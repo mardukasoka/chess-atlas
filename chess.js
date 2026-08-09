@@ -55,10 +55,11 @@ function drawBoard() {
 
       square.textContent = board[row][col];
 
-      square.addEventListener("pointerdown", (event) => {
+      square.addEventListener("touchstart", (event) => {
   event.preventDefault();
+  statusElement.textContent = `Touched ${row},${col}`;
   handleSquare(row, col);
-});
+}, { passive: false });
 
       boardElement.appendChild(square);
     }
