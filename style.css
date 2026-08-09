@@ -45,6 +45,7 @@ h1 {
   line-height: 1;
 
   user-select: none;
+touch-action: manipulation;
   cursor: pointer;
 }
 
