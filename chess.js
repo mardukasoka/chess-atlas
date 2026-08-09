@@ -55,9 +55,10 @@ function drawBoard() {
 
       square.textContent = board[row][col];
 
-      square.addEventListener("pointerup", () => {
-        handleSquare(row, col);
-      });
+      square.addEventListener("pointerdown", (event) => {
+  event.preventDefault();
+  handleSquare(row, col);
+});
 
       boardElement.appendChild(square);
     }
