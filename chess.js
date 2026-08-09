@@ -58,7 +58,7 @@ square.type = "button";
 
       square.addEventListener("touchstart", (event) => {
   event.preventDefault();
-  statusElement.textContent = `Touched ${row},${col}`;
+  square.blur();
   handleSquare(row, col);
 }, { passive: false });
 
