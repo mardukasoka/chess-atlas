@@ -77,8 +77,9 @@ function handleSquare(row, col) {
     if (turn === "Black" && !isBlack(piece)) return;
 
     selected = { row, col };
-    drawBoard();
-    return;
+statusElement.textContent = `Selected ${piece} at ${row},${col}`;
+drawBoard();
+return;
   }
 
   const selectedPiece =
