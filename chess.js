@@ -55,7 +55,7 @@ function drawBoard() {
 
       square.textContent = board[row][col];
 
-      square.addEventListener("click", () => {
+      square.addEventListener("pointerup", () => {
         handleSquare(row, col);
       });
 
