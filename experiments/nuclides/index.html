@@ -1,9 +1,438 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nuclide Atlas</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #101216;
+      color: #f2f2f2;
+    }
+
+    .app {
+      padding: 16px;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    .subtitle {
+      color: #aeb6c2;
+      margin-bottom: 16px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #2a2f38;
+      color: white;
+      font-size: 0.95rem;
+    }
+
+    button.active {
+      background: #5865f2;
+    }
+
+    .board-wrap {
+      overflow: auto;
+      border: 1px solid #343a46;
+      border-radius: 12px;
+      background: #171a20;
+      padding: 12px;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(14, 52px);
+      grid-auto-rows: 52px;
+      gap: 3px;
+      min-width: max-content;
+    }
+
+    .cell {
+      border-radius: 6px;
+      background: #242932;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      border: 1px solid #313844;
+    }
+
+    .cell.empty {
+      opacity: 0.18;
+    }
+
+    .cell.selected {
+      outline: 3px solid #ffd54a;
+      outline-offset: 1px;
+    }
+
+    .symbol {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .mass {
+      font-size: 0.7rem;
+      color: #c8ced8;
+    }
+
+    .matter {
+      background: #25344a;
+    }
+
+    .hyper {
+      background: #3b3152;
+    }
+
+    .antimatter {
+      background: #4a2c32;
+    }
+
+    .antihyper {
+      background: #49354b;
+    }
+
+    .details {
+      margin-top: 14px;
+      padding: 14px;
+      background: #171a20;
+      border: 1px solid #343a46;
+      border-radius: 12px;
+      min-height: 120px;
+    }
+
+    .coords {
+      font-family: monospace;
+      color: #ffd54a;
+    }
+
+    .legend {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: #b8c0cc;
+      line-height: 1.5;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Nuclide Atlas</h1>
+  <main class="app">
+    <h1>Nuclide Atlas</h1>
+
+    <div class="subtitle">
+      Experimental nuclear-matter coordinate map using
+      <strong>(N, Z, S)</strong>
+    </div>
+
+    <div class="toolbar">
+      <button data-filter="all" class="active">All</button>
+      <button data-filter="matter">Matter</button>
+      <button data-filter="hyper">Hypernuclei</button>
+      <button data-filter="antimatter">Antimatter</button>
+      <button data-filter="antihyper">Antihyper</button>
+    </div>
+
+    <div class="board-wrap">
+      <div id="board" class="board"></div>
+    </div>
+
+    <section id="details" class="details">
+      Tap a nuclide to inspect it.
+    </section>
+
+    <div class="legend">
+      Horizontal axis: neutron coordinate N<br />
+      Vertical axis: proton coordinate Z<br />
+      S is shown as the nuclear-matter layer.<br /><br />
+
+      Negative N and Z are an Atlas visualization convention
+      for antimatter and are not standard nuclear-chart notation.
+    </div>
+  </main>
+
+  <script>
+    const nuclides = [
+      {
+        name: "Proton",
+        symbol: "p",
+        N: 0,
+        Z: 1,
+        S: 0,
+        type: "matter",
+        note: "Single proton."
+      },
+      {
+        name: "Neutron",
+        symbol: "n",
+        N: 1,
+        Z: 0,
+        S: 0,
+        type: "matter",
+        note: "Single neutron."
+      },
+      {
+        name: "Hydrogen-1",
+        symbol: "H",
+        A: 1,
+        N: 0,
+        Z: 1,
+        S: 0,
+        type: "matter",
+        note: "Ordinary hydrogen nucleus."
+      },
+      {
+        name: "Deuterium",
+        symbol: "H",
+        A: 2,
+        N: 1,
+        Z: 1,
+        S: 0,
+        type: "matter",
+        note: "Stable isotope of hydrogen."
+      },
+      {
+        name: "Tritium",
+        symbol: "H",
+        A: 3,
+        N: 2,
+        Z: 1,
+        S: 0,
+        type: "matter",
+        note: "Radioactive hydrogen isotope."
+      },
+      {
+        name: "Helium-3",
+        symbol: "He",
+        A: 3,
+        N: 1,
+        Z: 2,
+        S: 0,
+        type: "matter",
+        note: "Stable helium isotope."
+      },
+      {
+        name: "Helium-4",
+        symbol: "He",
+        A: 4,
+        N: 2,
+        Z: 2,
+        S: 0,
+        type: "matter",
+        note: "Alpha particle nucleus."
+      },
+      {
+        name: "Carbon-12",
+        symbol: "C",
+        A: 12,
+        N: 6,
+        Z: 6,
+        S: 0,
+        type: "matter",
+        note: "Stable carbon isotope."
+      },
+      {
+        name: "Oxygen-16",
+        symbol: "O",
+        A: 16,
+        N: 8,
+        Z: 8,
+        S: 0,
+        type: "matter",
+        note: "Most abundant oxygen isotope."
+      },
+      {
+        name: "Hypertriton",
+        symbol: "ΛH",
+        A: 3,
+        N: 1,
+        Z: 1,
+        S: 1,
+        type: "hyper",
+        note: "Light hypernucleus containing a Lambda hyperon."
+      },
+      {
+        name: "Lambda Helium-5",
+        symbol: "ΛHe",
+        A: 5,
+        N: 2,
+        Z: 2,
+        S: 1,
+        type: "hyper",
+        note: "Example Lambda hypernucleus."
+      },
+      {
+        name: "Antiproton",
+        symbol: "p̄",
+        N: 0,
+        Z: -1,
+        S: 0,
+        type: "antimatter",
+        note: "Antimatter counterpart of the proton."
+      },
+      {
+        name: "Antineutron",
+        symbol: "n̄",
+        N: -1,
+        Z: 0,
+        S: 0,
+        type: "antimatter",
+        note: "Antimatter counterpart of the neutron."
+      },
+      {
+        name: "Antideuteron",
+        symbol: "d̄",
+        A: 2,
+        N: -1,
+        Z: -1,
+        S: 0,
+        type: "antimatter",
+        note: "Antimatter counterpart of deuterium."
+      },
+      {
+        name: "Antihelium-4",
+        symbol: "Hē",
+        A: 4,
+        N: -2,
+        Z: -2,
+        S: 0,
+        type: "antimatter",
+        note: "Antimatter counterpart of helium-4."
+      },
+      {
+        name: "Anti-Hypertriton",
+        symbol: "Λ̄H̄",
+        A: 3,
+        N: -1,
+        Z: -1,
+        S: -1,
+        type: "antihyper",
+        note: "Antimatter counterpart of the hypertriton."
+      }
+    ];
+
+    const board = document.getElementById("board");
+    const details = document.getElementById("details");
+    const buttons = document.querySelectorAll("[data-filter]");
+
+    let activeFilter = "all";
+    let selected = null;
+
+    const minN = -3;
+    const maxN = 10;
+    const minZ = -3;
+    const maxZ = 10;
+
+    function findNuclide(N, Z) {
+      return nuclides.find(n => n.N === N && n.Z === Z);
+    }
+
+    function renderBoard() {
+      board.innerHTML = "";
+
+      for (let Z = maxZ; Z >= minZ; Z--) {
+        for (let N = minN; N <= maxN; N++) {
+          const cell = document.createElement("div");
+          cell.className = "cell";
+
+          const nuclide = findNuclide(N, Z);
+
+          if (!nuclide) {
+            cell.classList.add("empty");
+            board.appendChild(cell);
+            continue;
+          }
+
+          if (
+            activeFilter !== "all" &&
+            nuclide.type !== activeFilter
+          ) {
+            cell.classList.add("empty");
+            board.appendChild(cell);
+            continue;
+          }
+
+          cell.classList.add(nuclide.type);
+
+          if (selected === nuclide) {
+            cell.classList.add("selected");
+          }
+
+          cell.innerHTML = `
+            <div class="symbol">${nuclide.symbol}</div>
+            <div class="mass">
+              ${nuclide.A ? "A=" + nuclide.A : ""}
+            </div>
+          `;
+
+          cell.addEventListener("click", () => {
+            selected = nuclide;
+            showDetails(nuclide);
+            renderBoard();
+          });
+
+          board.appendChild(cell);
+        }
+      }
+    }
+
+    function showDetails(n) {
+      details.innerHTML = `
+        <strong>${n.name}</strong><br /><br />
+
+        Symbol: ${n.symbol}<br />
+
+        <span class="coords">
+          N = ${n.N},
+          Z = ${n.Z},
+          S = ${n.S}
+        </span><br />
+
+        ${n.A ? "Mass number A = " + n.A + "<br />" : ""}
+
+        Layer: ${n.type}<br /><br />
+
+        ${n.note}
+      `;
+    }
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.remove("active"));
+        button.classList.add("active");
+
+        activeFilter = button.dataset.filter;
+        selected = null;
+
+        details.textContent =
+          "Tap a nuclide to inspect it.";
+
+        renderBoard();
+      });
+    });
+
+    renderBoard();
+  </script>
 </body>
 </html>
