@@ -1,0 +1,133 @@
+{
+  "schema_version": "0.1",
+  "project": "Chess Atlas",
+  "description": "Registry of upstream projects used as references, dependencies, or adaptation sources by Chess Atlas.",
+  "policy": {
+    "principle": "Reference first, adapt selectively, preserve provenance.",
+    "notes": [
+      "An entry in this registry does not imply that upstream code has been copied into Chess Atlas.",
+      "Upstream licences must be checked before code, data, or assets are incorporated.",
+      "Record the upstream commit or release whenever Atlas begins depending on a specific implementation.",
+      "Keep Atlas modifications distinguishable from upstream source material."
+    ]
+  },
+  "upstreams": [
+    {
+      "id": "infinite-chess",
+      "name": "Infinite Chess",
+      "repository": "https://github.com/Infinite-Chess/infinitechess.org",
+      "role": "Reference implementation for unbounded chess boards, navigation, rendering, and infinite-board interaction.",
+      "atlas_domains": [
+        "chess",
+        "spatial-navigation",
+        "interface"
+      ],
+      "integration": "reference",
+      "adapter_path": "adapters/infinite-chess/",
+      "upstream_commit": null,
+      "license": "VERIFY",
+      "modified": false
+    },
+    {
+      "id": "5d-chess",
+      "name": "5D Chess Designer",
+      "repository": "https://github.com/adri326/5dchess-designer",
+      "role": "Reference implementation for branching timelines, multidimensional chess state, and 5D chess representation.",
+      "atlas_domains": [
+        "chess",
+        "time",
+        "branching-worlds",
+        "interface"
+      ],
+      "integration": "reference",
+      "adapter_path": "adapters/five-d-chess/",
+      "upstream_commit": null,
+      "license": "VERIFY",
+      "modified": false
+    },
+    {
+      "id": "llm-council",
+      "name": "Karpathy LLM Council",
+      "repository": "https://github.com/karpathy/llm-council",
+      "role": "Reference architecture for independent model responses, peer comparison, and chairman synthesis.",
+      "atlas_domains": [
+        "ai-council",
+        "deliberation",
+        "epistemology"
+      ],
+      "integration": "reference-adapt",
+      "adapter_path": "adapters/llm-council/",
+      "upstream_commit": null,
+      "license": "VERIFY",
+      "modified": false
+    },
+    {
+      "id": "galaxy-of-nuclides",
+      "name": "Galaxy of Nuclides",
+      "repository": "https://github.com/Frencil/galaxy_of_nuclides",
+      "role": "Reference implementation for interactive transitions between the periodic table, elements, isotopes, and the chart of nuclides.",
+      "atlas_domains": [
+        "nuclear-physics",
+        "periodic-table",
+        "nuclides",
+        "visualisation"
+      ],
+      "integration": "reference-adapt",
+      "adapter_path": "adapters/galaxy-nuclides/",
+      "upstream_commit": null,
+      "license": "CC BY 4.0 - VERIFY CURRENT REPOSITORY LICENCE",
+      "modified": false
+    },
+    {
+      "id": "worlddynamics",
+      "name": "WorldDynamics.jl",
+      "repository": "https://github.com/worlddynamics/WorldDynamics.jl",
+      "role": "Julia framework for integrated assessment and world-system dynamics, providing an executable quantitative modelling reference for the Atlas.",
+      "atlas_domains": [
+        "julia",
+        "earth-systems",
+        "civilisation",
+        "integrated-assessment",
+        "simulation"
+      ],
+      "integration": "dependency-adapter",
+      "adapter_path": "adapters/worlddynamics/",
+      "upstream_commit": null,
+      "license": "VERIFY",
+      "modified": false
+    }
+  ],
+  "atlas_architecture": {
+    "layers": [
+      {
+        "name": "Reality",
+        "question": "What exists?"
+      },
+      {
+        "name": "Observation",
+        "question": "What has been measured or recorded?"
+      },
+      {
+        "name": "Knowledge Graph",
+        "question": "What is known, with what provenance?"
+      },
+      {
+        "name": "Julia",
+        "question": "What does the quantitative model predict?"
+      },
+      {
+        "name": "AI Council",
+        "question": "How should competing evidence, models, and interpretations be compared?"
+      },
+      {
+        "name": "Inform7",
+        "question": "What relationships, actions, and transitions are permitted?"
+      },
+      {
+        "name": "Interface",
+        "question": "What does the user see and explore?"
+      }
+    ],
+    "guiding_principle": "Facts are not simulations. Simulations are not judgments. Judgments are not laws. Laws are not interfaces."
+  }
+}
