@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Chess Atlas — Infinite Board Experiment</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="toolbar">
+      <div>
+        <h1>Infinite Board</h1>
+        <p>Mobile-first camera + touch experiment</p>
+      </div>
+      <button id="homeButton" type="button">Home</button>
+    </header>
+
+    <section class="status" aria-live="polite">
+      <span id="cameraStatus">Camera: (0, 0)</span>
+      <span id="zoomStatus">Zoom: 1.00×</span>
+    </section>
+
+    <section class="board-frame">
+      <canvas id="boardCanvas"></canvas>
+    </section>
+
+    <footer class="help">
+      Drag to pan · Pinch to zoom · Tap a square to inspect its coordinate
+    </footer>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
