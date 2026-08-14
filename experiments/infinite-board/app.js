@@ -6,8 +6,8 @@ const zoomStatus = document.getElementById("zoomStatus");
 const homeButton = document.getElementById("homeButton");
 
 const state = {
-  cameraX: 0,
-  cameraY: 0,
+  cameraX: 4,
+  cameraY: 4,
   zoom: 1,
   baseSquareSize: 56,
   minZoom: 0.35,
@@ -19,6 +19,20 @@ const state = {
   tapStart: null,
   selectedSquare: null
 };
+
+// Classical chess position occupies x = 0..7, y = 0..7.
+const pieces = new Map();
+
+const whiteBackRank = ["♖", "♘", "♗", "♕", "♔", "♗", "♘", "♖"];
+const blackBackRank = ["♜", "♞", "♝", "♛", "♚", "♝", "♞", "♜"];
+
+for (let x = 0; x < 8; x++) {
+  pieces.set(`${x},0`, whiteBackRank[x]);
+  pieces.set(`${x},1`, "♙");
+
+  pieces.set(`${x},6`, "♟");
+  pieces.set(`${x},7`, blackBackRank[x]);
+}
 
 function squareSize() {
   return state.baseSquareSize * state.zoom;
@@ -73,10 +87,6 @@ function draw() {
 
   ctx.clearRect(0, 0, width, height);
 
-  if (size < 4) {
-    return;
-  }
-
   const topLeftWorld = screenToWorld(0, 0);
   const bottomRightWorld = screenToWorld(width, height);
 
@@ -89,7 +99,6 @@ function draw() {
   for (let x = minX; x <= maxX; x++) {
     for (let y = minY; y <= maxY; y++) {
       const topLeft = worldToScreen(x, y + 1);
-
       const light = (x + y) % 2 === 0;
 
       ctx.fillStyle = light ? "#d8d8d8" : "#6e6e6e";
@@ -109,38 +118,74 @@ function draw() {
           size - 4
         );
       }
+
+      drawPiece(x, y, topLeft, size);
     }
   }
 
+  drawClassicalBoundary();
   drawAxes();
   updateStatus();
 }
 
+function drawPiece(x, y, topLeft, size) {
+  const piece = pieces.get(`${x},${y}`);
+
+  if (!piece) return;
+
+  ctx.save();
+
+  ctx.font = `${size * 0.76}px "Arial Unicode MS", "Noto Sans Symbols 2", serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  ctx.fillStyle = "#111";
+  ctx.fillText(
+    piece,
+    topLeft.x + size / 2,
+    topLeft.y + size / 2 + size * 0.03
+  );
+
+  ctx.restore();
+}
+
+function drawClassicalBoundary() {
+  const size = squareSize();
+  const topLeft = worldToScreen(0, 8);
+
+  ctx.save();
+
+  ctx.strokeStyle = "#ffd54a";
+  ctx.lineWidth = Math.max(2, size * 0.05);
+
+  ctx.strokeRect(
+    topLeft.x,
+    topLeft.y,
+    size * 8,
+    size * 8
+  );
+
+  ctx.restore();
+}
+
 function drawAxes() {
   const rect = canvas.getBoundingClientRect();
-  const width = rect.width;
-  const height = rect.height;
-
   const origin = worldToScreen(0, 0);
 
   ctx.save();
 
   ctx.lineWidth = 2;
-  ctx.strokeStyle = "rgba(255,255,255,0.65)";
+  ctx.strokeStyle = "rgba(255,255,255,0.55)";
 
   ctx.beginPath();
   ctx.moveTo(0, origin.y);
-  ctx.lineTo(width, origin.y);
+  ctx.lineTo(rect.width, origin.y);
   ctx.stroke();
 
   ctx.beginPath();
   ctx.moveTo(origin.x, 0);
-  ctx.lineTo(origin.x, height);
+  ctx.lineTo(origin.x, rect.height);
   ctx.stroke();
-
-  ctx.fillStyle = "rgba(0,0,0,0.7)";
-  ctx.font = "12px system-ui";
-  ctx.fillText("(0,0)", origin.x + 5, origin.y - 6);
 
   ctx.restore();
 }
@@ -165,9 +210,7 @@ function pointerPosition(event) {
 function distanceBetweenPointers() {
   const points = [...state.pointers.values()];
 
-  if (points.length < 2) {
-    return null;
-  }
+  if (points.length < 2) return null;
 
   return Math.hypot(
     points[1].x - points[0].x,
@@ -204,9 +247,7 @@ canvas.addEventListener("pointerdown", (event) => {
 });
 
 canvas.addEventListener("pointermove", (event) => {
-  if (!state.pointers.has(event.pointerId)) {
-    return;
-  }
+  if (!state.pointers.has(event.pointerId)) return;
 
   const position = pointerPosition(event);
   state.pointers.set(event.pointerId, position);
@@ -255,10 +296,17 @@ function finishPointer(event) {
 
     if (distance < 10) {
       state.selectedSquare = screenToSquare(position.x, position.y);
+
+      const key =
+        `${state.selectedSquare.x},${state.selectedSquare.y}`;
+
+      const piece = pieces.get(key);
+
       draw();
 
-      cameraStatus.textContent =
-        `Square: (${state.selectedSquare.x}, ${state.selectedSquare.y})`;
+      cameraStatus.textContent = piece
+        ? `${piece} at (${key})`
+        : `Square: (${key})`;
     }
   }
 
@@ -296,8 +344,8 @@ canvas.addEventListener(
 );
 
 homeButton.addEventListener("click", () => {
-  state.cameraX = 0;
-  state.cameraY = 0;
+  state.cameraX = 4;
+  state.cameraY = 4;
   state.zoom = 1;
   state.selectedSquare = null;
 
