@@ -17,7 +17,8 @@ const state = {
   pinchStartDistance: null,
   pinchStartZoom: null,
   tapStart: null,
-  selectedSquare: null
+  selectedSquare: null,
+  selectedPiece: null
 };
 
 // Classical chess position occupies x = 0..7, y = 0..7.
@@ -111,6 +112,7 @@ function draw() {
       ) {
         ctx.strokeStyle = "#ffd54a";
         ctx.lineWidth = Math.max(2, size * 0.06);
+
         ctx.strokeRect(
           topLeft.x + 2,
           topLeft.y + 2,
@@ -135,11 +137,14 @@ function drawPiece(x, y, topLeft, size) {
 
   ctx.save();
 
-  ctx.font = `${size * 0.76}px "Arial Unicode MS", "Noto Sans Symbols 2", serif`;
+  ctx.font =
+    `${size * 0.76}px "Arial Unicode MS", "Noto Sans Symbols 2", serif`;
+
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 
   ctx.fillStyle = "#111";
+
   ctx.fillText(
     piece,
     topLeft.x + size / 2,
@@ -213,145 +218,4 @@ function distanceBetweenPointers() {
   if (points.length < 2) return null;
 
   return Math.hypot(
-    points[1].x - points[0].x,
-    points[1].y - points[0].y
-  );
-}
-
-canvas.addEventListener("pointerdown", (event) => {
-  canvas.setPointerCapture(event.pointerId);
-
-  const position = pointerPosition(event);
-
-  state.pointers.set(event.pointerId, position);
-
-  if (state.pointers.size === 1) {
-    state.dragStart = {
-      pointerX: position.x,
-      pointerY: position.y,
-      cameraX: state.cameraX,
-      cameraY: state.cameraY
-    };
-
-    state.tapStart = {
-      x: position.x,
-      y: position.y,
-      time: performance.now()
-    };
-  }
-
-  if (state.pointers.size === 2) {
-    state.pinchStartDistance = distanceBetweenPointers();
-    state.pinchStartZoom = state.zoom;
-  }
-});
-
-canvas.addEventListener("pointermove", (event) => {
-  if (!state.pointers.has(event.pointerId)) return;
-
-  const position = pointerPosition(event);
-  state.pointers.set(event.pointerId, position);
-
-  if (state.pointers.size === 2) {
-    const distance = distanceBetweenPointers();
-
-    if (distance && state.pinchStartDistance) {
-      const ratio = distance / state.pinchStartDistance;
-
-      state.zoom = Math.min(
-        state.maxZoom,
-        Math.max(state.minZoom, state.pinchStartZoom * ratio)
-      );
-
-      draw();
-    }
-
-    return;
-  }
-
-  if (state.pointers.size === 1 && state.dragStart) {
-    const dx = position.x - state.dragStart.pointerX;
-    const dy = position.y - state.dragStart.pointerY;
-    const size = squareSize();
-
-    state.cameraX = state.dragStart.cameraX - dx / size;
-    state.cameraY = state.dragStart.cameraY + dy / size;
-
-    draw();
-  }
-});
-
-function finishPointer(event) {
-  const position = pointerPosition(event);
-
-  if (
-    state.pointers.size === 1 &&
-    state.tapStart &&
-    performance.now() - state.tapStart.time < 300
-  ) {
-    const distance = Math.hypot(
-      position.x - state.tapStart.x,
-      position.y - state.tapStart.y
-    );
-
-    if (distance < 10) {
-      state.selectedSquare = screenToSquare(position.x, position.y);
-
-      const key =
-        `${state.selectedSquare.x},${state.selectedSquare.y}`;
-
-      const piece = pieces.get(key);
-
-      draw();
-
-      cameraStatus.textContent = piece
-        ? `${piece} at (${key})`
-        : `Square: (${key})`;
-    }
-  }
-
-  state.pointers.delete(event.pointerId);
-
-  if (state.pointers.size < 2) {
-    state.pinchStartDistance = null;
-    state.pinchStartZoom = null;
-  }
-
-  if (state.pointers.size === 0) {
-    state.dragStart = null;
-    state.tapStart = null;
-  }
-}
-
-canvas.addEventListener("pointerup", finishPointer);
-canvas.addEventListener("pointercancel", finishPointer);
-
-canvas.addEventListener(
-  "wheel",
-  (event) => {
-    event.preventDefault();
-
-    const factor = event.deltaY < 0 ? 1.1 : 0.9;
-
-    state.zoom = Math.min(
-      state.maxZoom,
-      Math.max(state.minZoom, state.zoom * factor)
-    );
-
-    draw();
-  },
-  { passive: false }
-);
-
-homeButton.addEventListener("click", () => {
-  state.cameraX = 4;
-  state.cameraY = 4;
-  state.zoom = 1;
-  state.selectedSquare = null;
-
-  draw();
-});
-
-window.addEventListener("resize", resizeCanvas);
-
-resizeCanvas();
+   
