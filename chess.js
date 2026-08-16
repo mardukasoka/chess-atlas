@@ -82,6 +82,8 @@ function resetGame() {
 function handleSquare(row, col) {
   const piece = board[row][col];
 
+  // Nothing selected yet:
+  // only the side whose turn it is may select a piece.
   if (!selected) {
     if (!piece) return;
 
@@ -100,15 +102,23 @@ function handleSquare(row, col) {
   const selectedPiece =
     board[selected.row][selected.col];
 
+  // Touching another friendly piece changes selection
+  // without consuming the turn.
   if (
     (turn === "White" && isWhite(piece)) ||
     (turn === "Black" && isBlack(piece))
   ) {
     selected = { row, col };
+
+    statusElement.textContent =
+      `Selected ${piece} at ${row},${col}`;
+
     drawBoard();
     return;
   }
 
+  // Prototype move execution.
+  // Piece-specific legality comes in later rule layers.
   board[row][col] = selectedPiece;
   board[selected.row][selected.col] = "";
 
