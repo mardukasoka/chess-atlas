@@ -18,11 +18,11 @@ let selected = null;
 let turn = "White";
 
 function isWhite(piece) {
-  return "♙♖♘♗♕♔".includes(piece);
+  return Boolean(piece) && "♙♖♘♗♕♔".includes(piece);
 }
 
 function isBlack(piece) {
-  return "♟♜♞♝♛♚".includes(piece);
+  return Boolean(piece) && "♟♜♞♝♛♚".includes(piece);
 }
 
 function createBoard() {
