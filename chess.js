@@ -1,5 +1,6 @@
 const boardElement = document.getElementById("board");
 const statusElement = document.getElementById("status");
+const turnDisplay = document.getElementById("turn-display");
 const resetButton = document.getElementById("reset");
 
 const startingPosition = [
@@ -72,7 +73,9 @@ function resetGame() {
   selected = null;
   turn = "White";
 
+  turnDisplay.textContent = "White";
   statusElement.textContent = "White to move";
+
   drawBoard();
 }
 
@@ -112,6 +115,7 @@ function handleSquare(row, col) {
   selected = null;
   turn = turn === "White" ? "Black" : "White";
 
+  turnDisplay.textContent = turn;
   statusElement.textContent = `${turn} to move`;
 
   drawBoard();
