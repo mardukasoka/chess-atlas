@@ -1,46 +1,37 @@
-const boardElement = document.getElementById("board");
-const statusElement = document.getElementById("status");
-const turnDisplay = document.getElementById("turn-display");
-const resetButton = document.getElementById("reset");
+const boardElement =
+  document.getElementById("board");
 
-const startingPosition = [
-  ["♜","♞","♝","♛","♚","♝","♞","♜"],
-  ["♟","♟","♟","♟","♟","♟","♟","♟"],
-  ["","","","","","","",""],
-  ["","","","","","","",""],
-  ["","","","","","","",""],
-  ["","","","","","","",""],
-  ["♙","♙","♙","♙","♙","♙","♙","♙"],
-  ["♖","♘","♗","♕","♔","♗","♘","♖"]
-];
+const statusElement =
+  document.getElementById("status");
 
-let board = [];
-let selected = null;
-let turn = "White";
+const turnDisplay =
+  document.getElementById("turn-display");
 
-function isWhite(piece) {
-  return Boolean(piece) && "♙♖♘♗♕♔".includes(piece);
-}
+const resetButton =
+  document.getElementById("reset");
 
-function isBlack(piece) {
-  return Boolean(piece) && "♟♜♞♝♛♚".includes(piece);
-}
+const engine = new window.ChessEngine();
 
 function createBoard() {
   boardElement.innerHTML = "";
 
   for (let row = 0; row < 8; row++) {
     for (let col = 0; col < 8; col++) {
-      const square = document.createElement("button");
+      const square =
+        document.createElement("button");
 
       square.type = "button";
       square.id = `square-${row}-${col}`;
+
       square.dataset.row = row;
       square.dataset.col = col;
 
       square.classList.add("square");
+
       square.classList.add(
-        (row + col) % 2 === 0 ? "light" : "dark"
+        (row + col) % 2 === 0
+          ? "light"
+          : "dark"
       );
 
       boardElement.appendChild(square);
@@ -48,103 +39,73 @@ function createBoard() {
   }
 }
 
-function drawBoard() {
+function drawState(state) {
   for (let row = 0; row < 8; row++) {
     for (let col = 0; col < 8; col++) {
       const square =
-        document.getElementById(`square-${row}-${col}`);
+        document.getElementById(
+          `square-${row}-${col}`
+        );
 
-      square.textContent = board[row][col];
+      square.textContent =
+        state.board[row][col];
 
       square.classList.toggle(
         "selected",
         Boolean(
-          selected &&
-          selected.row === row &&
-          selected.col === col
+          state.selected &&
+          state.selected.row === row &&
+          state.selected.col === col
         )
       );
     }
   }
+
+  turnDisplay.textContent = state.turn;
+  statusElement.textContent = state.status;
 }
 
 function resetGame() {
-  board = startingPosition.map(row => [...row]);
-  selected = null;
-  turn = "White";
-
-  turnDisplay.textContent = "White";
-  statusElement.textContent = "White to move";
-
-  drawBoard();
+  const state = engine.resetGame();
+  drawState(state);
 }
 
 function handleSquare(row, col) {
-  const piece = board[row][col];
+  const state =
+    engine.handleSquare(row, col);
 
-  // Nothing selected yet:
-  // only the side whose turn it is may select a piece.
-  if (!selected) {
-    if (!piece) return;
-
-    if (turn === "White" && !isWhite(piece)) return;
-    if (turn === "Black" && !isBlack(piece)) return;
-
-    selected = { row, col };
-
-    statusElement.textContent =
-      `Selected ${piece} at ${row},${col}`;
-
-    drawBoard();
-    return;
-  }
-
-  const selectedPiece =
-    board[selected.row][selected.col];
-
-  // Touching another friendly piece changes selection
-  // without consuming the turn.
-  if (
-    (turn === "White" && isWhite(piece)) ||
-    (turn === "Black" && isBlack(piece))
-  ) {
-    selected = { row, col };
-
-    statusElement.textContent =
-      `Selected ${piece} at ${row},${col}`;
-
-    drawBoard();
-    return;
-  }
-
-  // Prototype move execution.
-  // Piece-specific legality comes in later rule layers.
-  board[row][col] = selectedPiece;
-  board[selected.row][selected.col] = "";
-
-  selected = null;
-  turn = turn === "White" ? "Black" : "White";
-
-  turnDisplay.textContent = turn;
-  statusElement.textContent = `${turn} to move`;
-
-  drawBoard();
+  drawState(state);
 }
 
-boardElement.addEventListener("pointerdown", event => {
-  const square = event.target.closest(".square");
+boardElement.addEventListener(
+  "pointerdown",
+  event => {
+    const square =
+      event.target.closest(".square");
 
-  if (!square || !boardElement.contains(square)) return;
+    if (
+      !square ||
+      !boardElement.contains(square)
+    ) {
+      return;
+    }
 
-  event.preventDefault();
+    event.preventDefault();
 
-  const row = Number(square.dataset.row);
-  const col = Number(square.dataset.col);
+    const row =
+      Number(square.dataset.row);
 
-  handleSquare(row, col);
-});
+    const col =
+      Number(square.dataset.col);
 
-resetButton.addEventListener("click", resetGame);
+    handleSquare(row, col);
+  }
+);
+
+resetButton.addEventListener(
+  "click",
+  resetGame
+);
 
 createBoard();
 resetGame();
