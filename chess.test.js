@@ -5,24 +5,27 @@
 const fs = require("fs");
 const path = require("path");
 
-const ChessEngine = require("./engine.js");
+const ChessEngine =
+  require("./engine.js");
 
 function touch(element) {
-  const event = new Event(
-    "pointerdown",
-    {
-      bubbles: true,
-      cancelable: true
-    }
-  );
+  const event =
+    new Event(
+      "pointerdown",
+      {
+        bubbles: true,
+        cancelable: true
+      }
+    );
 
   element.dispatchEvent(event);
 }
 
 function squareAt(row, col) {
   return document
-    .querySelectorAll("#board .square")
-    [row * 8 + col];
+    .querySelectorAll(
+      "#board .square"
+    )[row * 8 + col];
 }
 
 describe(
@@ -31,13 +34,21 @@ describe(
     test(
       "creates a complete 8x8 board",
       () => {
-        const engine = new ChessEngine();
-        const state = engine.getState();
+        const engine =
+          new ChessEngine();
 
-        expect(state.board).toHaveLength(8);
+        const state =
+          engine.getState();
 
-        for (const row of state.board) {
-          expect(row).toHaveLength(8);
+        expect(
+          state.board
+        ).toHaveLength(8);
+
+        for (
+          const row of state.board
+        ) {
+          expect(row)
+            .toHaveLength(8);
         }
       }
     );
@@ -45,27 +56,38 @@ describe(
     test(
       "starts with White to move",
       () => {
-        const engine = new ChessEngine();
-        const state = engine.getState();
+        const engine =
+          new ChessEngine();
+
+        const state =
+          engine.getState();
 
         expect(state.turn)
           .toBe("White");
 
         expect(state.status)
           .toBe("White to move");
+
+        expect(state.error)
+          .toBeNull();
       }
     );
 
     test(
       "selecting the white e2 pawn updates status",
       () => {
-        const engine = new ChessEngine();
+        const engine =
+          new ChessEngine();
 
         const state =
-          engine.handleSquare(6, 4);
+          engine.handleSquare(
+            6,
+            4
+          );
 
-        expect(state.board[6][4])
-          .toBe("♙");
+        expect(
+          state.board[6][4]
+        ).toBe("♙");
 
         expect(state.selected)
           .toEqual({
@@ -74,25 +96,39 @@ describe(
           });
 
         expect(state.status)
-          .toContain("Selected ♙");
+          .toContain(
+            "Selected ♙"
+          );
+
+        expect(state.error)
+          .toBeNull();
       }
     );
 
     test(
       "Black cannot select or move while it is White's turn",
       () => {
-        const engine = new ChessEngine();
+        const engine =
+          new ChessEngine();
 
-        engine.handleSquare(1, 4);
+        engine.handleSquare(
+          1,
+          4
+        );
 
         const state =
-          engine.handleSquare(3, 4);
+          engine.handleSquare(
+            3,
+            4
+          );
 
-        expect(state.board[1][4])
-          .toBe("♟");
+        expect(
+          state.board[1][4]
+        ).toBe("♟");
 
-        expect(state.board[3][4])
-          .toBe("");
+        expect(
+          state.board[3][4]
+        ).toBe("");
 
         expect(state.turn)
           .toBe("White");
@@ -102,31 +138,61 @@ describe(
 
         expect(state.selected)
           .toBeNull();
+
+        expect(state.error)
+          .toBeNull();
       }
     );
 
     test(
-      "a player can switch between friendly pieces without consuming the turn",
+      "a move onto a friendly piece is rejected and preserves the active selection",
       () => {
-        const engine = new ChessEngine();
+        const engine =
+          new ChessEngine();
 
-        engine.handleSquare(6, 4);
+        // Select White pawn on e2.
+        engine.handleSquare(
+          6,
+          4
+        );
 
+        // Attempt to move it onto
+        // the White pawn on d2.
         const state =
-          engine.handleSquare(6, 3);
+          engine.handleSquare(
+            6,
+            3
+          );
 
+        // Original pieces remain.
+        expect(
+          state.board[6][4]
+        ).toBe("♙");
+
+        expect(
+          state.board[6][3]
+        ).toBe("♙");
+
+        // Original e2 selection remains.
         expect(state.selected)
           .toEqual({
             row: 6,
-            col: 3
+            col: 4
           });
 
+        // Turn is not consumed.
         expect(state.turn)
           .toBe("White");
 
+        // Rule violation is explicit.
+        expect(state.error)
+          .toBe(
+            "Cannot capture your own piece"
+          );
+
         expect(state.status)
-          .toContain(
-            "Selected ♙ at 6,3"
+          .toBe(
+            "Cannot capture your own piece"
           );
       }
     );
@@ -134,43 +200,65 @@ describe(
     test(
       "e2 pawn can be moved to e4 in the current prototype",
       () => {
-        const engine = new ChessEngine();
+        const engine =
+          new ChessEngine();
 
-        engine.handleSquare(6, 4);
+        engine.handleSquare(
+          6,
+          4
+        );
 
         const state =
-          engine.handleSquare(4, 4);
+          engine.handleSquare(
+            4,
+            4
+          );
 
-        expect(state.board[6][4])
-          .toBe("");
+        expect(
+          state.board[6][4]
+        ).toBe("");
 
-        expect(state.board[4][4])
-          .toBe("♙");
+        expect(
+          state.board[4][4]
+        ).toBe("♙");
 
         expect(state.turn)
           .toBe("Black");
 
         expect(state.status)
           .toBe("Black to move");
+
+        expect(state.error)
+          .toBeNull();
       }
     );
 
     test(
       "Reset Game restores the starting position and turn",
       () => {
-        const engine = new ChessEngine();
+        const engine =
+          new ChessEngine();
 
-        engine.handleSquare(6, 4);
-        engine.handleSquare(4, 4);
+        engine.handleSquare(
+          6,
+          4
+        );
+
+        engine.handleSquare(
+          4,
+          4
+        );
 
         const state =
           engine.resetGame();
 
-        expect(state.board[6][4])
-          .toBe("♙");
+        expect(
+          state.board[6][4]
+        ).toBe("♙");
 
-        expect(state.board[4][4])
-          .toBe("");
+        expect(
+          state.board[4][4]
+        ).toBe("");
 
         expect(state.selected)
           .toBeNull();
@@ -180,6 +268,9 @@ describe(
 
         expect(state.status)
           .toBe("White to move");
+
+        expect(state.error)
+          .toBeNull();
       }
     );
   }
@@ -220,21 +311,31 @@ describe(
             )
         ).toHaveLength(64);
 
-        const e2 = squareAt(6, 4);
-        const e4 = squareAt(4, 4);
+        const e2 =
+          squareAt(6, 4);
 
-        expect(e2.textContent)
-          .toBe("♙");
+        const e4 =
+          squareAt(4, 4);
+
+        expect(
+          e2.textContent
+        ).toBe("♙");
 
         touch(e2);
         touch(e4);
 
         expect(
-          squareAt(6, 4).textContent
+          squareAt(
+            6,
+            4
+          ).textContent
         ).toBe("");
 
         expect(
-          squareAt(4, 4).textContent
+          squareAt(
+            4,
+            4
+          ).textContent
         ).toBe("♙");
 
         expect(
@@ -247,9 +348,13 @@ describe(
 
         expect(
           document
-            .getElementById("status")
+            .getElementById(
+              "status"
+            )
             .textContent
-        ).toBe("Black to move");
+        ).toBe(
+          "Black to move"
+        );
       }
     );
   }
