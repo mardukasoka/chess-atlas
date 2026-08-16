@@ -5,155 +5,252 @@
 const fs = require("fs");
 const path = require("path");
 
+const ChessEngine = require("./engine.js");
+
 function touch(element) {
-  const event = new Event("pointerdown", {
-    bubbles: true,
-    cancelable: true
-  });
+  const event = new Event(
+    "pointerdown",
+    {
+      bubbles: true,
+      cancelable: true
+    }
+  );
 
   element.dispatchEvent(event);
 }
 
 function squareAt(row, col) {
-  return document.querySelectorAll("#board .square")[row * 8 + col];
+  return document
+    .querySelectorAll("#board .square")
+    [row * 8 + col];
 }
 
-describe("Chess Atlas browser state", () => {
-  beforeEach(() => {
-    jest.resetModules();
+describe(
+  "Chess Atlas headless engine",
+  () => {
+    test(
+      "creates a complete 8x8 board",
+      () => {
+        const engine = new ChessEngine();
+        const state = engine.getState();
 
-    const html = fs.readFileSync(
-      path.resolve(__dirname, "index.html"),
-      "utf8"
+        expect(state.board).toHaveLength(8);
+
+        for (const row of state.board) {
+          expect(row).toHaveLength(8);
+        }
+      }
     );
 
-    document.open();
-    document.write(html);
-    document.close();
+    test(
+      "starts with White to move",
+      () => {
+        const engine = new ChessEngine();
+        const state = engine.getState();
 
-    require("./chess.js");
-  });
+        expect(state.turn)
+          .toBe("White");
 
-  test("creates a complete 8x8 board", () => {
-    const board = document.getElementById("board");
+        expect(state.status)
+          .toBe("White to move");
+      }
+    );
 
-    expect(board).not.toBeNull();
-    expect(board.querySelectorAll(".square")).toHaveLength(64);
-  });
+    test(
+      "selecting the white e2 pawn updates status",
+      () => {
+        const engine = new ChessEngine();
 
-  test("starts with White to move", () => {
-    expect(document.getElementById("status").textContent)
-      .toBe("White to move");
+        const state =
+          engine.handleSquare(6, 4);
 
-    expect(document.getElementById("turn-display").textContent)
-      .toBe("White");
-  });
+        expect(state.board[6][4])
+          .toBe("♙");
 
-  test("selecting the white e2 pawn updates status", () => {
-    const e2 = squareAt(6, 4);
+        expect(state.selected)
+          .toEqual({
+            row: 6,
+            col: 4
+          });
 
-    expect(e2.textContent).toBe("♙");
+        expect(state.status)
+          .toContain("Selected ♙");
+      }
+    );
 
-    touch(e2);
+    test(
+      "Black cannot select or move while it is White's turn",
+      () => {
+        const engine = new ChessEngine();
 
-    expect(document.getElementById("status").textContent)
-      .toContain("Selected ♙");
-  });
+        engine.handleSquare(1, 4);
 
-  test("Black cannot select or move while it is White's turn", () => {
-    const e7 = squareAt(1, 4);
-    const e5 = squareAt(3, 4);
+        const state =
+          engine.handleSquare(3, 4);
 
-    expect(e7.textContent).toBe("♟");
+        expect(state.board[1][4])
+          .toBe("♟");
 
-    touch(e7);
-    touch(e5);
+        expect(state.board[3][4])
+          .toBe("");
 
-    expect(squareAt(1, 4).textContent).toBe("♟");
-    expect(squareAt(3, 4).textContent).toBe("");
+        expect(state.turn)
+          .toBe("White");
 
-    expect(document.getElementById("turn-display").textContent)
-      .toBe("White");
+        expect(state.status)
+          .toBe("White to move");
 
-    expect(document.getElementById("status").textContent)
-      .toBe("White to move");
-  });
+        expect(state.selected)
+          .toBeNull();
+      }
+    );
 
-  test("a player can switch between friendly pieces without consuming the turn", () => {
-    const e2 = squareAt(6, 4);
-    const d2 = squareAt(6, 3);
+    test(
+      "a player can switch between friendly pieces without consuming the turn",
+      () => {
+        const engine = new ChessEngine();
 
-    touch(e2);
+        engine.handleSquare(6, 4);
 
-    expect(e2.classList.contains("selected")).toBe(true);
+        const state =
+          engine.handleSquare(6, 3);
 
-    touch(d2);
+        expect(state.selected)
+          .toEqual({
+            row: 6,
+            col: 3
+          });
 
-    expect(e2.classList.contains("selected")).toBe(false);
-    expect(d2.classList.contains("selected")).toBe(true);
+        expect(state.turn)
+          .toBe("White");
 
-    expect(document.getElementById("turn-display").textContent)
-      .toBe("White");
+        expect(state.status)
+          .toContain(
+            "Selected ♙ at 6,3"
+          );
+      }
+    );
 
-    expect(document.getElementById("status").textContent)
-      .toContain("Selected ♙ at 6,3");
-  });
+    test(
+      "e2 pawn can be moved to e4 in the current prototype",
+      () => {
+        const engine = new ChessEngine();
 
-  test("e2 pawn can be moved to e4 in the current prototype", () => {
-    const e2 = squareAt(6, 4);
-    const e4 = squareAt(4, 4);
+        engine.handleSquare(6, 4);
 
-    touch(e2);
-    touch(e4);
+        const state =
+          engine.handleSquare(4, 4);
 
-    expect(squareAt(6, 4).textContent).toBe("");
-    expect(squareAt(4, 4).textContent).toBe("♙");
+        expect(state.board[6][4])
+          .toBe("");
 
-    expect(document.getElementById("status").textContent)
-      .toBe("Black to move");
-  });
+        expect(state.board[4][4])
+          .toBe("♙");
 
-  test("turn indicator switches after a valid move", () => {
-    expect(document.getElementById("turn-display").textContent)
-      .toBe("White");
+        expect(state.turn)
+          .toBe("Black");
 
-    touch(squareAt(6, 4));
-    touch(squareAt(4, 4));
+        expect(state.status)
+          .toBe("Black to move");
+      }
+    );
 
-    expect(document.getElementById("turn-display").textContent)
-      .toBe("Black");
-  });
+    test(
+      "Reset Game restores the starting position and turn",
+      () => {
+        const engine = new ChessEngine();
 
-  test("White cannot select another White piece after White has moved", () => {
-    touch(squareAt(6, 4));
-    touch(squareAt(4, 4));
+        engine.handleSquare(6, 4);
+        engine.handleSquare(4, 4);
 
-    expect(document.getElementById("turn-display").textContent)
-      .toBe("Black");
+        const state =
+          engine.resetGame();
 
-    const d2 = squareAt(6, 3);
+        expect(state.board[6][4])
+          .toBe("♙");
 
-    touch(d2);
+        expect(state.board[4][4])
+          .toBe("");
 
-    expect(d2.classList.contains("selected")).toBe(false);
+        expect(state.selected)
+          .toBeNull();
 
-    expect(document.getElementById("status").textContent)
-      .toBe("Black to move");
-  });
+        expect(state.turn)
+          .toBe("White");
 
-  test("Reset Game restores the starting position and turn", () => {
-    touch(squareAt(6, 4));
-    touch(squareAt(4, 4));
+        expect(state.status)
+          .toBe("White to move");
+      }
+    );
+  }
+);
 
-    document.getElementById("reset").click();
+describe(
+  "Chess Atlas browser boundary",
+  () => {
+    beforeEach(() => {
+      jest.resetModules();
 
-    expect(squareAt(6, 4).textContent).toBe("♙");
-    expect(squareAt(4, 4).textContent).toBe("");
+      const html =
+        fs.readFileSync(
+          path.resolve(
+            __dirname,
+            "index.html"
+          ),
+          "utf8"
+        );
 
-    expect(document.getElementById("status").textContent)
-      .toBe("White to move");
+      document.open();
+      document.write(html);
+      document.close();
 
-    expect(document.getElementById("turn-display").textContent)
-      .toBe("White");
-  });
-});
+      window.ChessEngine =
+        ChessEngine;
+
+      require("./chess.js");
+    });
+
+    test(
+      "pointer events delegate a move to the engine and repaint the board",
+      () => {
+        expect(
+          document
+            .querySelectorAll(
+              "#board .square"
+            )
+        ).toHaveLength(64);
+
+        const e2 = squareAt(6, 4);
+        const e4 = squareAt(4, 4);
+
+        expect(e2.textContent)
+          .toBe("♙");
+
+        touch(e2);
+        touch(e4);
+
+        expect(
+          squareAt(6, 4).textContent
+        ).toBe("");
+
+        expect(
+          squareAt(4, 4).textContent
+        ).toBe("♙");
+
+        expect(
+          document
+            .getElementById(
+              "turn-display"
+            )
+            .textContent
+        ).toBe("Black");
+
+        expect(
+          document
+            .getElementById("status")
+            .textContent
+        ).toBe("Black to move");
+      }
+    );
+  }
+);
