@@ -44,6 +44,9 @@ describe("Chess Atlas browser state", () => {
   test("starts with White to move", () => {
     expect(document.getElementById("status").textContent)
       .toBe("White to move");
+
+    expect(document.getElementById("turn-display").textContent)
+      .toBe("White");
   });
 
   test("selecting the white e2 pawn updates status", () => {
@@ -58,28 +61,31 @@ describe("Chess Atlas browser state", () => {
   });
 
   test("e2 pawn can be moved to e4 in the current prototype", () => {
-    let e2 = squareAt(6, 4);
-    let e4 = squareAt(4, 4);
+    const e2 = squareAt(6, 4);
+    const e4 = squareAt(4, 4);
 
     touch(e2);
-
-    // drawBoard() rebuilds the square elements,
-    // so obtain e4 again after selection.
-    e4 = squareAt(4, 4);
     touch(e4);
 
-    // drawBoard() rebuilt the DOM again.
-    e2 = squareAt(6, 4);
-    e4 = squareAt(4, 4);
-
-    expect(e2.textContent).toBe("");
-    expect(e4.textContent).toBe("♙");
+    expect(squareAt(6, 4).textContent).toBe("");
+    expect(squareAt(4, 4).textContent).toBe("♙");
 
     expect(document.getElementById("status").textContent)
       .toBe("Black to move");
   });
 
-  test("Reset Game restores the starting position", () => {
+  test("turn indicator switches after a valid move", () => {
+    expect(document.getElementById("turn-display").textContent)
+      .toBe("White");
+
+    touch(squareAt(6, 4));
+    touch(squareAt(4, 4));
+
+    expect(document.getElementById("turn-display").textContent)
+      .toBe("Black");
+  });
+
+  test("Reset Game restores the starting position and turn", () => {
     touch(squareAt(6, 4));
     touch(squareAt(4, 4));
 
@@ -87,7 +93,11 @@ describe("Chess Atlas browser state", () => {
 
     expect(squareAt(6, 4).textContent).toBe("♙");
     expect(squareAt(4, 4).textContent).toBe("");
+
     expect(document.getElementById("status").textContent)
       .toBe("White to move");
+
+    expect(document.getElementById("turn-display").textContent)
+      .toBe("White");
   });
 });
