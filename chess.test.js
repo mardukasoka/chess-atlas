@@ -60,6 +60,45 @@ describe("Chess Atlas browser state", () => {
       .toContain("Selected ♙");
   });
 
+  test("Black cannot select or move while it is White's turn", () => {
+    const e7 = squareAt(1, 4);
+    const e5 = squareAt(3, 4);
+
+    expect(e7.textContent).toBe("♟");
+
+    touch(e7);
+    touch(e5);
+
+    expect(squareAt(1, 4).textContent).toBe("♟");
+    expect(squareAt(3, 4).textContent).toBe("");
+
+    expect(document.getElementById("turn-display").textContent)
+      .toBe("White");
+
+    expect(document.getElementById("status").textContent)
+      .toBe("White to move");
+  });
+
+  test("a player can switch between friendly pieces without consuming the turn", () => {
+    const e2 = squareAt(6, 4);
+    const d2 = squareAt(6, 3);
+
+    touch(e2);
+
+    expect(e2.classList.contains("selected")).toBe(true);
+
+    touch(d2);
+
+    expect(e2.classList.contains("selected")).toBe(false);
+    expect(d2.classList.contains("selected")).toBe(true);
+
+    expect(document.getElementById("turn-display").textContent)
+      .toBe("White");
+
+    expect(document.getElementById("status").textContent)
+      .toContain("Selected ♙ at 6,3");
+  });
+
   test("e2 pawn can be moved to e4 in the current prototype", () => {
     const e2 = squareAt(6, 4);
     const e4 = squareAt(4, 4);
@@ -83,6 +122,23 @@ describe("Chess Atlas browser state", () => {
 
     expect(document.getElementById("turn-display").textContent)
       .toBe("Black");
+  });
+
+  test("White cannot select another White piece after White has moved", () => {
+    touch(squareAt(6, 4));
+    touch(squareAt(4, 4));
+
+    expect(document.getElementById("turn-display").textContent)
+      .toBe("Black");
+
+    const d2 = squareAt(6, 3);
+
+    touch(d2);
+
+    expect(d2.classList.contains("selected")).toBe(false);
+
+    expect(document.getElementById("status").textContent)
+      .toBe("Black to move");
   });
 
   test("Reset Game restores the starting position and turn", () => {
