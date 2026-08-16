@@ -6,7 +6,7 @@ const fs = require("fs");
 const path = require("path");
 
 function touch(element) {
-  const event = new Event("touchstart", {
+  const event = new Event("pointerdown", {
     bubbles: true,
     cancelable: true
   });
