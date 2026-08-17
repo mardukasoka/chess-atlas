@@ -66,7 +66,11 @@ class ChessEngine {
     return this.getState();
   }
 
-  handleSquare(row, col) {
+  handleSquare(
+    row,
+    col,
+    intent = "auto"
+  ) {
     const piece =
       this.board[row][col];
 
@@ -112,15 +116,43 @@ class ChessEngine {
         this.selected.col
       ];
 
-    // Rule:
-    // a selected piece may not move
-    // onto a square occupied by a
-    // friendly piece.
+    // Ordinary square interaction:
     //
-    // Preserve the original selection
-    // so the player can choose another
-    // destination.
-    if (this.isFriendly(piece)) {
+    // Clicking another friendly piece
+    // means "change my active selection",
+    // not "capture my own piece".
+    //
+    // This does not modify the board
+    // and does not consume the turn.
+    if (
+      intent !== "move" &&
+      this.isFriendly(piece)
+    ) {
+      this.selected = {
+        row,
+        col
+      };
+
+      this.status =
+        `Selected ${piece} at ${row},${col}`;
+
+      this.error = null;
+
+      return this.getState();
+    }
+
+    // Explicit movement/capture intent:
+    //
+    // A movement transition may never
+    // overwrite a friendly piece.
+    //
+    // Preserve the original active
+    // selection so another destination
+    // can be attempted.
+    if (
+      intent === "move" &&
+      this.isFriendly(piece)
+    ) {
       this.error =
         "Cannot capture your own piece";
 
@@ -132,9 +164,13 @@ class ChessEngine {
 
     // Prototype move execution.
     //
+    // Empty destinations and enemy
+    // destinations are processed
+    // normally.
+    //
     // Piece-specific movement legality,
-    // check rules, and capture semantics
-    // arrive in later rule layers.
+    // check rules, and richer capture
+    // semantics arrive in later layers.
     this.board[row][col] =
       selectedPiece;
 
