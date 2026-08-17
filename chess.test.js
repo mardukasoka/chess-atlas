@@ -145,7 +145,7 @@ describe(
     );
 
     test(
-      "a move onto a friendly piece is rejected and preserves the active selection",
+      "clicking another friendly piece switches the active selection without consuming the turn",
       () => {
         const engine =
           new ChessEngine();
@@ -156,15 +156,67 @@ describe(
           4
         );
 
-        // Attempt to move it onto
-        // the White pawn on d2.
+        // Ordinary click on the
+        // White pawn on d2.
         const state =
           engine.handleSquare(
             6,
             3
           );
 
-        // Original pieces remain.
+        // Neither piece moved.
+        expect(
+          state.board[6][4]
+        ).toBe("♙");
+
+        expect(
+          state.board[6][3]
+        ).toBe("♙");
+
+        // Selection switched to d2.
+        expect(state.selected)
+          .toEqual({
+            row: 6,
+            col: 3
+          });
+
+        // Turn was not consumed.
+        expect(state.turn)
+          .toBe("White");
+
+        expect(state.status)
+          .toBe(
+            "Selected ♙ at 6,3"
+          );
+
+        expect(state.error)
+          .toBeNull();
+      }
+    );
+
+    test(
+      "explicit own-piece destination capture is rejected and preserves the original selection",
+      () => {
+        const engine =
+          new ChessEngine();
+
+        // Select White pawn on e2.
+        engine.handleSquare(
+          6,
+          4
+        );
+
+        // Explicitly attempt to MOVE
+        // the e2 pawn onto the friendly
+        // White pawn on d2.
+        const state =
+          engine.handleSquare(
+            6,
+            3,
+            "move"
+          );
+
+        // Board transition is blocked.
         expect(
           state.board[6][4]
         ).toBe("♙");
@@ -184,7 +236,8 @@ describe(
         expect(state.turn)
           .toBe("White");
 
-        // Rule violation is explicit.
+        // Semantic rule rejection
+        // is explicitly exposed.
         expect(state.error)
           .toBe(
             "Cannot capture your own piece"
@@ -227,6 +280,86 @@ describe(
 
         expect(state.status)
           .toBe("Black to move");
+
+        expect(state.error)
+          .toBeNull();
+      }
+    );
+
+    test(
+      "explicit move intent can move onto an empty square",
+      () => {
+        const engine =
+          new ChessEngine();
+
+        engine.handleSquare(
+          6,
+          4
+        );
+
+        const state =
+          engine.handleSquare(
+            4,
+            4,
+            "move"
+          );
+
+        expect(
+          state.board[6][4]
+        ).toBe("");
+
+        expect(
+          state.board[4][4]
+        ).toBe("♙");
+
+        expect(state.turn)
+          .toBe("Black");
+
+        expect(state.selected)
+          .toBeNull();
+
+        expect(state.error)
+          .toBeNull();
+      }
+    );
+
+    test(
+      "an enemy piece can be captured in the current prototype",
+      () => {
+        const engine =
+          new ChessEngine();
+
+        // Create a simple prototype
+        // capture position directly.
+        engine.board[4][4] = "♙";
+        engine.board[3][3] = "♟";
+        engine.board[6][4] = "";
+
+        engine.handleSquare(
+          4,
+          4
+        );
+
+        const state =
+          engine.handleSquare(
+            3,
+            3,
+            "move"
+          );
+
+        expect(
+          state.board[4][4]
+        ).toBe("");
+
+        expect(
+          state.board[3][3]
+        ).toBe("♙");
+
+        expect(state.turn)
+          .toBe("Black");
+
+        expect(state.selected)
+          .toBeNull();
 
         expect(state.error)
           .toBeNull();
@@ -354,6 +487,70 @@ describe(
             .textContent
         ).toBe(
           "Black to move"
+        );
+      }
+    );
+
+    test(
+      "pointer click on another friendly piece switches the visible selection without consuming the turn",
+      () => {
+        const e2 =
+          squareAt(6, 4);
+
+        const d2 =
+          squareAt(6, 3);
+
+        touch(e2);
+        touch(d2);
+
+        expect(
+          squareAt(
+            6,
+            4
+          ).textContent
+        ).toBe("♙");
+
+        expect(
+          squareAt(
+            6,
+            3
+          ).textContent
+        ).toBe("♙");
+
+        expect(
+          squareAt(
+            6,
+            4
+          ).classList.contains(
+            "selected"
+          )
+        ).toBe(false);
+
+        expect(
+          squareAt(
+            6,
+            3
+          ).classList.contains(
+            "selected"
+          )
+        ).toBe(true);
+
+        expect(
+          document
+            .getElementById(
+              "turn-display"
+            )
+            .textContent
+        ).toBe("White");
+
+        expect(
+          document
+            .getElementById(
+              "status"
+            )
+            .textContent
+        ).toBe(
+          "Selected ♙ at 6,3"
         );
       }
     );
