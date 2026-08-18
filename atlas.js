@@ -1,10 +1,7 @@
 "use strict";
 
 /*
- * Chess Atlas — temporal/world navigation proof of concept.
- *
- * This layer does NOT own chess, diplomacy or civilisation rules.
- * It tells each game which world, date, timeline and region it is viewing.
+ * Chess Atlas — temporal/world navigation + first campaign slice.
  */
 
 const ATLAS_WORLD = {
@@ -20,6 +17,37 @@ const ATLAS_WORLD = {
       description: "Early states, trade networks and race games.",
       games: ["race"]
     },
+
+    {
+      id: "punic-opening",
+      year: -218,
+      label: "Second Punic War",
+      description: "Hannibal leaves Iberia and advances toward Italy.",
+      games: ["chess", "civilisation", "diplomacy"],
+      campaign: {
+        title: "Hannibal's Italian Campaign",
+        sides: "Rome vs Carthage",
+        status: "Campaign begins",
+        chessWhite: "Rome",
+        chessBlack: "Carthage"
+      }
+    },
+
+    {
+      id: "cannae",
+      year: -216,
+      label: "Battle of Cannae",
+      description: "A major confrontation between Rome and Hannibal.",
+      games: ["chess", "civilisation", "diplomacy"],
+      campaign: {
+        title: "Cannae",
+        sides: "Rome vs Carthage",
+        status: "Conflict available for resolution",
+        chessWhite: "Rome",
+        chessBlack: "Carthage"
+      }
+    },
+
     {
       id: "chaturanga",
       year: 600,
@@ -27,6 +55,7 @@ const ATLAS_WORLD = {
       description: "Early Indian chess tradition.",
       games: ["chess", "civilisation"]
     },
+
     {
       id: "shatranj",
       year: 800,
@@ -34,6 +63,7 @@ const ATLAS_WORLD = {
       description: "Chess spreads through the Islamic world.",
       games: ["chess", "civilisation", "diplomacy"]
     },
+
     {
       id: "classical",
       year: 1500,
@@ -41,6 +71,7 @@ const ATLAS_WORLD = {
       description: "European chess approaches its modern rules.",
       games: ["chess", "civilisation", "diplomacy"]
     },
+
     {
       id: "industrial",
       year: 1800,
@@ -48,6 +79,7 @@ const ATLAS_WORLD = {
       description: "Population, industry and interstate competition accelerate.",
       games: ["chess", "civilisation", "diplomacy"]
     },
+
     {
       id: "present",
       year: 2026,
@@ -55,6 +87,7 @@ const ATLAS_WORLD = {
       description: "Observed history reaches the simulation boundary.",
       games: ["chess", "civilisation", "diplomacy"]
     },
+
     {
       id: "near-future",
       year: 2050,
@@ -62,6 +95,7 @@ const ATLAS_WORLD = {
       description: "Population and political trajectories become simulations.",
       games: ["chess", "civilisation", "diplomacy", "infinite"]
     },
+
     {
       id: "far-future",
       year: 2200,
@@ -83,11 +117,113 @@ function getCurrentNode() {
 }
 
 function formatYear(year) {
-  if (year < 0) {
-    return `${Math.abs(year)} BCE`;
+  return year < 0
+    ? `${Math.abs(year)} BCE`
+    : `${year} CE`;
+}
+
+function ensureCampaignPanel() {
+  if (document.getElementById("campaign-panel")) {
+    return;
   }
 
-  return `${year} CE`;
+  const panel = document.createElement("section");
+
+  panel.id = "campaign-panel";
+  panel.className = "campaign-panel";
+  panel.hidden = true;
+
+  panel.innerHTML = `
+    <small>ACTIVE CAMPAIGN</small>
+
+    <h2 id="campaign-title"></h2>
+
+    <p id="campaign-sides"></p>
+
+    <p id="campaign-status"></p>
+
+    <div class="campaign-actions">
+      <button id="resolve-chess">
+        ♟ Chess
+      </button>
+
+      <button id="resolve-diplomacy">
+        🤝 Diplomacy
+      </button>
+
+      <button id="resolve-history">
+        ▶ Historical
+      </button>
+    </div>
+
+    <p id="campaign-result"></p>
+  `;
+
+  const gameSpace = document.getElementById("game-space");
+  gameSpace.parentNode.insertBefore(panel, gameSpace);
+
+  document
+    .getElementById("resolve-chess")
+    .addEventListener("click", resolveByChess);
+
+  document
+    .getElementById("resolve-diplomacy")
+    .addEventListener("click", resolveByDiplomacy);
+
+  document
+    .getElementById("resolve-history")
+    .addEventListener("click", resolveHistorically);
+}
+
+function renderCampaign() {
+  const node = getCurrentNode();
+  const panel = document.getElementById("campaign-panel");
+
+  if (!node.campaign) {
+    panel.hidden = true;
+    return;
+  }
+
+  panel.hidden = false;
+
+  document.getElementById("campaign-title").textContent =
+    node.campaign.title;
+
+  document.getElementById("campaign-sides").textContent =
+    node.campaign.sides;
+
+  document.getElementById("campaign-status").textContent =
+    node.campaign.status;
+
+  document.getElementById("campaign-result").textContent = "";
+}
+
+function resolveByChess() {
+  const node = getCurrentNode();
+
+  setMode("chess");
+
+  document.getElementById("campaign-result").textContent =
+    `${node.campaign.chessWhite} = White · ${node.campaign.chessBlack} = Black. Chess will resolve the strategic confrontation.`;
+}
+
+function resolveByDiplomacy() {
+  setMode("diplomacy");
+
+  document.getElementById("campaign-result").textContent =
+    "Diplomacy selected. The campaign date and world state remain unchanged.";
+}
+
+function resolveHistorically() {
+  const node = getCurrentNode();
+
+  if (node.id === "cannae") {
+    document.getElementById("campaign-result").textContent =
+      "Historical path: Carthaginian victory at Cannae. The campaign continues rather than ending the war.";
+  } else {
+    document.getElementById("campaign-result").textContent =
+      "Historical path selected. Advance the timeline to continue.";
+  }
 }
 
 function setMode(mode) {
@@ -114,7 +250,9 @@ function moveTimeline(direction) {
   }
 
   currentNodeIndex = nextIndex;
+
   renderTimeline();
+  renderCampaign();
   renderMode();
 }
 
@@ -141,8 +279,11 @@ function renderMode() {
   const node = getCurrentNode();
 
   const board = document.getElementById("board");
-  const chessControls = document.getElementById("chess-controls");
-  const worldPanel = document.getElementById("world-panel");
+  const chessControls =
+    document.getElementById("chess-controls");
+
+  const worldPanel =
+    document.getElementById("world-panel");
 
   if (currentMode === "chess") {
     board.hidden = false;
@@ -155,7 +296,8 @@ function renderMode() {
   chessControls.hidden = true;
   worldPanel.hidden = false;
 
-  const available = node.games.includes(currentMode);
+  const available =
+    node.games.includes(currentMode);
 
   const labels = {
     diplomacy: "Diplomacy",
@@ -181,13 +323,21 @@ function renderMode() {
 }
 
 function initialiseAtlas() {
+  ensureCampaignPanel();
+
   document
     .getElementById("timeline-up")
-    .addEventListener("click", () => moveTimeline(1));
+    .addEventListener(
+      "click",
+      () => moveTimeline(1)
+    );
 
   document
     .getElementById("timeline-down")
-    .addEventListener("click", () => moveTimeline(-1));
+    .addEventListener(
+      "click",
+      () => moveTimeline(-1)
+    );
 
   document.querySelectorAll(".atlas-mode").forEach(button => {
     button.addEventListener("click", () => {
@@ -196,7 +346,11 @@ function initialiseAtlas() {
   });
 
   renderTimeline();
+  renderCampaign();
   setMode("chess");
 }
 
-document.addEventListener("DOMContentLoaded", initialiseAtlas);
+document.addEventListener(
+  "DOMContentLoaded",
+  initialiseAtlas
+);
