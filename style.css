@@ -231,3 +231,45 @@ button {
   padding: 12px 20px;
   font-size: 1rem;
 }
+
+/* CAMPAIGN */
+
+.campaign-panel {
+  margin: 12px 0 14px;
+  padding: 16px;
+  background: #20242b;
+  border: 1px solid #383e48;
+  border-radius: 16px;
+}
+
+.campaign-panel[hidden] {
+  display: none;
+}
+
+.campaign-panel small {
+  opacity: 0.6;
+  letter-spacing: 0.08em;
+}
+
+.campaign-panel h2 {
+  margin: 6px 0;
+}
+
+.campaign-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.campaign-actions button {
+  min-height: 48px;
+  padding: 8px 4px;
+  font-size: clamp(0.72rem, 3vw, 0.95rem);
+}
+
+#campaign-result {
+  min-height: 1.5em;
+  margin-bottom: 0;
+  opacity: 0.8;
+}
