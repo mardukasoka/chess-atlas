@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
@@ -11,35 +12,122 @@
 
   <link
     rel="stylesheet"
-    href="style.css?v=2"
+    href="style.css?v=3"
   >
 </head>
 
 <body>
   <main>
-    <h1>Chess Atlas</h1>
+    <header class="atlas-header">
+      <h1>Chess Atlas</h1>
+      <p>World × History × Strategy</p>
+    </header>
 
-    <p>v0.1 — Classical Chess</p>
+    <section
+      class="timeline-card"
+      aria-label="Historical timeline"
+    >
+      <button
+        id="timeline-up"
+        class="timeline-arrow"
+        aria-label="Move forward through time"
+      >
+        ▲
+      </button>
 
-    <div id="board"></div>
+      <div class="timeline-spine">
+        <span class="timeline-dot"></span>
 
-    <p id="turn-indicator">
-      Turn:
-      <strong id="turn-display">
-        White
-      </strong>
-    </p>
+        <strong id="atlas-year">
+          2026 CE
+        </strong>
 
-    <p id="status">
-      White to move
-    </p>
+        <span id="atlas-period">
+          Present
+        </span>
 
-    <button id="reset">
-      Reset Game
-    </button>
+        <small id="atlas-description">
+          Observed history reaches the simulation boundary.
+        </small>
+      </div>
+
+      <button
+        id="timeline-down"
+        class="timeline-arrow"
+        aria-label="Move backward through time"
+      >
+        ▼
+      </button>
+    </section>
+
+    <nav
+      class="atlas-modes"
+      aria-label="Atlas representation"
+    >
+      <button
+        class="atlas-mode active"
+        data-mode="chess"
+      >
+        ♟ Chess
+      </button>
+
+      <button
+        class="atlas-mode"
+        data-mode="diplomacy"
+      >
+        🤝 Diplomacy
+      </button>
+
+      <button
+        class="atlas-mode"
+        data-mode="civilisation"
+      >
+        🏛 Civ
+      </button>
+    </nav>
+
+    <section id="game-space">
+      <div id="board"></div>
+
+      <div id="chess-controls">
+        <p id="turn-indicator">
+          Turn:
+          <strong id="turn-display">
+            White
+          </strong>
+        </p>
+
+        <p id="status">
+          White to move
+        </p>
+
+        <button id="reset">
+          Reset Game
+        </button>
+      </div>
+
+      <section
+        id="world-panel"
+        class="world-panel"
+        hidden
+      >
+        <div class="world-symbol">
+          ◎
+        </div>
+
+        <h2 id="world-mode-title">
+          Diplomacy
+        </h2>
+
+        <p id="world-mode-status"></p>
+
+        <small id="world-mode-detail"></small>
+      </section>
+    </section>
   </main>
 
   <script src="engine.js?v=1"></script>
   <script src="chess.js?v=3"></script>
+  <script src="atlas.js?v=1"></script>
 </body>
 </html>
