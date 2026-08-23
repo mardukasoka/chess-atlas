@@ -1547,18 +1547,30 @@ if (capturedPiece) {
 
 
     this.board[
-      fromRow
-    ][
-      fromCol
-    ] =
-      "";
+  fromRow
+][
+  fromCol
+] =
+  "";
 
 
-    if (
-      typeOf(
-        selectedPiece
-      ) ===
-        "P" &&
+// Remember that this physical piece
+// has now moved.
+//
+// Acedrex uses this to allow the
+// queen's special two-square diagonal
+// jump only on its first move.
+this.movedPieces.add(
+  `${row},${col}`
+);
+
+
+if (
+  typeOf(
+    selectedPiece
+  ) ===
+    "P" &&
+
       (
         row === 0 ||
         row === 7
