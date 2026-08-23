@@ -108,6 +108,57 @@ const PROFILES = {
   },
 
 
+acedrex: {
+  name: "Acedrex — Alfonso X, 1283",
+
+  backRank: [
+    "R",
+    "N",
+    "B",
+    "Q",
+    "K",
+    "B",
+    "N",
+    "R"
+  ],
+
+  blackBackRank: [
+    "R",
+    "N",
+    "B",
+    "Q",
+    "K",
+    "B",
+    "N",
+    "R"
+  ],
+
+  pawnDoubleStep: true,
+
+  pawnDoubleUntilCapture: true,
+
+  bishop:
+    "diagonal-jump",
+
+  queen:
+    "ferz-first-jump",
+
+  elephant: null,
+
+  promotion:
+    "Q",
+
+  promotionRequiresMissingQueen:
+    true,
+
+  stalemate:
+    "continue",
+
+  bareKing:
+    "continue"
+},
+
+
   modern: {
     name: "Modern Chess",
 
@@ -358,6 +409,12 @@ class ChessEngine {
     this.gameOver = false;
 
     this.winner = null;
+
+this.captureOccurred =
+  false;
+
+this.movedPieces =
+  new Set();
 
     this.status =
       `${this.profile.name}: White to move`;
@@ -848,22 +905,117 @@ class ChessEngine {
 
       case "B":
 
-        return this.slidingMoves(
-          row,
-          col,
-          DIAGONAL,
-          board
-        );
+  if (
+    this.profile.bishop ===
+    "diagonal-jump"
+  ) {
+
+    return this.stepMoves(
+      row,
+      col,
+      [
+        [-2, -2],
+        [-2, 2],
+        [2, -2],
+        [2, 2]
+      ],
+      board
+    );
+
+  }
+
+  return this.slidingMoves(
+    row,
+    col,
+    DIAGONAL,
+    board
+  );
 
 
       case "Q":
 
-        return this.slidingMoves(
-          row,
-          col,
-          KING_MOVES,
-          board
-        );
+  if (
+    this.profile.queen ===
+    "ferz-first-jump"
+  ) {
+
+    const moves =
+      this.stepMoves(
+        row,
+        col,
+        DIAGONAL,
+        board
+      );
+
+
+    const key =
+      `${row},${col}`;
+
+
+    if (
+      !this.movedPieces.has(
+        key
+      )
+    ) {
+
+      for (
+        const [
+          rowOffset,
+          colOffset
+        ]
+        of [
+          [-2, -2],
+          [-2, 2],
+          [2, -2],
+          [2, 2]
+        ]
+      ) {
+
+        const targetRow =
+          row + rowOffset;
+
+        const targetCol =
+          col + colOffset;
+
+
+        if (
+          inside(
+            targetRow,
+            targetCol
+          ) &&
+          !board[
+            targetRow
+          ][
+            targetCol
+          ]
+        ) {
+
+          moves.push({
+            row:
+              targetRow,
+
+            col:
+              targetCol
+          });
+
+        }
+
+      }
+
+    }
+
+
+    return moves;
+
+  }
+
+
+  return this.slidingMoves(
+    row,
+    col,
+    KING_MOVES,
+    board
+  );
 
 
       case "K":
