@@ -273,3 +273,66 @@ button {
   margin-bottom: 0;
   opacity: 0.8;
 }
+
+/* HISTORICAL GAME SELECTOR */
+
+.variant-control {
+  width: min(92vw, 560px);
+  margin: 4px auto 10px;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+
+  align-items: center;
+
+  padding: 10px 12px;
+
+  background: #20242b;
+
+  border:
+    1px solid #383e48;
+
+  border-radius: 12px;
+}
+
+
+.variant-control label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+
+#game-variant {
+  width: 100%;
+
+  min-height: 44px;
+
+  padding:
+    8px 10px;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  font:
+    inherit;
+
+  background:
+    #e9edf2;
+
+  color:
+    #111;
+}
+
+
+#board[data-variant="chaturanga"]
+.square,
+#board[data-variant="shatranj"]
+.square {
+  font-family:
+    "Noto Sans Symbols 2",
+    "Segoe UI Symbol",
+    system-ui,
+    sans-serif;
+}
