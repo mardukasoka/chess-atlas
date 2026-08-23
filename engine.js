@@ -738,9 +738,16 @@ this.movedPieces =
 
       if (
         this.profile
-          .pawnDoubleStep &&
-        row ===
-          startingRow &&
+  .pawnDoubleStep &&
+
+(
+  !this.profile
+    .pawnDoubleUntilCapture ||
+  !this.captureOccurred
+) &&
+
+row ===
+  startingRow &&
         !board[
           twoStep
         ][
