@@ -1560,15 +1560,23 @@ if (capturedPiece) {
   "";
 
 
-// Remember that this physical piece
-// has now moved.
-//
-// Acedrex uses this to allow the
-// queen's special two-square diagonal
-// jump only on its first move.
-this.movedPieces.add(
-  `${row},${col}`
-);
+// Record the Acedrex queen's
+// first move permanently.
+if (
+  this.profile.queen ===
+    "ferz-first-jump" &&
+  typeOf(
+    selectedPiece
+  ) ===
+    "Q"
+) {
+
+  this.queenHasMoved[
+    mover
+  ] =
+    true;
+
+}
 
 
 if (
