@@ -413,10 +413,16 @@ class ChessEngine {
 this.captureOccurred =
   false;
 
-this.movedPieces =
-  new Set();
 
-    this.status =
+// Acedrex gives each queen
+// one special first-move jump.
+this.queenHasMoved = {
+  w: false,
+  b: false
+};
+
+
+this.status =
       `${this.profile.name}: White to move`;
 
     return this.getState();
