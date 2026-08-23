@@ -1527,6 +1527,17 @@ row ===
       this.turn;
 
 
+const capturedPiece =
+  this.board[row][col];
+
+
+if (capturedPiece) {
+
+  this.captureOccurred =
+    true;
+
+}
+
     this.board[
       row
     ][
