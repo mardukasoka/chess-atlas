@@ -961,15 +961,15 @@ row ===
       );
 
 
-    const key =
-      `${row},${col}`;
+    const queenColour =
+  colourOf(piece);
 
 
-    if (
-      !this.movedPieces.has(
-        key
-      )
-    ) {
+if (
+  !this.queenHasMoved[
+    queenColour
+  ]
+) {
 
       for (
         const [
