@@ -460,6 +460,9 @@ this.status =
             }
           : null,
 
+turnCode:
+  this.turn,
+
       turn:
         colourName(
           this.turn
@@ -474,15 +477,91 @@ this.status =
       gameOver:
         this.gameOver,
 
-      winner:
+      winnerCode:
+  this.winner,
+
+winner:
+  this.winner
+    ? colourName(
         this.winner
-          ? colourName(
-              this.winner
-            )
-          : null
+      )
+    : null,
+
+captureOccurred:
+  this.captureOccurred,
+
+queenHasMoved: {
+  ...this.queenHasMoved
+}
     };
 
   }
+
+
+restoreState(
+  snapshot
+) {
+
+  if (
+    !snapshot ||
+    !PROFILES[snapshot.profile]
+  ) {
+    throw new Error(
+      "Invalid chess state"
+    );
+  }
+
+  this.profileId =
+    snapshot.profile;
+
+  this.profile =
+    PROFILES[
+      snapshot.profile
+    ];
+
+  this.board =
+    cloneBoard(
+      snapshot.board
+    );
+
+  this.selected =
+    snapshot.selected
+      ? {
+          ...snapshot.selected
+        }
+      : null;
+
+  this.turn =
+    snapshot.turnCode;
+
+  this.status =
+    snapshot.status;
+
+  this.error =
+    snapshot.error;
+
+  this.gameOver =
+    snapshot.gameOver;
+
+  this.winner =
+    snapshot.winnerCode;
+
+  this.captureOccurred =
+    Boolean(
+      snapshot.captureOccurred
+    );
+
+  this.queenHasMoved = {
+    w: Boolean(
+      snapshot.queenHasMoved?.w
+    ),
+    b: Boolean(
+      snapshot.queenHasMoved?.b
+    )
+  };
+
+  return this.getState();
+}
 
 
   findKing(
