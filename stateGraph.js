@@ -59,6 +59,45 @@ class StateGraph {
     this.nextId = 1;
   }
 
+load(data) {
+  if (
+    !data ||
+    data.version !==
+      "atlas-5d-state-v0.1" ||
+    !Array.isArray(data.nodes)
+  ) {
+    return false;
+  }
+
+  this.nodes =
+    data.nodes;
+
+  this.currentId =
+    data.currentId;
+
+  this.nextId =
+    this.nodes.reduce(
+      (max, node) => {
+        const number =
+          Number(
+            String(node.id)
+              .replace(
+                "state-",
+                ""
+              )
+          );
+
+        return Math.max(
+          max,
+          number + 1
+        );
+      },
+      1
+    );
+
+  return true;
+}
+
   export() {
     return {
       version: "atlas-5d-state-v0.1",
