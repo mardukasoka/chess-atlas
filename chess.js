@@ -36,7 +36,7 @@ const stateGraph =
 let graphTime = 0;
 
 const STORAGE_KEY =
-  "chess-atlas-5d-state-v0.1";
+  "chess-atlas-5d-state-v0.2";
 
 function saveGraph() {
   localStorage.setItem(
@@ -326,6 +326,9 @@ if (saved) {
           engine.restoreState(
             current.state
           );
+
+variantSelect.value =
+  initialState.profile;
 
         graphTime =
           current.time;
