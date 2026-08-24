@@ -196,12 +196,28 @@ function handleSquare(
   col
 ) {
 
+  const before =
+    engine.getState();
+
   const state =
     engine.handleSquare(
       row,
       col
     );
 
+  if (
+    state.turn !== before.turn
+  ) {
+    graphTime += 1;
+
+    stateGraph.addState({
+      game: "chess",
+      timeline: "history",
+      time: graphTime,
+      action: "move",
+      state
+    });
+  }
 
   drawState(
     state
