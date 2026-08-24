@@ -30,6 +30,10 @@ const engine =
     variantSelect.value
   );
 
+const stateGraph =
+  new window.StateGraph();
+
+let graphTime = 0;
 
 function createBoard() {
 
@@ -264,7 +268,18 @@ variantSelect.addEventListener(
 
 createBoard();
 
+const initialState =
+  engine.getState();
+
+stateGraph.addState({
+  game: "chess",
+  timeline: "history",
+  time: graphTime,
+  parentId: null,
+  action: "initial",
+  state: initialState
+});
 
 drawState(
-  engine.getState()
+  initialState
 );
