@@ -10,10 +10,7 @@ const statusElement =
   );
 
 
-const turnDisplay =
-  document.getElementById(
-    "turn-display"
-  );
+
 
 
 const resetButton =
