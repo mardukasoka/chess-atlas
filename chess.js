@@ -284,17 +284,60 @@ variantSelect.addEventListener(
 
 createBoard();
 
-const initialState =
+let initialState =
   engine.getState();
 
-stateGraph.addState({
-  game: "chess",
-  timeline: "history",
-  time: graphTime,
-  parentId: null,
-  action: "initial",
-  state: initialState
-});
+const saved =
+  localStorage.getItem(
+    STORAGE_KEY
+  );
+
+if (saved) {
+  try {
+    const data =
+      JSON.parse(saved);
+
+    if (
+      stateGraph.load(data)
+    ) {
+      const current =
+        stateGraph.getCurrent();
+
+      if (
+        current &&
+        current.state
+      ) {
+        initialState =
+          engine.restoreState(
+            current.state
+          );
+
+        graphTime =
+          current.time;
+      }
+    }
+  } catch (error) {
+    console.warn(
+      "Could not restore saved game",
+      error
+    );
+  }
+}
+
+if (
+  stateGraph.nodes.length === 0
+) {
+  stateGraph.addState({
+    game: "chess",
+    timeline: "history",
+    time: graphTime,
+    parentId: null,
+    action: "initial",
+    state: initialState
+  });
+
+  saveGraph();
+}
 
 drawState(
   initialState
