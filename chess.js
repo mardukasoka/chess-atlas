@@ -35,6 +35,18 @@ const stateGraph =
 
 let graphTime = 0;
 
+const STORAGE_KEY =
+  "chess-atlas-5d-state-v0.1";
+
+function saveGraph() {
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(
+      stateGraph.export()
+    )
+  );
+}
+
 function createBoard() {
 
   boardElement.innerHTML =
@@ -217,6 +229,9 @@ function handleSquare(
       action: "move",
       state
     });
+
+saveGraph();
+
   }
 
   drawState(
