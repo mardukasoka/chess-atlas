@@ -146,8 +146,7 @@ function drawState(
   }
 
 
-  turnDisplay.textContent =
-    state.turn;
+  
 
 
   statusElement.textContent =
