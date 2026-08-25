@@ -336,3 +336,16 @@ button {
     system-ui,
     sans-serif;
 }
+
+.state-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+
+#state-back {
+  padding: 12px 18px;
+  font-size: 1rem;
+}
