@@ -19,6 +19,12 @@ const resetButton =
   );
 
 
+const stateBackButton =
+  document.getElementById(
+    "state-back"
+  );
+
+
 const variantSelect =
   document.getElementById(
     "game-variant"
@@ -188,6 +194,44 @@ function resetGame() {
 }
 
 
+function goBackState() {
+
+  const node =
+    stateGraph.goBack();
+
+
+  if (
+    !node ||
+    !node.state
+  ) {
+    return;
+  }
+
+
+  const state =
+    engine.restoreState(
+      node.state
+    );
+
+
+  variantSelect.value =
+    state.profile;
+
+
+  graphTime =
+    node.time;
+
+
+  drawState(
+    state
+  );
+
+
+  saveGraph();
+
+}
+
+
 function changeVariant() {
 
   const state =
@@ -288,6 +332,12 @@ boardElement.addEventListener(
 resetButton.addEventListener(
   "click",
   resetGame
+);
+
+
+stateBackButton.addEventListener(
+  "click",
+  goBackState
 );
 
 
