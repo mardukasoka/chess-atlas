@@ -47,11 +47,39 @@ class StateGraph {
     );
   }
 
-  getChildren(id) {
+    getChildren(id) {
     return this.nodes.filter(
       node => node.parentId === id
     );
   }
+
+
+  goBack() {
+    const current =
+      this.getCurrent();
+
+    if (
+      !current ||
+      current.parentId === null
+    ) {
+      return null;
+    }
+
+    const parent =
+      this.getNode(
+        current.parentId
+      );
+
+    if (!parent) {
+      return null;
+    }
+
+    this.currentId =
+      parent.id;
+
+    return parent;
+  }
+
 
   reset() {
     this.nodes = [];
