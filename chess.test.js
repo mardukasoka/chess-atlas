@@ -68,7 +68,325 @@ describe(
         );
 
       }
+   
+test(
+  "Acedrex pawn may double-step before the first capture",
+  () => {
+
+    const engine =
+      new ChessEngine(
+        "acedrex"
+      );
+
+    const moves =
+      engine.legalMoves(
+        6,
+        4
+      );
+
+    expect(moves)
+      .toContainEqual({
+        row: 4,
+        col: 4
+      });
+
+  }
+);
+
+
+test(
+  "Acedrex pawn double-step disappears after a capture",
+  () => {
+
+    const engine =
+      new ChessEngine(
+        "acedrex"
+      );
+
+    // Create a simple capture position.
+    engine.board[4][4] =
+      "wP";
+
+    engine.board[3][3] =
+      "bP";
+
+    engine.board[6][4] =
+      "";
+
+    engine.turn =
+      "w";
+
+    engine.handleSquare(
+      4,
+      4
     );
+
+    engine.handleSquare(
+      3,
+      3
+    );
+
+    // Return turn to White so we can
+    // inspect another starting pawn.
+    engine.turn =
+      "w";
+
+    const moves =
+      engine.legalMoves(
+        6,
+        0
+      );
+
+    expect(moves)
+      .toContainEqual({
+        row: 5,
+        col: 0
+      });
+
+    expect(moves)
+      .not
+      .toContainEqual({
+        row: 4,
+        col: 0
+      });
+
+  }
+);
+
+
+test(
+  "Acedrex bishop jumps exactly two diagonal squares",
+  () => {
+
+    const engine =
+      new ChessEngine(
+        "acedrex"
+      );
+
+    const moves =
+      engine.legalMoves(
+        7,
+        2
+      );
+
+    expect(moves)
+      .toContainEqual({
+        row: 5,
+        col: 0
+      });
+
+    expect(moves)
+      .toContainEqual({
+        row: 5,
+        col: 4
+      });
+
+    expect(moves)
+      .not
+      .toContainEqual({
+        row: 6,
+        col: 3
+      });
+
+  }
+);
+
+
+test(
+  "Acedrex queen has a special two-square first move",
+  () => {
+
+    const engine =
+      new ChessEngine(
+        "acedrex"
+      );
+
+    // Clear the landing squares.
+    engine.board[5][1] =
+      "";
+
+    engine.board[5][5] =
+      "";
+
+    const moves =
+      engine.legalMoves(
+        7,
+        3
+      );
+
+    expect(moves)
+      .toContainEqual({
+        row: 5,
+        col: 1
+      });
+
+    expect(moves)
+      .toContainEqual({
+        row: 5,
+        col: 5
+      });
+
+  }
+);
+
+
+test(
+  "Acedrex queen loses the two-square jump after moving",
+  () => {
+
+    const engine =
+      new ChessEngine(
+        "acedrex"
+      );
+
+    // Clear one diagonal square.
+    engine.board[6][2] =
+      "";
+
+    // Move queen one square.
+    engine.handleSquare(
+      7,
+      3
+    );
+
+    engine.handleSquare(
+      6,
+      2
+    );
+
+    // Force turn back for the test.
+    engine.turn =
+      "w";
+
+    const moves =
+      engine.legalMoves(
+        6,
+        2
+      );
+
+    expect(moves)
+      .not
+      .toContainEqual({
+        row: 4,
+        col: 0
+      });
+
+    expect(moves)
+      .not
+      .toContainEqual({
+        row: 4,
+        col: 4
+      });
+
+  }
+);
+
+
+test(
+  "Acedrex pawn does not promote while own queen still exists",
+  () => {
+
+    const engine =
+      new ChessEngine(
+        "acedrex"
+      );
+
+    // Construct a promotion position.
+    engine.board =
+      Array.from(
+        { length: 8 },
+        () =>
+          Array(8)
+            .fill("")
+      );
+
+    engine.board[7][4] =
+      "wK";
+
+    engine.board[0][4] =
+      "bK";
+
+    engine.board[7][3] =
+      "wQ";
+
+    engine.board[1][0] =
+      "wP";
+
+    engine.turn =
+      "w";
+
+    engine.handleSquare(
+      1,
+      0
+    );
+
+    const state =
+      engine.handleSquare(
+        0,
+        0
+      );
+
+    expect(
+      state.board[0][0]
+    ).toBe(
+      "wP"
+    );
+
+  }
+);
+
+
+test(
+  "Acedrex pawn promotes after own queen has been captured",
+  () => {
+
+    const engine =
+      new ChessEngine(
+        "acedrex"
+      );
+
+    engine.board =
+      Array.from(
+        { length: 8 },
+        () =>
+          Array(8)
+            .fill("")
+      );
+
+    engine.board[7][4] =
+      "wK";
+
+    engine.board[0][4] =
+      "bK";
+
+    // No white queen remains.
+    engine.board[1][0] =
+      "wP";
+
+    engine.turn =
+      "w";
+
+    engine.handleSquare(
+      1,
+      0
+    );
+
+    const state =
+      engine.handleSquare(
+        0,
+        0
+      );
+
+    expect(
+      state.board[0][0]
+    ).toBe(
+      "wQ"
+    );
+
+  }
+);
+
+ );
 
 
     test(
