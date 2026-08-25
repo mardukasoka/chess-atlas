@@ -1664,20 +1664,43 @@ if (
   ) ===
     "P" &&
 
-      (
-        row === 0 ||
-        row === 7
-      )
-    ) {
+  (
+    row === 0 ||
+    row === 7
+  )
+) {
 
-      this.board[
-        row
-      ][
-        col
-      ] =
-        `${mover}${this.profile.promotion}`;
+  const ownQueen =
+    `${mover}Q`;
 
-    }
+  const queenStillExists =
+    this.board
+      .flat()
+      .includes(
+        ownQueen
+      );
+
+
+  const promotionAllowed =
+    !this.profile
+      .promotionRequiresMissingQueen ||
+    !queenStillExists;
+
+
+  if (
+    promotionAllowed
+  ) {
+
+    this.board[
+      row
+    ][
+      col
+    ] =
+      `${mover}${this.profile.promotion}`;
+
+  }
+
+}
 
 
     this.selected =
