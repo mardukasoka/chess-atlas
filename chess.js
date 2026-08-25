@@ -25,6 +25,12 @@ const stateBackButton =
   );
 
 
+const stateForwardSelect =
+  document.getElementById(
+    "state-forward"
+  );
+
+
 const variantSelect =
   document.getElementById(
     "game-variant"
@@ -222,6 +228,100 @@ function goBackState() {
     node.time;
 
 
+    drawState(
+    state
+  );
+
+
+  saveGraph();
+
+
+  updateForwardOptions();
+
+}
+
+function updateForwardOptions() {
+
+  const children =
+    stateGraph
+      .getForwardOptions();
+
+
+  stateForwardSelect
+    .innerHTML =
+      '<option value="">Future States</option>';
+
+
+  children.forEach(
+    (
+      node,
+      index
+    ) => {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        node.id;
+
+
+      option.textContent =
+        `Future ${index + 1} — ${node.action || "state"}`;
+
+
+      stateForwardSelect
+        .appendChild(
+          option
+        );
+
+    }
+  );
+
+}
+
+
+function goForwardState() {
+
+  const childId =
+    stateForwardSelect.value;
+
+
+  if (!childId) {
+    return;
+  }
+
+
+  const node =
+    stateGraph.goForward(
+      childId
+    );
+
+
+  if (
+    !node ||
+    !node.state
+  ) {
+    return;
+  }
+
+
+  const state =
+    engine.restoreState(
+      node.state
+    );
+
+
+  variantSelect.value =
+    state.profile;
+
+
+  graphTime =
+    node.time;
+
+
   drawState(
     state
   );
@@ -229,8 +329,10 @@ function goBackState() {
 
   saveGraph();
 
-}
 
+  updateForwardOptions();
+
+}
 
 function changeVariant() {
 
@@ -275,6 +377,8 @@ function handleSquare(
     });
 
 saveGraph();
+
+updateForwardOptions();
 
   }
 
@@ -340,6 +444,10 @@ stateBackButton.addEventListener(
   goBackState
 );
 
+stateForwardSelect.addEventListener(
+  "change",
+  goForwardState
+);
 
 variantSelect.addEventListener(
   "change",
@@ -410,3 +518,5 @@ if (
 drawState(
   initialState
 );
+
+updateForwardOptions();
