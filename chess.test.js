@@ -67,8 +67,10 @@ describe(
           }
         );
 
-      }
-   
+            }
+    );
+
+
 test(
   "Acedrex pawn may double-step before the first capture",
   () => {
@@ -383,10 +385,8 @@ test(
       "wQ"
     );
 
-  }
+    }
 );
-
- );
 
 
     test(
