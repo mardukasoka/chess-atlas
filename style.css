@@ -349,3 +349,21 @@ button {
   padding: 12px 18px;
   font-size: 1rem;
 }
+
+#state-forward {
+  min-height: 44px;
+  padding: 10px 18px;
+
+  font: inherit;
+  font-size: 1rem;
+
+  border: 1px solid
+    currentColor;
+
+  border-radius: 10px;
+
+  background: #e9edf2;
+  color: #111;
+
+  cursor: pointer;
+}
