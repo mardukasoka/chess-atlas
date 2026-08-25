@@ -54,7 +54,7 @@ class StateGraph {
   }
 
 
-  goBack() {
+    goBack() {
     const current =
       this.getCurrent();
 
@@ -78,6 +78,40 @@ class StateGraph {
       parent.id;
 
     return parent;
+  }
+
+
+  getForwardOptions() {
+    if (!this.currentId) {
+      return [];
+    }
+
+    return this.getChildren(
+      this.currentId
+    );
+  }
+
+
+  goForward(
+    childId
+  ) {
+    const children =
+      this.getForwardOptions();
+
+    const child =
+      children.find(
+        node =>
+          node.id === childId
+      );
+
+    if (!child) {
+      return null;
+    }
+
+    this.currentId =
+      child.id;
+
+    return child;
   }
 
 
