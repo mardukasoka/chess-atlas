@@ -585,6 +585,19 @@ if (
   stateGraph.nodes.length === 0
 ) {
   stateGraph.addState({
+    game: "history",
+    timeline: "alexander",
+    time: alexander336BCE.date,
+    parentId: null,
+    action: "Alexander becomes king",
+    state: alexander336BCE
+  });
+}
+
+if (
+  stateGraph.nodes.length === 0
+) {
+  stateGraph.addState({
     game: "chess",
     timeline: "history",
     time: graphTime,
