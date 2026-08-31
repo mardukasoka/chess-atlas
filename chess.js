@@ -73,6 +73,11 @@ const historicalState = {
     administration: null
   },
 
+diplomacy: [],
+  armies: [],
+  events: []
+};
+
 const alexander336BCE = {
   ...structuredClone(historicalState),
 
@@ -121,10 +126,7 @@ const alexander336BCE = {
   ]
 };
 
-  diplomacy: [],
-  armies: [],
-  events: []
-};
+  
 
 const STORAGE_KEY =
   "chess-atlas-5d-state-v0.2";
