@@ -47,6 +47,37 @@ const stateGraph =
 
 let graphTime = 0;
 
+const historicalState = {
+  date: null,
+  region: null,
+
+  polity: {
+    id: null,
+    name: null,
+    ruler: null,
+    capital: null,
+    government: null
+  },
+
+  cities: [],
+  territory: [],
+  tradeRoutes: [],
+  resources: [],
+
+  technology: {
+    transport: null,
+    communication: null,
+    agriculture: null,
+    materials: null,
+    military: null,
+    administration: null
+  },
+
+  diplomacy: [],
+  armies: [],
+  events: []
+};
+
 const STORAGE_KEY =
   "chess-atlas-5d-state-v0.2";
 
