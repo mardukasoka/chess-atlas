@@ -73,6 +73,54 @@ const historicalState = {
     administration: null
   },
 
+const alexander336BCE = {
+  ...structuredClone(historicalState),
+
+  date: -336,
+  region: "Eastern Mediterranean",
+
+  polity: {
+    id: "macedon",
+    name: "Kingdom of Macedon",
+    ruler: "Alexander III",
+    capital: "Pella",
+    government: "Monarchy"
+  },
+
+  cities: [
+    "Pella",
+    "Amphipolis"
+  ],
+
+  technology: {
+    transport: "horse-road-sea",
+    communication: "messenger",
+    agriculture: "iron-age",
+    materials: "iron-bronze-wood",
+    military: "macedonian-combined-arms",
+    administration: "royal-administration"
+  },
+
+  diplomacy: [
+    {
+      polity: "Achaemenid Empire",
+      relation: "hostile"
+    }
+  ],
+
+  armies: [
+    {
+      id: "macedonian-main",
+      commander: "Alexander III",
+      location: "Macedon"
+    }
+  ],
+
+  events: [
+    "Alexander succeeds Philip II"
+  ]
+};
+
   diplomacy: [],
   armies: [],
   events: []
