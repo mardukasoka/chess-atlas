@@ -278,6 +278,17 @@ function resetGame() {
 
 }
 
+function drawHistoricalState(state) {
+  const year =
+    state.date < 0
+      ? `${Math.abs(state.date)} BCE`
+      : `${state.date} CE`;
+
+  statusElement.textContent =
+    `${year} — ${state.polity.name} — ` +
+    `${state.polity.ruler} — ` +
+    `Capital: ${state.polity.capital}`;
+}
 
 function goBackState() {
 
@@ -294,6 +305,7 @@ function goBackState() {
 
 if (node.game !== "chess") {
   graphTime = node.time;
+  drawHistoricalState(node.state);
   saveGraph();
   updateForwardOptions();
   return;
@@ -394,6 +406,7 @@ function goForwardState() {
 
 if (node.game !== "chess") {
   graphTime = node.time;
+  drawHistoricalState(node.state);
   saveGraph();
   updateForwardOptions();
   return;
