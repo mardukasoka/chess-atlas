@@ -581,20 +581,26 @@ if (saved) {
         stateGraph.getCurrent();
 
       if (
-        current &&
+  current &&
+  current.state
+) {
+  graphTime =
+    current.time;
+
+  if (current.game !== "chess") {
+    drawHistoricalState(
+      current.state
+    );
+  } else {
+    initialState =
+      engine.restoreState(
         current.state
-      ) {
-        initialState =
-          engine.restoreState(
-            current.state
-          );
+      );
 
-variantSelect.value =
-  initialState.profile;
-
-        graphTime =
-          current.time;
-      }
+    variantSelect.value =
+      initialState.profile;
+  }
+}
     }
   } catch (error) {
     console.warn(
@@ -632,8 +638,20 @@ if (
   saveGraph();
 }
 
-drawState(
-  initialState
-);
+const currentNode =
+  stateGraph.getCurrent();
+
+if (
+  currentNode &&
+  currentNode.game !== "chess"
+) {
+  drawHistoricalState(
+    currentNode.state
+  );
+} else {
+  drawState(
+    initialState
+  );
+}
 
 updateForwardOptions();
