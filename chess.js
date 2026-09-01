@@ -11,8 +11,6 @@ const statusElement =
 
 
 
-
-
 const resetButton =
   document.getElementById(
     "reset"
