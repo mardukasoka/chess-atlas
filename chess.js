@@ -298,12 +298,6 @@ function goBackState() {
       node.state
     );
 
-if (node.game !== "chess") {
-  graphTime = node.time;
-  saveGraph();
-  updateForwardOptions();
-  return;
-}
 
   variantSelect.value =
     state.profile;
@@ -391,6 +385,13 @@ function goForwardState() {
   ) {
     return;
   }
+
+if (node.game !== "chess") {
+  graphTime = node.time;
+  saveGraph();
+  updateForwardOptions();
+  return;
+}
 
 if (node.game !== "chess") {
   graphTime = node.time;
