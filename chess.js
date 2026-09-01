@@ -292,6 +292,12 @@ function goBackState() {
     return;
   }
 
+if (node.game !== "chess") {
+  graphTime = node.time;
+  saveGraph();
+  updateForwardOptions();
+  return;
+}
 
   const state =
     engine.restoreState(
@@ -385,13 +391,6 @@ function goForwardState() {
   ) {
     return;
   }
-
-if (node.game !== "chess") {
-  graphTime = node.time;
-  saveGraph();
-  updateForwardOptions();
-  return;
-}
 
 if (node.game !== "chess") {
   graphTime = node.time;
