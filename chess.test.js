@@ -688,3 +688,10 @@ test(
 
         expect(
           state
+            .turn
+        ).toBe("Black");
+
+      }
+    );
+  }
+);
