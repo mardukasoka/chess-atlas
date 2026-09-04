@@ -440,3 +440,89 @@ button {
 
   cursor: pointer;
 }
+
+/* PORTRAIT PHONE LAYOUT */
+
+@media (max-width: 600px) {
+  main {
+    padding: 8px 0 12px;
+  }
+
+  .atlas-header p {
+    margin: 2px 0 8px;
+  }
+
+  .timeline-card {
+    min-height: 124px;
+    margin: 6px auto 8px;
+    padding: 8px;
+  }
+
+  .timeline-spine {
+    min-height: 94px;
+  }
+
+  .atlas-modes {
+    gap: 5px;
+    margin-bottom: 8px;
+  }
+
+  .atlas-mode {
+    min-height: 44px;
+    padding: 9px 5px;
+  }
+
+  .variant-control {
+    margin: 2px auto 8px;
+    padding: 8px 10px;
+  }
+
+  .world-panel {
+    min-height: 0;
+    padding: 12px;
+  }
+
+  .world-panel-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 8px;
+  }
+
+  .world-panel h2 {
+    margin-bottom: 2px;
+  }
+
+  .world-map-actions {
+    flex-wrap: nowrap;
+    gap: 5px;
+  }
+
+  .world-map-actions button {
+    min-height: 44px;
+    padding: 8px 7px;
+    font-size: 0.74rem;
+    white-space: nowrap;
+  }
+
+  .world-map-status {
+    margin-bottom: 6px !important;
+  }
+
+  .world-map {
+    min-height: clamp(232px, 30vh, 268px);
+  }
+
+  .world-map-summary {
+    min-height: 0;
+    margin-top: 6px !important;
+    padding: 7px 8px;
+    font-size: 0.82rem;
+    line-height: 1.25;
+  }
+
+  .world-panel small {
+    margin-top: 6px;
+    font-size: 0.76rem;
+  }
+}
