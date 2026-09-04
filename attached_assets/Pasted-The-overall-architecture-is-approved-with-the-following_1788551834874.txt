@@ -1,0 +1,220 @@
+The overall architecture is approved, with the following changes before implementation.
+
+IMPLEMENT MAP v0.1, but preserve a stricter distinction between physical world geography and Atlas navigation regions.
+
+1. THE INITIAL MAP MUST BE A REAL WHOLE-WORLD MAP
+
+Do not make the initial geography fixture only:
+
+Iberia
+North Africa
+Italy
+Balkans
+Anatolia
+Levant
+Mesopotamia
+Arabia
+Persia
+
+Those are useful for the first historical scenario, but the common Atlas substrate must begin with the entire Earth.
+
+At world zoom, render a lightweight recognizable global land/coastline outline.
+
+The first view should immediately communicate:
+
+"This is the Atlas world map."
+
+It may be extremely simplified at global scale.
+
+2. SEPARATE THREE CONCEPTS
+
+A. PHYSICAL GEOGRAPHY
+
+Persistent and non-historical:
+
+- Earth
+- land/coastline geometry
+- world coordinate system
+- major physical geographic anchors
+
+This layer should not contain:
+
+- polity
+- controller
+- year
+- war
+- army
+- historical ownership
+
+B. ATLAS NAVIGATION REGIONS
+
+Stable Atlas IDs used for zoom/navigation and cross-system references.
+
+Examples:
+
+near-east
+eastern-mediterranean
+anatolia
+levant
+mesopotamia
+arabia
+iranian-plateau
+
+These may eventually have approximate/selectable geometry, anchors, hierarchy and bounds.
+
+They are not claims that these regions have one timeless exact historical boundary.
+
+C. HISTORICAL STATE / GEOMETRY
+
+Later overlays may define:
+
+- Achaemenid territory
+- Macedonian control
+- historical borders
+- contested areas
+- cultural zones
+- fronts
+- claims
+
+These are time/branch dependent and must never modify physical geography.
+
+Conceptually:
+
+PHYSICAL EARTH
+       ↓
+ATLAS NAVIGATION REGIONS
+       ↓
+HISTORICAL OVERLAYS
+       ↓
+Civilisation / Diplomacy / Warfare
+
+3. KEEP v0.1 SMALLER
+
+The proposed 900–1,250 lines of new JavaScript is larger than I want for the first map milestone.
+
+Do not optimize for an arbitrary line count, but aim for the smallest clear implementation.
+
+Prefer approximately:
+
+400–700 production JS lines if practical.
+
+Do not create abstractions we do not need yet.
+
+In particular:
+
+- Do not implement a historical-overlay engine yet.
+- Do not create placeholder APIs with substantial unused machinery.
+- `setHistoricalOverlay()` can wait until v0.2 if it adds complexity.
+- Do not implement Civilization/Diplomacy mode adapters yet.
+
+Map v0.1 needs only:
+
+- geography loading
+- rendering
+- camera
+- touch/mouse input
+- hit testing
+- selection
+- focus/reset
+- accessible selected-region summary
+
+4. RECONSIDER DATA FORMAT IF IT REDUCES CODE
+
+TopoJSON is approved if it produces the smallest total solution.
+
+But zero dependencies is more important than using TopoJSON specifically.
+
+If using TopoJSON requires writing a substantial custom runtime decoder, compare that with a highly simplified/preprojected GeoJSON asset.
+
+Choose whichever gives us the smallest combination of:
+
+runtime code + geography payload + memory use.
+
+Do not add a mapping framework.
+
+5. WORLD + FIRST DETAIL LEVEL
+
+Map v0.1 should demonstrate:
+
+WORLD
+  ↓
+Near East / Eastern Mediterranean
+  ↓
+Mesopotamia
+
+It does not need Gaugamela yet.
+
+A user should be able to:
+
+- see the whole Earth
+- pinch/zoom and pan
+- tap/select a navigation region
+- focus that region
+- reset to world
+- zoom toward the Near East
+- select Mesopotamia
+
+6. KEEP ALEXANDER OUT OF THE DATA
+
+Do not add:
+
+- Alexander
+- Macedon
+- Achaemenid ownership
+- Gaugamela
+- armies
+- campaign paths
+- historical borders
+
+Those belong in Map v0.2 / the first historical overlay.
+
+7. FILE ORGANIZATION
+
+Your proposed modular organization is good, but merge modules if doing so materially reduces complexity.
+
+Do not split code merely to satisfy an architectural diagram.
+
+The important separation is conceptual:
+
+geography
+camera/input
+renderer
+Atlas integration
+
+not a required number of files.
+
+8. MOBILE TARGET REMAINS
+
+Preserve:
+
+- Canvas 2D
+- Pointer Events
+- pinch zoom
+- one-finger pan
+- tap selection
+- requestAnimationFrame batching
+- DPR cap
+- reduced-resolution hit canvas
+- static hosting
+- no backend
+- no heavyweight runtime dependency
+
+9. IMPLEMENTATION BOUNDARY
+
+Implement Map v0.1 only.
+
+After implementation:
+
+- run existing tests
+- run syntax/lint checks
+- run git diff --check
+- start preview
+- report exact files changed
+- report asset size
+- report production LOC
+- report any existing unrelated failures
+- report git status
+
+Do not push.
+
+Stop after implementation and testing for review.
