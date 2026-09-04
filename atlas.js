@@ -111,6 +111,8 @@ let currentNodeIndex = ATLAS_WORLD.nodes.findIndex(
 );
 
 let currentMode = "chess";
+let atlasMap = null;
+let atlasMapError = null;
 
 function getCurrentNode() {
   return ATLAS_WORLD.nodes[currentNodeIndex];
@@ -320,10 +322,38 @@ function renderMode() {
     document.getElementById("world-mode-detail").textContent =
       "The timeline remains fixed. Choose another representation or period.";
   }
+
+  if (atlasMapError) {
+    document.getElementById("world-mode-status").textContent =
+      `The common world map could not load: ${atlasMapError.message}`;
+  }
 }
 
 function initialiseAtlas() {
   ensureCampaignPanel();
+
+  const mapViewport = document.getElementById("world-map");
+  const mapSummary = document.getElementById("world-map-summary");
+  AtlasGeography.load("data/earth-main-v0.1.json")
+    .then(geography => {
+      atlasMap = new AtlasMapRenderer({
+        viewport: mapViewport,
+        geography,
+        summary: mapSummary
+      });
+      document
+        .getElementById("reset-world")
+        .addEventListener("click", () => atlasMap.resetWorld());
+      document
+        .getElementById("focus-selection")
+        .addEventListener("click", () => atlasMap.focusSelection());
+      renderMode();
+    })
+    .catch(error => {
+      atlasMapError = error;
+      mapSummary.textContent = "The Atlas world map is unavailable.";
+      renderMode();
+    });
 
   document
     .getElementById("timeline-up")

@@ -238,31 +238,40 @@
         id="world-panel"
         class="world-panel"
         hidden
+        aria-labelledby="world-mode-title"
       >
-
-        <div
-          class="world-symbol"
-        >
-          ◎
+        <div class="world-panel-heading">
+          <div>
+            <p class="eyebrow">Common Atlas geography</p>
+            <h2 id="world-mode-title">World Map</h2>
+          </div>
+          <div class="world-map-actions">
+            <button id="reset-world" type="button">Reset World</button>
+            <button id="focus-selection" type="button">Focus Selection</button>
+          </div>
         </div>
 
+        <p id="world-mode-status" class="world-map-status"></p>
 
-        <h2
-          id="world-mode-title"
+        <div
+          id="world-map"
+          class="world-map"
+          role="application"
+          aria-label="Interactive Atlas world map"
         >
-          Diplomacy
-        </h2>
-
+          <canvas class="world-map-canvas" aria-hidden="true"></canvas>
+          <canvas class="world-map-hit-canvas" aria-hidden="true"></canvas>
+        </div>
 
         <p
-          id="world-mode-status"
-        ></p>
+          id="world-map-summary"
+          class="world-map-summary"
+          aria-live="polite"
+        >
+          Loading the Atlas world map…
+        </p>
 
-
-        <small
-          id="world-mode-detail"
-        ></small>
-
+        <small id="world-mode-detail"></small>
       </section>
 
     </section>
@@ -282,6 +291,21 @@
   src="chess.js?v=5"
 ></script>
 
+<script
+  src="geography.js?v=1"
+></script>
+
+<script
+  src="map-camera.js?v=1"
+></script>
+
+<script
+  src="map-input.js?v=1"
+></script>
+
+<script
+  src="map-renderer.js?v=1"
+></script>
 
   <script
     src="atlas.js?v=1"
