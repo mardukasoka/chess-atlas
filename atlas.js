@@ -15,7 +15,8 @@ const ATLAS_WORLD = {
       year: -2500,
       label: "Ancient World",
       description: "Early states, trade networks and race games.",
-      games: ["race"]
+      games: ["race"],
+      historicalGame: null
     },
 
     {
@@ -24,6 +25,7 @@ const ATLAS_WORLD = {
       label: "Second Punic War",
       description: "Hannibal leaves Iberia and advances toward Italy.",
       games: ["chess", "civilisation", "diplomacy"],
+      historicalGame: null,
       campaign: {
         title: "Hannibal's Italian Campaign",
         sides: "Rome vs Carthage",
@@ -39,6 +41,7 @@ const ATLAS_WORLD = {
       label: "Battle of Cannae",
       description: "A major confrontation between Rome and Hannibal.",
       games: ["chess", "civilisation", "diplomacy"],
+      historicalGame: null,
       campaign: {
         title: "Cannae",
         sides: "Rome vs Carthage",
@@ -53,7 +56,8 @@ const ATLAS_WORLD = {
       year: 600,
       label: "Chaturanga",
       description: "Early Indian chess tradition.",
-      games: ["chess", "civilisation"]
+      games: ["chess", "civilisation"],
+      historicalGame: "chaturanga"
     },
 
     {
@@ -61,7 +65,8 @@ const ATLAS_WORLD = {
       year: 800,
       label: "Shatranj",
       description: "Chess spreads through the Islamic world.",
-      games: ["chess", "civilisation", "diplomacy"]
+      games: ["chess", "civilisation", "diplomacy"],
+      historicalGame: "shatranj"
     },
 
     {
@@ -69,7 +74,8 @@ const ATLAS_WORLD = {
       year: 1500,
       label: "Modern Chess Emerges",
       description: "European chess approaches its modern rules.",
-      games: ["chess", "civilisation", "diplomacy"]
+      games: ["chess", "civilisation", "diplomacy"],
+      historicalGame: "modern"
     },
 
     {
@@ -77,7 +83,8 @@ const ATLAS_WORLD = {
       year: 1800,
       label: "Industrial World",
       description: "Population, industry and interstate competition accelerate.",
-      games: ["chess", "civilisation", "diplomacy"]
+      games: ["chess", "civilisation", "diplomacy"],
+      historicalGame: "modern"
     },
 
     {
@@ -85,7 +92,8 @@ const ATLAS_WORLD = {
       year: 2026,
       label: "Present",
       description: "Observed history reaches the simulation boundary.",
-      games: ["chess", "civilisation", "diplomacy"]
+      games: ["chess", "civilisation", "diplomacy"],
+      historicalGame: "modern"
     },
 
     {
@@ -93,7 +101,8 @@ const ATLAS_WORLD = {
       year: 2050,
       label: "Modelled Future",
       description: "Population and political trajectories become simulations.",
-      games: ["chess", "civilisation", "diplomacy", "infinite"]
+      games: ["chess", "civilisation", "diplomacy", "infinite"],
+      historicalGame: "modern"
     },
 
     {
@@ -101,7 +110,8 @@ const ATLAS_WORLD = {
       year: 2200,
       label: "Speculative Future",
       description: "Alternative futures and fictional scenarios branch outward.",
-      games: ["civilisation", "diplomacy", "infinite"]
+      games: ["civilisation", "diplomacy", "infinite"],
+      historicalGame: null
     }
   ]
 };
@@ -113,6 +123,15 @@ let currentNodeIndex = ATLAS_WORLD.nodes.findIndex(
 let currentMode = "chess";
 let atlasMap = null;
 let atlasMapError = null;
+let manualGameExploration = false;
+let applyingTimelineGame = false;
+
+const HISTORICAL_GAME_LABELS = {
+  chaturanga: "Chaturanga",
+  shatranj: "Shatranj",
+  acedrex: "Acedrex — Spain 1283",
+  modern: "Modern Chess"
+};
 
 function getCurrentNode() {
   return ATLAS_WORLD.nodes[currentNodeIndex];
@@ -122,6 +141,60 @@ function formatYear(year) {
   return year < 0
     ? `${Math.abs(year)} BCE`
     : `${year} CE`;
+}
+
+function updateGameVariantContext() {
+  const node = getCurrentNode();
+  const context = document.getElementById("game-variant-context");
+  const select = document.getElementById("game-variant");
+  const historicalGame = node.historicalGame;
+
+  if (manualGameExploration) {
+    const selectedGame =
+      HISTORICAL_GAME_LABELS[select.value] || "selected ruleset";
+
+    context.textContent = historicalGame
+      ? `Manual exploration · timeline default: ${HISTORICAL_GAME_LABELS[historicalGame]}`
+      : `Manual exploration · no historical chess-family game at ${formatYear(node.year)}`;
+
+    select.setAttribute(
+      "aria-label",
+      `${selectedGame}. ${context.textContent}`
+    );
+    return;
+  }
+
+  context.textContent = historicalGame
+    ? `Timeline default · ${HISTORICAL_GAME_LABELS[historicalGame]}`
+    : `Unavailable · no chess-family game at ${formatYear(node.year)}`;
+
+  select.setAttribute("aria-label", context.textContent);
+}
+
+function applyTimelineGame() {
+  const node = getCurrentNode();
+  const select = document.getElementById("game-variant");
+
+  manualGameExploration = false;
+  select.value = node.historicalGame || "";
+
+  if (node.historicalGame) {
+    applyingTimelineGame = true;
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+    applyingTimelineGame = false;
+  }
+
+  updateGameVariantContext();
+}
+
+function selectManualGame() {
+  if (applyingTimelineGame) {
+    return;
+  }
+
+  manualGameExploration = true;
+  updateGameVariantContext();
+  renderMode();
 }
 
 function ensureCampaignPanel() {
@@ -181,7 +254,7 @@ function renderCampaign() {
   const node = getCurrentNode();
   const panel = document.getElementById("campaign-panel");
 
-  if (!node.campaign) {
+  if (!node.campaign || currentMode !== "diplomacy") {
     panel.hidden = true;
     return;
   }
@@ -205,8 +278,8 @@ function resolveByChess() {
 
   setMode("chess");
 
-  document.getElementById("campaign-result").textContent =
-    `${node.campaign.chessWhite} = White · ${node.campaign.chessBlack} = Black. Chess will resolve the strategic confrontation.`;
+  document.getElementById("status").textContent =
+    `${node.campaign.chessWhite} vs ${node.campaign.chessBlack}: choose a ruleset above for an explicitly manual chess simulation.`;
 }
 
 function resolveByDiplomacy() {
@@ -231,13 +304,14 @@ function resolveHistorically() {
 function setMode(mode) {
   currentMode = mode;
 
-  document.querySelectorAll(".atlas-mode").forEach(button => {
+  document.querySelectorAll(".atlas-mode[data-mode]").forEach(button => {
     button.classList.toggle(
       "active",
       button.dataset.mode === currentMode
     );
   });
 
+  renderCampaign();
   renderMode();
 }
 
@@ -254,6 +328,7 @@ function moveTimeline(direction) {
   currentNodeIndex = nextIndex;
 
   renderTimeline();
+  applyTimelineGame();
   renderCampaign();
   renderMode();
 }
@@ -286,16 +361,35 @@ function renderMode() {
 
   const worldPanel =
     document.getElementById("world-panel");
+  const variantControl =
+    document.querySelector(".variant-control");
+  const stateControls =
+    document.querySelector(".state-controls");
 
   if (currentMode === "chess") {
-    board.hidden = false;
+    const historicalGameAvailable =
+      Boolean(node.historicalGame);
+    const showPlayableBoard =
+      historicalGameAvailable || manualGameExploration;
+
+    variantControl.hidden = false;
+    board.hidden = !showPlayableBoard;
     chessControls.hidden = false;
+    stateControls.hidden = !showPlayableBoard;
     worldPanel.hidden = true;
+
+    if (!showPlayableBoard) {
+      document.getElementById("status").textContent =
+        `No historically valid chess-family game is available at ${formatYear(node.year)}. Choose a ruleset above only for manual exploration.`;
+    }
+
     return;
   }
 
+  variantControl.hidden = true;
   board.hidden = true;
   chessControls.hidden = true;
+  stateControls.hidden = true;
   worldPanel.hidden = false;
 
   const available =
@@ -369,14 +463,18 @@ function initialiseAtlas() {
       () => moveTimeline(-1)
     );
 
-  document.querySelectorAll(".atlas-mode").forEach(button => {
+  document.querySelectorAll(".atlas-mode[data-mode]").forEach(button => {
     button.addEventListener("click", () => {
       setMode(button.dataset.mode);
     });
   });
 
+  document
+    .getElementById("game-variant")
+    .addEventListener("change", selectManualGame);
+
   renderTimeline();
-  renderCampaign();
+  applyTimelineGame();
   setMode("chess");
 }
 

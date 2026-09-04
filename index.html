@@ -138,16 +138,29 @@
         class="variant-control"
       >
 
-        <label
-          for="game-variant"
-        >
-          Historical game
-        </label>
+        <div class="variant-label">
+          <label
+            for="game-variant"
+          >
+            Historical game
+          </label>
+
+          <small id="game-variant-context">
+            Timeline default
+          </small>
+        </div>
 
 
         <select
           id="game-variant"
         >
+
+          <option
+            value=""
+            disabled
+          >
+            Unavailable
+          </option>
 
           <option
             value="chaturanga"
@@ -170,6 +183,7 @@
 
           <option
             value="modern"
+            selected
           >
             ♟ Modern Chess
           </option>

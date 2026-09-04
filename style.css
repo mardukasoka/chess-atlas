@@ -319,6 +319,11 @@ button {
   display: none;
 }
 
+.variant-control[hidden],
+.state-controls[hidden] {
+  display: none;
+}
+
 .campaign-panel small {
   opacity: 0.6;
   letter-spacing: 0.08em;
@@ -373,6 +378,18 @@ button {
 .variant-control label {
   font-size: 0.9rem;
   font-weight: 600;
+}
+
+.variant-label {
+  min-width: 0;
+}
+
+.variant-label small {
+  display: block;
+  margin-top: 2px;
+  color: #c5ccd5;
+  font-size: 0.72rem;
+  font-weight: 400;
 }
 
 
@@ -473,8 +490,84 @@ button {
   }
 
   .variant-control {
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 0.9fr);
     margin: 2px auto 8px;
     padding: 8px 10px;
+  }
+
+  .variant-label small {
+    line-height: 1.2;
+  }
+
+  #board {
+    margin: 8px auto;
+  }
+
+  #status {
+    margin: 7px 0;
+    font-size: 0.9rem;
+  }
+
+  .state-controls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  #state-back,
+  #state-forward,
+  #reset {
+    min-width: 0;
+    min-height: 44px;
+    padding: 7px 4px;
+    font-size: 0.72rem;
+  }
+
+  .campaign-panel {
+    margin: 6px 0 8px;
+    padding: 9px 10px;
+    text-align: left;
+  }
+
+  .campaign-panel h2 {
+    margin: 2px 0;
+    font-size: 1.1rem;
+  }
+
+  #campaign-sides,
+  #campaign-status {
+    display: inline;
+    margin: 0;
+    color: #c5ccd5;
+    font-size: 0.78rem;
+  }
+
+  #campaign-sides::after {
+    content: " · ";
+  }
+
+  .campaign-actions {
+    gap: 5px;
+    margin-top: 7px;
+  }
+
+  .campaign-actions button {
+    min-height: 44px;
+    font-size: 0.72rem;
+  }
+
+  #campaign-result {
+    min-height: 0;
+    margin: 6px 0 0;
+    font-size: 0.78rem;
+  }
+
+  #campaign-result:empty {
+    display: none;
+  }
+
+  .campaign-panel:not([hidden]) + #game-space .world-map {
+    min-height: clamp(220px, 27vh, 240px);
   }
 
   .world-panel {
@@ -528,6 +621,50 @@ button {
 }
 
 @media (max-width: 374px) {
+  main {
+    padding-bottom: 0;
+  }
+
+  .timeline-card {
+    min-height: 116px;
+  }
+
+  .timeline-spine {
+    min-height: 86px;
+  }
+
+  .campaign-panel {
+    margin-top: 4px;
+    margin-bottom: 0;
+    padding: 7px 8px;
+  }
+
+  .campaign-panel h2 {
+    font-size: 1rem;
+    line-height: 1.1;
+  }
+
+  #campaign-sides,
+  #campaign-status {
+    font-size: 0.72rem;
+  }
+
+  .campaign-actions {
+    margin-top: 5px;
+  }
+
+  .campaign-actions button {
+    font-size: 0.68rem;
+  }
+
+  .campaign-panel:not([hidden]) + #game-space .world-map {
+    min-height: 202px;
+  }
+
+  .world-panel {
+    padding: 10px;
+  }
+
   .world-panel-heading {
     gap: 6px;
   }
