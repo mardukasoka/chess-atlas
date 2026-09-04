@@ -7,25 +7,21 @@ window.AtlasMapCamera = class AtlasMapCamera {
     this.x = 0;
     this.y = 0;
     this.zoom = 1;
-    this.minZoom = 0.18;
+    this.minZoom = 1;
     this.maxZoom = 8;
   }
 
   setViewport(width, height) {
     this.viewport = { width, height };
+    this.minZoom = this.getFitZoom();
+    this.zoom = Math.max(this.minZoom, Math.min(this.maxZoom, this.zoom));
     this.clamp();
   }
 
   reset() {
-    const scale = Math.min(
-      this.viewport.width / (this.worldBounds.maxX - this.worldBounds.minX),
-      this.viewport.height / (this.worldBounds.maxY - this.worldBounds.minY)
-    ) * 0.92;
-    this.zoom = Math.max(this.minZoom, Math.min(this.maxZoom, scale));
-    this.x = (this.viewport.width -
-      (this.worldBounds.maxX - this.worldBounds.minX) * this.zoom) / 2;
-    this.y = (this.viewport.height -
-      (this.worldBounds.maxY - this.worldBounds.minY) * this.zoom) / 2;
+    this.minZoom = this.getFitZoom();
+    this.zoom = Math.min(this.maxZoom, this.minZoom);
+    this.centerWorld();
     this.clamp();
   }
 
@@ -74,16 +70,52 @@ window.AtlasMapCamera = class AtlasMapCamera {
   }
 
   clamp() {
+    this.minZoom = this.getFitZoom();
+    this.zoom = Math.max(this.minZoom, Math.min(this.maxZoom, this.zoom));
+    this.x = this.clampAxis(
+      this.x,
+      this.worldBounds.minX,
+      this.worldBounds.maxX,
+      this.viewport.width
+    );
+    this.y = this.clampAxis(
+      this.y,
+      this.worldBounds.minY,
+      this.worldBounds.maxY,
+      this.viewport.height
+    );
+  }
+
+  getFitZoom() {
+    const worldWidth = this.worldBounds.maxX - this.worldBounds.minX;
+    const worldHeight = this.worldBounds.maxY - this.worldBounds.minY;
+    return Math.min(
+      this.viewport.width / worldWidth,
+      this.viewport.height / worldHeight
+    );
+  }
+
+  centerWorld() {
     const worldWidth = (this.worldBounds.maxX - this.worldBounds.minX) * this.zoom;
     const worldHeight = (this.worldBounds.maxY - this.worldBounds.minY) * this.zoom;
-    const margin = 35;
-    this.x = Math.min(
-      this.viewport.width - margin,
-      Math.max(margin - worldWidth, this.x)
-    );
-    this.y = Math.min(
-      this.viewport.height - margin,
-      Math.max(margin - worldHeight, this.y)
+    this.x = (this.viewport.width - worldWidth) / 2 -
+      this.worldBounds.minX * this.zoom;
+    this.y = (this.viewport.height - worldHeight) / 2 -
+      this.worldBounds.minY * this.zoom;
+  }
+
+  clampAxis(position, worldMin, worldMax, viewportSize) {
+    const scaledMin = worldMin * this.zoom;
+    const scaledMax = worldMax * this.zoom;
+    const scaledSize = scaledMax - scaledMin;
+
+    if (scaledSize <= viewportSize) {
+      return (viewportSize - scaledSize) / 2 - scaledMin;
+    }
+
+    return Math.min(
+      -scaledMin,
+      Math.max(viewportSize - scaledMax, position)
     );
   }
 };
