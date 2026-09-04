@@ -218,16 +218,8 @@ function ensureCampaignPanel() {
     <p id="campaign-status"></p>
 
     <div class="campaign-actions">
-      <button id="resolve-chess">
-        ♟ Chess
-      </button>
-
-      <button id="resolve-diplomacy">
-        🤝 Diplomacy
-      </button>
-
       <button id="resolve-history">
-        ▶ Historical
+        ▶ Historical outcome
       </button>
     </div>
 
@@ -236,14 +228,6 @@ function ensureCampaignPanel() {
 
   const gameSpace = document.getElementById("game-space");
   gameSpace.parentNode.insertBefore(panel, gameSpace);
-
-  document
-    .getElementById("resolve-chess")
-    .addEventListener("click", resolveByChess);
-
-  document
-    .getElementById("resolve-diplomacy")
-    .addEventListener("click", resolveByDiplomacy);
 
   document
     .getElementById("resolve-history")
