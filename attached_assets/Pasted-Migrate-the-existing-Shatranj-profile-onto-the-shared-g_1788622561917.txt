@@ -1,0 +1,102 @@
+Migrate the existing Shatranj profile onto the shared generic rule kernel while preserving current Chess Atlas behavior exactly.
+
+Do not remove the legacy path yet.
+
+GOAL
+
+Use Shatranj as the first historical ruleset migration to prove that the shared movement kernel supports non-modern chess movement correctly.
+
+Keep the existing Shatranj implementation as the reference implementation for parity testing.
+
+MOVEMENT MAPPING
+
+Map Shatranj pieces through the shared kernel:
+
+- rook → ordinary sliding rook movement
+- king → ordinary one-step king movement
+- knight → ordinary knight jump
+- pawn → one-step forward only, with existing capture behavior
+- ferz → one step diagonally
+- elephant / alfil → exactly two squares diagonally, jumping over the intermediate square
+
+The elephant jump is especially important:
+
+It is a jump, not a sliding bishop move.
+
+It must ignore occupancy on the intermediate square but obey occupancy rules at the destination.
+
+PRESERVE EXISTING BEHAVIOR
+
+Do not change:
+
+- board setup
+- promotion behavior
+- stalemate handling
+- bare-king rules
+- check/checkmate logic
+- turn management
+- move execution
+- any Shatranj-specific victory conditions already implemented
+
+These remain ChessEngine responsibilities unless an existing rule is already safely represented by the shared kernel.
+
+PARITY TESTS
+
+Compare legacy and shared-rule Shatranj paths for:
+
+- full starting position
+- rook
+- king
+- knight
+- ferz
+- elephant
+- elephant jumping over an occupied intermediate square
+- elephant blocked by friendly destination
+- elephant capturing enemy destination
+- pawn one-step
+- pawn capture
+- promotion boundary
+- friendly blocking
+- enemy capture
+- king-safety filtering
+- representative short move sequence
+
+Assert equivalent pseudo-legal and legal destination sets.
+
+Do not change observable behavior to satisfy the new kernel.
+
+If parity differs, stop and report the discrepancy.
+
+ARCHITECTURE
+
+Prefer a dedicated module such as:
+
+shatranj-rules.js
+
+using the existing:
+
+- geometry.js
+- rules.js
+- dense-board-adapter.js
+
+Keep variant-specific movement definitions outside the generic rule kernel unless they are genuinely reusable primitives.
+
+Do not hard-code Shatranj concepts into "rules.js".
+
+TESTS
+
+All existing tests must remain green.
+
+Report:
+
+1. files changed
+2. Shatranj movement mapping
+3. which behavior now uses shared rules
+4. what remains legacy
+5. parity results
+6. full test count
+7. any discrepancies
+8. recommended next migration target
+
+Do not migrate Acedrex or Chaturanga in this task.
+Do not expose 4D Chess yet.
