@@ -12,6 +12,13 @@ const ModernChessRulesApi =
     ? require("./modern-rules.js")
     : window.ChessAtlasModernRules;
 
+const ShatranjChessRulesApi =
+  typeof module !==
+    "undefined" &&
+  module.exports
+    ? require("./shatranj-rules.js")
+    : window.ChessAtlasShatranjRules;
+
 
 const GLYPHS = {
   wK: "♔",
@@ -1049,6 +1056,42 @@ row ===
   }
 
 
+  shatranjMoveCandidates(
+    row,
+    col,
+    board = this.board
+  ) {
+    return ShatranjChessRulesApi
+      .generateMoves({
+        board,
+        shape:
+          this.boardShape,
+        row,
+        col
+      });
+  }
+
+
+  shatranjPseudoMoves(
+    row,
+    col,
+    board = this.board
+  ) {
+    return this
+      .shatranjMoveCandidates(
+        row,
+        col,
+        board
+      )
+      .map(
+        move => ({
+          row: move.to[0],
+          col: move.to[1]
+        })
+      );
+  }
+
+
   pseudoMoves(
     row,
     col,
@@ -1060,6 +1103,18 @@ row ===
     ) {
       return this
         .modernPseudoMoves(
+          row,
+          col,
+          board
+        );
+    }
+
+    if (
+      this.profileId ===
+      "shatranj"
+    ) {
+      return this
+        .shatranjPseudoMoves(
           row,
           col,
           board
