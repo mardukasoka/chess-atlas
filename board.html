@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Chess Atlas — Futures Board</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: system-ui, sans-serif;
+      background: #111318;
+      color: #f4f4f4;
+    }
+
+    #toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      padding: 8px 12px;
+
+      background: #181b21;
+      border-bottom: 1px solid #333;
+
+      z-index: 10;
+    }
+
+    #toolbar strong {
+      flex: 1;
+    }
+
+    button,
+    a {
+      padding: 8px 10px;
+
+      border: 1px solid #444;
+      border-radius: 8px;
+
+      background: #252a33;
+      color: white;
+
+      text-decoration: none;
+      font: inherit;
+    }
+
+    #viewport {
+      position: absolute;
+
+      top: 56px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      overflow: hidden;
+      touch-action: none;
+
+      background-image:
+        radial-gradient(
+          circle,
+          #3a3f49 1px,
+          transparent 1px
+        );
+
+      background-size: 24px 24px;
+    }
+
+    #world {
+      position: absolute;
+
+      width: 4000px;
+      height: 4000px;
+
+      transform-origin: 0 0;
+    }
+
+    #edges {
+      position: absolute;
+
+      width: 4000px;
+      height: 4000px;
+
+      pointer-events: none;
+    }
+
+    line {
+      stroke: #697386;
+      stroke-width: 2;
+    }
+
+    .card {
+      position: absolute;
+
+      width: 210px;
+      min-height: 110px;
+
+      padding: 14px;
+
+      border: 1px solid #46505e;
+      border-radius: 14px;
+
+      background: #1d222a;
+
+      box-shadow:
+        0 8px 24px
+        rgba(0, 0, 0, 0.3);
+
+      user-select: none;
+      touch-action: none;
+    }
+
+    .future {
+      border-color: #5f8b69;
+    }
+
+    .conflict {
+      border-color: #95675d;
+    }
+
+    .system {
+      border-color: #607aa5;
+    }
+
+    .resource {
+      border-color: #9a8d59;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .card p {
+      margin: 0;
+
+      color: #abb3bf;
+
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .tag {
+      display: inline-block;
+
+      margin-top: 10px;
+      padding: 3px 7px;
+
+      border-radius: 10px;
+
+      background: #2b313a;
+
+      color: #ccd2da;
+
+      font-size: 11px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header id="toolbar">
+
+    <a href="index.html">
+      ← Atlas
+    </a>
+
+    <strong>
+      Civilisation Futures
+    </strong>
+
+    <button id="add">
+      + Card
+    </button>
+
+    <button id="centre">
+      ◎
+    </button>
+
+  </header>
+
+
+  <main id="viewport">
+
+    <div id="world">
+
+      <svg id="edges"></svg>
+
+      <div id="cards"></div>
+
+    </div>
+
+  </main>
+
+
+  <script>
+
+    const nodes = [
+
+      {
+        id: "present",
+        type: "future",
+        title: "Present — 2026",
+        text:
+          "Observed history reaches the simulation boundary.",
+        x: 400,
+        y: 500
+      },
+
+      {
+        id: "solarpunk",
+        type: "future",
+        title: "Solarpunk Transition",
+        text:
+          "Clean energy, ecological restoration and resilient communities.",
+        x: 720
+,
+        y: 300
+      },
+
+      {
+        id: "civilisation",
+        type: "system",
+        title: "5D Civilisation",
+        text:
+          "Population, technology, resources and institutions.",
+        x: 1040,
+        y: 500
+      },
+
+      {
+        id: "diplomacy",
+        type: "system",
+        title: "Diplomacy",
+        text:
+          "Actors, alliances, negotiation and strategic geography.",
+        x: 1360,
+        y: 300
+      },
+
+      {
+        id: "conflict",
+        type: "conflict",
+        title: "Future Conflict",
+        text:
+          "Energy, water, migration, governance or orbital resources.",
+        x: 1360,
+        y: 700
+      },
+
+      {
+        id: "chess",
+        type: "system",
+        title: "Chess / Battle",
+        text:
+          "One possible engine for resolving bounded conflict.",
+        x: 1680,
+        y: 500
+      },
+
+      {
+        id: "council",
+        type: "system",
+        title: "LLM Council",
+        text:
+          "Models analyse scenarios and propose alternative futures.",
+        x: 1040,
+        y: 850
+      },
+
+      {
+        id: "compute",
+        type: "resource",
+        title: "Compute",
+        text:
+          "Browser → Saturn Cloud → Vast.ai burst compute.",
+        x: 720,
+        y: 850
+      }
+
+    ];
+
+
+    const links = [
+
+      ["present", "solarpunk"],
+      ["solarpunk", "civilisation"],
+      ["civilisation", "diplomacy"],
+      ["civilisation", "conflict"],
+      ["diplomacy", "chess"],
+      ["conflict", "chess"],
+      ["council", "civilisation"],
+      ["compute", "council"]
+
+    ];
+
+
+    const viewport =
+      document.getElementById("viewport");
+
+    const world =
+      document.getElementById("world");
+
+    const cards =
+      document.getElementById("cards");
+
+    const edges =
+      document.getElementById("edges");
+
+
+    let camera = {
+      x: 20,
+      y: 20,
+      scale: 0.8
+    };
+
+
+    let drag = null;
+    let pan = null;
+
+
+    function node(id) {
+
+      return nodes.find(
+        item => item.id === id
+      );
+
+    }
+
+
+    function drawCards() {
+
+      cards.innerHTML = "";
+
+      nodes.forEach(item => {
+
+        const card =
+          document.createElement("div");
+
+        card.className =
+          "card " + item.type;
+
+        card.dataset.id =
+          item.id;
+
+        card.style.left =
+          item.x + "px";
+
+        card.style.top =
+          item.y + "px";
+
+        card.innerHTML = `
+          <h3>${item.title}</h3>
+          <p>${item.text}</p>
+          <span class="tag">
+            ${item.type}
+          </span>
+        `;
+
+        cards.appendChild(card);
+
+      });
+
+    }
+
+
+    function drawEdges() {
+
+      edges.innerHTML = "";
+
+      links.forEach(link => {
+
+        const a =
+          node(link[0]);
+
+        const b =
+          node(link[1]);
+
+        const line =
+          document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+          );
+
+        line.setAttribute(
+          "x1",
+          a.x + 105
+        );
+
+        line.setAttribute(
+          "y1",
+          a.y + 55
+        );
+
+        line.setAttribute(
+          "x2",
+          b.x + 105
+        );
+
+        line.setAttribute(
+          "y2",
+          b.y + 55
+        );
+
+        edges.appendChild(line);
+
+      });
+
+    }
+
+
+    function applyCamera() {
+
+      world.style.transform =
+        `translate(
+          ${camera.x}px,
+          ${camera.y}px
+        )
+        scale(${camera.scale})`;
+
+    }
+
+
+    function screenToWorld(x, y) {
+
+      const rect =
+        viewport.getBoundingClientRect();
+
+      return {
+
+        x:
+          (
+            x -
+            rect.left -
+            camera.x
+          ) /
+          camera.scale,
+
+        y:
+          (
+            y -
+            rect.top -
+            camera.y
+          ) /
+          camera.scale
+
+      };
+
+    }
+
+
+    viewport.addEventListener(
+      "pointerdown",
+      event => {
+
+        const card =
+          event.target.closest(".card");
+
+        viewport.setPointerCapture(
+          event.pointerId
+        );
+
+
+        if (card) {
+
+          const item =
+            node(card.dataset.id);
+
+          const point =
+            screenToWorld(
+              event.clientX,
+              event.clientY
+            );
+
+          drag = {
+
+            id: event.pointerId,
+            item,
+
+            dx:
+              point.x -
+              item.x,
+
+            dy:
+              point.y -
+              item.y
+
+          };
+
+        }
+
+        else {
+
+          pan = {
+
+            id:
+              event.pointerId,
+
+            startX:
+              event.clientX,
+
+            startY:
+              event.clientY,
+
+            x:
+              camera.x,
+
+            y:
+              camera.y
+
+          };
+
+        }
+
+      }
+    );
+
+
+    viewport.addEventListener(
+      "pointermove",      event => {
+
+        if (
+          drag &&
+          drag.id ===
+          event.pointerId
+        ) {
+
+          const point =
+            screenToWorld(
+              event.clientX,
+              event.clientY
+            );
+
+          drag.item.x =
+            point.x -
+            drag.dx;
+
+          drag.item.y =
+            point.y -
+            drag.dy;
+
+          const card =
+            document.querySelector(
+              `[data-id="${drag.item.id}"]`
+            );
+
+          card.style.left =
+            drag.item.x + "px";
+
+          card.style.top =
+            drag.item.y + "px";
+
+          drawEdges();
+
+        }
+
+        else if (
+          pan &&
+          pan.id ===
+          event.pointerId
+        ) {
+
+          camera.x =
+            pan.x +
+            event.clientX -
+            pan.startX;
+
+          camera.y =
+            pan.y +
+            event.clientY -
+            pan.startY;
+
+          applyCamera();
+
+        }
+
+      }
+    );
+
+
+    function release(event) {
+
+      if (
+        drag &&
+        drag.id ===
+        event.pointerId
+      ) {
+        drag = null;
+      }
+
+      if (
+        pan &&
+        pan.id ===
+        event.pointerId
+      ) {
+        pan = null;
+      }
+
+    }
+
+
+    viewport.addEventListener(
+      "pointerup",
+      release
+    );
+
+    viewport.addEventListener(
+      "pointercancel",
+      release
+    );
+
+
+    viewport.addEventListener(
+      "wheel",
+      event => {
+
+        event.preventDefault();
+
+        const factor =
+          event.deltaY < 0
+            ? 1.1
+            : 0.9;
+
+        camera.scale =
+          Math.max(
+            0.25,
+            Math.min(
+              2,
+              camera.scale *
+              factor
+            )
+          );
+
+        applyCamera();
+
+      },
+      {
+        passive: false
+      }
+    );
+
+
+    document
+      .getElementById("centre")
+      .addEventListener(
+        "click",
+        () => {
+
+          camera = {
+            x: 20,
+            y: 20,
+            scale: 0.8
+          };
+
+          applyCamera();
+
+        }
+      );
+
+
+    document
+      .getElementById("add")
+      .addEventListener(
+        "click",
+        () => {
+
+          nodes.push({
+
+            id:
+              "idea-" +
+              Date.now(),
+
+            type:
+              "future",
+
+            title:
+              "New Future State",
+
+            text:
+              "A new scenario, idea or resource.",
+
+            x: 900,
+            y: 600
+
+          });
+
+          drawCards();
+          drawEdges();
+
+        }
+      );
+
+
+    drawCards();
+    drawEdges();
+    applyCamera();
+
+  </script>
+
+</body>
+</html>
+     

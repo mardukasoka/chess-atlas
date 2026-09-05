@@ -1,0 +1,123 @@
+IMPLEMENT TEST REPAIR + HISTORICAL REGRESSION TESTS ONLY.
+
+Do not change production code.
+Do not change atlas.js, index.html, style.css, geography, map files, or dependencies.
+Do not push.
+
+ALLOWED TEST CHANGES
+
+1. Repair the truncated final test in chess.test.js.
+
+Complete the unfinished assertion so the test verifies:
+
+state.turn === "Black"
+
+Then close the test and outer describe blocks correctly.
+
+Do not alter the intent or surrounding test logic.
+
+2. Add focused historical timeline regression tests.
+
+Create the smallest appropriate test file for Atlas timeline/game alignment.
+
+Prefer a separate test file rather than expanding chess.test.js if that keeps engine-rule tests and UI/timeline tests clearly separated.
+
+REQUIRED REGRESSION COVERAGE
+
+A. Table-driven timeline mapping
+
+Verify:
+
+2500 BCE
+→ selector unavailable
+→ board hidden
+
+218 BCE
+→ selector unavailable
+→ board hidden
+
+216 BCE
+→ selector unavailable
+→ board hidden
+
+600 CE
+→ chaturanga
+→ board visible
+→ context indicates Timeline default
+
+800 CE
+→ shatranj
+→ board visible
+→ context indicates Timeline default
+
+1500 CE
+→ modern
+→ board visible
+→ context indicates Timeline default
+
+Present
+→ modern
+→ board visible
+→ context indicates Timeline default
+
+For unavailable nodes, verify the UI explains that no historically valid chess-family game is available.
+
+The Present case must include a fresh-page-load path so initialization order is covered.
+
+B. Manual exploration reset
+
+Test this exact sequence:
+
+1. Navigate to 218 BCE.
+2. Confirm selector unavailable and board hidden.
+3. Manually choose Chaturanga.
+4. Dispatch the existing selector change event.
+5. Confirm:
+   - board visible
+   - context says Manual exploration
+6. Move timeline to 216 BCE.
+7. Confirm:
+   - selector resets to unavailable
+   - board hidden
+   - manual context cleared
+8. Move timeline to 600 CE.
+9. Confirm:
+   - Chaturanga becomes selected automatically
+   - board visible
+   - context returns to Timeline default
+
+CONSTRAINTS
+
+- Use the project’s existing test stack.
+- Do not add jsdom or any new dependency if it is not already available.
+- If the existing test environment cannot support the Atlas UI test cleanly, stop and report instead of adding dependencies or inventing a new harness.
+- Keep the tests small and deterministic.
+- Do not duplicate the historical mapping logic inside the tests; exercise the actual production code.
+
+VALIDATION
+
+After changes run:
+
+- repaired chess.test.js
+- new Atlas regression tests
+- full existing test suite
+- syntax checks
+- git diff --check
+
+Report:
+
+1. exact files changed
+2. exact repaired assertion
+3. new test names
+4. test results
+5. any remaining baseline failures
+6. whether any production code was touched
+7. git status
+
+If all tests pass, create one local commit with message:
+
+Add historical timeline regression tests
+
+Do not push.
+
+Stop for review.

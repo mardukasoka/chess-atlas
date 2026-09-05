@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nuclide Atlas — N Z S</title>
+
+<style>
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #101216;
+  color: #eee;
+}
+
+main { padding: 14px; }
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+}
+
+h2 {
+  margin: 22px 0 8px;
+  font-size: 1.1rem;
+}
+
+.subtitle {
+  color: #aaa;
+  margin-bottom: 14px;
+}
+
+.layers {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #292e37;
+  color: white;
+}
+
+button.active { background: #5967e8; }
+
+.layer-title {
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.scroll {
+  overflow: auto;
+  border: 1px solid #343a46;
+  border-radius: 10px;
+  padding: 10px;
+  background: #171a20;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(14,52px);
+  grid-auto-rows: 52px;
+  gap: 3px;
+  min-width: max-content;
+}
+
+.cell {
+  border: 1px solid #303743;
+  border-radius: 5px;
+  background: #222730;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.empty { opacity: .16; }
+.nuclide { cursor: pointer; }
+
+.matter { background: #253b55; }
+.hyper { background: #493765; }
+.antimatter { background: #593038; }
+.antihyper { background: #633f62; }
+
+.selected { outline: 3px solid #ffd84d; }
+
+.symbol { font-weight: bold; }
+
+.mass {
+  font-size: .7rem;
+  color: #ccc;
+}
+
+.details,
+.panel {
+  margin-top: 12px;
+  border: 1px solid #343a46;
+  border-radius: 10px;
+  background: #171a20;
+  padding: 14px;
+}
+
+.details { min-height: 110px; }
+
+.coords {
+  color: #ffd84d;
+  font-family: monospace;
+}
+
+.note {
+  margin-top: 14px;
+  color: #aaa;
+  font-size: .85rem;
+  line-height: 1.45;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 10px;
+}
+
+.card {
+  border: 1px solid #343a46;
+  border-radius: 10px;
+  padding: 12px;
+  background: #1d2128;
+}
+
+.card strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.meta {
+  font-size: .82rem;
+  color: #b9c0cb;
+  line-height: 1.4;
+}
+
+.badge {
+  display: inline-block;
+  border: 1px solid #4a5260;
+  border-radius: 999px;
+  padding: 2px 7px;
+  font-size: .72rem;
+  margin: 2px 4px 2px 0;
+}
+
+a { color: #9eb0ff; }
+</style>
+</head>
+
+<body>
+<main>
+
+<h1>Nuclide Atlas</h1>
+<div class="subtitle">
+  N–Z nuclear map with selectable strangeness layer S
+</div>
+
+<div class="layers">
+  <button data-s="0" class="active">S = 0</button>
+  <button data-s="1">S = +1 Λ</button>
+  <button data-s="-1">S = −1 anti-Λ</button>
+</div>
+
+<div id="layerTitle" class="layer-title">
+  S = 0 — ordinary nuclear matter
+</div>
+
+<div class="scroll">
+  <div id="board" class="board"></div>
+</div>
+
+<div id="details" class="details">
+  Tap a nuclide to inspect it.
+</div>
+
+<h2>Matter ↔ Antimatter Pairs</h2>
+
+<div class="panel">
+  <div id="pairCards" class="cards"></div>
+</div>
+
+<h2>Exotic Bound States / Exotic Atoms</h2>
+
+<div class="panel">
+  <div id="exoticCards" class="cards"></div>
+
+  <div class="note">
+    Status labels are Atlas metadata and should be updated against
+    current primary references.
+
+    Historical reference:
+    <a
+      href="https://robertlovespi.net/2014/04/18/alphabetical-listing-of-known-exotic-atoms/"
+      target="_blank"
+      rel="noopener">
+      RobertLovesPi exotic-atoms list (2014)
+    </a>.
+
+    Current reference examples:
+    <a href="https://pdg.lbl.gov/" target="_blank" rel="noopener">
+      Particle Data Group
+    </a>
+    and
+    <a
+      href="https://home.cern/science/experiments/ASACUSA/"
+      target="_blank"
+      rel="noopener">
+      CERN ASACUSA
+    </a>.
+  </div>
+</div>
+
+<div class="note">
+  N = neutron coordinate<br>
+  Z = proton coordinate<br>
+  S = Atlas strangeness/hypernuclear layer<br><br>
+
+  Negative N and Z are used here as an Atlas visualization convention
+  for antimatter. They are not standard nuclear-chart notation.
+</div>
+
+</main>
+
+<script>
+const nuclides = [
+  {
+    name: "Proton",
+    symbol: "p",
+    N: 0,
+    Z: 1,
+    S: 0,
+    type: "matter"
+  },
+  {
+    name: "Neutron",
+    symbol: "n",
+    N: 1,
+    Z: 0,
+    S: 0,
+    type: "matter"
+  },
+  {
+    name: "Hydrogen-1",
+    symbol: "H",
+    A: 1,
+    N: 0,
+    Z: 1,
+    S: 0,
+    type: "matter"
+  },
+  {
+    name: "Deuterium",
+    symbol: "H",
+    A: 2,
+    N: 1,
+    Z: 1,
+    S: 0,
+    type: "matter"
+  },
+  {
+    name: "Tritium",
+    symbol: "H",
+    A: 3,
+    N: 2,
+    Z: 1,
+    S: 0,
+    type: "matter"
+  },
+  {
+    name: "Helium-3",
+    symbol: "He",
+    A: 3,
+    N: 1,
+    Z: 2,
+    S: 0,
+    type: "matter"
+  },
+  {
+    name: "Helium-4",
+    symbol: "He",
+    A: 4,
+    N: 2,
+    Z: 2,
+    S: 0,
+    type: "matter"
+  },
+  {
+    name: "Carbon-12",
+    symbol: "C",
+    A: 12,
+    N: 6,
+    Z: 6,
+    S: 0,
+    type: "matter"
+  },
+  {
+    name: "Oxygen-16",
+    symbol: "O",
+    A: 16,
+    N: 8,
+    Z: 8,
+    S: 0,
+    type: "matter"
+  },
+
+  {
+    name: "Hypertriton",
+    symbol: "ΛH",
+    A: 3,
+    N: 1,
+    Z: 1,
+    S: 1,
+    type: "hyper",
+    note: "Bound proton-neutron-Lambda hypernuclear system."
+  },
+  {
+    name: "Lambda Hydrogen-4",
+    symbol: "ΛH",
+    A: 4,
+    N: 2,
+    Z: 1,
+    S: 1,
+    type: "hyper",
+    note: "Lambda hypernucleus."
+  },
+  {
+    name: "Lambda Helium-4",
+    symbol: "ΛHe",
+    A: 4,
+    N: 1,
+    Z: 2,
+    S: 1,
+    type: "hyper",
+    note: "Lambda hypernucleus."
+  },
+  {
+    name: "Lambda Helium-5",
+    symbol: "ΛHe",
+    A: 5,
+    N: 2,
+    Z: 2,
+    S: 1,
+    type: "hyper",
+    note: "Lambda bound to a helium nuclear core."
+  },
+
+  {
+    name: "Antiproton",
+    symbol: "p̄",
+    N: 0,
+    Z: -1,
+    S: 0,
+    type: "antimatter"
+  },
+  {
+    name: "Antineutron",
+    symbol: "n̄",
+    N: -1,
+    Z: 0,
+    S: 0,
+    type: "antimatter"
+  },
+  {
+    name: "Antideuteron",
+    symbol: "d̄",
+    A: 2,
+    N: -1,
+    Z: -1,
+    S: 0,
+    type: "antimatter"
+  },
+  {
+    name: "Antihelium-3",
+    symbol: "H̄e",
+    A: 3,
+    N: -1,
+    Z: -2,
+    S: 0,
+    type: "antimatter"
+  },
+  {
+    name: "Antihelium-4",
+    symbol: "H̄e",
+    A: 4,
+    N: -2,
+    Z: -2,
+    S: 0,
+    type: "antimatter"
+  },
+  {
+    name: "Anti-Hypertriton",
+    symbol: "Λ̄H̄",
+    A: 3,
+    N: -1,
+    Z: -1,
+    S: -1,
+    type: "antihyper",
+    note: "Antimatter counterpart of the hypertriton."
+  }
+];
+
+const particlePairs = [
+  {
+    id: "electron-positron",
+    matter: "electron (e−)",
+    antimatter: "positron (e+)",
+    category: "charged lepton",
+    status: "established",
+    boundStates: ["positronium"],
+    notes: "Particle-antiparticle pair.",
+    sources: ["PDG"]
+  },
+  {
+    id: "proton-antiproton",
+    matter: "proton (p)",
+    antimatter: "antiproton (p̄)",
+    category: "baryon",
+    status: "established",
+    boundStates: ["protonium", "antiprotonic helium"],
+    notes: "Composite hadron pair.",
+    sources: ["PDG", "CERN ASACUSA"]
+  },
+  {
+    id: "neutron-antineutron",
+    matter: "neutron (n)",
+    antimatter: "antineutron (n̄)",
+    category: "baryon",
+    status: "established",
+    boundStates: [],
+    notes: "Neutral composite hadron pair.",
+    sources: ["PDG"]
+  },
+  {
+    id: "muon",
+    matter: "muon− (μ−)",
+    antimatter: "muon+ (μ+)",
+    category: "charged lepton",
+    status: "established",
+    boundStates: ["muonic hydrogen"],
+    notes: "Second-generation charged lepton pair.",
+    sources: ["PDG"]
+  },
+  {
+    id: "tau",
+    matter: "tau− (τ−)",
+    antimatter: "tau+ (τ+)",
+    category: "charged lepton",
+    status: "established",
+    boundStates: [],
+    notes: "Third-generation charged lepton pair.",
+    sources: ["PDG"]
+  },
+  {
+    id: "pion",
+    matter: "pion+ (π+)",
+    antimatter: "pion− (π−)",
+    category: "meson",
+    status: "established",
+    boundStates: ["pionium"],
+    notes: "Charged pion pair.",
+    sources: ["PDG"]
+  },
+  {
+    id: "kaon",
+    matter: "kaon+ (K+)",
+    antimatter: "kaon− (K−)",
+    category: "meson",
+    status: "established",
+    boundStates: ["kaonium"],
+    notes: "Charged kaon pair.",
+    sources: ["PDG"]
+  },
+  {
+    id: "nu-e",
+    matter: "electron neutrino (νe)",
+    antimatter: "electron antineutrino (ν̄e)",
+    category: "neutrino",
+    status: "established",
+    boundStates: [],
+    notes: "Flavour-labelled neutrino/antineutrino entry.",
+    sources: ["PDG"]
+  },
+  {
+    id: "nu-mu",
+    matter: "muon neutrino (νμ)",
+    antimatter: "muon antineutrino (ν̄μ)",
+    category: "neutrino",
+    status: "established",
+    boundStates: [],
+    notes: "Flavour-labelled neutrino/antineutrino entry.",
+    sources: ["PDG"]
+  },
+  {
+    id: "nu-tau",
+    matter: "tau neutrino (ντ)",
+    antimatter: "tau antineutrino (ν̄τ)",
+    category: "neutrino",
+    status: "established",
+    boundStates: [],
+    notes: "Flavour-labelled neutrino/antineutrino entry.",
+    sources: ["PDG"]
+  }
+];
+
+const exoticStates = [
+  {
+    id: "positronium",
+    name: "Positronium",
+    composition: "e− + e+",
+    kind: "onium",
+    status: "observed",
+    notes: "Electromagnetically bound electron-positron system.",
+    sources: ["PDG"]
+  },
+  {
+    id: "protonium",
+    name: "Protonium",
+    composition: "p + p̄",
+    kind: "hadronic atom",
+    status: "observed",
+    notes: "Proton-antiproton bound system.",
+    sources: ["historical exotic-atom literature"]
+  },
+  {
+    id: "pionium",
+    name: "Pionium",
+    composition: "π+ + π−",
+    kind: "mesonic atom",
+    status: "observed",
+    notes: "Short-lived charged-pion bound state.",
+    sources: ["PDG / precision hadron-atom experiments"]
+  },
+  {
+    id: "kaonium",
+    name: "Kaonium",
+    composition: "K+ + K−",
+    kind: "mesonic bound-state concept",
+    status: "candidate",
+    notes:
+      "Candidate status retained pending a selected primary Atlas reference.",
+    sources: ["PDG terminology / literature review"]
+  },
+  {
+    id: "muonic-hydrogen",
+    name: "Muonic hydrogen",
+    composition: "p + μ−",
+    kind: "exotic atom",
+    status: "observed",
+    notes: "Muon replaces the electron in hydrogen.",
+    sources: ["precision spectroscopy literature"]
+  },
+  {
+    id: "antiprotonic-helium",
+    name: "Antiprotonic helium",
+    composition: "He nucleus + e− + p̄",
+    kind: "hybrid exotic atom",
+    status: "observed",
+    notes:
+      "Matter-antimatter hybrid atom used for precision antiproton studies.",
+    sources: ["CERN ASACUSA"]
+  }
+];
+
+const board = document.getElementById("board");
+const details = document.getElementById("details");
+const layerTitle = document.getElementById("layerTitle");
+const buttons = document.querySelectorAll("[data-s]");
+const pairCards = document.getElementById("pairCards");
+const exoticCards = document.getElementById("exoticCards");
+
+let currentS = 0;
+let selected = null;
+
+const minN = -3;
+const maxN = 10;
+const minZ = -3;
+const maxZ = 10;
+
+function getNuclide(N, Z, S) {
+  return nuclides.find(
+    n => n.N === N && n.Z === Z && n.S === S
+  );
+}
+
+/*
+ * Safe formatter for future mass, lifetime, binding-energy and
+ * decay-width datasets. Never call toFixed() on arbitrary data.
+ */
+function safeNumber(value, digits = 3) {
+  return (
+    typeof value === "number" &&
+    Number.isFinite(value)
+  )
+    ? value.toFixed(digits)
+    : String(value ?? "");
+}
+
+function render() {
+  board.innerHTML = "";
+
+  for (let Z = maxZ; Z >= minZ; Z--) {
+    for (let N = minN; N <= maxN; N++) {
+      const cell = document.createElement("div");
+      cell.className = "cell";
+
+      const n = getNuclide(N, Z, currentS);
+
+      if (!n) {
+        cell.classList.add("empty");
+      } else {
+        cell.classList.add("nuclide", n.type);
+
+        if (selected === n) {
+          cell.classList.add("selected");
+        }
+
+        cell.innerHTML =
+          `<div class="symbol">${n.symbol}</div>` +
+          `<div class="mass">${n.A ? "A=" + n.A : ""}</div>`;
+
+        cell.onclick = () => {
+          selected = n;
+          showDetails(n);
+          render();
+        };
+      }
+
+      board.appendChild(cell);
+    }
+  }
+}
+
+function showDetails(n) {
+  details.innerHTML = `
+    <strong>${n.name}</strong><br><br>
+    Symbol: ${n.symbol}<br>
+    <span class="coords">
+      N=${n.N} Z=${n.Z} S=${n.S}
+    </span><br>
+    ${n.A ? "Mass number A=" + n.A + "<br>" : ""}
+    Layer: ${n.type}<br><br>
+    ${n.note || ""}
+  `;
+}
+
+function renderPairs() {
+  pairCards.innerHTML = particlePairs.map(p => `
+    <article class="card">
+      <strong>${p.matter} ↔ ${p.antimatter}</strong>
+      <div class="meta">
+        <span class="badge">${p.category}</span>
+        <span class="badge">${p.status}</span><br>
+
+        ${
+          p.boundStates.length
+            ? `Bound states: ${p.boundStates.join(", ")}<br>`
+            : ""
+        }
+
+        ${p.notes}<br>
+        Sources: ${p.sources.join(", ")}
+      </div>
+    </article>
+  `).join("");
+}
+
+function renderExotics() {
+  exoticCards.innerHTML = exoticStates.map(x => `
+    <article class="card">
+      <strong>${x.name}</strong>
+      <div class="meta">
+        ${x.composition}<br>
+        <span class="badge">${x.kind}</span>
+        <span class="badge">${x.status}</span><br>
+        ${x.notes}<br>
+        Sources: ${x.sources.join(", ")}
+      </div>
+    </article>
+  `).join("");
+}
+
+buttons.forEach(button => {
+  button.onclick = () => {
+    currentS = Number(button.dataset.s);
+    selected = null;
+
+    buttons.forEach(b => b.classList.remove("active"));
+    button.classList.add("active");
+
+    if (currentS === 0) {
+      layerTitle.textContent =
+        "S = 0 — ordinary nuclei and antinuclei";
+    }
+
+    if (currentS === 1) {
+      layerTitle.textContent =
+        "S = +1 — Lambda hypernuclei";
+    }
+
+    if (currentS === -1) {
+      layerTitle.textContent =
+        "S = −1 — anti-Lambda hypernuclei";
+    }
+
+    details.textContent = "Tap a nuclide to inspect it.";
+    render();
+  };
+});
+
+render();
+renderPairs();
+renderExotics();
+</script>
+
+</body>
+</html>

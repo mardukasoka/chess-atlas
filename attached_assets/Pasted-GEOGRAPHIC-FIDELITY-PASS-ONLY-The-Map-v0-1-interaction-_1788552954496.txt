@@ -1,0 +1,74 @@
+GEOGRAPHIC FIDELITY PASS ONLY.
+
+The Map v0.1 interaction architecture is approved.
+
+Do not redesign:
+- camera
+- pan/zoom
+- hit testing
+- region selection
+- Chess/Diplomacy transition
+- Atlas integration
+- controls
+- renderer architecture
+
+The current physical world geometry is deliberately schematic and is not accurate enough for the Atlas.
+
+Replace ONLY the schematic physical Earth/continent geometry with a geographically accurate, aggressively simplified world outline derived from a reputable published geographic dataset such as Natural Earth.
+
+Requirements:
+
+1. The whole Earth must be immediately recognizable.
+2. Preserve realistic continental proportions and positions.
+3. Preserve important large-scale coastline features.
+4. Include major islands where useful at world scale.
+5. Antarctica should have realistic geometry rather than a rectangular strip.
+6. Keep the map lightweight enough for the existing fast mobile interaction.
+7. Preserve the existing preprojected Atlas coordinate system if practical.
+8. Do not add a runtime mapping framework.
+9. Do not add historical borders or modern country borders.
+10. Keep Atlas navigation regions separate from physical land geometry.
+11. Do not change the existing selectable yellow region behavior.
+12. Do not add Alexander, Macedon, Persia, armies, cities, routes, fronts or historical ownership.
+
+Accuracy is now more important than retaining the current ~3 KB geography asset.
+
+A geography asset in the tens or even low hundreds of KB is acceptable if necessary for a substantially more accurate world.
+
+Record:
+- exact source dataset
+- source version if available
+- license/public-domain status
+- transformation/simplification performed
+
+Update docs/geography-provenance.md accordingly.
+
+Before replacing the asset, preserve the current working version so the change can be reviewed/reverted through Git.
+
+After implementation test on the existing renderer:
+
+- full-world Reset view
+- portrait viewport
+- landscape viewport
+- pinch zoom
+- pan
+- navigation-region selection
+- Focus Selection
+- Chess → Diplomacy transition
+- minimum zoom clamp
+- asset loading
+- syntax/JSON validation
+- git diff --check
+
+Report:
+1. source used
+2. exact files changed
+3. old/new geography asset sizes
+4. number of physical geometry points before/after
+5. whether any runtime JS changed and why
+6. mobile interaction result
+7. git status
+
+Do not push.
+Do not begin historical overlays.
+Stop for review.

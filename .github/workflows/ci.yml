@@ -1,0 +1,87 @@
+name: Chess Atlas Validator
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+
+jobs:
+
+  validate-and-verify:
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+
+        with:
+          node-version: "20"
+
+
+      - name: Install lightweight test environment
+        run: |
+          npm init -y
+          npm install --save-dev jest@29 jest-environment-jsdom@29
+
+
+      - name: Validate engine syntax
+        run: node --check engine.js
+
+
+      - name: Validate browser syntax
+        run: node --check chess.js
+
+
+      - name: Validate Atlas syntax
+        run: node --check atlas.js
+
+
+      - name: Verify local assets referenced by index.html
+        shell: bash
+
+        run: |
+
+          grep -oE 'href="([^"#]+)"|src="([^"#]+)"' index.html |
+          cut -d'"' -f2 |
+          while read -r asset; do
+
+            case "$asset" in
+
+              http://*|https://*)
+
+                echo "Skipping remote URL: $asset"
+                ;;
+
+              *)
+
+                clean_asset="${asset%%\?*}"
+                clean_asset="${clean_asset%%#*}"
+
+                if [ ! -f "$clean_asset" ]; then
+
+                  echo "::error file=index.html::Missing local asset: $clean_asset"
+
+                  exit 1
+
+                fi
+
+                echo "Found: $clean_asset"
+                ;;
+
+            esac
+
+          done
+
+
+      - name: Run historical board-state tests
+        run: npx jest chess.test.js --runInBand
