@@ -1,6 +1,6 @@
 "use strict";
 
-const GeometryApi =
+const RuleGeometryApi =
   typeof module !==
     "undefined" &&
   module.exports
@@ -10,6 +10,23 @@ const GeometryApi =
 
 const vectorCache =
   new Map();
+
+const MAX_VECTOR_COUNT =
+  100000;
+
+
+function guardVectorCount(
+  count
+) {
+  if (
+    !Number.isSafeInteger(count) ||
+    count > MAX_VECTOR_COUNT
+  ) {
+    throw new RangeError(
+      "Requested vector set is too large"
+    );
+  }
+}
 
 
 function validateDimension(
@@ -66,6 +83,10 @@ function axisVectors(
     "axis",
     dimension,
     size => {
+      guardVectorCount(
+        2 * size
+      );
+
       const vectors = [];
 
       for (
@@ -97,6 +118,12 @@ function diagonalVectors(
     "diagonal",
     dimension,
     size => {
+      guardVectorCount(
+        2 *
+        size *
+        (size - 1)
+      );
+
       const vectors = [];
 
       for (
@@ -143,6 +170,8 @@ function queenVectors(
       const vectors = [];
       const total =
         (3 ** size) - 1;
+
+      guardVectorCount(total);
 
       for (
         let encoded = 1;
@@ -191,6 +220,12 @@ function knightVectors(
     "knight",
     dimension,
     size => {
+      guardVectorCount(
+        4 *
+        size *
+        (size - 1)
+      );
+
       const vectors = [];
 
       for (
@@ -249,7 +284,7 @@ function movement(
     vectors.map(
       vector => {
         const value =
-          GeometryApi
+          RuleGeometryApi
             .validateCoordinate(
               vector
             );
@@ -287,6 +322,24 @@ function movement(
     );
   }
 
+  const maxSteps =
+    options.maxSteps ===
+      undefined
+      ? null
+      : options.maxSteps;
+
+  if (
+    maxSteps !== null &&
+    (
+      !Number.isInteger(maxSteps) ||
+      maxSteps < 0
+    )
+  ) {
+    throw new RangeError(
+      "Movement maxSteps must be a non-negative integer"
+    );
+  }
+
   return Object.freeze({
     kind,
     vectors:
@@ -294,11 +347,7 @@ function movement(
         normalized
       ),
     captureMode,
-    maxSteps:
-      options.maxSteps ===
-        undefined
-        ? null
-        : options.maxSteps
+    maxSteps
   });
 }
 
@@ -393,7 +442,7 @@ function pawn(
             captureVectors.map(
               vector =>
                 Object.freeze(
-                  GeometryApi
+                  RuleGeometryApi
                     .validateCoordinate(
                       vector
                     )
@@ -476,7 +525,7 @@ function shapeFor(
   if (
     dimensions !== undefined
   ) {
-    return GeometryApi
+    return RuleGeometryApi
       .createBoardShape(
         dimensions
       );
@@ -571,9 +620,10 @@ function moveRecord(
     to: [...destination],
     kind,
     capture:
-      Boolean(occupant),
+      occupant !== undefined &&
+      occupant !== null,
     captured:
-      occupant || null,
+      occupant ?? null,
     promotion:
       Boolean(promotion)
   };
@@ -595,7 +645,7 @@ function generateStepLike(
     of movementDefinition.vectors
   ) {
     const destination =
-      GeometryApi.add(
+      RuleGeometryApi.add(
         origin,
         vector
       );
@@ -613,9 +663,11 @@ function generateStepLike(
         occupancy,
         destination
       );
-    const friendly =
+    const occupied =
       occupant !== undefined &&
-      occupant !== null &&
+      occupant !== null;
+    const friendly =
+      occupied &&
       sideReader(occupant) ===
         movingSide;
 
@@ -623,7 +675,7 @@ function generateStepLike(
       !canAdd(
         movementDefinition
           .captureMode,
-        Boolean(occupant),
+        occupied,
         friendly
       )
     ) {
@@ -670,7 +722,7 @@ function generateSlide(
     of movementDefinition.vectors
   ) {
     let destination =
-      GeometryApi.step(
+      RuleGeometryApi.step(
         origin,
         vector
       );
@@ -725,7 +777,7 @@ function generateSlide(
       }
 
       destination =
-        GeometryApi.step(
+        RuleGeometryApi.step(
           destination,
           vector
         );
@@ -746,7 +798,7 @@ function matchesStartingPoint(
       definition.startingCoordinate
     )
   ) {
-    return GeometryApi.equals(
+    return RuleGeometryApi.equals(
       origin,
       definition.startingCoordinate
     );
@@ -773,6 +825,23 @@ function generatePawn(
   movingSide,
   sideReader
 ) {
+  if (
+    definition.forwardAxis >=
+      origin.length ||
+    definition.captureAxes.some(
+      axis =>
+        !Number.isInteger(axis) ||
+        axis < 0 ||
+        axis >= origin.length ||
+        axis ===
+          definition.forwardAxis
+    )
+  ) {
+    throw new RangeError(
+      "Pawn axes must fit distinct board dimensions"
+    );
+  }
+
   const moves = [];
   const forward =
     Array(
@@ -784,14 +853,17 @@ function generatePawn(
     definition.forwardDirection;
 
   const addForward =
-    distance => {
+    (
+      distance,
+      checkPath = false
+    ) => {
       const vector =
         forward.map(
           component =>
             component * distance
         );
       const destination =
-        GeometryApi.add(
+        RuleGeometryApi.add(
           origin,
           vector
         );
@@ -802,6 +874,45 @@ function generatePawn(
         )
       ) {
         return false;
+      }
+
+      if (checkPath) {
+        for (
+          let stepDistance = 1;
+          stepDistance <
+            distance;
+          stepDistance++
+        ) {
+          const intermediate =
+            RuleGeometryApi.step(
+              origin,
+              forward,
+              stepDistance
+            );
+          const intermediateOccupant =
+            shape.contains(
+              intermediate
+            )
+              ? occupancyAt(
+                  occupancy,
+                  intermediate
+                )
+              : null;
+
+          if (
+            !shape.contains(
+              intermediate
+            ) ||
+            (
+              intermediateOccupant !==
+                undefined &&
+              intermediateOccupant !==
+                null
+            )
+          ) {
+            return false;
+          }
+        }
       }
 
       const occupant =
@@ -847,7 +958,8 @@ function generatePawn(
     )
   ) {
     addForward(
-      definition.multiStep
+      definition.multiStep,
+      true
     );
   }
 
@@ -876,7 +988,7 @@ function generatePawn(
     const vector of captureVectors
   ) {
     const destination =
-      GeometryApi.add(
+      RuleGeometryApi.add(
         origin,
         vector
       );
@@ -945,7 +1057,7 @@ function generateMoves({
       dimensions
     );
   const start =
-    GeometryApi.validateCoordinate(
+    RuleGeometryApi.validateCoordinate(
       origin,
       boardShape.dimensions.length
     );
