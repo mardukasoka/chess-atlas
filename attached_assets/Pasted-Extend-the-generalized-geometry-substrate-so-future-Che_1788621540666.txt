@@ -1,0 +1,77 @@
+Extend the generalized geometry substrate so future Chess Atlas variants can use board dimensions other than 8×8, including multidimensional boards.
+
+Do not implement a new playable variant yet.
+
+GOAL
+
+Remove unnecessary assumptions that every chess-family board is exactly 8×8, while preserving current 8×8 behavior and the existing ChessEngine API.
+
+Support configuration such as:
+
+[8, 8]
+[10, 8]
+[4, 4, 2]
+[4, 4, 2, 2]
+
+The architecture must also remain compatible with future sparse or unbounded boards for Infinite Chess.
+
+IMPORTANT
+
+- Do not treat time/history as a spatial dimension.
+- Do not encode quantum state as a board dimension.
+- Do not build 4D UI/rendering yet.
+- Do not import external 4D chess code.
+- Do not change existing historical chess rules unnecessarily.
+- Existing Chaturanga, Shatranj, Acedrex, and Modern Chess behavior must remain unchanged.
+
+IMPLEMENTATION
+
+Add a board-shape/dimensions concept to the engine or a small board abstraction.
+
+Avoid hard-coded assumptions such as:
+
+row < 8
+col < 8
+Array(8)
+8×8 traversal loops
+
+where those assumptions are part of generic board handling.
+
+Keep the current historical chess profiles explicitly configured as 8×8.
+
+Where possible, separate:
+
+- geometry dimensions
+- board storage
+- game rules
+- rendering assumptions
+
+For multidimensional boards, prefer generic coordinate arrays rather than nested arrays of arbitrary depth.
+
+A sparse Map-based representation may be introduced as an abstraction or future-compatible interface, but do not migrate existing 8×8 chess to a more complex storage model unless there is a clear benefit.
+
+TESTS
+
+Add tests for:
+
+- 8×8 compatibility
+- rectangular boards
+- 3D bounded boards
+- 4D bounded boards
+- invalid coordinates
+- coordinate serialization/keying if introduced
+- iteration over finite board coordinates
+- preservation of existing chess tests
+
+DELIVERABLE
+
+Report:
+
+1. files changed
+2. remaining 8×8 assumptions
+3. how board dimensions are represented
+4. whether storage remains compatible with sparse/infinite boards
+5. all test results
+6. recommended next step toward a playable 4D variant
+
+Do not implement the playable 4D game in this task.
