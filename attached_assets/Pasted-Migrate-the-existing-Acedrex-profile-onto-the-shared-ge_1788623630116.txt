@@ -1,0 +1,163 @@
+Migrate the existing Acedrex profile onto the shared generic rule kernel with exact legacy parity.
+
+Do not change "rules.js" unless a genuinely reusable primitive is missing.
+
+Use the current Acedrex implementation as the parity oracle.
+
+Create a dedicated:
+
+"acedrex-rules.js"
+
+and, if useful, a small explicit variant-context object passed into move generation.
+
+The generic rule kernel must remain stateless.
+
+STATE CONTEXT
+
+Pass the existing engine state into Acedrex movement generation explicitly.
+
+At minimum:
+
+{
+  queenHasMoved,
+  captureOccurred
+}
+
+Do not:
+
+- store these values inside "rules.js"
+- encode them in coordinates
+- create hidden global state
+- couple Acedrex rules directly to DOM/UI state
+
+MOVEMENT MAPPING
+
+Preserve the current Chess Atlas Acedrex behavior exactly.
+
+Map:
+
+- rook → orthogonal sliding
+- king → one-square king movement
+- knight → knight jump
+- bishop/elephant → existing two-square diagonal jump
+- queen → normally one diagonal step
+- pawn → existing Acedrex pawn movement/capture behavior
+
+QUEEN SPECIAL RULE
+
+Before the queen has moved, preserve the existing additional two-square diagonal move.
+
+Important:
+
+- reproduce exactly whether it is a jump
+- reproduce exactly whether intermediate occupancy matters
+- preserve the current rule that this special move is non-capturing if that is what the legacy implementation does
+- after the queen has moved, this extra move must disappear
+
+Do not infer or “correct” the rule from external historical sources during migration.
+
+Use "legacyPseudoMoves()" as the authority.
+
+PAWN SPECIAL RULE
+
+Preserve the existing capture-dependent pawn behavior.
+
+Pass "captureOccurred" explicitly into Acedrex movement generation.
+
+Verify exact parity for:
+
+- pawn movement before any capture
+- pawn movement after a capture
+- pawn captures
+- any existing double-step behavior
+- promotion-boundary metadata
+
+PROMOTION
+
+Keep actual promotion eligibility and piece replacement in "ChessEngine".
+
+If the current Acedrex implementation restricts promotion based on whether the original queen still exists, preserve that behavior exactly.
+
+Do not move this stateful execution rule into the generic movement kernel.
+
+PARITY TESTS
+
+Add "acedrex-rules-parity.test.js".
+
+Cover at minimum:
+
+- entire starting position
+- rook
+- king
+- knight
+- bishop/elephant jump
+- queen normal movement
+- queen special first-move movement
+- queen special movement disappearing after first queen move
+- non-capturing restriction on the special queen move
+- intermediate blocker behavior for that special move
+- pawn before "captureOccurred"
+- pawn after "captureOccurred"
+- pawn capture
+- promotion boundary
+- actual promotion behavior
+- friendly blocking
+- enemy capture
+- king-safety filtering
+- representative legal move sequence
+- state restoration preserving "queenHasMoved" and "captureOccurred"
+
+Compare both pseudo-legal and king-safe legal destinations against the legacy implementation.
+
+ARCHITECTURE
+
+Prefer a call resembling:
+
+AcedrexRules.generateMoves({
+  board,
+  shape,
+  row,
+  col,
+  context: {
+    queenHasMoved,
+    captureOccurred
+  }
+});
+
+The exact API may differ if a cleaner interface fits the current codebase.
+
+Keep all Acedrex-specific state interpretation in "acedrex-rules.js".
+
+ENGINE RESPONSIBILITIES TO RETAIN
+
+"ChessEngine" should continue controlling:
+
+- check and king safety
+- checkmate/stalemate
+- bare-king behavior
+- turn management
+- move execution
+- promotion replacement
+- persistent variant state
+- state restoration
+- selection/public API
+
+Do not delete the legacy generator yet.
+
+TEST / REPORT
+
+All existing tests must remain green.
+
+Report:
+
+1. files changed
+2. Acedrex movement mapping
+3. variant-context API
+4. behavior now using shared rules
+5. behavior retained in "ChessEngine"
+6. parity results
+7. total test count
+8. discrepancies
+9. whether the historical chess migration can now be considered complete
+
+Do not begin Infinite Chess, 4D Chess, Quantum Chess, or 5D Chess in this task.
