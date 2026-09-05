@@ -5,6 +5,13 @@ const GeometryApi =
     ? require("./geometry.js")
     : window.Geometry;
 
+const ModernChessRulesApi =
+  typeof module !==
+    "undefined" &&
+  module.exports
+    ? require("./modern-rules.js")
+    : window.ChessAtlasModernRules;
+
 
 const GLYPHS = {
   wK: "♔",
@@ -1006,7 +1013,69 @@ row ===
   }
 
 
+  modernMoveCandidates(
+    row,
+    col,
+    board = this.board
+  ) {
+    return ModernChessRulesApi
+      .generateMoves({
+        board,
+        shape:
+          this.boardShape,
+        row,
+        col
+      });
+  }
+
+
+  modernPseudoMoves(
+    row,
+    col,
+    board = this.board
+  ) {
+    return this
+      .modernMoveCandidates(
+        row,
+        col,
+        board
+      )
+      .map(
+        move => ({
+          row: move.to[0],
+          col: move.to[1]
+        })
+      );
+  }
+
+
   pseudoMoves(
+    row,
+    col,
+    board = this.board
+  ) {
+    if (
+      this.profileId ===
+      "modern"
+    ) {
+      return this
+        .modernPseudoMoves(
+          row,
+          col,
+          board
+        );
+    }
+
+    return this
+      .legacyPseudoMoves(
+        row,
+        col,
+        board
+      );
+  }
+
+
+  legacyPseudoMoves(
     row,
     col,
     board = this.board
