@@ -1,0 +1,179 @@
+Build a generic rule layer for Chess Atlas that can operate on arbitrary coordinate arrays and sparse occupancy.
+
+Do NOT implement a playable 4D UI yet.
+
+GOAL
+
+Create a compact rule kernel capable of expressing chess-family movement on boards such as:
+
+[8, 8]
+[4, 4, 2]
+[4, 4, 2, 2]
+
+and compatible with sparse/unbounded geometry where practical.
+
+The rule layer must be independent from DOM rendering and independent from historical timeline/state-graph logic.
+
+ARCHITECTURE
+
+Keep these separate:
+
+1. Geometry
+   
+   - coordinates
+   - vectors
+   - rays
+   - bounds
+   - board shapes
+   - CoordinateMap
+
+2. Rule kernel
+   
+   - piece movement patterns
+   - occupancy
+   - capture legality
+   - sliding/blocking
+   - move generation
+
+3. Variant profile
+   
+   - board dimensions
+   - piece definitions
+   - starting state
+   - special rules
+
+4. State systems
+   
+   - ordinary state
+   - quantum state later
+   - timeline/branch state later
+
+5. Rendering
+   
+   - existing 2D renderer
+   - future multidimensional projections
+
+DO NOT encode quantum state or timelines into coordinates.
+
+MOVEMENT MODEL
+
+Represent movement generically using coordinate vectors.
+
+Support reusable primitives for:
+
+- step moves
+- sliding/ray moves
+- jumping moves
+- occupancy-aware movement
+- capture-only movement
+- non-capturing movement
+
+Design the API so a variant can define movement mathematically rather than hard-code every legal destination.
+
+For an N-dimensional board, support definitions equivalent to:
+
+ROOK
+Exactly one non-zero coordinate component.
+
+BISHOP
+Exactly two non-zero coordinate components with equal absolute magnitude.
+
+QUEEN
+Any non-empty combination of coordinate axes, with equal absolute movement along all active axes.
+
+KING
+Any non-empty combination of axes with magnitude 1.
+
+KNIGHT
+Permutation of:
+[2,1,0,...]
+including sign variations.
+
+These should be generated from the board dimensionality rather than manually enumerated for 4D.
+
+PAWNS
+
+Do not attempt to create one universal pawn rule.
+
+Provide a configurable pawn-like movement definition so variants can specify:
+
+- forward axis
+- forward direction
+- starting coordinate/rank
+- one-step movement
+- optional multi-step movement
+- allowed capture axes
+- promotion boundary
+
+Preserve existing historical chess pawn behavior.
+
+OCCUPANCY
+
+Use a generic occupancy interface compatible with "CoordinateMap".
+
+It should distinguish:
+
+- empty
+- friendly piece
+- enemy piece
+
+Sliding movement must stop at the first occupied square.
+
+Jumping movement must ignore intermediate occupancy.
+
+VARIANT PROFILE
+
+Add a minimal test/reference variant for multidimensional rules, but do NOT expose it in the public UI yet.
+
+A suitable reference is a 4D board:
+
+dimensions: [4,4,2,2]
+
+Use it only for automated rule tests.
+
+Do not copy external 4D Chess source code.
+
+TESTS
+
+Test generic movement mathematically.
+
+Include:
+
+- 2D rook movement
+- 3D rook movement
+- 4D rook movement
+- multidimensional bishop vectors
+- multidimensional queen vectors
+- multidimensional king vectors
+- N-dimensional knight vector generation
+- sliding blocked by friendly piece
+- sliding capture of enemy piece
+- jumping over occupied intermediate coordinates
+- invalid/out-of-bounds destinations
+- rectangular board dimensions
+- [4,4,2,2] board behavior
+- existing historical ChessEngine tests must continue to pass
+
+IMPORTANT PERFORMANCE CONSTRAINT
+
+Do not generate enormous move-vector sets unnecessarily.
+
+Cache reusable vector sets by dimensionality where appropriate.
+
+Keep implementation small and browser-friendly.
+
+Do not add dependencies.
+
+DELIVERABLE
+
+Report:
+
+1. files created/changed
+2. rule-kernel API
+3. how movement vectors are generated
+4. test results
+5. performance considerations
+6. remaining coupling to old 2D ChessEngine
+7. recommended next step
+
+Do not implement rendering or expose a new playable variant yet.
