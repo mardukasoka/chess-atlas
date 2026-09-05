@@ -26,6 +26,13 @@ const ChaturangaChessRulesApi =
     ? require("./chaturanga-rules.js")
     : window.ChessAtlasChaturangaRules;
 
+const AcedrexChessRulesApi =
+  typeof module !==
+    "undefined" &&
+  module.exports
+    ? require("./acedrex-rules.js")
+    : window.ChessAtlasAcedrexRules;
+
 
 const GLYPHS = {
   wK: "♔",
@@ -1135,6 +1142,48 @@ row ===
   }
 
 
+  acedrexMoveCandidates(
+    row,
+    col,
+    board = this.board
+  ) {
+    return AcedrexChessRulesApi
+      .generateMoves({
+        board,
+        shape:
+          this.boardShape,
+        row,
+        col,
+        context: {
+          queenHasMoved:
+            this.queenHasMoved,
+          captureOccurred:
+            this.captureOccurred
+        }
+      });
+  }
+
+
+  acedrexPseudoMoves(
+    row,
+    col,
+    board = this.board
+  ) {
+    return this
+      .acedrexMoveCandidates(
+        row,
+        col,
+        board
+      )
+      .map(
+        move => ({
+          row: move.to[0],
+          col: move.to[1]
+        })
+      );
+  }
+
+
   pseudoMoves(
     row,
     col,
@@ -1170,6 +1219,18 @@ row ===
     ) {
       return this
         .chaturangaPseudoMoves(
+          row,
+          col,
+          board
+        );
+    }
+
+    if (
+      this.profileId ===
+      "acedrex"
+    ) {
+      return this
+        .acedrexPseudoMoves(
           row,
           col,
           board
