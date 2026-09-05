@@ -1,0 +1,55 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="394fa5c3-e9a1-e59c-ccea-bd2328c480e8")}catch(e){}}();
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,340768,e=>{"use strict";var r=e.i(351623);let n=r.gql`
+    fragment PauseBannerArrangement on CustomerBillingArrangement {
+  __typename
+  ... on CustomerSelfServeSubscription {
+    pauseStatus
+    pauseUpdateId
+    cancellationScheduledAt
+    resumesAt
+    subscriptionEndDate
+    plan {
+      __typename
+      ... on TieredSelfServePlan {
+        name
+        tier
+      }
+      ... on FlatSelfServePlan {
+        name
+      }
+    }
+  }
+  ... on CustomerSalesContract {
+    id
+    name
+  }
+}
+    `;e.s(["PauseBannerArrangementFragmentDoc",0,n])},354967,e=>{"use strict";var r=e.i(276385),n=e.i(15801),a=e.i(389959),t=e.i(242917),i=e.i(528326),o=e.i(64017);e.s(["HomeRouteModals",0,function(){let e=(0,n.useRouter)(),{show:l}=(0,t.useGlobalModal)(),[s,u]=(0,a.useState)(!!e.query.supportform);return(0,a.useEffect)(()=>{if(!e.query.upgrade)return;let r=e.query.upgrade,n=e.query.period,a=e.query.plan,t=e.query.tier;e.replace(e.pathname,"/~"),l("MembershipPurchaseModal",{analyticsContext:{upgrade:{context:r}},selectedPlanPeriod:n,highlightedPlan:a,defaultSelectedTier:t})},[e,l]),(0,r.jsx)(i.Modal,{isOpen:s,onRequestClose:()=>{u(!1)},children:(0,r.jsx)(o.default,{onRequestClose:()=>{u(!1)}})})}])},723983,e=>{"use strict";var r=e.i(351623),n=e.i(950086),a=e.i(340768),t=e.i(344480);e.i(975473);let i={},o=r.gql`
+    query HomePage($isDowngradeEnabled: Boolean = false) {
+  currentUser {
+    id
+    image
+    username
+    firstName
+    email
+    scheduledDowngrade @include(if: $isDowngradeEnabled) {
+      ...ScheduledDowngradeBanner_scheduledDowngrade
+    }
+    customer {
+      id
+      billing {
+        __typename
+        ... on CustomerBilling {
+          arrangement {
+            ...PauseBannerArrangement
+          }
+        }
+      }
+    }
+  }
+}
+    ${n.ScheduledDowngradeBanner_ScheduledDowngradeFragmentDoc}
+${a.PauseBannerArrangementFragmentDoc}`;e.s(["useHomePageQuery",0,function(e){let r={...i,...e};return t.useQuery(o,r)}])},334152,e=>{"use strict";var r=e.i(276385),n=e.i(723983),a=e.i(519168),t=e.i(476384),i=e.i(822754),o=e.i(354967),l=e.i(11466),s=e.i(97584),u=e.i(897395),d=e.i(780902);e.i(214847);var m=e.i(864300),g=e.i(249341),c=e.i(685513),p=e.i(833475),h=e.i(926684);let f={page:"home"};e.s(["default",0,()=>{let e=(0,m.useIntl)(),b=(0,d.useIsMobile)(),{data:y}=(0,n.useHomePageQuery)({variables:{isDowngradeEnabled:!0}}),w=e.formatMessage({id:"home.pageTitle",defaultMessage:"Home"}),P=y?.currentUser,_=P?.customer,S=_&&"CustomerBilling"===_.billing.__typename?{customerId:_.id,arrangement:_.billing.arrangement}:null,C=(0,s.useHomeChatPersonalization)(),B=b?l.MobileHomeChat:i.DesktopHomeChat;return(0,r.jsxs)(h.TrackingHierarchyProvider,{hierarchy:f,children:[(0,r.jsx)(o.HomeRouteModals,{}),(0,r.jsx)(a.HomeArrivalTour,{}),b?(0,r.jsx)(t.HomeArrivalTourEntryPoint,{presentation:"icon"}):null,(0,r.jsx)(p.default,{title:w,newMobileLayout:b,fitViewport:!0,children:(0,r.jsx)(B,{firstName:P?.firstName??null,personalizationState:C,signupEmail:P?.email,ownerPill:P?(0,r.jsx)(g.default,{children:(0,r.jsx)(u.OwnerPill,{ownerName:P.firstName??P.username,image:P.image,buttonVariant:"filledAndOutlined",buttonColorway:"control",buttonBorderStrength:"subtle",glass:!0,overlayBorder:!0,hideWhenNoOtherWorkspaces:!0})}):null,banner:P?(0,r.jsx)(g.default,{children:(0,r.jsx)(c.HomeBanner,{isLoggedIn:!0,isCollapsedStyle:!0,scheduledDowngrade:P.scheduledDowngrade,subscriptionPause:S})}):null})})]})}])},648369,(e,r,n)=>{let a="/home";(window.__NEXT_P=window.__NEXT_P||[]).push([a,()=>e.r(334152)]),r.hot&&r.hot.dispose(function(){window.__NEXT_P.push([a])})}]);
+
+//# debugId=394fa5c3-e9a1-e59c-ccea-bd2328c480e8
+//# sourceMappingURL=17ljhr4zb1ag2.js.map

@@ -1,0 +1,294 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="7abf8904-1af9-78fc-ce56-e96d19a35e07")}catch(e){}}();
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,169391,(e,t,r)=>{"use strict";let n,a;Object.defineProperty(r,"__esModule",{value:!0});var s={useDynamicRouteParams:function(){return n},useDynamicSearchParams:function(){return a}};for(var i in s)Object.defineProperty(r,i,{enumerable:!0,get:s[i]});("function"==typeof r.default||"object"==typeof r.default&&null!==r.default)&&void 0===r.default.__esModule&&(Object.defineProperty(r.default,"__esModule",{value:!0}),Object.assign(r.default,r),t.exports=r.default)},903246,(e,t,r)=>{"use strict";Object.defineProperty(r,"__esModule",{value:!0});var n={ServerInsertedHTMLContext:function(){return i},useServerInsertedHTML:function(){return o}};for(var a in n)Object.defineProperty(r,a,{enumerable:!0,get:n[a]});let s=e.r(887602)._(e.r(389959)),i=s.default.createContext(null);function o(e){let t=(0,s.useContext)(i);t&&t(e)}},53710,(e,t,r)=>{"use strict";Object.defineProperty(r,"__esModule",{value:!0});var n={UnrecognizedActionError:function(){return s},unstable_isUnrecognizedActionError:function(){return i}};for(var a in n)Object.defineProperty(r,a,{enumerable:!0,get:n[a]});class s extends Error{constructor(...e){super(...e),this.name="UnrecognizedActionError"}}function i(e){return!!(e&&"object"==typeof e&&e instanceof s)}("function"==typeof r.default||"object"==typeof r.default&&null!==r.default)&&void 0===r.default.__esModule&&(Object.defineProperty(r.default,"__esModule",{value:!0}),Object.assign(r.default,r),t.exports=r.default)},167979,(e,t,r)=>{"use strict";Object.defineProperty(r,"__esModule",{value:!0}),Object.defineProperty(r,"notFound",{enumerable:!0,get:function(){return s}});let n=e.r(566030),a=`${n.HTTP_ERROR_FALLBACK_ERROR_CODE};404`;function s(){let e=Object.defineProperty(Error(a),"__NEXT_ERROR_CODE",{value:"E1041",enumerable:!1,configurable:!0});throw e.digest=a,e}("function"==typeof r.default||"object"==typeof r.default&&null!==r.default)&&void 0===r.default.__esModule&&(Object.defineProperty(r.default,"__esModule",{value:!0}),Object.assign(r.default,r),t.exports=r.default)},720990,(e,t,r)=>{"use strict";function n(){throw Object.defineProperty(Error("`forbidden()` is experimental and only allowed to be enabled when `experimental.authInterrupts` is enabled."),"__NEXT_ERROR_CODE",{value:"E488",enumerable:!1,configurable:!0})}Object.defineProperty(r,"__esModule",{value:!0}),Object.defineProperty(r,"forbidden",{enumerable:!0,get:function(){return n}}),e.r(566030).HTTP_ERROR_FALLBACK_ERROR_CODE,("function"==typeof r.default||"object"==typeof r.default&&null!==r.default)&&void 0===r.default.__esModule&&(Object.defineProperty(r.default,"__esModule",{value:!0}),Object.assign(r.default,r),t.exports=r.default)},252817,(e,t,r)=>{"use strict";function n(){throw Object.defineProperty(Error("`unauthorized()` is experimental and only allowed to be used when `experimental.authInterrupts` is enabled."),"__NEXT_ERROR_CODE",{value:"E411",enumerable:!1,configurable:!0})}Object.defineProperty(r,"__esModule",{value:!0}),Object.defineProperty(r,"unauthorized",{enumerable:!0,get:function(){return n}}),e.r(566030).HTTP_ERROR_FALLBACK_ERROR_CODE,("function"==typeof r.default||"object"==typeof r.default&&null!==r.default)&&void 0===r.default.__esModule&&(Object.defineProperty(r.default,"__esModule",{value:!0}),Object.assign(r.default,r),t.exports=r.default)},84120,(e,t,r)=>{"use strict";Object.defineProperty(r,"__esModule",{value:!0});var n={getRedirectError:function(){return u},getRedirectStatusCodeFromError:function(){return f},getRedirectTypeFromError:function(){return g},getURLFromRedirectError:function(){return c},permanentRedirect:function(){return d},redirect:function(){return l}};for(var a in n)Object.defineProperty(r,a,{enumerable:!0,get:n[a]});let s=e.r(990515),i=e.r(993825),o=e.r(269363);function u(e,t,r=s.RedirectStatusCode.TemporaryRedirect){let n=Object.defineProperty(Error(i.REDIRECT_ERROR_CODE),"__NEXT_ERROR_CODE",{value:"E394",enumerable:!1,configurable:!0});return n.digest=`${i.REDIRECT_ERROR_CODE};${t};${e};${r};`,n}function l(e,t){throw u(e,t??=o.actionAsyncStorage?.getStore()?.isAction?"push":"replace",s.RedirectStatusCode.TemporaryRedirect)}function d(e,t="replace"){throw u(e,t,s.RedirectStatusCode.PermanentRedirect)}function c(e){return(0,i.isRedirectError)(e)?e.digest.split(";").slice(2,-2).join(";"):null}function g(e){if(!(0,i.isRedirectError)(e))throw Object.defineProperty(Error("Not a redirect error"),"__NEXT_ERROR_CODE",{value:"E260",enumerable:!1,configurable:!0});return e.digest.split(";",2)[1]}function f(e){if(!(0,i.isRedirectError)(e))throw Object.defineProperty(Error("Not a redirect error"),"__NEXT_ERROR_CODE",{value:"E260",enumerable:!1,configurable:!0});return Number(e.digest.split(";").at(-2))}("function"==typeof r.default||"object"==typeof r.default&&null!==r.default)&&void 0===r.default.__esModule&&(Object.defineProperty(r.default,"__esModule",{value:!0}),Object.assign(r.default,r),t.exports=r.default)},269363,(e,t,r)=>{"use strict";let n,a,s;Object.defineProperty(r,"__esModule",{value:!0});var i={actionAsyncStorage:function(){return n},workAsyncStorage:function(){return a},workUnitAsyncStorage:function(){return s}};for(var o in i)Object.defineProperty(r,o,{enumerable:!0,get:i[o]});("function"==typeof r.default||"object"==typeof r.default&&null!==r.default)&&void 0===r.default.__esModule&&(Object.defineProperty(r.default,"__esModule",{value:!0}),Object.assign(r.default,r),t.exports=r.default)},433528,(e,t,r)=>{"use strict";Object.defineProperty(r,"__esModule",{value:!0}),Object.defineProperty(r,"unstable_rethrow",{enumerable:!0,get:function(){return function e(t){if((0,a.isNextRouterError)(t)||(0,n.isBailoutToCSRError)(t))throw t;t instanceof Error&&"cause"in t&&e(t.cause)}}});let n=e.r(556198),a=e.r(91254);("function"==typeof r.default||"object"==typeof r.default&&null!==r.default)&&void 0===r.default.__esModule&&(Object.defineProperty(r.default,"__esModule",{value:!0}),Object.assign(r.default,r),t.exports=r.default)},469200,(e,t,r)=>{"use strict";Object.defineProperty(r,"__esModule",{value:!0});var n={ReadonlyURLSearchParams:function(){return s.ReadonlyURLSearchParams},RedirectType:function(){return g},forbidden:function(){return u.forbidden},notFound:function(){return o.notFound},permanentRedirect:function(){return i.permanentRedirect},redirect:function(){return i.redirect},unauthorized:function(){return l.unauthorized},unstable_isUnrecognizedActionError:function(){return c},unstable_rethrow:function(){return d.unstable_rethrow}};for(var a in n)Object.defineProperty(r,a,{enumerable:!0,get:n[a]});let s=e.r(701628),i=e.r(84120),o=e.r(167979),u=e.r(720990),l=e.r(252817),d=e.r(433528);function c(){throw Object.defineProperty(Error("`unstable_isUnrecognizedActionError` can only be used on the client."),"__NEXT_ERROR_CODE",{value:"E776",enumerable:!1,configurable:!0})}let g={push:"push",replace:"replace"};("function"==typeof r.default||"object"==typeof r.default&&null!==r.default)&&void 0===r.default.__esModule&&(Object.defineProperty(r.default,"__esModule",{value:!0}),Object.assign(r.default,r),t.exports=r.default)},166127,(e,t,r)=>{"use strict";Object.defineProperty(r,"__esModule",{value:!0});var n={ReadonlyURLSearchParams:function(){return o.ReadonlyURLSearchParams},RedirectType:function(){return g.RedirectType},ServerInsertedHTMLContext:function(){return d.ServerInsertedHTMLContext},forbidden:function(){return g.forbidden},notFound:function(){return g.notFound},permanentRedirect:function(){return g.permanentRedirect},redirect:function(){return g.redirect},unauthorized:function(){return g.unauthorized},unstable_isUnrecognizedActionError:function(){return c.unstable_isUnrecognizedActionError},unstable_rethrow:function(){return g.unstable_rethrow},useParams:function(){return v},usePathname:function(){return b},useRouter:function(){return _},useSearchParams:function(){return h},useSelectedLayoutSegment:function(){return x},useSelectedLayoutSegments:function(){return y},useServerInsertedHTML:function(){return d.useServerInsertedHTML}};for(var a in n)Object.defineProperty(r,a,{enumerable:!0,get:n[a]});let s=e.r(887602)._(e.r(389959)),i=e.r(571e3),o=e.r(259163),u=e.r(974114),l=e.r(169391),d=e.r(903246),c=e.r(53710),g=e.r(469200),{instrumentParamsForClientValidation:f,instrumentSearchParamsForClientValidation:m,expectCompleteParamsInClientValidation:p}={};function h(){l.useDynamicSearchParams?.("useSearchParams()");let e=(0,s.useContext)(o.SearchParamsContext);return(0,s.useMemo)(()=>e?new o.ReadonlyURLSearchParams(e):null,[e])}function b(){return l.useDynamicRouteParams?.("usePathname()"),(0,s.useContext)(o.PathnameContext)}function _(){let e=(0,s.useContext)(i.AppRouterContext);if(null===e)throw Object.defineProperty(Error("invariant expected app router to be mounted"),"__NEXT_ERROR_CODE",{value:"E238",enumerable:!1,configurable:!0});let t=(0,s.useContext)(i.LayoutRouterContext),r=t?.parentCacheNode.bfcacheId??0;return(0,s.useMemo)(()=>({back:e.back,forward:e.forward,refresh:e.refresh,hmrRefresh:e.hmrRefresh,push:e.push,replace:e.replace,prefetch:e.prefetch,experimental_gesturePush:e.experimental_gesturePush,bfcacheId:"_b_"+r+"_"}),[e,r])}function v(){return l.useDynamicRouteParams?.("useParams()"),(0,s.useContext)(o.PathParamsContext)}function y(e="children"){l.useDynamicRouteParams?.("useSelectedLayoutSegments()");let t=(0,s.useContext)(i.LayoutRouterContext);return t?(0,u.getSelectedLayoutSegmentPath)(t.parentTree,e):null}function x(e="children"){l.useDynamicRouteParams?.("useSelectedLayoutSegment()"),(0,s.useContext)(o.NavigationPromisesContext);let t=y(e);return(0,u.computeSelectedLayoutSegment)(t,e)}("function"==typeof r.default||"object"==typeof r.default&&null!==r.default)&&void 0===r.default.__esModule&&(Object.defineProperty(r.default,"__esModule",{value:!0}),Object.assign(r.default,r),t.exports=r.default)},763999,(e,t,r)=>{t.exports=e.r(166127)},284789,e=>{e.v({container:"LoadingPage-module__ZqOHTW__container"})},775702,e=>{"use strict";var t=e.i(276385),r=e.i(269848),n=e.i(61732),a=e.i(284789);e.s(["default",0,()=>(0,t.jsx)(n.View,{align:"center",justify:"center",clsx:a.default.container,children:(0,t.jsx)(r.default,{size:24})})])},64810,e=>{"use strict";var t=e.i(276385);let r=(0,e.i(389959).createContext)(1/0);e.s(["SettingsContentWidthProvider",0,function({width:e,children:n}){return(0,t.jsx)(r.Provider,{value:e,children:n})}])},419407,e=>{"use strict";var t=e.i(389959);let r=(0,t.createContext)("legacy");e.s(["SettingsLayoutContext",0,r,"useSettingsLayout",0,function(){return(0,t.useContext)(r)}])},1393,e=>{e.v({backdrop:"SettingsModalSideSheet-module__BevDQa__backdrop",root:"SettingsModalSideSheet-module__BevDQa__root","settings-side-sheet-backdrop-enter":"SettingsModalSideSheet-module__BevDQa__settings-side-sheet-backdrop-enter","settings-side-sheet-backdrop-exit":"SettingsModalSideSheet-module__BevDQa__settings-side-sheet-backdrop-exit","settings-side-sheet-enter":"SettingsModalSideSheet-module__BevDQa__settings-side-sheet-enter","settings-side-sheet-enter-bottom":"SettingsModalSideSheet-module__BevDQa__settings-side-sheet-enter-bottom","settings-side-sheet-exit":"SettingsModalSideSheet-module__BevDQa__settings-side-sheet-exit","settings-side-sheet-exit-bottom":"SettingsModalSideSheet-module__BevDQa__settings-side-sheet-exit-bottom",sheet:"SettingsModalSideSheet-module__BevDQa__sheet",viewportHost:"SettingsModalSideSheet-module__BevDQa__viewportHost"})},56742,e=>{"use strict";var t=e.i(276385),r=e.i(389959),n=e.i(921211),a=e.i(739261),s=e.i(935506);e.i(214847);var i=e.i(864300),o=e.i(919073),u=e.i(1393);let l=(0,r.createContext)(null);e.s(["SettingsModalSideSheetHost",0,function({viewportBound:e=!1,zIndex:d}={}){let c=(0,i.useIntl)(),g=(0,r.useContext)(l),f=g?.content??null,m=g?.hide,p=g?.completeHide,h=g?.isOpen??!1,b=(0,s.usePrefersReducedMotion)(),_=(0,r.useRef)(null);(0,r.useEffect)(()=>{!h&&f&&b&&p?.()},[p,f,h,b]);let v=c.formatMessage({id:"settings.sideSheetBackdropClose",defaultMessage:"Close settings side sheet"}),{dialogProps:y}=(0,a.useDialog)({"aria-label":f?.ariaLabel??v},_);if(!f||!m)return null;let x=(0,t.jsxs)("div",{clsx:u.default.root,"data-state":h?"open":"closing",children:[(0,t.jsx)("button",{type:"button",clsx:u.default.backdrop,"aria-label":v,disabled:!h,onClick:m}),(0,t.jsx)(n.FocusScope,{contain:!0,restoreFocus:!0,autoFocus:!0,children:(0,t.jsx)(o.ShadesSurface,{...y,"aria-modal":"true",colorShade:"themePopup",border:{side:"left",strength:"subtle"},p:0,clsx:u.default.sheet,innerRef:_,tabIndex:-1,onAnimationEnd:e=>{e.target!==e.currentTarget||h||b||p?.()},onKeyDown:e=>{"Escape"!==e.key||e.defaultPrevented||(e.preventDefault(),e.stopPropagation(),m())},children:f.content})})]});return e?(0,t.jsx)("div",{clsx:u.default.viewportHost,style:{zIndex:d},children:x}):x},"SettingsModalSideSheetProvider",0,function({children:e}){let[n,a]=(0,r.useState)(null),s=(0,r.useCallback)(()=>{a(e=>e?{...e,isOpen:!1}:null)},[]),i=(0,r.useCallback)(()=>a(null),[]),o=(0,r.useCallback)(e=>{a({...e,isOpen:!0})},[]),u=(0,r.useMemo)(()=>({isOpen:n?.isOpen??!1,show:o,hide:s,completeHide:i,content:n}),[i,s,n,o]);return(0,t.jsx)(l.Provider,{value:u,children:e})},"useOptionalSettingsModalSideSheet",0,function(){let e=(0,r.useContext)(l);return e?{show:e.show,hide:e.hide}:null},"useSettingsModalSideSheet",0,function(){let e=(0,r.useContext)(l);if(!e)throw Error("useSettingsModalSideSheet must be used within SettingsModalSideSheetProvider");return{isOpen:e.isOpen,show:e.show,hide:e.hide}}])},300340,e=>{e.v({permissionDeniedContent:"SettingsTabContent-module__MGOYlG__permissionDeniedContent",permissionDeniedDescription:"SettingsTabContent-module__MGOYlG__permissionDeniedDescription",permissionDeniedRoot:"SettingsTabContent-module__MGOYlG__permissionDeniedRoot"})},595375,e=>{"use strict";var t=e.i(276385),r=e.i(196786),n=e.i(389959),a=e.i(830675),s=e.i(995691),i=e.i(403649),o=e.i(569910),u=e.i(619297);e.i(214847);var l=e.i(864300),d=e.i(786224),c=e.i(643484),g=e.i(8047),f=e.i(61732),m=e.i(412947),p=e.i(775702),h=e.i(300340);let b=new WeakSet,_=e=>{b.has(e)||(b.add(e),a.withScope(t=>{t.setTag("settings-tab-chunk-error",!0),a.captureException(e)}))},v=()=>{let e=(0,l.useIntl)();return(0,t.jsx)(f.View,{clsx:h.default.permissionDeniedRoot,p:32,children:(0,t.jsxs)(f.View,{clsx:h.default.permissionDeniedContent,gap:16,children:[(0,t.jsx)(i.default,{size:48}),(0,t.jsx)(g.Header,{level:2,variant:"headerDefault",children:e.formatMessage({id:"settings.chunkLoadError",defaultMessage:"Something went wrong"})}),(0,t.jsx)(g.Text,{clsx:h.default.permissionDeniedDescription,color:"dimmer",children:e.formatMessage({id:"settings.chunkLoadErrorDescription",defaultMessage:"This section failed to load, likely due to an update. Reload the page to get the latest version."})}),(0,t.jsx)(c.Button,{text:e.formatMessage({id:"settings.reloadPage",defaultMessage:"Reload page"}),onClick:()=>window.location.reload()})]})})},y=()=>{let e=(0,l.useIntl)();return(0,t.jsx)(f.View,{clsx:h.default.permissionDeniedRoot,p:32,children:(0,t.jsxs)(f.View,{clsx:h.default.permissionDeniedContent,gap:16,children:[(0,t.jsx)(i.default,{size:48}),(0,t.jsx)(g.Header,{level:2,variant:"headerDefault",children:e.formatMessage({id:"settings.integrationsError",defaultMessage:"Something went wrong"})}),(0,t.jsx)(g.Text,{clsx:h.default.permissionDeniedDescription,color:"dimmer",children:e.formatMessage({id:"settings.integrationsErrorDescription",defaultMessage:"The integrations section failed to load. Reload the page to try again."})}),(0,t.jsx)(c.Button,{text:e.formatMessage({id:"settings.reloadPage",defaultMessage:"Reload page"}),onClick:()=>window.location.reload()})]})})},x=e=>e.error?(_(e.error),(0,t.jsx)(v,{})):(0,t.jsx)(p.default,{}),S=(0,n.createContext)(null),C=e=>{let r=(0,n.useContext)(S);e.error&&_(e.error);let a=e.error?(0,t.jsx)(v,{}):(0,t.jsx)(p.default,{});return r?(0,t.jsx)(d.SettingsTabLayout,{...r.tabConfig,hideHeader:r.hideHeader,isHeaderSticky:r.isHeaderSticky,children:a}):a},A=(0,r.default)(()=>e.A(710640).then(e=>({default:e.ConnectorsSettings2})),{loadableGenerated:{modules:[669417]},loading:x}),w=(0,r.default)(()=>e.A(93755),{loadableGenerated:{modules:[600640]},loading:x}),O=(0,r.default)(()=>e.A(932195),{loadableGenerated:{modules:[463818]},loading:x}),j=(0,r.default)(()=>e.A(392515),{loadableGenerated:{modules:[860454]},loading:x}),P=(0,r.default)(()=>e.A(511347),{loadableGenerated:{modules:[334026]},loading:x}),T=(0,r.default)(()=>e.A(513788).then(e=>({default:e.UsageTabContent})),{loadableGenerated:{modules:[374381]},loading:C}),R=(0,r.default)(()=>e.A(548975),{loadableGenerated:{modules:[743542]},loading:x}),z=(0,r.default)(()=>e.A(167595),{loadableGenerated:{modules:[400755]},loading:x}),E=(0,r.default)(()=>e.A(652022),{loadableGenerated:{modules:[764632]},loading:x}),U=(0,r.default)(()=>e.A(937600),{loadableGenerated:{modules:[414466]},loading:x}),M=(0,r.default)(()=>e.A(610467),{loadableGenerated:{modules:[864764]},loading:x}),I=(0,r.default)(()=>e.A(559243),{loadableGenerated:{modules:[383479]},loading:x}),D=(0,r.default)(()=>e.A(590287),{loadableGenerated:{modules:[543474]},loading:x}),k=(0,r.default)(()=>e.A(766648),{loadableGenerated:{modules:[841007]},loading:x}),H=(0,r.default)(()=>e.A(929521),{loadableGenerated:{modules:[172806]},loading:x}),L=(0,r.default)(()=>e.A(24884),{loadableGenerated:{modules:[146952]},loading:x}),F=(0,r.default)(()=>e.A(182553).then(e=>({default:e.TemplatesTabContent})),{loadableGenerated:{modules:[693041]},loading:C}),B=(0,r.default)(()=>e.A(470257).then(e=>({default:e.TemplatesSettingsContent})),{loadableGenerated:{modules:[755063]},loading:C}),V=(0,r.default)(()=>e.A(95019),{loadableGenerated:{modules:[555792]},loading:x}),$=(0,r.default)(()=>e.A(959679),{loadableGenerated:{modules:[846898]},loading:x}),Q=e=>{switch(e.tab){case"workspaceOverview":return(0,t.jsx)(E,{orgId:e.orgId,orgSlug:e.orgSlug});case"invitedUsers":return e.orgSlug?(0,t.jsx)(z,{orgSlug:e.orgSlug}):(0,t.jsx)(I,{});case"workspaceUsage":return(0,t.jsx)(M,{orgId:e.orgId,setSelectedTab:e.setSelectedTab});case"groups":return(0,t.jsx)(U,{orgId:e.orgId});case"integrations":return(0,t.jsx)(m.default,{sentryTag:"settings-integrations-crashed",fallback:()=>(0,t.jsx)(y,{}),children:(0,t.jsx)(A,{context:e.orgSlug?"org":"personal",orgId:e.orgId,orgSlug:e.orgSlug,handleClose:e.handleClose})});case"knowledge":return(0,t.jsx)(L,{orgContext:e.orgContext});case"security":return(0,t.jsx)(V,{orgId:e.orgId});case"billing":return e.customerContext.isBillingV2Enabled?(0,t.jsx)(j,{customerContext:e.customerContext}):(0,t.jsx)(O,{customerContext:e.customerContext});case"seats":return(0,t.jsx)(R,{customerContext:e.customerContext,setSelectedTab:e.setSelectedTab});case"customerUsage":return(0,t.jsx)(P,{customerContext:e.customerContext,setSelectedTab:e.setSelectedTab});case"advanced":return(0,t.jsx)(w,{customerContext:e.customerContext});case"authenticationAndIdentity":return(0,t.jsx)(w,{customerContext:e.customerContext,section:"authenticationAndIdentity"});case"developer":return(0,t.jsx)($,{customerId:e.customerId});case"profile":return(0,t.jsx)(k,{});case"promotionsReferrals":return(0,t.jsx)(H,{});case"personalization":return(0,t.jsx)(u.PreferencesProvider,{children:(0,t.jsx)(D,{})});default:return(0,o.default)(e)}};e.s(["SettingsTabContent",0,e=>{let r=(0,l.useIntl)();return e.disabled?(0,t.jsx)(d.SettingsTabLayout,{...e.tabConfig,hideHeader:e.hideHeader,children:(0,t.jsx)(f.View,{clsx:h.default.permissionDeniedRoot,p:32,children:(0,t.jsxs)(f.View,{clsx:h.default.permissionDeniedContent,gap:16,children:[(0,t.jsx)(s.default,{size:48}),(0,t.jsx)(g.Header,{level:2,variant:"headerDefault",children:r.formatMessage({id:"settings.permissionRequired",defaultMessage:"Permission required"})}),(0,t.jsx)(g.Text,{clsx:h.default.permissionDeniedDescription,color:"dimmer",children:e.disabledMessageId?r.formatMessage({id:e.disabledMessageId,defaultMessage:e.disabledMessage}):e.disabledMessage||r.formatMessage({id:"settings.permissionDenied",defaultMessage:"You do not have permission to view this page."})})]})})}):"usage"===e.tab?"loading"===e.usageContext.status?(0,t.jsx)(d.SettingsTabLayout,{...e.tabConfig,hideHeader:e.hideHeader,isHeaderSticky:!0,children:(0,t.jsx)(p.default,{})}):(0,t.jsx)(S.Provider,{value:{tabConfig:e.tabConfig,hideHeader:e.hideHeader,isHeaderSticky:!0},children:(0,t.jsx)(T,{tabConfig:e.tabConfig,hideHeader:e.hideHeader,customerId:e.usageContext.customerId,contextOrgId:e.usageContext.contextOrgId,contextOrgName:e.usageContext.contextOrgName})}):"templates"===e.tab?(0,t.jsx)(S.Provider,{value:{tabConfig:e.tabConfig,hideHeader:e.hideHeader},children:(0,t.jsx)(B,{tabConfig:e.tabConfig,orgContext:e.orgContext,hideHeader:e.hideHeader,handleClose:e.handleClose})}):"slidesTemplates"===e.tab||"designSystems"===e.tab?(0,t.jsx)(S.Provider,{value:{tabConfig:e.tabConfig,hideHeader:e.hideHeader},children:(0,t.jsx)(F,{tabConfig:e.tabConfig,hideHeader:e.hideHeader,artifactKind:"designSystems"===e.tab?"design-system":"slides",orgContext:e.orgContext,handleClose:e.handleClose},e.tab)}):(0,t.jsx)(d.SettingsTabLayout,{...e.tabConfig,hideHeader:e.hideHeader,children:(0,t.jsx)(Q,{...e})})}])},744456,e=>{e.v({settingsTabLayout:"SettingsTabLayout-module__0dYyPa__settingsTabLayout",stickyTabHeader:"SettingsTabLayout-module__0dYyPa__stickyTabHeader",tabHeader:"SettingsTabLayout-module__0dYyPa__tabHeader"})},786224,e=>{"use strict";var t=e.i(276385);e.i(214847);var r=e.i(864300),n=e.i(459289),a=e.i(8047),s=e.i(61732),i=e.i(744456);e.s(["SettingsTabLayout",0,({label:e,labelId:o,subtitle:u,hideHeader:l,headerActions:d,isHeaderSticky:c,children:g})=>{let f=(0,r.useIntl)(),m=o?f.formatMessage({id:o,defaultMessage:e}):e,p=c?{clsx:i.default.stickyTabHeader,"data-testid":"settings-tab-sticky-header"}:void 0,h=null;if(l)h=d||c?(0,t.jsx)(s.View,{row:!0,justify:"end",...p,children:d}):null;else if(u)h=(0,t.jsxs)(s.View,{gap:4,clsx:i.default.tabHeader,...p,children:[(0,t.jsxs)(s.View,{row:!0,align:"center",justify:"space-between",gap:16,wrap:!0,children:[(0,t.jsx)(a.Header,{level:3,variant:"headerDefault",children:m}),d]}),(0,t.jsx)(a.Text,{variant:"text",color:"dimmer",children:u})]});else{let e=(0,t.jsx)(n.ToolPaneHeader,{title:m,headingLevel:3,action:d});h=p?(0,t.jsx)(s.View,{...p,children:e}):e}return(0,t.jsxs)(s.View,{grow:!0,pt:24*!c,clsx:i.default.settingsTabLayout,children:[h,(0,t.jsx)(s.View,{py:16,children:g})]})}])},248146,e=>{e.v({content:"UniversalSettingsContentArea-module__bZEcFa__content",contentCompact:"UniversalSettingsContentArea-module__bZEcFa__contentCompact",contentPage:"UniversalSettingsContentArea-module__bZEcFa__contentPage",contentWidthObserver:"UniversalSettingsContentArea-module__bZEcFa__contentWidthObserver"})},626425,e=>{"use strict";var t=e.i(276385),r=e.i(389959),n=e.i(934982),a=e.i(64810),s=e.i(419407),i=e.i(595375),o=e.i(919073),u=e.i(61732),l=e.i(775702),d=e.i(248146);e.s(["UniversalSettingsContentArea",0,function({loading:e,tabContentProps:c,surface:g}){let f="legacyDialog"===g.type?"legacy":"compact",m="page"===g.type?{"--settings-tab-max-width":`${g.maxWidth}px`}:void 0,[p,h]=(0,r.useState)(null),b=(0,n.default)(({width:e})=>{h(e)}),_=(0,r.useCallback)(e=>{b(e),e&&void 0===window.ResizeObserver&&h(Math.round(e.getBoundingClientRect().width))},[b]),v="page"===g.type?p:1/0,y=e||"page"===g.type&&null===p,x=null;return y?x=(0,t.jsx)(l.default,{}):c&&(x=(0,t.jsx)(i.SettingsTabContent,{...c})),(0,t.jsx)(s.SettingsLayoutContext.Provider,{value:f,children:(0,t.jsx)(a.SettingsContentWidthProvider,{width:v??0,children:(0,t.jsx)(o.ShadesSurface,{clsx:[d.default.content,{[d.default.contentCompact]:"compact"===f,[d.default.contentPage]:"page"===g.type}],style:m,"data-settings-layout":"compact"===f?f:void 0,elevate:"page"!==g.type&&"1x",children:(0,t.jsx)(u.View,{innerRef:"page"===g.type?_:void 0,clsx:d.default.contentWidthObserver,grow:y,align:y?"center":void 0,justify:y?"center":void 0,children:x})})})})}])},430263,e=>{"use strict";var t=e.i(351623),r=e.i(344480);e.i(975473);let n={},a=t.gql`
+    fragment UsagePageViewPageAccessResult on UsagePageAuthorizations {
+  usageBreakdownEnabled
+  viewPage {
+    isAuthorized
+    message
+  }
+  viewAccountUsage {
+    isAuthorized
+  }
+  viewExtraUsage {
+    isAuthorized
+  }
+  viewLimits @include(if: $includeLimits) {
+    isAuthorized
+  }
+  editLimits @include(if: $includeLimits) {
+    isAuthorized
+  }
+}
+    `,s=t.gql`
+    query UsagePageViewAccessForOrg($orgId: String!, $filterOrgId: String, $includeLimits: Boolean!, $includeEarliestUsageDay: Boolean!, $includeFullUsagePageEnabled: Boolean!) {
+  getOrg(orgId: $orgId) {
+    __typename
+    ... on Org {
+      id
+      customer {
+        ... on Customer {
+          id
+          earliestUsageDay @include(if: $includeEarliestUsageDay)
+          fullUsagePageEnabled @include(if: $includeFullUsagePageEnabled)
+          authorizations {
+            isTopUpCustomer
+            editPaymentMethod {
+              isAuthorized
+              message
+            }
+          }
+          pageAuthorizations: usagePageAuthorizations(
+            contextOrgId: $orgId
+            filterOrgId: $filterOrgId
+          ) {
+            ...UsagePageViewPageAccessResult
+          }
+        }
+      }
+    }
+  }
+}
+    ${a}`,i=t.gql`
+    query UsagePageViewAccessCustomerWide($filterOrgId: String, $includeLimits: Boolean!, $includeEarliestUsageDay: Boolean!, $includeFullUsagePageEnabled: Boolean!) {
+  currentUser {
+    __typename
+    ... on CurrentUser {
+      id
+      customer {
+        ... on Customer {
+          id
+          earliestUsageDay @include(if: $includeEarliestUsageDay)
+          fullUsagePageEnabled @include(if: $includeFullUsagePageEnabled)
+          authorizations {
+            isTopUpCustomer
+            editPaymentMethod {
+              isAuthorized
+              message
+            }
+          }
+          pageAuthorizations: usagePageAuthorizations(filterOrgId: $filterOrgId) {
+            ...UsagePageViewPageAccessResult
+          }
+        }
+      }
+    }
+  }
+}
+    ${a}`;e.s(["useUsagePageViewAccessCustomerWideQuery",0,function(e){let t={...n,...e};return r.useQuery(i,t)},"useUsagePageViewAccessForOrgQuery",0,function(e){let t={...n,...e};return r.useQuery(s,t)}])},612546,e=>{"use strict";var t=e.i(430263);e.s(["useUsagePageViewAccess",0,function({contextOrgId:e,selectedWorkspaceOrgId:r,includeLimits:n=!1,includeEarliestUsageDay:a=!1,includeFullUsagePageEnabled:s=!1}){let i=null!=e,o=(0,t.useUsagePageViewAccessForOrgQuery)({variables:{orgId:e??"",filterOrgId:r,includeLimits:n,includeEarliestUsageDay:a,includeFullUsagePageEnabled:s},skip:!i,ssr:!1,fetchPolicy:"cache-and-network"}),u=(0,t.useUsagePageViewAccessCustomerWideQuery)({variables:{filterOrgId:r,includeLimits:n,includeEarliestUsageDay:a,includeFullUsagePageEnabled:s},skip:i,ssr:!1,fetchPolicy:"cache-and-network"}),l=o.data?.getOrg?.__typename==="Org"?o.data.getOrg:null,d=l?.customer.__typename==="Customer"?l.customer:null,c=u.data?.currentUser?.__typename==="CurrentUser"?u.data.currentUser:null,g=c?.customer?.__typename==="Customer"?c.customer:null,f=d??g,m=f?.pageAuthorizations,p=m?.usageBreakdownEnabled??!1,h=f?.fullUsagePageEnabled??!1,b=m?.viewPage.isAuthorized??!1,_=m?.viewPage.message,v=m?.viewAccountUsage.isAuthorized??!1,y=m?.viewExtraUsage.isAuthorized??!1,x=f?.authorizations.isTopUpCustomer??!1,S=f?.authorizations.editPaymentMethod,C=S&&!1===S.isAuthorized?S.message:void 0;return{usageBreakdownEnabled:p,fullUsagePageEnabled:h,viewPageAuthorized:b,viewPageMessage:_,viewAccountUsageAuthorized:v,viewExtraUsageAuthorized:y,isTopUpCustomer:x,editTopUpDisabledReason:C,viewLimitsAuthorized:m?.viewLimits?.isAuthorized??!1,editLimitsAuthorized:m?.editLimits?.isAuthorized??!1,earliestUsageDay:f?.earliestUsageDay,customerId:f?.id,loading:i?o.loading:u.loading,error:i?null!=o.error:null!=u.error}}])},67770,e=>{"use strict";var t=e.i(351623);let r=t.gql`
+    fragment UniversalSettingsTabsOrgDealContext on OrgDealContext {
+  dealType
+}
+    `,n=t.gql`
+    fragment UniversalSettingsTabsCustomerAuthorizations on Customer {
+  id
+  authorizations {
+    viewSubscription {
+      isAuthorized
+      message
+    }
+    viewSeats {
+      isAuthorized
+      message
+    }
+    viewUsage {
+      isAuthorized
+      message
+    }
+    editUsageLimit {
+      isAuthorized
+      message
+    }
+    editSettings {
+      isAuthorized
+      message
+    }
+    configurePiiFilter {
+      isAuthorized
+      message
+    }
+    enableScim {
+      isAuthorized
+      message
+    }
+    enableSaml {
+      isAuthorized
+      message
+    }
+    enableAuditLogs {
+      isAuthorized
+      message
+    }
+    viewAuditLogs {
+      isAuthorized
+      message
+    }
+    enablePromotions {
+      isAuthorized
+      message
+    }
+    editSecurityContacts {
+      isAuthorized
+      message
+    }
+    isTopUpCustomer
+  }
+}
+    `,a=t.gql`
+    fragment UniversalSettingsTabsOrgAuthorizations on OrgAuthorizations {
+  viewUsage {
+    isAuthorized
+    message
+  }
+  viewOrgMetadata {
+    isAuthorized
+    message
+  }
+  createRepl(private: true) {
+    isAuthorized
+    message
+  }
+  viewOrgGroups {
+    isAuthorized
+  }
+  viewOrgCustomInstructions {
+    isAuthorized
+    message
+  }
+  viewPersonalMemory {
+    isAuthorized
+    message
+  }
+  viewOrgCustomSkills {
+    isAuthorized
+    message
+  }
+  viewArtifactTemplates {
+    isAuthorized
+    message
+  }
+  createArtifactTemplates {
+    isAuthorized
+    message
+  }
+  manageArtifactTemplates {
+    isAuthorized
+    message
+  }
+  consumeArtifactTemplates {
+    isAuthorized
+    message
+  }
+  viewOrgSecurity {
+    isAuthorized
+    message
+  }
+  viewOwnBudgets {
+    isAuthorized
+    message
+  }
+}
+    `;e.s(["UniversalSettingsTabsCustomerAuthorizationsFragmentDoc",0,n,"UniversalSettingsTabsOrgAuthorizationsFragmentDoc",0,a,"UniversalSettingsTabsOrgDealContextFragmentDoc",0,r])},9757,e=>{"use strict";e.s(["resolveUsageTabContext",0,function({customerId:e,orgSlug:t,org:r,orgLoading:n}){return null==t?{status:"ready",customerId:e,contextOrgId:null,contextOrgName:null}:r?.slug===t?{status:"ready",customerId:e,contextOrgId:r.id,contextOrgName:r.name}:n?{status:"loading"}:{status:"ready",customerId:e,contextOrgId:null,contextOrgName:null}}])},846773,e=>{"use strict";var t=e.i(351623),r=e.i(67770),n=e.i(344480);e.i(975473);let a={},s=t.gql`
+    fragment UniversalSettingsOrgSections on Org {
+  dealContext {
+    ...UniversalSettingsTabsOrgDealContext
+  }
+}
+    ${r.UniversalSettingsTabsOrgDealContextFragmentDoc}`,i=t.gql`
+    query UniversalSettingsModalCurrentUser {
+  currentUser {
+    __typename
+    ... on CurrentUser {
+      id
+      username
+      image
+      personalOrgAuthorizations {
+        ...UniversalSettingsTabsOrgAuthorizations
+      }
+      customer {
+        id
+        usagePageAuthorizations {
+          usageBreakdownEnabled
+          viewPage {
+            isAuthorized
+            message
+          }
+        }
+        ...UniversalSettingsTabsCustomerAuthorizations
+      }
+    }
+  }
+}
+    ${r.UniversalSettingsTabsOrgAuthorizationsFragmentDoc}
+${r.UniversalSettingsTabsCustomerAuthorizationsFragmentDoc}`,o=t.gql`
+    query UniversalSettingsModalOrg($orgSlug: String!) {
+  getOrg(orgSlug: $orgSlug) {
+    __typename
+    ... on Org {
+      id
+      slug
+      image
+      name
+      authorizations {
+        ...UniversalSettingsTabsOrgAuthorizations
+      }
+      customer {
+        ... on Customer {
+          id
+          ...UniversalSettingsTabsCustomerAuthorizations
+        }
+      }
+      ...UniversalSettingsOrgSections
+    }
+    ... on NotFoundError {
+      message
+    }
+  }
+}
+    ${r.UniversalSettingsTabsOrgAuthorizationsFragmentDoc}
+${r.UniversalSettingsTabsCustomerAuthorizationsFragmentDoc}
+${s}`,u=t.gql`
+    query UniversalSettingsDeveloperTabAccess($customerId: Int!) {
+  getCustomer(customerId: $customerId) {
+    __typename
+    ... on Customer {
+      id
+      authorizations {
+        manageApiKeys {
+          isAuthorized
+        }
+      }
+    }
+  }
+}
+    `,l=t.gql`
+    query UniversalSettingsSessionExpiryTabAccess($customerId: Int!) {
+  getCustomer(customerId: $customerId) {
+    __typename
+    ... on Customer {
+      id
+      authorizations {
+        editAuthSessionExpiry {
+          isAuthorized
+        }
+      }
+    }
+  }
+}
+    `,d=t.gql`
+    query UniversalSettingsApprovalRequestsTabAccess($customerId: Int!) {
+  getCustomer(customerId: $customerId) {
+    __typename
+    ... on Customer {
+      id
+      authorizations {
+        manageApprovalRequests {
+          isAuthorized
+        }
+      }
+    }
+  }
+}
+    `;e.s(["useUniversalSettingsApprovalRequestsTabAccessQuery",0,function(e){let t={...a,...e};return n.useQuery(d,t)},"useUniversalSettingsDeveloperTabAccessQuery",0,function(e){let t={...a,...e};return n.useQuery(u,t)},"useUniversalSettingsModalCurrentUserQuery",0,function(e){let t={...a,...e};return n.useQuery(i,t)},"useUniversalSettingsModalOrgQuery",0,function(e){let t={...a,...e};return n.useQuery(o,t)},"useUniversalSettingsSessionExpiryTabAccessQuery",0,function(e){let t={...a,...e};return n.useQuery(l,t)}])},565848,e=>{"use strict";var t=e.i(389959),r=e.i(846773),n=e.i(151027),a=e.i(346777),s=e.i(612546),i=e.i(9757),o=e.i(933302);e.s(["useUniversalSettingsData",0,function(e,u){let{orgSlug:l}=(0,n.useCurrentUserStoredOrgContext)(),d=(0,o.useFeatureGate)("gate_public_template_marketplace",!1),c=l;e?.type==="org"?c=e.orgSlug:e?.type==="personal"&&(c=void 0);let{data:g,error:f,loading:m}=(0,r.useUniversalSettingsModalCurrentUserQuery)(),{data:p,error:h,loading:b,previousData:_}=(0,r.useUniversalSettingsModalOrgQuery)({variables:{orgSlug:c??""},skip:!c}),v=c?p??_:void 0,y=v?.getOrg?.__typename==="Org"?v.getOrg:null,x=g?.currentUser?.__typename==="CurrentUser"?g.currentUser:null,S=b||p?.getOrg?.__typename!=="Org"||p.getOrg.slug!==c?null:p.getOrg,C=u?.settingsSurface===void 0||"page"===u.settingsSurface.type||"legacyModal"===u.settingsSurface.type,A=u?.settingsSurface?.type==="page"||u?.settingsSurface?.type==="legacyModal"&&u.settingsSurface.gateEnabled,w=S?.customer?.__typename==="Customer"?S.customer.id:null,{data:O,error:j,loading:P}=(0,r.useUniversalSettingsDeveloperTabAccessQuery)({variables:{customerId:w??0},skip:null==w,ssr:!1,fetchPolicy:"network-only"}),T=null!=c&&(b||P),{usageBreakdownEnabled:R,viewPageAuthorized:z,viewPageMessage:E,loading:U}=(0,s.useUsagePageViewAccess)({contextOrgId:y?.id}),M=x?.customer?.__typename==="Customer"?x.customer:null,I=M?.usagePageAuthorizations,D=(0,t.useMemo)(()=>y?{usageBreakdownEnabled:R,viewPage:{isAuthorized:z,message:E}}:{usageBreakdownEnabled:I?.usageBreakdownEnabled??!1,viewPage:{isAuthorized:I?.viewPage.isAuthorized??!1,message:I?.viewPage.message??void 0}},[y,R,z,E,I]),k=D.usageBreakdownEnabled,H=O?.getCustomer.__typename==="Customer"?O.getCustomer:null,L=!P&&null==j&&H?.id===w&&H?.authorizations.manageApiKeys.isAuthorized===!0,F=y?y.customer:x?.customer,B=F?.__typename==="Customer"?F:null,V=B?.id??null,$=B?.authorizations.editSettings.isAuthorized===!1,{data:Q,loading:G}=(0,r.useUniversalSettingsSessionExpiryTabAccessQuery)({variables:{customerId:V??0},skip:!$,ssr:!1,fetchPolicy:"network-only"}),N=Q?.getCustomer.__typename==="Customer"&&Q.getCustomer.id===V?Q.getCustomer:null,q=N?.authorizations.editAuthSessionExpiry.isAuthorized===!0,W=null!=y&&$,{data:Z,loading:K}=(0,r.useUniversalSettingsApprovalRequestsTabAccessQuery)({variables:{customerId:V??0},skip:!W,ssr:!1,fetchPolicy:"network-only"}),X=Z?.getCustomer.__typename==="Customer"&&Z.getCustomer.id===V?Z.getCustomer:null,Y=X?.authorizations.manageApprovalRequests.isAuthorized===!0,J=m||b&&null==_||U||G||K,ee=(0,t.useMemo)(()=>{if(y)return{type:"shared",orgId:y.id,orgSlug:y.slug,orgDealContext:y.dealContext??void 0,orgAuthorizations:y.authorizations};let e=x?.personalOrgAuthorizations;if(e&&"OrgAuthorizations"===e.__typename)return{type:"personal",orgAuthorizations:e}},[y,x]),et=(0,t.useMemo)(()=>{if(y){if(y.customer?.__typename!=="Customer")return;return{type:"shared",customerId:y.customer.id,isBillingV2Enabled:D.usageBreakdownEnabled,orgId:y.id,orgName:y.name,orgDealContext:y.dealContext??void 0,customerAuthorizations:y.customer.authorizations,canEditAuthSessionExpiry:q,canManageApprovalRequests:Y,usagePageAccess:D}}if(x){if(x.customer?.__typename!=="Customer")return;return{type:"personal",customerId:x.customer.id,isBillingV2Enabled:D.usageBreakdownEnabled,customerAuthorizations:x.customer.authorizations,canEditAuthSessionExpiry:q,usagePageAccess:D}}},[y,x,D,q,Y]),er=(0,t.useMemo)(()=>{if(!ee)return[];let e=!C||!u?.includeDedicatedTabs&&A;return(0,a.getAvailableOrgTabs)(ee,{hideDedicatedTabs:e,isTemplateMarketplaceEnabled:d,showGroupsTab:u?.settingsSurface?.type==="page",usageBreakdownEnabled:k})},[ee,C,A,u?.includeDedicatedTabs,u?.settingsSurface?.type,d,k]),en=(0,t.useMemo)(()=>et?(0,a.getAvailableCustomerTabs)(et,{canManageDeveloperApiKeys:L}):[],[et,L]),ea=(0,t.useMemo)(()=>(0,a.getAvailableUserTabs)(et),[et]),es=(0,t.useMemo)(()=>new Map([...er,...en,...ea].map(e=>[e.tabConfig.id,e])),[er,en,ea]),ei=(0,t.useCallback)((e,t,r)=>{let n=(0,a.resolveUsageTab)(e,k),s=es.get(n);if(!s)return null;let o=ee?.type==="shared"?ee:void 0,u=e=>({...e,tabConfig:s.tabConfig,setSelectedTab:t,disabled:!s.isAuthorized,disabledMessage:s.isAuthorized?void 0:s.message,disabledMessageId:s.isAuthorized?void 0:s.messageId,handleClose:r});switch(n){case"workspaceOverview":return u({tab:"workspaceOverview",orgId:o?.orgId,orgSlug:o?.orgSlug});case"invitedUsers":return u({tab:"invitedUsers",orgSlug:c});case"workspaceUsage":return u({tab:"workspaceUsage",orgId:y?.id??null});case"groups":if(!y)return null;return u({tab:"groups",orgId:y.id});case"integrations":return u({tab:"integrations",orgId:o?.orgId,orgSlug:o?.orgSlug});case"knowledge":if(!ee)return null;return u({tab:"knowledge",orgContext:ee,customerId:et?.customerId});case"templates":case"slidesTemplates":case"designSystems":if(!ee)return null;return u({tab:n,orgContext:ee});case"security":return u({tab:"security",orgId:y?.id});case"usage":if(!et)return null;return u({tab:"usage",usageContext:(0,i.resolveUsageTabContext)({customerId:et.customerId,orgSlug:c,org:y,orgLoading:b})});case"billing":if(!et)return null;return u({tab:"billing",customerContext:et});case"seats":if(!et)return null;return u({tab:"seats",customerContext:et});case"customerUsage":if(!et)return null;return u({tab:"customerUsage",customerContext:et});case"authenticationAndIdentity":if(!et)return null;return u({tab:"authenticationAndIdentity",customerContext:et});case"advanced":return u({tab:"advanced",customerContext:et});case"developer":if(!et||"shared"!==et.type)return null;return u({tab:"developer",customerId:et.customerId});case"profile":return u({tab:"profile"});case"promotionsReferrals":return u({tab:"promotionsReferrals"});case"personalization":return u({tab:"personalization"});default:return null}},[es,y,c,b,et,ee,k]);return{loading:J,userLoading:m,orgLoading:b,orgSlug:c,org:y,currentUser:x,orgTabs:er,customerTabs:en,userTabs:ea,availableTabs:es,buildTabContentProps:ei,usageBreakdownEnabled:k,usagePageAuthzLoading:U,developerTabAccessLoading:T,isUniversalSettingsPageEnabled:A,isGateContextReady:C,userError:f,orgError:h}}])},843279,e=>{e.v({descriptionRow:"ToolPaneHeader-module__cZFV3W__descriptionRow",header:"ToolPaneHeader-module__cZFV3W__header",keepActionInlineOnNarrow:"ToolPaneHeader-module__cZFV3W__keepActionInlineOnNarrow",learnMore:"ToolPaneHeader-module__cZFV3W__learnMore",openInNewTab:"ToolPaneHeader-module__cZFV3W__openInNewTab",title:"ToolPaneHeader-module__cZFV3W__title",titleBlock:"ToolPaneHeader-module__cZFV3W__titleBlock",titleRow:"ToolPaneHeader-module__cZFV3W__titleRow"})},459289,e=>{"use strict";var t=e.i(276385),r=e.i(252204);e.i(214847);var n=e.i(20397),a=e.i(864300),s=e.i(488299),i=e.i(8047),o=e.i(61732),u=e.i(843279);function l({onOpenInNewTab:e}){let n=(0,a.useIntl)();return(0,t.jsx)(s.IconButton,{alt:n.formatMessage({id:"workspace.toolPaneHeaderOpenInNewTab",defaultMessage:"Open in new tab"}),size:28,"data-analytics-id":"tool_pane_header_open_in_new_tab_button",onClick:e,children:(0,t.jsx)(r.default,{})})}e.s(["ToolPaneHeader",0,function({title:e,description:r,descriptionAddon:a,learnMoreHref:s,learnMoreLabel:d,action:c,keepActionInlineOnNarrow:g,openInNewTab:f,headingLevel:m=1}){return(0,t.jsxs)(o.View,{row:!0,wrap:!0,align:"start",justify:"space-between",gap:16,clsx:[u.default.header,g&&u.default.keepActionInlineOnNarrow],children:[(0,t.jsxs)(o.View,{gap:4,grow:!0,shrink:!0,basis:0,clsx:u.default.titleBlock,children:[(0,t.jsxs)(o.View,{row:!0,align:"center",gap:4,clsx:u.default.titleRow,children:[(0,t.jsx)(o.View,{shrink:!0,clsx:u.default.title,children:(0,t.jsx)(i.Header,{level:m,variant:"headerDefault",children:e})}),null!=f?(0,t.jsx)(o.View,{shrink:0,clsx:u.default.openInNewTab,children:(0,t.jsx)(l,{onOpenInNewTab:f})}):null]}),null!=r||null!=a||null!=s?(0,t.jsxs)(o.View,{clsx:u.default.descriptionRow,children:[null!=r||null!=s?(0,t.jsxs)(i.Text,{variant:"text",color:"dimmer",children:[r,null!=r&&null!=s?" ":null,null!=s?(0,t.jsx)("a",{href:s,target:"_blank",rel:"noreferrer",clsx:u.default.learnMore,"data-analytics-id":"tool_pane_header_learn_more_link",children:d??(0,t.jsx)(n.FormattedMessage,{id:"workspace.toolPaneHeaderLearnMore",defaultMessage:"Learn more"})}):null]}):null,null!=a&&(null!=r||null!=s)?" ":null,a]}):null]}),null!=c?(0,t.jsx)(o.View,{shrink:0,children:c}):null]})}])}]);
+
+//# debugId=7abf8904-1af9-78fc-ce56-e96d19a35e07
+//# sourceMappingURL=2t8s3qc7gsr4s.js.map

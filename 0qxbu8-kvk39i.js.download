@@ -1,0 +1,178 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="f114dcd4-afe1-2535-de17-eddca4b696f7")}catch(e){}}();
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,262502,e=>{"use strict";e.s(["toKey",0,function(e){return"string"==typeof e||"symbol"==typeof e?e:Object.is(e?.valueOf?.(),-0)?"-0":String(e)}])},739431,e=>{"use strict";var t=e.i(440354),n=e.i(262502);e.s(["toPath",0,function(e){if(Array.isArray(e))return e.map(n.toKey);if("symbol"==typeof e)return[e];e=(0,t.toString)(e);let o=[],i=e.length;if(0===i)return o;let r=0,s="",a="",c=!1;for(46===e.charCodeAt(0)&&(o.push(""),r++);r<i;){let t=e[r];a?"\\"===t&&r+1<i?s+=e[++r]:t===a?a="":s+=t:c?'"'===t||"'"===t?a=t:"]"===t?(c=!1,o.push(s),s=""):s+=t:"["===t?(c=!0,s&&(o.push(s),s="")):"."===t?s&&(o.push(s),s=""):s+=t,r++}return s&&o.push(s),o}])},440354,e=>{"use strict";e.s(["toString",0,function e(t){if(null==t)return"";if("string"==typeof t)return t;if(Array.isArray(t))return t.map(e).join(",");let n=String(t);return"0"===n&&Object.is(Number(t),-0)?"-0":n}])},800818,e=>{"use strict";e.s(["default",0,function(e){if("string"!=typeof e)throw TypeError("Expected a string");return e.replace(/[|\\{}()[\]^$+*?.]/g,"\\$&").replace(/-/g,"\\x2d")}])},515155,e=>{"use strict";let t=function(e){var i,r;if(null==e)return o;if("string"==typeof e){return i=e,n(function(e){return e&&e.type===i})}if("object"==typeof e){return Array.isArray(e)?function(e){let o=[],i=-1;for(;++i<e.length;)o[i]=t(e[i]);return n(function(...e){let t=-1;for(;++t<o.length;)if(o[t].call(this,...e))return!0;return!1})}(e):(r=e,n(function(e){let t;for(t in r)if(e[t]!==r[t])return!1;return!0}))}if("function"==typeof e)return n(e);throw Error("Expected function, string, or object as test")};function n(e){return function(...t){return!!e.call(this,...t)}}function o(){return!0}e.s(["convert",0,t])},913638,e=>{"use strict";e.s(["color",0,function(e){return e}])},345036,e=>{"use strict";var t=e.i(515155),n=e.i(913638);e.s(["visitParents",0,function(e,o,i,r){"function"==typeof o&&"function"!=typeof i&&(r=i,i=o,o=null);var s=(0,t.convert)(o),a=r?-1:1;(function e(t,c,l){var d,p="object"==typeof t&&null!==t?t:{};return"string"==typeof p.type&&(d="string"==typeof p.tagName?p.tagName:"string"==typeof p.name?p.name:void 0,Object.defineProperty(u,"name",{value:"node ("+(0,n.color)(p.type+(d?"<"+d+">":""))+")"})),u;function u(){var n,d,p,u,m=[];if((!o||s(t,c,l[l.length-1]||null))&&!1===(m=Array.isArray(n=i(t,l))?n:"number"==typeof n?[!0,n]:[n])[0])return m;if(t.children&&"skip"!==m[0])for(p=(r?t.children.length:-1)+a,u=l.concat(t);p>-1&&p<t.children.length;){if(!1===(d=e(t.children[p],p,u)())[0])return d;p="number"==typeof d[1]?d[1]:p+a}return m}})(e,null,[])()}])},675690,e=>{"use strict";var t=e.i(800818),n=e.i(345036),o=e.i(515155);let i={}.hasOwnProperty;function r(e){return"string"==typeof e?RegExp((0,t.default)(e),"g"):e}function s(e){return"function"==typeof e?e:()=>e}e.s(["findAndReplace",0,function(e,t,a,c){let l,d;"string"==typeof t||t instanceof RegExp?(d=[[t,a]],l=c):(d=t,l=a),l||(l={});let p=(0,o.convert)(l.ignore||[]),u=function(e){let t=[];if("object"!=typeof e)throw TypeError("Expected array or object as schema");if(Array.isArray(e)){let n=-1;for(;++n<e.length;)t.push([r(e[n][0]),s(e[n][1])])}else{let n;for(n in e)i.call(e,n)&&t.push([r(n),s(e[n])])}return t}(d),m=-1;for(;++m<u.length;)(0,n.visitParents)(e,"text",g);return e;function g(e,t){let n,o=-1;for(;++o<t.length;){let e=t[o];if(p(e,n?n.children.indexOf(e):void 0,n))return;n=e}if(n)return function(e,t){let n,o=u[m][0],i=u[m][1],r=0,s=t.children.indexOf(e),a=[];o.lastIndex=0;let c=o.exec(e.value);for(;c;){n=c.index;let t=i(...c,{index:c.index,input:c.input});if("string"==typeof t&&(t=t.length>0?{type:"text",value:t}:void 0),!1!==t&&(r!==n&&a.push({type:"text",value:e.value.slice(r,n)}),Array.isArray(t)?a.push(...t):t&&a.push(t),r=n+c[0].length),!o.global)break;c=o.exec(e.value)}return void 0===n?(a=[e],s--):(r<e.value.length&&a.push({type:"text",value:e.value.slice(r)}),t.children.splice(s,1,...a)),s+a.length+1}(e,n)}}])},445389,e=>{e.v({agentWideRoot:"Markdown-module__eSbD4q__agentWideRoot",agentWideTableBreakout:"Markdown-module__eSbD4q__agentWideTableBreakout",anchor:"Markdown-module__eSbD4q__anchor",inheritShadesTextColor:"Markdown-module__eSbD4q__inheritShadesTextColor","markdown-table-edge-shadows":"Markdown-module__eSbD4q__markdown-table-edge-shadows",markdownTheme:"Markdown-module__eSbD4q__markdownTheme",markdownThemeCompact:"Markdown-module__eSbD4q__markdownThemeCompact",markdownThemeConversation:"Markdown-module__eSbD4q__markdownThemeConversation",pTagsInheritFont:"Markdown-module__eSbD4q__pTagsInheritFont",tableScroll:"Markdown-module__eSbD4q__tableScroll",textColorDimmer:"Markdown-module__eSbD4q__textColorDimmer",textColorDimmest:"Markdown-module__eSbD4q__textColorDimmest"})},180617,e=>{"use strict";var t=e.i(276385),n=e.i(389959),o=e.i(675690),i=e.i(445389);let r=(0,n.lazy)(()=>e.A(416298)),s=/(?:^|\s)@([0-9a-zA-Z-]{2,28})\b/g,a=window.location.origin,c=(0,n.memo)(function({children:e,background:o=!0,mentionsLink:s=!1,headersLink:a=!1,lineBreaks:c=!1,themed:l=!0,compact:d=!1,onCodeInsert:p,components:u,className:m,useRemarkGfm:g=!0,remarkGitHubOptions:f,pTagsInheritFont:h,inheritShadesTextColor:b=!1,textColor:I,remarkPlugins:y,rehypePlugins:C,skipHtml:k,linkTarget:S}){let v=(0,n.useMemo)(()=>["rendered-markdown",h&&i.default.pTagsInheritFont,m],[h,m]),O=(0,n.useMemo)(()=>({backgroundColor:o?void 0:"unset"}),[o]),D=(0,n.useMemo)(()=>[l&&!d&&i.default.markdownTheme,d&&i.default.markdownThemeCompact,b&&i.default.inheritShadesTextColor,"dimmer"===I&&i.default.textColorDimmer,"dimmest"===I&&i.default.textColorDimmest].filter(Boolean).join(" "),[l,d,b,I]);return(0,t.jsx)("div",{style:O,clsx:v,children:(0,t.jsx)(n.Suspense,{fallback:(0,t.jsx)("div",{className:D,style:{whiteSpace:"pre-wrap"},children:e}),children:(0,t.jsx)(r,{className:D,components:u,remarkPlugins:y,rehypePlugins:C,mentionsLink:s,headersLink:a,lineBreaks:c,useRemarkGfm:g,remarkGitHubOptions:f,onCodeInsert:p,skipHtml:k,linkTarget:S,children:e})})})});e.s(["ALLOWED_ELEMENTS",0,["a","pre","code","em","strong","p","ul","ol","li","img","kbd","details","summary","del","ins","h1","h2","h3","h4","h5","h6","table","tr","th","td","thead","tbody","input","sup","sub","ruby","rt","rp","br","hr","blockquote","span","div"],"ALLOWED_HTML_ATTRIBUTES",0,{a:["href"],img:["src","longdesc","alt"],div:["itemscope","itemtype"],blockquote:["cite"],del:["cite"],ins:["cite"],q:["cite"],"*":["abbr","accept","accept-charset","accesskey","action","align","alt","aria-describedby","aria-hidden","aria-label","aria-labelledby","axis","border","cellpadding","cellspacing","char","charoff","charset","checked","className","clear","color","cols","colspan","compact","coords","datetime","dir","disabled","enctype","for","frame","headers","height","hreflang","hspace","ismap","itemprop","label","lang","maxlength","media","method","multiple","name","nohref","noshade","nowrap","open","progress","prompt","readonly","rel","rev","role","rows","rowspan","rules","scope","selected","shape","size","span","start","summary","tabindex","target","title","type","usemap","valign","value","vspace","width"]},"default",0,c,"remarkMentionsLink",0,()=>e=>{(0,o.findAndReplace)(e,s,(e,t)=>({type:"link",title:null,url:`${a}/@${t}`,children:[{type:"text",value:e}]}),{ignore:["link","linkReference"]})}])},79514,e=>{"use strict";e.s(["connectorSetupRequiresOpenIntTarget",0,function(e,t){return e||"api_key"!==t},"getOpenIntConnectBaseUrl",0,function(e){return`${e.openIntUrl}/connect`},"resolveOpenIntConnectTarget",0,function(e,t){return e&&t?{token:e,openIntUrl:t}:null}])},829706,e=>{"use strict";var t=e.i(276385),n=e.i(917736),o=e.i(882848),i=e.i(995691),r=e.i(146432),s=e.i(142643),a=e.i(374521),c=e.i(89148);let l=a.MCP_CONNECTORS,d=a.VERSION_CONTROL_CONNECTORS,p=new Set(s.APP_SCOPED_CONNECTORS.map(s.connectorNameToGql)),u=new Set(["disconnected","error"]),m=new Set(["BIGQUERY_SA"]);[{id:"replit-database",displayName:"Replit Database",displayNameIntlId:"connectors.replitDatabaseDisplayName",typeLabel:"PostgreSQL",typeLabelIntlId:"connectors.replitDatabaseTypeLabel",icon:(0,t.jsx)(n.default,{size:16,color:c.tokens.blueStronger}),link:"https://docs.replit.com/cloud-services/storage-and-databases/sql-database",pane:{type:"neon"}},{id:"replit-app-storage",displayName:"Replit App Storage",displayNameIntlId:"connectors.replitAppStorageDisplayName",typeLabel:"Object Storage",typeLabelIntlId:"connectors.replitAppStorageTypeLabel",icon:(0,t.jsx)(r.default,{size:16,color:c.tokens.greenStronger}),link:"https://docs.replit.com/cloud-services/storage-and-databases/object-storage",pane:{type:"objectStorage"}},{id:"replit-auth",displayName:"Replit Auth",displayNameIntlId:"connectors.replitAuthDisplayName",typeLabel:"Authentication",typeLabelIntlId:"connectors.replitAuthTypeLabel",icon:(0,t.jsx)(i.default,{size:16,color:c.tokens.orangeStronger}),link:"https://docs.replit.com/replit-workspace/replit-auth#replit-auth",pane:{type:"replitAuth"}},{id:"replit-domains",displayName:"Replit Domains",displayNameIntlId:"connectors.replitDomainsDisplayName",typeLabel:"Domains",typeLabelIntlId:"connectors.replitDomainsTypeLabel",icon:(0,t.jsx)(o.default,{size:16,color:c.tokens.tealStronger}),link:"https://docs.replit.com/cloud-services/deployments/domain-purchasing",pane:{type:"deployments"}}].map(e=>e.id),e.s(["ALL_CONNECTOR_TYPES_KEY",0,"__all_types__","APP_SCOPED_CONNECTORS_UPPER_SNAKE",0,p,"CONNECTOR_DESCRIPTIONS",0,{AGENTMAIL:{description:"Send, receive, and reply to emails using the AgentMail email inbox API.",descriptionIntlId:"connectors.agentmailDescription"},AMPLITUDE:{description:"Query analytics data, manage event taxonomy, and trigger project runs in Amplitude",descriptionIntlId:"connectors.amplitudeDescription"},ASHBY:{description:"Access job postings, candidates, and applications from your Ashby ATS",descriptionIntlId:"connectors.ashbyDescription"},ASANA:{description:"Read tasks and project data from Asana workspaces",descriptionIntlId:"connectors.asanaDescription"},SPROUTSOCIAL:{description:"Manage social media profiles, posts, messages, and cases from Sprout Social",descriptionIntlId:"connectors.sproutsocialDescription"},BITBUCKET:{description:"Access Bitbucket repositories, users, and organizations from Replit",descriptionIntlId:"connectors.bitbucketDescription"},BITBUCKET_SOURCE_CONTROL:{description:"Sync code to Bitbucket repositories from your Replit apps",descriptionIntlId:"connectors.bitbucketSourceControlDescription",longDescription:"Bitbucket is Atlassian's Git hosting service with built-in CI/CD through Bitbucket Pipelines. This integration lets you access repositories and branches, create and review pull requests, trigger pipelines, and read workspace data. Use it to automate code review workflows, sync repository metadata, or build developer experience tools.",longDescriptionIntlId:"connectors.bitbucketSourceControlLongDescription"},GITHUB_SOURCE_CONTROL:{description:"Sync code to GitHub repositories from your Replit apps",descriptionIntlId:"connectors.githubSourceControlDescription",longDescription:"GitHub is the world's largest platform for hosting and collaborating on code. This integration lets you read and write repositories, manage issues and pull requests, trigger and monitor GitHub Actions, and access user and organization data. It's a foundation for developer tools, CI pipelines, and code review automations.",longDescriptionIntlId:"connectors.githubSourceControlLongDescription"},GITLAB_SOURCE_CONTROL:{description:"Sync code to GitLab projects from your Replit apps",descriptionIntlId:"connectors.gitlabSourceControlDescription",longDescription:"GitLab is a complete DevOps platform providing source control, CI/CD, and project management in one tool. This integration lets you read and write repositories, manage merge requests and issues, trigger pipelines, and access group and project data. Use it to build developer tooling, automate code review workflows, or integrate GitLab data into your CI pipelines.",longDescriptionIntlId:"connectors.gitlabSourceControlLongDescription"},DATABRICKS_M2M:{description:"Execute SQL queries and manage data workflows in Databricks using a service account",descriptionIntlId:"connectors.databricksM2mDescription"},BIGQUERY:{description:"Execute SQL queries on Google BigQuery datasets from your Replit apps",descriptionIntlId:"connectors.bigqueryDescription"},BIGQUERY_SA:{description:"Query BigQuery as a shared service account so cost attributes to the app",descriptionIntlId:"connectors.bigquerySaDescription"},BOX:{description:"Access Box files and folders from Replit",descriptionIntlId:"connectors.boxDescription"},CALENDLY:{description:"View Calendly events and event types",descriptionIntlId:"connectors.calendlyDescription"},CONFLUENCE:{description:"Read users and groups, create and edit content in Confluence spaces",descriptionIntlId:"connectors.confluenceDescription"},CLICKUP:{description:"Access tasks, projects, and workflows in ClickUp",descriptionIntlId:"connectors.clickupDescription"},DATABRICKS:{description:"Execute SQL queries and manage data workflows in Databricks",descriptionIntlId:"connectors.databricksDescription"},DISCORD:{description:"Access Discord guild information and user profiles",descriptionIntlId:"connectors.discordDescription"},DROPBOX:{description:"Access Dropbox files, content, and metadata",descriptionIntlId:"connectors.dropboxDescription"},ELEVENLABS:{description:"AI voice generation and text-to-speech",descriptionIntlId:"connectors.elevenlabsDescription"},HEX:{description:"Run data notebooks, manage projects, and trigger Hex project runs via API",descriptionIntlId:"connectors.hexDescription"},OPENAI:{description:"Access your own OpenAI API key instead of default Replit-managed AI integrations",descriptionIntlId:"connectors.openaiDescription"},FACEBOOK:{description:"View Facebook profiles, posts, photos, and manage pages",descriptionIntlId:"connectors.facebookDescription"},GITHUB:{description:"Access GitHub repositories, users, and organizations from your Replit apps",descriptionIntlId:"connectors.githubDescription"},GOOGLE_CALENDAR:{description:"Read and write Google Calendar events and settings",descriptionIntlId:"connectors.googleCalendarDescription"},GOOGLE_DOCS:{description:"Create, read, and edit Google Docs",descriptionIntlId:"connectors.googleDocsDescription"},GOOGLE_DRIVE:{description:"Access and manage Google Drive files and folders",descriptionIntlId:"connectors.googleDriveDescription"},GOOGLE_MAIL:{description:"Send, receive, and manage Gmail messages",descriptionIntlId:"connectors.googleMailDescription"},GOOGLE_SHEET:{description:"Read and write data in Google Sheets",descriptionIntlId:"connectors.googleSheetDescription"},GOOGLE_SLIDES:{description:"Create, read, and edit Google Slides presentations",descriptionIntlId:"connectors.googleSlidesDescription"},HUBSPOT:{description:"Access HubSpot CRM objects, contacts, and deals from Replit",descriptionIntlId:"connectors.hubspotDescription"},INSTAGRAM:{description:"Manage Instagram business content, messages, and insights",descriptionIntlId:"connectors.instagramDescription"},JIRA:{description:"View users and manage Jira work items and issues",descriptionIntlId:"connectors.jiraDescription"},LINEAR:{description:"Create and manage Linear issues, comments, and schedules",descriptionIntlId:"connectors.linearDescription"},MONDAY:{description:"Access Monday.com boards and user information",descriptionIntlId:"connectors.mondayDescription"},MOBILE_MAPS:{description:"Access mobile maps and locations from Replit",descriptionIntlId:"connectors.mobileMapsDescription"},NOTION:{description:"Read and write to Notion workspaces and pages",descriptionIntlId:"connectors.notionDescription"},ONEDRIVE:{description:"Access and manage OneDrive files and folders",descriptionIntlId:"connectors.onedriveDescription"},OUTLOOK:{description:"Send and receive emails, manage Outlook calendar events",descriptionIntlId:"connectors.outlookDescription"},PLAID:{description:"Access Plaid connected bank accounts and transactions",descriptionIntlId:"connectors.plaidDescription"},POSTGRES:{description:"Execute read-only SQL queries on PostgreSQL databases",descriptionIntlId:"connectors.postgresDescription"},RESEND:{description:"Send transactional emails using the Resend API",descriptionIntlId:"connectors.resendDescription"},REVENUECAT:{description:"Monetize your mobile apps built on Replit",descriptionIntlId:"connectors.revenuecatDescription"},SALESFORCE:{description:"Access Salesforce CRM data and perform operations via REST API",descriptionIntlId:"connectors.salesforceDescription"},SEGMENT:{description:"Manage Segment sources, destinations, and tracking plans via the Public API",descriptionIntlId:"connectors.segmentDescription"},SENDGRID:{description:"Send transactional emails using the SendGrid API",descriptionIntlId:"connectors.sendgridDescription"},SHAREPOINT:{description:"Read, write, and manage SharePoint sites and documents",descriptionIntlId:"connectors.sharepointDescription"},SLACK:{description:"Send messages and interact with Slack workspaces",descriptionIntlId:"connectors.slackDescription"},SLACK_AGENT:{description:"Integrate Slack agent capabilities from Replit",descriptionIntlId:"connectors.slackAgentDescription"},SLACK_AGENT_BUILDER:{description:"Build and manage custom Slack agents",descriptionIntlId:"connectors.slackAgentBuilderDescription"},STRIPE:{description:"Connect to Stripe to enable seamless and secure payments for your apps",descriptionIntlId:"connectors.stripeDescription"},SNOWFLAKE:{description:"Execute SQL queries on Snowflake data warehouses",descriptionIntlId:"connectors.snowflakeDescription"},SPOTIFY:{description:"Access and manage Spotify playlists and libraries",descriptionIntlId:"connectors.spotifyDescription"},TODOIST:{description:"Read and write to your Todoist tasks and projects",descriptionIntlId:"connectors.todoistDescription"},TWILIO:{description:"Send SMS messages and make voice calls using the Twilio API",descriptionIntlId:"connectors.twilioDescription"},YOUTUBE:{description:"Upload and manage YouTube videos, channels, and analytics",descriptionIntlId:"connectors.youtubeDescription"},ZENDESK:{description:"Access Zendesk users and support tickets from Replit",descriptionIntlId:"connectors.zendeskDescription"},FIGMA:{description:"Allow Replit Agent to view and rapidly build your designs from Figma",descriptionIntlId:"connectors.figmaDescription"},CUSTOM_MCP:{description:"Allows Replit Agent to access external MCP servers",descriptionIntlId:"connectors.customMcpDescription"},WHOP:{description:"Create payment plans, checkout configurations, and manage subscriptions via Whop",descriptionIntlId:"connectors.whopDescription"},ZOOM:{description:"Access Zoom meetings, users, settings, and webinars with admin privileges",descriptionIntlId:"connectors.zoomDescription"},WORKATO:{description:"Trigger Workato recipes and call Workato APIs",descriptionIntlId:"connectors.workatoDescription"},X:{description:"Access X posts, users, and search using the X API v2 with pay-per-usage pricing",descriptionIntlId:"connectors.xDescription"},MICROSOFT_FABRIC:{description:"Access Microsoft Fabric workspaces and resources",descriptionIntlId:"connectors.microsoftFabricDescription"}},"CONNECTOR_TYPE_FILTER_OPTIONS",0,[{key:"connector",label:"Connector",labelIntlId:"connectors.connectorTypeLabel"},{key:"mcp",label:"MCP",labelIntlId:"connectors.mcpBadge"},{key:"source-control",label:"Source Control",labelIntlId:"connectors.sourceControlBadge"}],"DISCONNECTED_STATUSES",0,u,"MCP_CONNECTORS",0,l,"VERSION_CONTROL_CONNECTORS",0,d,"buildConnectionManagementUrl",0,function(e,t,n){let o=`/integrations/${e.toLowerCase()}/apps/${t}`;return n?`/t/${n}${o}`:o},"isAppScopedConnector",0,e=>p.has(e),"isConnectionHealthy",0,e=>!u.has(e??""),"isHiddenUnlessConnected",0,e=>a.CONNECTORS_HIDDEN_UNLESS_CONNECTED.has(e),"isMCPConnector",0,e=>l.has(e),"isServiceAccountConnector",0,e=>m.has(e),"toConnectorName",0,function(e){if(!e)return null;let t=e.toUpperCase();return/^[A-Z][A-Z0-9_]*$/.test(t)?t:null}])},366541,e=>{"use strict";var t=e.i(351623),n=e.i(299020),o=e.i(344480),i=e.i(975473);let r={},s=t.gql`
+    fragment ConnectorContextReplInfo on Repl {
+  id
+  title
+  iconUrl
+  url
+  timeCreated
+  user {
+    id
+    username
+    fullName
+    image
+  }
+}
+    `,a=t.gql`
+    fragment ConnectorContextConnectionInfo on OintConnection {
+  connectionId
+  connectionOwner
+  connectorName
+  displayName
+  description
+  iconPath
+  status
+  type
+  environment
+  webhookProvider
+  repls {
+    ...ConnectorContextReplInfo
+  }
+  predefinedProvider {
+    id
+    displayName
+    description
+    baseUrl
+    iconPath
+  }
+}
+    ${s}`,c=t.gql`
+    fragment ConnectorContext on CurrentUserConnectorContext {
+  openIntClientToken: routedOpenIntClientToken
+  openIntUrl
+  connectorWhitelist
+  freeTierConnectors
+  connections {
+    ...ConnectorContextConnectionInfo
+  }
+  connectorConfigs {
+    id
+    type
+    connectorName
+    isMcpServerConfig
+    displayName
+    description
+    iconPath
+    accessType
+    verification
+    webhookEvents {
+      name
+      model
+      description
+    }
+  }
+}
+    ${a}`,l=t.gql`
+    fragment OrgConnectorContext on OrgConnectorContext {
+  openIntClientToken: routedOpenIntClientToken
+  openIntUrl
+  connectorWhitelist
+  freeTierConnectors
+  connections {
+    ...ConnectorContextConnectionInfo
+  }
+  connectorConfigs {
+    id
+    type
+    connectorName
+    isMcpServerConfig
+    displayName
+    description
+    iconPath
+    accessType
+    verification
+    webhookEvents {
+      name
+      model
+      description
+    }
+  }
+}
+    ${a}`,d=t.gql`
+    mutation UseConnectorsCreateConnection($input: CreateConnectionInput!) {
+  createConnection(input: $input) {
+    ... on CreateConnection {
+      connectionId
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    `,p=t.gql`
+    query GetConnectorContext {
+  currentUser {
+    ... on CurrentUser {
+      id
+      isSubscribed
+      personalOrgAuthorizations {
+        __typename
+        ... on OrgAuthorizations {
+          useAgentConnectors {
+            isAuthorized
+          }
+        }
+      }
+      connectorContext {
+        ...ConnectorContext
+      }
+    }
+  }
+}
+    ${c}`,u=t.gql`
+    query GetConnectorContextByOrg($orgId: String!) {
+  currentUser {
+    ... on CurrentUser {
+      id
+      isSubscribed
+      org(orgId: $orgId) {
+        __typename
+        ... on Org {
+          id
+          connectorContext {
+            ...OrgConnectorContext
+          }
+        }
+        ... on Error {
+          __typename
+          message
+        }
+      }
+    }
+  }
+}
+    ${l}`,m=t.gql`
+    query GetConnectorContextToken {
+  currentUser {
+    ... on CurrentUser {
+      id
+      connectorContext {
+        __typename
+        ... on CurrentUserConnectorContext {
+          openIntClientToken: routedOpenIntClientToken
+          openIntUrl
+        }
+      }
+    }
+  }
+}
+    `,g=t.gql`
+    query GetConnectorContextTokenByOrg($orgId: String!) {
+  getOrg(orgId: $orgId) {
+    __typename
+    ... on Org {
+      id
+      connectorContext {
+        __typename
+        ... on OrgConnectorContext {
+          openIntClientToken: routedOpenIntClientToken
+          openIntUrl
+        }
+      }
+    }
+  }
+}
+    `;e.s(["ConnectorContextConnectionInfoFragmentDoc",0,a,"ConnectorContextFragmentDoc",0,c,"ConnectorContextReplInfoFragmentDoc",0,s,"GetConnectorContextByOrgDocument",0,u,"GetConnectorContextDocument",0,p,"OrgConnectorContextFragmentDoc",0,l,"useGetConnectorContextByOrgQuery",0,function(e){let t={...r,...e};return o.useQuery(u,t)},"useGetConnectorContextQuery",0,function(e){let t={...r,...e};return o.useQuery(p,t)},"useGetConnectorContextTokenByOrgLazyQuery",0,function(e){let t={...r,...e};return i.useLazyQuery(g,t)},"useGetConnectorContextTokenLazyQuery",0,function(e){let t={...r,...e};return i.useLazyQuery(m,t)},"useUseConnectorsCreateConnectionMutation",0,function(e){let t={...r,...e};return n.useMutation(d,t)}])},768175,e=>{"use strict";var t=e.i(276385),n=e.i(983420);e.s(["default",0,function(e){return(0,t.jsx)(n.default,{...e,children:(0,t.jsx)("path",{fillRule:"evenodd",d:"M12.25 6a.75.75 0 0 1 .75-.75h3A2.75 2.75 0 0 1 18.75 8v6.325A3.751 3.751 0 0 1 18 21.75a3.75 3.75 0 0 1-.75-7.425V8A1.25 1.25 0 0 0 16 6.75h-3a.75.75 0 0 1-.75-.75M18 15.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5M11 18.75a.75.75 0 0 0 0-1.5H8A1.25 1.25 0 0 1 6.75 16V9.675A3.751 3.751 0 0 0 6 2.25a3.75 3.75 0 0 0-.75 7.425V16A2.75 2.75 0 0 0 8 18.75zM8.25 6a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0",clipRule:"evenodd"})})}])},917736,e=>{"use strict";var t=e.i(276385),n=e.i(983420);e.s(["default",0,function(e){return(0,t.jsx)(n.default,{...e,children:(0,t.jsx)("path",{fillRule:"evenodd",d:"M12 1.25c2.544 0 4.878.342 6.602.917.857.286 1.606.643 2.155 1.076.54.426.993 1.014.993 1.757v14c0 .718-.428 1.3-.965 1.732-.543.438-1.293.804-2.183 1.101-1.786.595-4.16.917-6.602.917s-4.816-.322-6.602-.917c-.89-.297-1.64-.663-2.183-1.1-.503-.405-.911-.943-.96-1.6L2.25 19V5c0-.743.452-1.33.993-1.757.55-.433 1.298-.79 2.155-1.076C7.122 1.592 9.457 1.25 12 1.25m8.25 12.85a8.4 8.4 0 0 1-1.648.733c-1.786.595-4.16.917-6.602.917s-4.816-.322-6.602-.917A8.4 8.4 0 0 1 3.75 14.1V19l.013.08c.03.102.123.267.392.484.353.283.92.58 1.718.846 1.59.53 3.795.84 6.127.84s4.537-.31 6.127-.84c.797-.266 1.365-.563 1.718-.846.27-.218.363-.382.392-.484l.013-.08zm0-7c-.47.282-1.03.527-1.648.733-1.724.575-4.059.917-6.602.917s-4.878-.342-6.602-.917a8.4 8.4 0 0 1-1.648-.732V12c0 .077.046.274.405.563.353.284.92.581 1.718.847 1.59.53 3.795.84 6.127.84s4.537-.31 6.127-.84c.797-.266 1.365-.563 1.718-.847.36-.289.405-.486.405-.563zM12 2.75c-2.427 0-4.593.329-6.127.84-.77.257-1.34.546-1.701.83-.37.292-.422.494-.422.58s.052.288.422.58c.361.284.93.573 1.701.83 1.534.511 3.7.84 6.127.84s4.593-.329 6.127-.84c.77-.257 1.34-.546 1.701-.83.37-.292.422-.494.422-.58s-.052-.288-.422-.58c-.361-.284-.93-.573-1.701-.83-1.533-.511-3.7-.84-6.127-.84",clipRule:"evenodd"})})}])},882848,e=>{"use strict";var t=e.i(276385),n=e.i(983420);e.s(["default",0,function(e){return(0,t.jsx)(n.default,{...e,children:(0,t.jsx)("path",{fillRule:"evenodd",d:"M12.949 2.93a5.75 5.75 0 0 1 8.13 8.131l-.009.01-3 3a5.75 5.75 0 0 1-8.67-.622.75.75 0 1 1 1.2-.898 4.25 4.25 0 0 0 6.41.459l2.995-2.995a4.25 4.25 0 0 0-6.01-6.01l-1.716 1.707a.75.75 0 1 1-1.058-1.064zM7.986 8.609a5.75 5.75 0 0 1 6.615 1.943.75.75 0 1 1-1.202.898 4.25 4.25 0 0 0-6.409-.459l-2.995 2.996a4.25 4.25 0 0 0 6.01 6.009l1.705-1.705a.75.75 0 0 1 1.06 1.06l-1.719 1.72a5.75 5.75 0 0 1-8.13-8.131l.009-.01 3-3a5.75 5.75 0 0 1 2.056-1.321",clipRule:"evenodd"})})}])},146432,e=>{"use strict";var t=e.i(276385),n=e.i(983420);e.s(["default",0,function(e){return(0,t.jsxs)(n.default,{...e,children:[(0,t.jsx)("path",{d:"M9.077 13.254A.75.75 0 0 1 9.75 14v3.25H10a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1 0-1.5h1.25v-2.5H7a.75.75 0 0 1 0-1.5h2z"}),(0,t.jsx)("path",{fillRule:"evenodd",d:"M15.5 13.25c1.157 0 2.25.852 2.25 2.083v1.334c0 1.231-1.093 2.083-2.25 2.083-1.085 0-2.113-.75-2.237-1.857l-.013-.226v-1.334c0-1.231 1.093-2.083 2.25-2.083m0 1.5c-.5 0-.75.341-.75.583v1.334l.012.094c.054.227.3.489.738.489.5 0 .75-.341.75-.583v-1.334c0-.242-.25-.583-.75-.583M8.5 5.25c1.157 0 2.25.852 2.25 2.083v1.334c0 1.231-1.093 2.083-2.25 2.083-1.085 0-2.113-.75-2.237-1.857l-.013-.226V7.333c0-1.231 1.093-2.083 2.25-2.083m0 1.5c-.5 0-.75.341-.75.583v1.334l.012.094c.054.227.3.489.738.489.5 0 .75-.341.75-.583V7.333c0-.242-.25-.583-.75-.583",clipRule:"evenodd"}),(0,t.jsx)("path",{d:"M16.077 5.254A.75.75 0 0 1 16.75 6v3.25H17a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1 0-1.5h1.25v-2.5H14a.75.75 0 0 1 0-1.5h2z"}),(0,t.jsx)("path",{fillRule:"evenodd",d:"M16 2.25c1.995 0 3.542.231 4.53 1.22.989.988 1.22 2.535 1.22 4.53v9c0 1.541-.247 2.808-1.095 3.655-.847.848-2.114 1.095-3.655 1.095H7c-1.542 0-2.808-.247-3.655-1.095C2.497 19.808 2.25 18.541 2.25 17V7c0-1.542.247-2.808 1.095-3.655C4.192 2.497 5.458 2.25 7 2.25zm-9 1.5c-1.458 0-2.192.253-2.595.655C4.003 4.808 3.75 5.542 3.75 7v10c0 1.459.253 2.192.655 2.595.403.402 1.137.655 2.595.655h10c1.459 0 2.192-.253 2.595-.655.402-.403.655-1.136.655-2.595V8c0-2.005-.269-2.958-.78-3.47-.512-.511-1.465-.78-3.47-.78z",clipRule:"evenodd"})]})}])},158666,e=>{"use strict";e.s(["CONNECTOR_NAME_VALUES",0,["accelo","acme-apikey","acme-oauth2","active-campaign","acuity-scheduling","addepar","adobe","adobe-commerce","adobe-workfront","adyen","affinity","agentmail","agentphone","aimfox-oauth","aircall","airtable","algolia","amazon","amazon-selling-partner","amazon-selling-partner-beta","amplitude","anrok","apaleo","apify","apollo","apollo-oauth","appstle-subscriptions","asana","ashby","atlas-so","atlassian","atlassian-admin","atlassian-government-cloud","attention","attio","auth0","autodesk","autotask","avoma","aws","axiom","bamboohr","basecamp","battlenet","beehiiv","bettercontact","bigcommerce","bigquery","bigquery-sa","bird","bitbucket","bitbucket-source-control","bitly","blackbaud","blandai","boldsign","box","braintree","braintree-sandbox","brave","braze","brevo","brex","brex-staging","browserbase","builder-io-private","builder-io-public","buildium","builtwith","bullhorn","cal-com-oauth","calendly","callrail","candis","canny","canva","canvas-lms","certn","chattermill","checkhq","checkr-partner","checkr-partner-staging","chorus","circle-so","clari-copilot","clerk","clickup","close","cloudbeds","cloudflare","coda","codeclimate","codegen","companycam","confluence","constant-contact","contactout","contentful","contentstack","copper","coros","coros-sandbox","cursor","custom-mcp","cyberimpact","databricks","databricks-m2m","datadog","datev","datto-rmm","deel","deel-sandbox","demodesk","devin","dialpad","dialpad-sandbox","digitalocean","discord","discourse","dixa","document360","docusign","docusign-sandbox","drata","drchrono","dropbox","dropbox-sign","ebay","ebay-sandbox","egnyte","elevenlabs","elevio","employment-hero","envoy","epic-games","eventbrite","exa","exact-online","exist","facebook","factorial","fairing","falai","fanvue","fathom-oauth","fellow","fiber-ai","figma","fillout","findymail","firecrawl","fireflies","firstbase","fiserv","fitbit","float","folk","fortnox","freeagent","freeagent-sandbox","freshbooks","freshsales","freshteam","front","fullenrich","gamma","gebruder-weiss","gem","ghost-content","github","github-source-control","gitlab","gitlab-source-control","glyphic","gong","gong-oauth","google","google-calendar","google-docs","google-drive","google-mail","google-play","google-sheet","google-slides","gorgias","grafana","grain","granola","greenhouse","greenhouse-harvest-partner","greenhouse-ingestion","grist","gumroad","gusto","gusto-demo","harvest","health-gorilla","helpscout-mailbox","hex","heygen","heyreach","highlevel","highlevel-white-label","holded","hover","hubspot","icypeas","incident-io","instagram","instantly","intercom","intuit","ironclad","itglue","jazzhr","jira","jira-data-center","jobadder","jobber","jobvite","jotform","jumpcloud","juniper-mist","justworks","kandji","keap","kintone","kintone-user-api","klaviyo-oauth","klipfolio","knowbe4","kustomer","lagrowthmachine","lattice","leadmagic","lever","lever-sandbox","linear","linkedin","linkhut","llamaindex","loop-returns","loops-so","luma","lumos","mailchimp","make","manatal","maximizer","maximizer-on-premise","mercury","metabase","microsoft","microsoft-admin","microsoft-fabric","microsoft-teams-bot","microsoft-tenant-specific","mindbody","mindee","minimax","miro","missive","mollie","momentum-io","monday","mural","namely","nano-banana","nationbuilder","netsuite","ninjaone-rmm-oauth2","nocrm","notion","nyne-ai","odoo","okta","one-drive-personal","onedrive","onlogist","oomnitza","open-hands","openai","ordinal","osu","oura","outlook","outreach","pagerduty","pandadoc","paycor","paycor-sandbox","payfit","paypal","paypal-sandbox","pendo","pennylane","pennylane-company-api","peopledatalabs","perdoo","perplexity","personio-recruiting","pingone","pinterest","pipedream","pipedrive","pivotaltracker","plaid","plain","podium","postgres","posthog","practicefusion","precisefp","printful","prive","procore","productboard","prospeo","pylon","qualtrics","quickbase","quickbooks","quiver-ai","ragieai","ramp","ramp-sandbox","rapidapi","readwise","readwise-reader","reapit","recall-ai","recharge","recruitcrm","recruitee","recruiterflow","reddit","refiner","replicate","resend","retell-ai","revenuecat","ring-central","ring-central-sandbox","rippling","rippling-shop-app","rocketlane","rootly","sage","sage-hr","sage-intacct-oauth","sage-people","salesforce","salesforce-experience-cloud","salesforce-sandbox","salesloft","salesmsg-oauth2","schwab","scrapedo","segment","sellsy","semrush","sendgrid","sentry","servicem8","servicenow","sharepoint","shipstation-v2","shopify","shopify-partner","shopify-store","shortcut","shotstack","signnow","signnow-sandbox","skio","slab","slack","slack-agent","slack-agent-builder","slack-deployed-agent","smartlead-ai","smartrecruiters","smartsheet","snapchat","snipe-it","snowflake","splitwise","spotify","sproutsocial","squarespace","squareup","squareup-sandbox","stackexchange","statista","strava","strava-web","stripe","stripe-agent-sandbox","stripe-app","stripe-app-sandbox","stripe-express","supabase","survey-monkey","tailscale","tally","teamleader","teamtailor","teamwork","terraform","thrivecart-oauth","ticktick","tiktok-accounts","tiktok-ads","tiktok-personal","timely","tldv","todoist","torii","tremendous","tremendous-sandbox","tripo3d","tsheetsteam","tumblr","twenty-crm","twenty-crm-self-hosted","twilio","twinfield","twitch","typeform","typefully","uber","ukg-pro-wfm","unipile","upsales","valley","vercel","vimeo","wakatime","wave-accounting","wealthbox","webex","webflow","whatsapp-business","whoop","whop","wildix-pbx","wise","wiseagent","wiza","wordpress","workable-oauth","workato","workday-oauth","workos","wrike","x","xai","xero","yahoo","yandex","youtube","zapier","zapier-nla","zendesk","zendesk-sell","zenefits","zoho","zoho-desk","zoom"]])},142643,e=>{"use strict";var t=e.i(158666);let n=new Set(t.CONNECTOR_NAME_VALUES);Object.fromEntries(t.CONNECTOR_NAME_VALUES.map(e=>[e,e])),e.s(["APP_SCOPED_CONNECTORS",0,["stripe","shopify-store","whop"],"connectorNameToGql",0,function(e){return e.toUpperCase().replace(/-/g,"_")},"gqlEnumToConnectorName",0,e=>e.toLowerCase().replace(/_/g,"-"),"isValidConnectorName",0,function(e){return n.has(e)}])},374521,e=>{"use strict";let t=new Set(["FIGMA","CUSTOM_MCP"]),n=new Set(["BITBUCKET_SOURCE_CONTROL","GITHUB_SOURCE_CONTROL","GITLAB_SOURCE_CONTROL"]),o=new Set(["YOUTUBE"]);e.s(["CONNECTORS_HIDDEN_UNLESS_CONNECTED",0,o,"MCP_CONNECTORS",0,t,"VERSION_CONTROL_CONNECTORS",0,n])}]);
+
+//# debugId=f114dcd4-afe1-2535-de17-eddca4b696f7
+//# sourceMappingURL=0h8ifctbg2gju.js.map

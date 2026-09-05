@@ -1,0 +1,362 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="79387ee6-2d3e-9b65-a045-723c81a66c79")}catch(e){}}();
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,872199,(e,t,n)=>{"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=function(e,t){(0,r.default)(e),"object"===i(t)?(n=t.min||0,o=t.max):(n=arguments[1],o=arguments[2]);var n,o,a=encodeURI(e).split(/%..|./).length-1;return a>=n&&(void 0===o||a<=o)};var o,r=(o=e.r(669996))&&o.__esModule?o:{default:o};function i(e){return(i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}t.exports=n.default,t.exports.default=n.default},84466,(e,t,n)=>{"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=function(e,t){if((0,o.default)(e),(t=(0,l.default)(t,u)).require_display_name||t.allow_display_name){var n=e.match(d);if(n){var c,C,x=n[1];if(e=e.replace(x,"").replace(/(^<|>$)/g,""),x.endsWith(" ")&&(x=x.slice(0,-1)),!(!(!(C=(c=x).replace(/^"(.+)"$/,"$1")).trim()||/[\.";<>]/.test(C)&&(C===c||C.split('"').length!==C.split('\\"').length))&&1))return!1}else if(t.require_display_name)return!1}if(!t.ignore_max_length&&e.length>254)return!1;var _=e.split("@"),S=_.pop(),y=S.toLowerCase();if(t.host_blacklist.length>0&&(0,r.default)(y,t.host_blacklist)||t.host_whitelist.length>0&&!(0,r.default)(y,t.host_whitelist))return!1;var v=_.join("@");if(t.domain_specific_validation&&("gmail.com"===y||"googlemail.com"===y)){var b=(v=v.toLowerCase()).split("+")[0];if(!(0,i.default)(b.replace(/\./g,""),{min:6,max:30}))return!1;for(var j=b.split("."),w=0;w<j.length;w++)if(!p.test(j[w]))return!1}if(!1===t.ignore_max_length&&(!(0,i.default)(v,{max:64})||!(0,i.default)(S,{max:254})))return!1;if(!(0,a.default)(S,{require_tld:t.require_tld,ignore_max_length:t.ignore_max_length,allow_underscores:t.allow_underscores})){if(!t.allow_ip_domain)return!1;if(!(0,s.default)(S)){if(!S.startsWith("[")||!S.endsWith("]"))return!1;var F=S.slice(1,-1);if(0===F.length||!(0,s.default)(F))return!1}}if(t.blacklisted_chars&&-1!==v.search(RegExp("[".concat(t.blacklisted_chars,"]+"),"g")))return!1;if('"'===v[0]&&'"'===v[v.length-1])return v=v.slice(1,v.length-1),t.allow_utf8_local_part?h.test(v):f.test(v);for(var O=t.allow_utf8_local_part?m:g,M=v.split("."),U=0;U<M.length;U++)if(!O.test(M[U]))return!1;return!0};var o=c(e.r(669996)),r=c(e.r(35073)),i=c(e.r(872199)),a=c(e.r(919872)),s=c(e.r(97982)),l=c(e.r(718435));function c(e){return e&&e.__esModule?e:{default:e}}var u={allow_display_name:!1,allow_underscores:!1,require_display_name:!1,allow_utf8_local_part:!0,require_tld:!0,blacklisted_chars:"",ignore_max_length:!1,host_blacklist:[],host_whitelist:[]},d=/^([^\x00-\x1F\x7F-\x9F\cX]+)</i,g=/^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~]+$/i,p=/^[a-z\d]+$/,f=/^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e]|(\\[\x01-\x09\x0b\x0c\x0d-\x7f]))*$/i,m=/^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\u00A1-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+$/i,h=/^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|(\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*$/i;t.exports=n.default,t.exports.default=n.default},919872,(e,t,n)=>{"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=function(e,t){(0,o.default)(e),(t=(0,r.default)(t,a)).allow_trailing_dot&&"."===e[e.length-1]&&(e=e.substring(0,e.length-1)),!0===t.allow_wildcard&&0===e.indexOf("*.")&&(e=e.substring(2));var n=e.split("."),i=n[n.length-1];return!(t.require_tld&&(n.length<2||!t.allow_numeric_tld&&!/^([a-z\u00A1-\u00A8\u00AA-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,}|xn[a-z0-9-]{2,})$/i.test(i)||/\s/.test(i)))&&!(!t.allow_numeric_tld&&/^\d+$/.test(i))&&n.every(function(e){return!(e.length>63&&!t.ignore_max_length||!/^[a-z_\u00a1-\uffff0-9-]+$/i.test(e)||/[\uff01-\uff5e]/.test(e)||/^-|-$/.test(e)||!t.allow_underscores&&/_/.test(e))})};var o=i(e.r(669996)),r=i(e.r(718435));function i(e){return e&&e.__esModule?e:{default:e}}var a={require_tld:!0,allow_underscores:!1,allow_trailing_dot:!1,allow_numeric_tld:!1,allow_wildcard:!1,ignore_max_length:!1};t.exports=n.default,t.exports.default=n.default},97982,(e,t,n)=>{"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=function e(t){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};(0,r.default)(t);var o=("object"===i(n)?n.version:arguments[1])||"";return o?"4"===o.toString()?l.test(t):"6"===o.toString()&&u.test(t):e(t,{version:4})||e(t,{version:6})};var o,r=(o=e.r(669996))&&o.__esModule?o:{default:o};function i(e){return(i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}var a="(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])",s="(".concat(a,"[.]){3}").concat(a),l=new RegExp("^".concat(s,"$")),c="(?:[0-9a-fA-F]{1,4})",u=RegExp("^("+"(?:".concat(c,":){7}(?:").concat(c,"|:)|")+"(?:".concat(c,":){6}(?:").concat(s,"|:").concat(c,"|:)|")+"(?:".concat(c,":){5}(?::").concat(s,"|(:").concat(c,"){1,2}|:)|")+"(?:".concat(c,":){4}(?:(:").concat(c,"){0,1}:").concat(s,"|(:").concat(c,"){1,3}|:)|")+"(?:".concat(c,":){3}(?:(:").concat(c,"){0,2}:").concat(s,"|(:").concat(c,"){1,4}|:)|")+"(?:".concat(c,":){2}(?:(:").concat(c,"){0,3}:").concat(s,"|(:").concat(c,"){1,5}|:)|")+"(?:".concat(c,":){1}(?:(:").concat(c,"){0,4}:").concat(s,"|(:").concat(c,"){1,6}|:)|")+"(?::((?::".concat(c,"){0,5}:").concat(s,"|(?::").concat(c,"){1,7}|:))")+")(%[0-9a-zA-Z.]{1,})?$");t.exports=n.default,t.exports.default=n.default},669996,(e,t,n)=>{"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=function(e){if(null==e)throw TypeError("Expected a string but received a ".concat(e));if("String"!==e.constructor.name)throw TypeError("Expected a string but received a ".concat(e.constructor.name))},t.exports=n.default,t.exports.default=n.default},35073,(e,t,n)=>{"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=function(e,t){for(var n=0;n<t.length;n++){var o=t[n];if(e===o||"[object RegExp]"===Object.prototype.toString.call(o)&&o.test(e))return!0}return!1},t.exports=n.default,t.exports.default=n.default},718435,(e,t,n)=>{"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},t=arguments.length>1?arguments[1]:void 0;for(var n in t)void 0===e[n]&&(e[n]=t[n]);return e},t.exports=n.default,t.exports.default=n.default},299560,e=>{e.v({description:"HasCredentialsSwitch-module__5n9FFa__description",optionCard:"HasCredentialsSwitch-module__5n9FFa__optionCard",optionCardContent:"HasCredentialsSwitch-module__5n9FFa__optionCardContent",optionsContainer:"HasCredentialsSwitch-module__5n9FFa__optionsContainer",radioButton:"HasCredentialsSwitch-module__5n9FFa__radioButton",selected:"HasCredentialsSwitch-module__5n9FFa__selected",title:"HasCredentialsSwitch-module__5n9FFa__title"})},392238,e=>{"use strict";var t=e.i(276385),n=e.i(532764),o=e.i(813707);e.i(214847);var r=e.i(20397),i=e.i(864300),a=e.i(89148),s=e.i(94824),l=e.i(8047),c=e.i(61732),u=e.i(299560);let d=({value:e,icon:n,title:o,description:r,selected:i})=>(0,t.jsxs)("label",{className:`${u.default.optionCard} ${i?u.default.selected:""}`,htmlFor:`radio-${e}`,children:[(0,t.jsx)(s.Radio,{id:`radio-${e}`,value:e,className:u.default.radioButton,checked:i}),(0,t.jsxs)(c.View,{className:u.default.optionCardContent,children:[(0,t.jsxs)(c.View,{row:!0,wrap:!0,gap:4,align:"center",children:[n,(0,t.jsx)(l.Text,{variant:"text",className:u.default.title,children:o})]}),(0,t.jsx)(l.Text,{variant:"small",className:u.default.description,children:r})]})]});e.s(["default",0,({value:e="default",onChange:g,isDisabled:p=!1,isUpdate:f=!1})=>{let m=(0,i.useIntl)();return(0,t.jsxs)(c.View,{gap:8,children:[(0,t.jsxs)(c.View,{gap:4,children:[(0,t.jsx)(l.Text,{variant:"text",children:f?(0,t.jsx)(r.FormattedMessage,{id:"jsonSchemaForms.setupMethodTitleUpdate",defaultMessage:"Configurations"}):(0,t.jsx)(r.FormattedMessage,{id:"jsonSchemaForms.setupMethodTitle",defaultMessage:"Set up method"})}),(0,t.jsx)(l.Text,{variant:"small",color:"dimmer",children:(0,t.jsx)(r.FormattedMessage,{id:"jsonSchemaForms.setupMethodDescription",defaultMessage:"Select how you'd like to configure your connector."})})]}),(0,t.jsx)(s.RadioGroup,{name:"setupMethod",value:e,onChange:g,children:(0,t.jsxs)(c.View,{className:u.default.optionsContainer,children:[(0,t.jsx)(d,{value:"default",icon:(0,t.jsx)(n.default,{size:16,color:"default"===e?a.tokens.accentPrimaryDefault:a.tokens.foregroundDimmer}),title:m.formatMessage({id:"jsonSchemaForms.defaultSetupTitle",defaultMessage:"Use Replit default configurations"}),description:m.formatMessage({id:"jsonSchemaForms.defaultSetupDescription",defaultMessage:"Set up connector with Replit's default credentials."}),selected:"default"===e}),p?(0,t.jsx)(l.Text,{variant:"small",color:"dimmer",children:(0,t.jsx)(r.FormattedMessage,{id:"jsonSchemaForms.customSetupDisabledNote",defaultMessage:"Upgrade to an Enterprise plan to use custom configurations."})}):(0,t.jsx)(d,{value:"custom",icon:(0,t.jsx)(o.default,{size:16,color:"custom"===e?a.tokens.accentPrimaryDefault:a.tokens.foregroundDimmer}),title:m.formatMessage({id:"jsonSchemaForms.customSetupTitle",defaultMessage:"Use custom configurations"}),description:m.formatMessage({id:"jsonSchemaForms.customSetupDescription",defaultMessage:"Set up your own connector credentials and get fine tuned control."}),selected:"custom"===e})]})})]})}])},32338,e=>{"use strict";var t=e.i(351623),n=e.i(130902),o=e.i(344480);e.i(975473);let r={},i=t.gql`
+    query OrgGroupSearch($orgId: String, $input: OrgGroupsInput) {
+  currentUser {
+    __typename
+    id
+    org(orgId: $orgId) {
+      __typename
+      ... on Org {
+        id
+        groups(input: $input) {
+          __typename
+          ... on OrgGroupConnection {
+            pageInfo {
+              hasNextPage
+              nextCursor
+            }
+            items {
+              ...OrgGroupsOrgGroup
+            }
+          }
+          ... on UserError {
+            message
+          }
+        }
+      }
+      ... on NotFoundError {
+        message
+      }
+    }
+  }
+}
+    ${n.OrgGroupsOrgGroupFragmentDoc}`;e.s(["useOrgGroupSearchQuery",0,function(e){let t={...r,...e};return o.useQuery(i,t)}])},767025,e=>{e.v({chip:"OrgGroupSearch-module__tfaGqG__chip",chipContainer:"OrgGroupSearch-module__tfaGqG__chipContainer",chipDanger:"OrgGroupSearch-module__tfaGqG__chipDanger",chipInput:"OrgGroupSearch-module__tfaGqG__chipInput",chipInputCell:"OrgGroupSearch-module__tfaGqG__chipInputCell",chipLabel:"OrgGroupSearch-module__tfaGqG__chipLabel",chipRemove:"OrgGroupSearch-module__tfaGqG__chipRemove",groupIcon:"OrgGroupSearch-module__tfaGqG__groupIcon",groupName:"OrgGroupSearch-module__tfaGqG__groupName",highlight:"OrgGroupSearch-module__tfaGqG__highlight",popover:"OrgGroupSearch-module__tfaGqG__popover",resultList:"OrgGroupSearch-module__tfaGqG__resultList",root:"OrgGroupSearch-module__tfaGqG__root",trailingSlot:"OrgGroupSearch-module__tfaGqG__trailingSlot"})},959787,e=>{"use strict";var t=e.i(276385),n=e.i(389959),o=e.i(969407),r=e.i(336799),i=e.i(964304),a=e.i(84466),s=e.i(908796),l=e.i(32338),c=e.i(602686),u=e.i(983420),d=e.i(269848),g=e.i(346781),p=e.i(612343),f=e.i(619158);e.i(214847);var m=e.i(864300),h=e.i(89148),C=e.i(825419),x=e.i(488299),_=e.i(528710),S=e.i(585544),y=e.i(773222),v=e.i(108431),b=e.i(8047),j=e.i(61732),w=e.i(767025);let F=(0,h.cvarsFrom)("OrgGroupSearch.module.css",["--scrollbar-width"]),O=e=>"group"===e.kind?`group:${e.group.id}`:`email:${e.email.toLowerCase()}`,M=e=>e?e.type===s.OrgGroupType.SystemIndividual?e.individualMember?.email||e.name:e.name||"":"",U=e=>"group"===e.kind?M(e.group):e.email,G=({text:e,highlight:n})=>{if(!n)return(0,t.jsx)(t.Fragment,{children:e});let o=n.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),r=e.split(RegExp(`(${o})`,"gi"));return(0,t.jsx)(t.Fragment,{children:r.map((e,o)=>e.toLowerCase()===n.toLowerCase()?(0,t.jsx)("span",{clsx:w.default.highlight,children:e},o):(0,t.jsx)("span",{children:e},o))})},D=({individualMember:e,searchQuery:n})=>{let o=e?.user;if(!o)return null;let r=e?.user?.displayName??"",i=e?.email??"";return(0,t.jsxs)(j.View,{row:!0,gap:8,align:"center",children:[(0,t.jsx)(C.Avatar,{size:24,src:o?.image,username:`${o?.displayName}`,fullName:o?.fullName}),(0,t.jsxs)(b.Text,{children:[(0,t.jsx)(G,{text:r,highlight:n})," (",(0,t.jsx)(G,{text:i,highlight:n}),")"]})]})},I=({label:e,isInvalid:n,removeLabel:o,onRemove:r,disabled:i})=>(0,t.jsxs)(j.View,{tag:"li",row:!0,align:"center",gap:2,pl:6,pr:2,br:4,clsx:n?w.default.chipDanger:w.default.chip,children:[(0,t.jsx)(b.Text,{variant:"small",clsx:w.default.chipLabel,multiline:!1,children:e}),(0,t.jsx)(x.IconButton,{alt:o,tooltipBehavior:"hidden",size:12,clsx:w.default.chipRemove,disabled:i,onClick:r,children:(0,t.jsx)(c.default,{size:10})})]});function E({firstKey:e,collectionKey:o,children:i}){return!function({firstKey:e,collectionKey:t}){let o=(0,n.useContext)(r.ComboBoxStateContext),i=(0,n.useRef)(o);i.current=o;let a=(0,n.useRef)(e);a.current=e,(0,n.useEffect)(()=>{let e=i.current,t=a.current;e&&null!=t&&e.selectionManager.setFocusedKey(t)},[t])}({firstKey:e,collectionKey:o}),(0,t.jsx)(t.Fragment,{children:i})}e.s(["default",0,e=>{let{inputId:h,orgId:C,types:G,selectedGroups:R,value:$,setValue:k,placeholder:q,hideSearchIcon:N=!1,hideEmptyResults:T=!1,disabled:A=!1,inputWrapperClassName:P,"aria-label":V,"aria-labelledby":z,"aria-describedby":B}=e,L=!0===e.multi,K=!0===e.multi?e.recipients.length:0,H=(0,m.useIntl)(),Q=q??H.formatMessage({id:"groups.searchPlaceholder",defaultMessage:"Find an existing group..."}),[W,J]=(0,n.useState)(null),[X,Y]=(0,n.useState)(),Z=(0,n.useRef)(null),ee=(0,n.useRef)(null),et=(0,o.useIsSSR)(),[en,eo]=(0,n.useState)(),[er,ei]=(0,n.useState)(0);(0,n.useEffect)(()=>{Z.current&&Y(Z.current)},[]),(0,n.useEffect)(()=>{let e=ee.current;e&&(e.scrollTop=e.scrollHeight)},[K]),(0,n.useEffect)(()=>{let e=ee.current;if(!e||"u"<typeof ResizeObserver)return;let t=()=>{let{borderLeftWidth:t,borderRightWidth:n}=getComputedStyle(e),o=parseFloat(t)+parseFloat(n);ei(Math.max(0,e.offsetWidth-e.clientWidth-o))};t();let n=new ResizeObserver(t);return n.observe(e),()=>n.disconnect()},[K]);let ea=(0,f.default)($.trim(),250),{data:es,loading:el,error:ec}=(0,l.useOrgGroupSearchQuery)({variables:{orgId:C,input:{count:10,types:G,filters:{name:{search:ea}}}},ssr:!1,skip:!ea,fetchPolicy:"cache-and-network"}),eu=(0,n.useMemo)(()=>ea&&$.trim()===ea&&es?.currentUser?.org?.__typename==="Org"&&es?.currentUser?.org?.groups?.__typename==="OrgGroupConnection"?es.currentUser.org.groups.items.filter(e=>!R.some(t=>e.id===t.id)):[],[es,R,ea,$]),ed=es&&es.currentUser&&"Org"!==es.currentUser.org.__typename?es.currentUser.org.message:void 0,eg=es&&es.currentUser&&"Org"===es.currentUser.org.__typename&&"OrgGroupConnection"!==es.currentUser.org.groups.__typename?es.currentUser.org.groups.message:void 0,ep=ec?.message,ef=ed??eg??ep,em=(0,n.useCallback)(()=>{if(!L)return;let t=new Set(e.recipients.map(O));for(let n of e.value.split(",").map(e=>e.trim()).filter(e=>e.length>0)){let o={kind:"email",email:n},r=O(o);t.has(r)||(t.add(r),e.onAdd(o))}e.setValue("")},[L,e]),eh=(0,n.useCallback)(t=>{if(!t)return;let n=eu.find(e=>e.id===t);if(n){if(J(t),L){let t={kind:"group",group:n},o=O(t);e.recipients.some(e=>O(e)===o)||e.onAdd(t),e.setValue("")}else e.onSelect(n),k(M(n));requestAnimationFrame(()=>J(null))}},[eu,L,e,k]),eC=(0,n.useCallback)(()=>{k(""),J(null),L||e.onClear?.()},[k,L,e]),ex=!L&&!el&&$.length>0,e_=!L&&el,eS=!L&&!el&&0===$.length&&!N,ey=el||$.trim().length>0&&ea!==$.trim(),ev=eu.length>0,eb=!T&&!ey&&ea.length>0&&0===eu.length,ej=$.length>0,ew=ey||ev||eb||!!ef,eF=ex?(0,t.jsx)(x.IconButton,{alt:H.formatMessage({id:"groups.searchClear",defaultMessage:"Clear"}),tooltipBehavior:"hidden",slot:null,onClick:eC,children:(0,t.jsx)(c.default,{})}):e_?(0,t.jsx)(u.IconProvider,{size:16,children:(0,t.jsx)(d.default,{})}):eS?(0,t.jsx)(u.IconProvider,{size:16,children:(0,t.jsx)(g.default,{})}):null,eO=L&&e.recipients.length>0,eM=L?e:null,eU=L?(0,t.jsxs)(j.View,{tag:"ul",innerRef:ee,row:!0,align:"center",gap:2,pl:4,pr:eM?.trailingSlot?96:4,py:4,br:4,clsx:w.default.chipContainer,children:[eM?eM.recipients.map(e=>{let n=U(e),o="email"===e.kind&&!(0,a.default)(e.email),r=H.formatMessage({id:"groups.removeRecipient",defaultMessage:"Remove {label}"},{label:n});return(0,t.jsx)(I,{label:n,isInvalid:o,removeLabel:r,disabled:A,onRemove:()=>eM.onRemove(e)},O(e))}):null,(0,t.jsx)(j.View,{tag:"li",row:!0,align:"center",grow:!0,shrink:!0,clsx:w.default.chipInputCell,children:(0,t.jsx)(i.Input,{id:h,autoComplete:"off",placeholder:eO?"":Q,clsx:w.default.chipInput,onKeyDown:t=>{if(!L)return;let n=e.value.trim();if(","===t.key||" "===t.key){n.length>0?(t.preventDefault(),em()):t.preventDefault(),eo(t.key);return}if("Enter"===t.key)return eu.length>0?void eo(t.key):(n.length>0?(t.preventDefault(),em()):e.recipients.length>0&&e.onSubmit&&(t.preventDefault(),e.onSubmit()),void eo(t.key));if(0===e.value.length&&"Backspace"===t.key&&"Backspace"===en&&e.recipients.length>0){let t=e.recipients[e.recipients.length-1];t&&(e.onRemove(t),e.setValue(U(t)))}eo(t.key)},onPaste:t=>{if(!L)return;let n=t.clipboardData.getData("text");if(!n||!/[,;\s]/.test(n))return;t.preventDefault();let o=n.split(/[,;\s]+/).map(e=>e.trim()).filter(e=>e.length>0);if(0===o.length)return;let r=e.value.trim(),[i,...a]=o,s=r.length>0&&i?r+i:i??"",l=s.length>0?[s,...a]:a,c=new Set(e.recipients.map(O));for(let t of l){let n={kind:"email",email:t},o=O(n);c.has(o)||(c.add(o),e.onAdd(n))}e.setValue("")},onBlur:()=>eo(void 0)})})]}):(0,t.jsx)(_.CustomDecoratedInput,{right:eF,autoComplete:"off",placeholder:Q,className:P});return(0,t.jsxs)("div",{ref:Z,className:w.default.root,children:[et?null:(0,t.jsx)(r.ComboBox,{id:L?void 0:h,isDisabled:A,selectedKey:W,allowsCustomValue:!0,inputValue:$,onInputChange:k,onSelectionChange:eh,items:eu,defaultFilter:()=>!0,menuTrigger:"input",allowsEmptyCollection:ej,"aria-label":V,"aria-labelledby":z,"aria-describedby":B,children:(0,t.jsxs)(E,{firstKey:eu[0]?.id??null,collectionKey:eu.map(e=>e.id).join(","),children:[eU,(0,t.jsxs)(y.RawPopover,{clsx:w.default.popover,style:{width:"var(--trigger-width)",display:ew?void 0:"none"},UNSTABLE_portalContainer:X,children:[ef?(0,t.jsx)(j.View,{p:8,children:(0,t.jsx)(v.StatusBanner,{colorway:"negative",text:ef})}):null,(0,t.jsx)(S.ListBox,{clsx:w.default.resultList,renderEmptyState:()=>ey?(0,t.jsxs)(j.View,{p:8,row:!0,align:"center",gap:8,children:[(0,t.jsx)(u.IconProvider,{size:16,children:(0,t.jsx)(d.default,{})}),(0,t.jsx)(b.Text,{height:"singleLine",color:"dimmer",multiline:!1,children:H.formatMessage({id:"groups.searching",defaultMessage:"Searching…"})})]}):eb?(0,t.jsx)(j.View,{p:8,children:(0,t.jsx)(b.Text,{height:"singleLine",color:"dimmer",multiline:!1,children:H.formatMessage({id:"groups.searchNoResults",defaultMessage:"No results found for “{query}”"},{query:$})})}):null,children:ev?eu.map(e=>(0,t.jsx)(S.BaseListBoxItem,{id:e.id,textValue:M(e),children:e.type===s.OrgGroupType.SystemIndividual?(0,t.jsx)(D,{individualMember:e.individualMember,searchQuery:ea}):(0,t.jsxs)(j.View,{row:!0,gap:8,align:"center",children:[(0,t.jsx)(j.View,{clsx:w.default.groupIcon,children:(0,t.jsx)(p.default,{size:12})}),(0,t.jsx)(b.Text,{height:"singleLine",multiline:!1,clsx:w.default.groupName,children:e.name})]})},e.id)):null})]})]})}),eM?.trailingSlot?(0,t.jsx)(j.View,{row:!0,align:"center",clsx:w.default.trailingSlot,style:{[F.scrollbarWidth]:`${er}px`},children:eM.trailingSlot}):null]})}])},167904,e=>{"use strict";var t=e.i(351623),n=e.i(130902),o=e.i(979e3),r=e.i(366541),i=e.i(344480);e.i(975473);var a=e.i(299020);let s={},l=t.gql`
+    fragment SharedConnection on OrgConfiguredConnectorSharedConnection {
+  connection {
+    connectionId
+    connectorName
+  }
+  groupScopes {
+    ...OrgGroupsOrgGroup
+  }
+}
+    ${n.OrgGroupsOrgGroupFragmentDoc}`,c=t.gql`
+    fragment ConfiguredConnectorItem on OrgConfiguredConnector {
+  id
+  connectorName
+  displayName
+  connectionCount
+  config
+  connector {
+    ...OrgConnectorItem
+  }
+  sharedConnection {
+    ...SharedConnection
+  }
+  repls {
+    ...ConnectorContextReplInfo
+  }
+  warehouseCostClasses @include(if: $includeWarehouseCost) {
+    replId
+    costClass
+  }
+}
+    ${o.OrgConnectorItemFragmentDoc}
+${l}
+${r.ConnectorContextReplInfoFragmentDoc}`,u=t.gql`
+    fragment UserConfiguredConnectorItem on UserConfiguredConnector {
+  id
+  connectorName
+  displayName
+  connectionCount
+  isSharedDefault
+  apiKeyConnectionId
+  config
+  connector {
+    ...OrgConnectorItem
+  }
+}
+    ${o.OrgConnectorItemFragmentDoc}`,d=t.gql`
+    query ConfiguredConnectors($orgSlug: String!, $includeWarehouseCost: Boolean = false) {
+  currentUser {
+    id
+    org(orgSlug: $orgSlug) {
+      ... on Org {
+        id
+        dealContext {
+          dealType
+        }
+        authorizations {
+          editConnectorConfig(isCustomConfig: true) {
+            isAuthorized
+          }
+        }
+        configuredConnectors {
+          ... on OrgConfiguredConnectorConnection {
+            items {
+              ...ConfiguredConnectorItem
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+            }
+          }
+        }
+      }
+      ... on NotFoundError {
+        message
+      }
+    }
+  }
+}
+    ${c}`,g=t.gql`
+    mutation DeleteSharedOrgConnectionAndConfig($input: DeleteSharedOrgConnectionAndConfigInput!) {
+  deleteSharedOrgConnectionAndConfig(input: $input) {
+    ... on DeleteSharedOrgConnectionAndConfigResult {
+      org {
+        id
+        configuredConnectors {
+          ... on OrgConfiguredConnectorConnection {
+            items {
+              id
+            }
+          }
+        }
+      }
+      deletedConnectionIds
+    }
+    ... on NotFoundError {
+      message
+    }
+    ... on UnauthorizedError {
+      message
+    }
+  }
+}
+    `,p=t.gql`
+    query UserConfiguredConnectorRepls($connectorConfigId: String!) {
+  getUserConfiguredConnectors(connectorConfigId: $connectorConfigId) {
+    id
+    repls {
+      ...ConnectorContextReplInfo
+    }
+  }
+}
+    ${r.ConnectorContextReplInfoFragmentDoc}`,f=t.gql`
+    mutation DeleteUserConnectorConfig($input: DeleteUserConnectorConfigInput!) {
+  deleteUserConnectorConfig(input: $input) {
+    ... on DeleteUserConnectorConfigResult {
+      success
+    }
+    ... on NotFoundError {
+      message
+    }
+    ... on UnauthorizedError {
+      message
+    }
+  }
+}
+    `;e.s(["ConfiguredConnectorItemFragmentDoc",0,c,"ConfiguredConnectorsDocument",0,d,"UserConfiguredConnectorItemFragmentDoc",0,u,"useDeleteSharedOrgConnectionAndConfigMutation",0,function(e){let t={...s,...e};return a.useMutation(g,t)},"useDeleteUserConnectorConfigMutation",0,function(e){let t={...s,...e};return a.useMutation(f,t)},"useUserConfiguredConnectorReplsQuery",0,function(e){let t={...s,...e};return i.useQuery(p,t)}])},579061,e=>{"use strict";var t=e.i(167904),n=e.i(933302);e.s(["useConfiguredConnectorsRefetch",0,function(e){let o=(0,n.useFeatureGate)("gate_connectors_warehouse_cost_class",!1);return{query:t.ConfiguredConnectorsDocument,variables:{orgSlug:e,includeWarehouseCost:o}}}])},979e3,e=>{"use strict";var t=e.i(351623);let n=t.gql`
+    fragment OrgConnectorItem on OrgConnector {
+  type
+  name
+  displayName
+  description
+  verticals
+  logoUrl
+  authType
+  stage
+  platforms
+  credentials
+  requiredScopes
+  defaultScopes
+  allowedScopes
+  scopes {
+    scope
+    displayName
+    description
+  }
+  setupGuide {
+    docsUrl
+    steps
+    fields {
+      field
+      label
+      help
+      sourceUrl
+      generateUrl
+    }
+  }
+  schemas {
+    connectorConfig
+    connectionSettings
+  }
+}
+    `,o=t.gql`
+    fragment PersonalConnectorItem on UserConnector {
+  type
+  name
+  displayName
+  logoUrl
+  authType
+  stage
+  platforms
+  verticals
+  credentials
+  requiredScopes
+  defaultScopes
+  allowedScopes
+  scopes {
+    scope
+    displayName
+    description
+  }
+  setupGuide {
+    docsUrl
+    steps
+    fields {
+      field
+      label
+      help
+      sourceUrl
+      generateUrl
+    }
+  }
+  schemas {
+    connectorConfig
+    connectionSettings
+  }
+}
+    `,r=t.gql`
+    query OrgConnectorSetup($orgSlug: String!) {
+  currentUser {
+    id
+    __typename
+    org(orgSlug: $orgSlug) {
+      __typename
+      ... on Org {
+        id
+        authorizations {
+          createConnectorConfig {
+            isAuthorized
+          }
+          editConnectorConfig(isCustomConfig: true) {
+            isAuthorized
+          }
+        }
+        connectors {
+          ... on OrgConnectorConnection {
+            items {
+              ...OrgConnectorItem
+            }
+          }
+        }
+      }
+      ... on NotFoundError {
+        message
+      }
+    }
+  }
+}
+    ${n}`;e.s(["OrgConnectorItemFragmentDoc",0,n,"OrgConnectorSetupDocument",0,r,"PersonalConnectorItemFragmentDoc",0,o])},456432,e=>{"use strict";var t=e.i(351623),n=e.i(979e3),o=e.i(299020);e.i(344480),e.i(975473);let r={},i=t.gql`
+    mutation UpdateConnectorConfig($input: UpdateConnectorConfigInput!) {
+  updateConnectorConfig(input: $input) {
+    ... on Org {
+      ... on Org {
+        id
+        configuredConnectors {
+          ... on OrgConfiguredConnectorConnection {
+            items {
+              id
+            }
+          }
+        }
+      }
+    }
+    ... on UserError {
+      message
+    }
+    ... on NotFoundError {
+      message
+    }
+    ... on UnauthorizedError {
+      message
+    }
+  }
+}
+    `,a=t.gql`
+    mutation OrgConnectorSetupFormCreateApiKeyConnection($input: CreateApiKeyConnectionInput!) {
+  createApiKeyConnection(input: $input) {
+    ... on CreateApiKeyConnectionResult {
+      connectionId
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    `,s=t.gql`
+    mutation createUpdateSharedOrgConnection($input: CreateUpdateSharedOrgConnectionInput!) {
+  createUpdateSharedOrgConnection(input: $input) {
+    ... on CreateUpdateSharedOrgConnectionResult {
+      connectionId
+      org {
+        id
+        connectors {
+          ... on OrgConnectorConnection {
+            items {
+              ...OrgConnectorItem
+            }
+          }
+        }
+        configuredConnectors {
+          ... on OrgConfiguredConnectorConnection {
+            items {
+              id
+            }
+          }
+        }
+        connectorContext {
+          __typename
+          ... on OrgConnectorContext {
+            connectorConfigs {
+              id
+              webhookEvents {
+                name
+                model
+                description
+              }
+            }
+          }
+          ... on Error {
+            message
+          }
+        }
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    ${n.OrgConnectorItemFragmentDoc}`,l=t.gql`
+    mutation CreateUserConnectorConfig($input: CreateUserConnectorConfigInput!) {
+  createUserConnectorConfig(input: $input) {
+    ... on CreateUserConnectorConfigResult {
+      connectorConfigId
+    }
+    ... on ServiceUnavailable {
+      message
+    }
+    ... on UserError {
+      message
+    }
+    ... on UnauthorizedError {
+      message
+    }
+  }
+}
+    `;e.s(["useCreateUpdateSharedOrgConnectionMutation",0,function(e){let t={...r,...e};return o.useMutation(s,t)},"useCreateUserConnectorConfigMutation",0,function(e){let t={...r,...e};return o.useMutation(l,t)},"useOrgConnectorSetupFormCreateApiKeyConnectionMutation",0,function(e){let t={...r,...e};return o.useMutation(a,t)},"useUpdateConnectorConfigMutation",0,function(e){let t={...r,...e};return o.useMutation(i,t)}])},534033,e=>{e.v({form:"OrgConnectorSetupForm-module__8B8tSW__form"})},696254,e=>{"use strict";var t=e.i(276385),n=e.i(635050),o=e.i(389959),r=e.i(29822),i=e.i(979e3),a=e.i(456432),s=e.i(142643),l=e.i(674826),c=e.i(829706),u=e.i(320216);e.i(214847);var d=e.i(20397),g=e.i(864300),p=e.i(742667),f=e.i(392238),m=e.i(665271),h=e.i(926010),C=e.i(624025),x=e.i(415541),_=e.i(709485),S=e.i(579061),y=e.i(919073),v=e.i(643484),b=e.i(903790),j=e.i(190545),w=e.i(8047),F=e.i(61732),O=e.i(180617),M=e.i(534033);let U={};e.s(["OrgConnectorSetupForm",0,function({connector:e,flowId:G,onComplete:D,connectionSettings:I,canUseCustomConfig:E=!1,orgId:R,orgSlug:$}){let k=(0,g.useIntl)(),q=(0,S.useConfiguredConnectorsRefetch)($),{name:N,logoUrl:T}=e??{},A=e?.displayName||N,{showConfirm:P,showError:V}=(0,u.default)(),z=!!R,B="api_key"===e.type||"API_KEY"===e.authType,[L,K]=(0,o.useState)(B||!e.credentials?"custom":"default"),H=(0,o.useMemo)(()=>({allowedScopes:e?.allowedScopes||[],defaultScopes:e?.defaultScopes||[]}),[e]),[Q,W]=(0,o.useState)(H.defaultScopes),[J,{loading:X,error:Y}]=(0,a.useUpdateConnectorConfigMutation)({refetchQueries:[{query:r.OrgConnectorsPageDocument,variables:{orgSlug:$}}],onCompleted:e=>{"Org"===e.updateConnectorConfig.__typename?(P(k.formatMessage({id:"orgs.connectorSetupConfiguredForWorkspaceConfirm",defaultMessage:"Connector has been successfully configured for your workspace"})),D()):("UserError"===e.updateConnectorConfig.__typename||"UnauthorizedError"===e.updateConnectorConfig.__typename)&&V(e.updateConnectorConfig.message)},onError:()=>{V(k.formatMessage({id:"orgs.connectorSetupEnableConnectorError",defaultMessage:"Failed to enable connector. Please try again."}))}}),[Z,{loading:ee}]=(0,a.useCreateUpdateSharedOrgConnectionMutation)({refetchQueries:[{query:r.OrgConnectorsPageDocument,variables:{orgSlug:$}},q,{query:i.OrgConnectorSetupDocument,variables:{orgSlug:$}}],onCompleted:e=>{"CreateUpdateSharedOrgConnectionResult"===e.createUpdateSharedOrgConnection.__typename?(P(k.formatMessage({id:"orgs.connectorSetupUpdatedConfirm",defaultMessage:"Connector has been successfully updated"})),D()):V(e.createUpdateSharedOrgConnection.message)},onError:()=>{V(k.formatMessage({id:"orgs.connectorSetupCreateConnectionError",defaultMessage:"Failed to create connection. Please try again."}))}}),[et,{loading:en}]=(0,a.useOrgConnectorSetupFormCreateApiKeyConnectionMutation)({refetchQueries:["UserConnectorsPage","PersonalConnectorSetup","UserConfiguredConnectors"],onCompleted:e=>{"CreateApiKeyConnectionResult"===e.createApiKeyConnection.__typename?(P(k.formatMessage({id:"orgs.connectorSetupConnectionCreatedConfirm",defaultMessage:"Connection created successfully"})),D()):V(e.createApiKeyConnection.message)},onError:()=>{V(k.formatMessage({id:"orgs.connectorSetupCreateConnectionError",defaultMessage:"Failed to create connection. Please try again."}))}}),[eo,{loading:er}]=(0,a.useCreateUserConnectorConfigMutation)({refetchQueries:["UserConnectorsPage","PersonalConnectorSetup","UserConfiguredConnectors"],onCompleted:e=>{"CreateUserConnectorConfigResult"===e.createUserConnectorConfig.__typename?(P(k.formatMessage({id:"orgs.connectorSetupConfiguredConfirm",defaultMessage:"Connector configured successfully"})),D()):("UserError"===e.createUserConnectorConfig.__typename||"UnauthorizedError"===e.createUserConnectorConfig.__typename||"ServiceUnavailable"===e.createUserConnectorConfig.__typename)&&V(e.createUserConnectorConfig.message)},onError:()=>{V(k.formatMessage({id:"orgs.connectorSetupConfigureConnectorError",defaultMessage:"Failed to configure connector. Please try again."}))}}),ei=e?.schemas?.connectorConfig,ea=(0,C.hasTopLevelPasswordField)(ei),es=async e=>{if(e.preventDefault(),!N)return;let t={oauth:{scopes:Q}};z?(await J({variables:{input:{connectorName:N,orgId:R,config:t}},refetchQueries:[q,{query:r.OrgConnectorsPageDocument,variables:{orgSlug:$}},{query:i.OrgConnectorSetupDocument,variables:{orgSlug:$}}]}),(0,x.track)(_.events.ORG_CREATE_CONNECTOR,{connectorName:N,orgSlug:$})):await eo({variables:{input:{connectorName:(0,s.connectorNameToGql)(N),config:t}}})},el=async t=>{if(N){if("OAUTH2"===e.authType)return void await eo({variables:{input:{connectorName:(0,s.connectorNameToGql)(N),config:t}}});await et({variables:{input:{connectorName:(0,s.connectorNameToGql)(N),config:t,...G&&{flowId:G}}}})}},ec=async e=>{if(N){if(!z)return void await el(e);await J({variables:{input:{connectorName:N,orgId:R,config:e}},refetchQueries:[q,{query:r.OrgConnectorsPageDocument,variables:{orgSlug:$}},{query:i.OrgConnectorSetupDocument,variables:{orgSlug:$}}]}),(0,x.track)(_.events.ORG_CREATE_CONNECTOR,{connectorName:N,orgSlug:$})}},eu=async e=>{if(N){if(!z)return void await el(e);await Z({variables:{input:{connectorName:(0,s.connectorNameToGql)(N),orgId:R,config:e,...G&&{flowId:G}}}}),(0,x.track)(_.events.ORG_CREATE_CONNECTOR,{connectorName:N,orgSlug:$})}},ed=X||ee||en||er,eg=k.formatMessage({id:"orgs.connectorSetupSubmitButton",defaultMessage:"Configure"});return(0,t.jsxs)(F.View,{gap:24,children:[(0,t.jsxs)(F.View,{gap:16,align:"start",children:[T?(0,t.jsx)(y.ShadesSurface,{p:4,align:"center",justify:"center",br:8,children:(0,t.jsx)(n.default,{src:T,alt:k.formatMessage({id:"orgs.connectorCardLogoAlt",defaultMessage:"{title} logo"},{title:A}),width:32,height:32,style:{objectFit:"contain"}})}):null,(0,t.jsxs)(F.View,{gap:8,align:"start",children:[(0,t.jsx)(w.Text,{variant:"headerDefault",children:(0,t.jsx)(d.FormattedMessage,{id:"orgs.connectorSetupEnableTitle",defaultMessage:"Enable {title}",values:{title:A}})}),(0,t.jsx)(w.Text,{color:"dimmer",children:z?(0,t.jsx)(d.FormattedMessage,{id:"orgs.connectorSetupOrgEnableDescription",defaultMessage:"Once configured, your entire workspace can use this {title} connector to build Apps without needing their own API keys.",values:{title:A}}):(0,t.jsx)(d.FormattedMessage,{id:"orgs.connectorSetupPersonalEnableDescription",defaultMessage:"Once configured, you can use this {title} connector to build Apps.",values:{title:A}})})]})]}),(0,t.jsx)(j.Form,{onSubmit:"default"===L?es:void 0,className:M.default.form,children:(0,t.jsxs)(F.View,{gap:8,children:[Y?(0,t.jsx)(l.default,{children:Y.message}):null,I&&B?(0,t.jsxs)(F.View,{gap:16,children:[(0,t.jsx)(p.ConnectorSetupGuidePanel,{setupGuide:e.setupGuide}),(0,t.jsx)(m.JSONSchemaForm,{jsonSchema:I,formContext:e,hideSubmitButton:!1,hideSensitiveFields:!1,onSubmit:eu,disabled:ed,submitButtonText:eg,formData:U,disableScopes:!1,loading:!1})]}):(0,t.jsxs)(t.Fragment,{children:[e.credentials?(0,t.jsx)(f.default,{value:L,onChange:e=>{let t=e.target.value;("default"===t||"custom"===t)&&K(t)},isDisabled:!E,isUpdate:!1}):null,"custom"===L&&ei?(0,t.jsxs)(F.View,{gap:16,children:[(0,t.jsx)(p.ConnectorSetupGuidePanel,{setupGuide:e.setupGuide}),e.authType?.includes("OAUTH")&&!(0,c.isServiceAccountConnector)((0,s.connectorNameToGql)(N??""))?(0,t.jsx)(O.default,{components:{p:e=>(0,t.jsx)(w.Text,{color:"dimmer",children:e.children})},clsx:M.default.markdown,children:k.formatMessage({id:"orgs.connectorSetupOauthCallbackInstructions",defaultMessage:"In order to properly configure this connector, you need to set `https://replit.com/connectors/oauth/callback` as the Redirect URL in your app."})}):null,(0,t.jsx)(m.JSONSchemaForm,{jsonSchema:ei,formData:U,formContext:e,hideSubmitButton:!1,hideSensitiveFields:!ea,onSubmit:ec,disabled:ed,submitButtonText:eg,disableScopes:!1})]}):null]}),"default"===L&&(0,t.jsxs)(F.View,{gap:12,pt:12,children:[(0,t.jsx)(b.DividerH,{className:M.default.divider}),(0,t.jsxs)(F.View,{gap:4,children:[(0,t.jsx)(w.Text,{variant:"text",children:(0,t.jsx)(d.FormattedMessage,{id:"orgs.connectorSetupScopesLabel",defaultMessage:"Connector Scopes"})}),(0,t.jsx)(w.Text,{variant:"small",color:"dimmer",children:(0,t.jsx)(d.FormattedMessage,{id:"orgs.connectorSetupScopesDescription",defaultMessage:"Connector scopes are permission mechanisms that define what specific resources and actions a connector is authorized to access on your account."})})]}),(0,t.jsx)(h.ScopesToggleList,{availableScopes:H.allowedScopes,scopeMetadata:e.scopes??[],selectedScopes:Q,onChange:W,lockedScopes:H.defaultScopes,isDisabled:!E}),(0,t.jsx)(F.View,{pt:16,row:!0,justify:"end",children:(0,t.jsx)(v.Button,{type:"submit",colorway:"primary",disabled:ed,loading:X||er,text:eg})})]})]})})]})}])},284294,e=>{"use strict";var t=e.i(276385);e.i(214847);var n=e.i(864300),o=e.i(27923);e.s(["default",0,({height:e=24})=>{let r=(0,n.useIntl)(),i={width:84,height:64,fill:"#FF3C00",rx:12};return(0,t.jsxs)("svg",{width:e/1.2,height:e,viewBox:"0 0 200 240",xmlns:"http://www.w3.org/2000/svg","aria-labelledby":"loading-animation-title",children:[(0,t.jsx)("title",{id:"loading-animation-title",children:r.formatMessage({id:"rui.loadingAnimationTitle",defaultMessage:"Loading animation"})}),(0,t.jsx)("rect",{clsx:(0,o.tw)("animate-loading-animation-rect-1"),...i,x:8,y:8}),(0,t.jsx)("rect",{clsx:(0,o.tw)("animate-loading-animation-rect-2"),...i,x:108,y:88}),(0,t.jsx)("rect",{clsx:(0,o.tw)("animate-loading-animation-rect-3"),...i,x:8,y:168})]})}])},94824,e=>{"use strict";var t=e.i(276385),n=e.i(389959),o=e.i(152651),r=e.i(210853),i=e.i(89148),a=e.i(27923),s=e.i(406664),l=e.i(857066),c=e.i(61732);let u=(0,n.createContext)(null),[d,g]=(0,a.twVar)({variable:"--Radio--checked-background"}),p=c.SpecializedView.input;e.s(["Radio",0,function({onChange:e,id:f,checked:m,disabled:h,name:C,value:x,dataAnalyticsId:_,className:S,...y}){let v=(0,n.useContext)(u),b=(0,l.useRuiComponentAttributes)("Radio");v&&(C=C??v.name,m=m??v.value===x,e=e??v.onChange,h=h??v.disabled);let j=(0,s.useCreateInteractive)({variant:"filledAndOutlined",borderRadius:"50%"}),{onClick:w}=(0,r.useClickIntentHandlers)(),F=h?i.tokens.outlineDefault:i.tokens.accentPrimaryDefault;return(0,t.jsxs)(c.View,{clsx:(0,a.tw)("relative"),row:!0,align:"center",justify:"center",style:g(F),children:[(0,t.jsx)(p,{...b,id:f,name:C,value:x,type:"radio",checked:m,disabled:h,onChange:t=>e?.(t),onClick:void 0===_?void 0:w,clsx:a.tw.merge("appearance-none size-500",a.tw.external(j.clsx),a.tw.external(S)),style:j.style,"data-analytics-id":_,...void 0===_?{}:o.INSTRUMENTED_MARKER_PROP,...y}),m?(0,t.jsx)(c.View,{clsx:(0,a.tw)("absolute size-300 rounded-[50%] pointer-events-none",a.tw.var(d("bg-(--Radio--checked-background)")))}):null]})},"RadioGroup",0,function({name:e,value:n,disabled:o,onChange:r,children:i,tag:a,className:s}){return(0,t.jsx)(c.View,{tag:a,className:s,children:(0,t.jsx)(u.Provider,{value:{value:n,name:e,onChange:r,disabled:o},children:i})})}])}]);
+
+//# debugId=79387ee6-2d3e-9b65-a045-723c81a66c79
+//# sourceMappingURL=04prvybmiyr2p.js.map

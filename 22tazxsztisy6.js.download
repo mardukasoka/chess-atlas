@@ -1,0 +1,162 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="be5d3678-5d1b-17eb-904d-e5c4fce92500")}catch(e){}}();
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,565282,e=>{"use strict";var t=e.i(276385),s=e.i(389959),a=e.i(138716),n=e.i(602686),i=e.i(549645),r=e.i(590563),o=e.i(644647),u=e.i(955410);e.i(214847);var l=e.i(800686),d=e.i(864300),c=e.i(89148),g=e.i(919073),p=e.i(643484),m=e.i(419635),h=e.i(488299),f=e.i(8047),y=e.i(61732);let b=(0,l.defineMessages)({title:{id:"billing.ubbInvoicePaymentFailedTitle",defaultMessage:"Payment failed"},titleSuspended:{id:"billing.ubbInvoicePaymentSuspendedTitle",defaultMessage:"Services suspended"},description:{id:"billing.ubbInvoicePaymentFailedDescription",defaultMessage:"We were unable to process your payment for your usage based billing invoice."},descriptionSuspended:{id:"billing.ubbInvoicePaymentSuspendedDescription",defaultMessage:"Your account has been suspended due to a failed payment. Pay your outstanding invoices to restore access."},consequencesHeading:{id:"billing.ubbInvoicePaymentFailedConsequencesHeading",defaultMessage:"What happens if this is not resolved"},consequencesHeadingSuspended:{id:"billing.ubbInvoicePaymentSuspendedConsequencesHeading",defaultMessage:"What this means"},consequenceAccountSuspended:{id:"billing.ubbInvoicePaymentFailedConsequenceAccountSuspended",defaultMessage:"Your account will be suspended"},consequenceAccountSuspendedActive:{id:"billing.ubbInvoicePaymentSuspendedConsequenceAccountSuspended",defaultMessage:"Your account is currently suspended"},consequenceAgent:{id:"billing.ubbInvoicePaymentFailedConsequenceAgent",defaultMessage:"No access to Replit Agent"},consequenceDeployments:{id:"billing.ubbInvoicePaymentFailedConsequenceDeployments",defaultMessage:"Active deployments will go offline"},consequenceDeploymentsActive:{id:"billing.ubbInvoicePaymentSuspendedConsequenceDeployments",defaultMessage:"Active deployments are offline and inaccessible"},consequenceDatabases:{id:"billing.ubbInvoicePaymentFailedConsequenceDatabases",defaultMessage:"Databases and storage will be paused"},consequenceDatabasesActive:{id:"billing.ubbInvoicePaymentSuspendedConsequenceDatabases",defaultMessage:"Databases and storage are paused"},consequenceImmediateSuspension:{id:"billing.ubbInvoicePaymentFailedConsequenceImmediateSuspension",defaultMessage:"Repeated payment failures increase the risk of suspension"},payInvoiceCta:{id:"billing.ubbInvoicePaymentFailedPayInvoice",defaultMessage:"Pay invoice"},dismiss:{id:"billing.dismiss",defaultMessage:"Dismiss"},updatePaymentMethodButton:{id:"billing.ubbInvoicePaymentFailedUpdatePaymentMethodButton",defaultMessage:"Update payment method"},updatePaymentMethodFormTitle:{id:"billing.ubbInvoicePaymentFailedUpdatePaymentMethodFormTitle",defaultMessage:"Update Payment Method"},backButtonAlt:{id:"billing.ubbInvoicePaymentFailedBackButtonAlt",defaultMessage:"Back"}});function x({onDone:e,onBack:s}){let n=(0,d.useIntl)();return(0,t.jsxs)(y.View,{gap:16,children:[(0,t.jsxs)(y.View,{row:!0,gap:8,align:"center",children:[(0,t.jsx)(h.IconButton,{alt:n.formatMessage(b.backButtonAlt),onClick:s,children:(0,t.jsx)(a.default,{})}),(0,t.jsx)(f.Text,{variant:"subheadDefault",multiline:!1,children:n.formatMessage(b.updatePaymentMethodFormTitle)})]}),(0,t.jsx)(r.NewPaymentMethodForm,{onClose:e,context:"suspension_grace_period"})]})}e.s(["PaymentMethodForm",0,x,"UBBSuspensionGracePeriod",0,function({onDone:e,customerId:a,variant:r="grace_period"}){let l=(0,d.useIntl)(),{trackClick:h}=(0,u.useTrackClick)(),[C,v]=(0,s.useState)(!1),w=(0,o.usePayInvoicesRedirect)(),M="suspended"===r,A=M?[l.formatMessage(b.consequenceAccountSuspendedActive),l.formatMessage(b.consequenceAgent),l.formatMessage(b.consequenceDeploymentsActive),l.formatMessage(b.consequenceDatabasesActive)]:[l.formatMessage(b.consequenceAccountSuspended),l.formatMessage(b.consequenceAgent),l.formatMessage(b.consequenceDeployments),l.formatMessage(b.consequenceDatabases),l.formatMessage(b.consequenceImmediateSuspension)],S=`/orb-customer-portal/customer/${a}`,U=M&&!w.shouldRedirect;return C?(0,t.jsx)(x,{onDone:e,onBack:()=>v(!1)}):(0,t.jsxs)(y.View,{p:16,gap:24,children:[(0,t.jsxs)(y.View,{gap:8,children:[(0,t.jsx)(f.Header,{variant:"headerDefault",level:1,children:l.formatMessage(M?b.titleSuspended:b.title)}),(0,t.jsx)(f.Text,{color:"dimmer",children:l.formatMessage(M?b.descriptionSuspended:b.description)})]}),(0,t.jsxs)(g.ShadesSurface,{elevate:"1x",border:"subtle",br:"container",p:16,gap:12,children:[(0,t.jsx)(f.Text,{color:"dimmer",children:l.formatMessage(M?b.consequencesHeadingSuspended:b.consequencesHeading)}),(0,t.jsx)(y.View,{gap:12,children:A.map(e=>(0,t.jsxs)(y.View,{row:!0,gap:12,align:"center",children:[(0,t.jsx)(y.View,{shrink:0,children:(0,t.jsx)(n.default,{size:16,color:c.tokens.accentNegativeStrongest})}),(0,t.jsx)(y.View,{grow:1,shrink:1,style:{minWidth:0},children:(0,t.jsx)(f.Text,{children:e})})]},e))})]}),(0,t.jsxs)(y.View,{row:!0,gap:8,children:[(0,t.jsx)(y.View,{grow:.45,shrink:1,basis:0,style:{minWidth:0},children:(0,t.jsx)(g.ShadesSurface,{colorShade:"themePopup",background:!1,children:(0,t.jsx)(p.Button,{stretch:!0,variant:"nofill",text:l.formatMessage(b.dismiss),onClick:e})})}),(0,t.jsx)(y.View,{grow:1,shrink:1,basis:0,style:{minWidth:0},children:w.shouldRedirect?(0,t.jsx)(p.Button,{colorway:"primary",stretch:!0,text:l.formatMessage(b.payInvoiceCta),onClick:()=>{h({productArea:"billing",target:"ubb_invoice_payment_failed_pay_invoice_button"}),w.openBillingTab(),e()}}):(0,t.jsx)(m.ButtonLink,{colorway:"primary",stretch:!0,href:S,text:l.formatMessage(b.payInvoiceCta),onClick:()=>{h({productArea:"billing",target:"ubb_invoice_payment_failed_pay_invoice_button"}),e()}})})]}),U?(0,t.jsx)(p.Button,{stretch:!0,variant:"nofill",iconLeft:(0,t.jsx)(i.default,{}),text:l.formatMessage(b.updatePaymentMethodButton),onClick:()=>v(!0)}):null]})}])},39358,e=>{"use strict";e.s(["extractCustomerAlerts",0,function(e){let t=e.usageInterval.spendingControls,s="CustomerSpendingControls"===t.__typename?t.alerts:void 0;return{customerId:e.id,alerts:s}}])},426899,e=>{"use strict";var t=e.i(351623),s=e.i(846545);let a={},n=t.gql`
+    subscription CreditDepletionRecovery {
+  usageBasedBillingCreditBalanceDepletedNotifications {
+    id
+    customer {
+      id
+    }
+  }
+}
+    `;e.s(["useCreditDepletionRecoverySubscription",0,function(e){let t={...a,...e};return s.useSubscription(n,t)}])},89579,e=>{"use strict";var t=e.i(426899);e.s(["useCreditDepletionRecovery",0,function({customerId:e,onMaybeRecovered:s}){(0,t.useCreditDepletionRecoverySubscription)({skip:null==e,onData:({data:{data:t}})=>{let a=t?.usageBasedBillingCreditBalanceDepletedNotifications;!a||a.some(t=>t.customer?.id===e)||Promise.resolve(s()).catch(()=>void 0)}})}])},522044,e=>{"use strict";var t=e.i(351623),s=e.i(299020);let a={},n=t.gql`
+    mutation FigmaCreateConnection($input: CreateConnectionInput!) {
+  createConnection(input: $input) {
+    ... on CreateConnection {
+      connectionId
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    `;e.s(["useFigmaCreateConnectionMutation",0,function(e){let t={...a,...e};return s.useMutation(n,t)}])},137769,e=>{"use strict";var t=e.i(276385),s=e.i(389959),a=e.i(522044),n=e.i(169729),i=e.i(445284);e.s(["FigmaAuthModal",0,function(e){let{onAuthenticated:r,onClose:o}=e,{connectTarget:u,isLoadingFigmaAuthentication:l,isFigmaAuthModalVisible:d,figmaSetupFlowId:c,showFigmaAuthModal:g,hideFigmaAuthModal:p,onFigmaAuthCallback:m}=(0,i.useAgentInputFigmaContext)(),h=(0,s.useCallback)((e,t)=>{e?g():(p(),o?.(t))},[g,p,o]),[f]=(0,a.useFigmaCreateConnectionMutation)();if(!l&&d&&u)return(0,t.jsx)(n.AddIntegrationModal,{isOpen:d,setIsOpen:h,connectTarget:u,flowId:c,selectedConnector:"FIGMA",onEvent:async(e,t)=>{"connect.connection-connected"===e.name&&(await f({variables:{input:{connectionId:e.data.connection_id,...t&&{flowId:t}}}}),m(!0),r?.(!0),o?.("authenticated"))}})}])},338375,e=>{"use strict";var t=e.i(351623),s=e.i(344480);e.i(975473);let a={},n=t.gql`
+    fragment AgentInputUser on CurrentUser {
+  id
+  connectorContext {
+    __typename
+    ... on CurrentUserConnectorContext {
+      openIntClientToken: routedOpenIntClientToken
+      openIntUrl
+    }
+    ... on Error {
+      message
+    }
+  }
+  figmaAuth: auth(provider: FIGMA) {
+    provider
+  }
+}
+    `,i=t.gql`
+    query AgentInputCurrentUser {
+  currentUser {
+    ...AgentInputUser
+  }
+}
+    ${n}`;e.s(["useAgentInputCurrentUserQuery",0,function(e){let t={...a,...e};return s.useQuery(i,t)}])},445284,e=>{"use strict";var t=e.i(389959),s=e.i(908796),a=e.i(338375),n=e.i(828043),i=e.i(79514),r=e.i(733834),o=e.i(295798),u=e.i(986437);let l=[],d=(0,t.createContext)({connectTarget:null,isLoadingFigmaAuthentication:!1,isFigmaAuthenticated:!1,isFigmaAuthModalVisible:!1,onFigmaAuthCallback:()=>{},showFigmaAuthModal:()=>!1,hideFigmaAuthModal:()=>{},figmaLinks:l,hasFigmaLinks:!1,createFigmaRepl:()=>Promise.resolve(),createFigmaReplStatus:"idle",getFigmaTelemetryData:()=>({hasFigmaLinks:!1,figmaLink:void 0,figmaLinksCount:0,figmaLinksCountUnique:0})});e.s(["AgentInputFigmaContext",0,d,"useAgentInputFigmaContext",0,()=>(0,t.useContext)(d),"useAgentInputFigmaContextProviderState",0,e=>{let{detectedLinks:d,skipFigmaLinksCheck:c,source:g}=e,[p,m]=(0,t.useState)(!1),[h,f]=(0,t.useState)(),y=(0,t.useMemo)(()=>{let e=d.filter(e=>(0,n.isValidFigmaUrl)(e)[0]);return e.length>0?e:l},[d]),b=y.length>0,{createFigmaRepl:x,status:C}=(0,u.useCreateFigmaRepl)(),v=!c&&!b,{data:w,refetch:M,loading:A}=(0,a.useAgentInputCurrentUserQuery)({skip:v,context:{noBatch:!0}}),S=(0,o.default)(M),U=w?.currentUser,k=(0,t.useMemo)(()=>U?.__typename==="CurrentUser"&&U.connectorContext?.__typename==="CurrentUserConnectorContext"?(0,i.resolveOpenIntConnectTarget)(U.connectorContext.openIntClientToken,U.connectorContext.openIntUrl):null,[U]),j=U?.__typename==="CurrentUser"&&U?.figmaAuth?.provider===s.UserAuthProviders.Figma,I=(0,t.useCallback)(e=>{S.current()},[S]),T=(0,t.useCallback)(e=>!!k&&(e&&f((0,r.trackConnectionSetupStarted)({connectorName:"figma",source:g,surface:e.surface,trigger:e.trigger})),m(!0),!0),[k,g]),R=(0,t.useCallback)(()=>{f(void 0),m(!1)},[]),q=(0,o.default)({figmaLinks:y,hasFigmaLinks:b}),F=(0,t.useCallback)(()=>{let e=q.current,[t]=e.figmaLinks;return{hasFigmaLinks:e.hasFigmaLinks,figmaLinksCount:e.figmaLinks.length,figmaLinksCountUnique:new Set(e.figmaLinks).size,figmaLink:t}},[q]);return(0,t.useMemo)(()=>({connectTarget:k,isLoadingFigmaAuthentication:A,isFigmaAuthenticated:j,isFigmaAuthModalVisible:p,figmaSetupFlowId:h,figmaLinks:y,hasFigmaLinks:b,onFigmaAuthCallback:I,showFigmaAuthModal:T,hideFigmaAuthModal:R,createFigmaRepl:x,createFigmaReplStatus:C,getFigmaTelemetryData:F}),[k,j,p,h,A,y,b,I,T,R,x,C,F])}])},948355,e=>{"use strict";var t=e.i(351623),s=e.i(299020);let a={},n=t.gql`
+    mutation CreateFigmaRepl($input: CreateReplInput!) {
+  createRepl(input: $input, isTitleAutoGenerated: false) {
+    ... on Repl {
+      id
+      url
+      isPrivate
+      nextPagePathname
+      origin {
+        id
+        isOwner
+      }
+      config {
+        figmaUrl
+        figmaImportStatus
+        zealot
+        agentHarness
+      }
+    }
+    ... on UserError {
+      message
+    }
+  }
+}
+    `;e.s(["useCreateFigmaReplMutation",0,function(e){let t={...a,...e};return s.useMutation(n,t)}])},986437,e=>{"use strict";var t=e.i(15801),s=e.i(389959),a=e.i(908796),n=e.i(948355),i=e.i(245750);e.i(214847);var r=e.i(864300),o=e.i(753451),u=e.i(927976),l=e.i(415541),d=e.i(709485),c=e.i(540742),g=e.i(921125);class p extends Error{constructor(e){super(e)}name="CreateFigmaReplError"}e.s(["CreateFigmaReplError",0,p,"useCreateFigmaRepl",0,function(){let e=(0,r.useIntl)(),[m,h]=(0,s.useState)("idle"),f=(0,o.useIsInBonsaiWebview)(),[y]=(0,n.useCreateFigmaReplMutation)({errorPolicy:"all"}),b=(0,t.useRouter)(),x=(0,c.default)(),C=e.formatMessage({id:"components.figmaSomethingWentWrong",defaultMessage:"Something went wrong. Please try again."});return{createFigmaRepl:async function({isPrivate:e,orgId:t,figmaUrl:s,initialPrompt:n}){h("creating_repl"),(0,l.track)(d.events.IMPORT,{action:"import_scheduled",import_type:"figma"});let r=await y({variables:{input:{isPrivate:e,orgId:t,figmaUrl:s,figmaImportStatus:a.FigmaImportStatus.Started,aiPromptText:n}}});if(r.errors)throw(0,i.sendErrorToSentry)(new p(r.errors.map(e=>e.message).join(", "))),new p(C);if(r.data?.createRepl?.__typename==="UserError")throw(0,i.sendErrorToSentry)(new p(r.data.createRepl.message)),new p(r.data.createRepl.message);if(!r.data)throw new p(C);let o=r.data.createRepl;(0,u.clearAiPromptLocalStorage)(),h("opening_repl");let c={enterInAgentMode:!0},m=(0,g.replLinkProps)(o,c);f?window.location.href=(0,g.replLinkFullUrl)(o,c):await b.push({...m.href,pathname:x},m.as)},status:m}}])},123066,e=>{e.v({buttonContainer:"AgentInputUbbBanned-module__UbUGAG__buttonContainer",ubbBannedContainer:"AgentInputUbbBanned-module__UbUGAG__ubbBannedContainer"})},524134,e=>{"use strict";var t=e.i(276385),s=e.i(15801),a=e.i(389959),n=e.i(908796),i=e.i(549645),r=e.i(706323),o=e.i(496090),u=e.i(565282),l=e.i(815598),d=e.i(644647),c=e.i(662898),g=e.i(476601);e.i(214847);var p=e.i(800686),m=e.i(864300);e.i(174474);var h=e.i(327711),f=e.i(919073),y=e.i(643484),b=e.i(419635),x=e.i(528326),C=e.i(8047),v=e.i(61732),w=e.i(123066);let M=(0,p.defineMessages)({heading:{id:"billing.topUpCreditsExhaustedTitle",defaultMessage:"Agent is locked, add credits to continue"},description:{id:"billing.topUpCreditsExhaustedBody",defaultMessage:"You have used all your credits, so the agent is unavailable and your published projects are offline. Top up credits to keep using Agent."},cta:{id:"billing.topUpFreeModeBannerAddCredits",defaultMessage:"Add credits to continue"}}),A=(0,a.lazy)(()=>e.A(797097).then(e=>({default:e.CreditBalanceDepletedUBBModal})));e.s(["default",0,function({context:e}){let p,S=(0,m.useIntl)(),[U,k]=(0,a.useState)(!1),[j,I]=(0,a.useState)(!1),T=(0,a.useRef)(!1),R=(0,a.useRef)(!1),q=(0,s.useRouter)(),{notification:F}=(0,c.usePendingPayAsYouGoNotification)({context:"user"===e.type?{type:"user"}:{type:"org",orgId:e.orgId},skip:!e.isSuspended}),{onDismiss:P,onSuspend:_,onAcknowledge:D}=(0,c.useUbbCreditBalanceDepletedNotificationActions)(),{refetchBanStatus:B}=(0,l.useIsUBBBanned)({skip:"user"!==e.type||!e.isSuspended}),V=()=>{"user"===e.type&&(0,o.startPayAsYouGoRecoveryPoll)(()=>B())},L="true"===q.query[h.SETTINGS_SHOW_PARAM];(0,a.useEffect)(()=>{if(T.current){if(L){R.current=!0;return}R.current&&(R.current=!1,T.current=!1,"user"===e.type&&(0,o.startPayAsYouGoRecoveryPoll)(()=>B()))}},[e.type,B,L]);let E=S.formatMessage({id:"createRepl.ubbBannedViewAndPayInvoices",defaultMessage:"View and pay invoices"}),G=(0,d.usePayInvoicesRedirect)("org"===e.type?e.orgId:void 0),O="org"===e.type&&e.orgDealContext?.dealType!==n.OrgDealType.Trial&&e.orgDealContext?.dealType!==n.OrgDealType.EnterpriseTrial&&e?.canEditPaymentMethod||"user"===e.type,Q=G.shouldRedirect||G.isLoading,{headingText:N,subheadingText:z}=(0,g.getUbbSuspensionDescription)("org"===e.type?{type:"org",isAdmin:e.isAdmin,isSuspended:e.isSuspended,orgDealContext:e.orgDealContext,isRazorpay:Q}:{type:"user",isSuspended:e.isSuspended,isRazorpay:Q});if(F){let s=F.customer?.id;return(0,t.jsxs)(v.View,{gap:12,align:"center",clsx:w.default.ubbBannedContainer,children:[(0,t.jsx)(C.Text,{variant:"subheadDefault",children:S.formatMessage(M.heading)}),(0,t.jsx)(C.Text,{children:S.formatMessage(M.description)}),(0,t.jsx)(y.Button,{"data-analytics-id":"ubb_payg_recovery_options_button",colorway:"primary",text:S.formatMessage(M.cta),onClick:()=>I(!0)}),j&&null!=s?(0,t.jsx)(a.Suspense,{fallback:null,children:(0,t.jsx)(A,{notification:F,creditDepletedCustomerId:s,isPersonalCustomer:"user"===e.type,onDismissCreditBalanceDepletedNotifications:async e=>{await P(e),I(!1)},onSuspendCreditBalanceDepletedNotifications:async e=>{await _(e),I(!1)},onCloseCreditBalanceDepletedNotifications:async()=>{I(!1)},onAcknowledgeCreditBalanceDepletedNotifications:async e=>{await (0,o.notifyPayAsYouGoRecoveryComplete)(()=>D(e)),I(!1)},onCreditPackPurchaseSuccess:()=>{I(!1),V()}})}):null]})}let W=null,H=null;return G.shouldRedirect?p=(0,t.jsx)(y.Button,{iconLeft:(0,t.jsx)(r.default,{}),text:E,colorway:"primary",onClick:()=>{T.current=!0,G.openBillingTab()}}):(p=(0,t.jsx)(b.ButtonLink,{iconLeft:(0,t.jsx)(r.default,{}),text:E,href:"org"===e.type?`/orb-customer-portal/org/${e.orgId}`:"/orb-customer-portal",target:"_blank",onClick:()=>{"user"===e.type&&(0,o.startUbbRecoveryPollOnFocus)(()=>B())}}),G.isLoading||(W=(0,t.jsx)(v.View,{gap:8,children:(0,t.jsx)(y.Button,{iconLeft:(0,t.jsx)(i.default,{}),text:S.formatMessage({id:"createRepl.ubbBannedUpdatePaymentMethod",defaultMessage:"Update payment method"}),colorway:"primary",onClick:()=>k(!0)})}),H=(0,t.jsx)(x.Modal,{isOpen:U,onRequestClose:()=>k(!1),children:(0,t.jsx)(u.PaymentMethodForm,{onDone:()=>{k(!1),V()},onBack:async()=>k(!1)})}))),(0,t.jsxs)(f.ShadesSurface,{colorShade:"themePopup",elevate:"1x",border:"regular",br:12,p:12,gap:12,align:"center",clsx:w.default.ubbBannedContainer,children:[(0,t.jsx)(C.Text,{variant:"subheadDefault",children:N}),(0,t.jsx)(C.Text,{children:z}),O?(0,t.jsxs)(v.View,{row:!0,clsx:w.default.buttonContainer,gap:12,children:[(0,t.jsx)(v.View,{gap:8,children:p}),W]}):null,H]})}])},143189,e=>{"use strict";var t=e.i(351623),s=e.i(344480);e.i(975473);let a={},n=t.gql`
+    query HomeTopUpCreditDepletion {
+  currentUser {
+    id
+    customer {
+      id
+      isSuspendedForCreditDepletion
+      authorizations {
+        startAutoTopUp {
+          isAuthorized
+        }
+      }
+      topUpState {
+        ... on CustomerTopUpState {
+          autoTopUpConfigStatus
+          topUpConfig {
+            triggerThresholdUsd
+            rechargeAmountUsd
+            monthlyCapCents
+          }
+        }
+      }
+    }
+  }
+}
+    `;e.s(["useHomeTopUpCreditDepletionQuery",0,function(e){let t={...a,...e};return s.useQuery(n,t)}])},469302,e=>{"use strict";var t=e.i(389959),s=e.i(143189),a=e.i(652207);e.s(["useHomeTopUpCreditDepletion",0,function(e={}){let{data:n,previousData:i,loading:r,error:o,refetch:u}=(0,s.useHomeTopUpCreditDepletionQuery)({fetchPolicy:e.fetchPolicy??"cache-and-network",notifyOnNetworkStatusChange:!0,ssr:!1,skip:e.skip}),l=(0,t.useCallback)(()=>{u()},[u]),d=(0,t.useCallback)(async()=>{try{let e=await u();return e.data?.currentUser?.customer?.isSuspendedForCreditDepletion??!0}catch{return!0}},[u]),c=(n??i)?.currentUser?.customer??null,g=c?.topUpState.__typename==="CustomerTopUpState"?c.topUpState:null;return{loading:r,isSuspendedForCreditDepletion:c?.isSuspendedForCreditDepletion??!1,customerId:c?.id??null,shouldOpenAutoReload:!r&&!o&&c?.authorizations.startAutoTopUp?.isAuthorized===!0&&g?.autoTopUpConfigStatus==="DISABLED",autoReloadConfig:(0,a.autoReloadConfigFromUsd)(g?.topUpConfig),refetch:l,refetchIsSuspended:d}}])},940584,e=>{"use strict";var t=e.i(351623),s=e.i(344480);e.i(975473);var a=e.i(299020);let n={},i=t.gql`
+    query BudgetIncreaseRequestPreflight($orgId: String!) {
+  approvalRequestPreflight(
+    checks: [{clientKey: "user", approvalType: "user_budget_increase", target: {targetType: ORG, orgId: $orgId}, data: {}}, {clientKey: "org", approvalType: "org_budget_increase", target: {targetType: ORG, orgId: $orgId}, data: {}}]
+  ) {
+    __typename
+    ... on ApprovalRequestPreflight {
+      results {
+        approvalType
+        isAuthorized
+        pendingRequest {
+          id
+          approvalType
+          status
+          reason
+          timeCreated
+        }
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    `,r=t.gql`
+    mutation CreateBudgetIncreaseApprovalRequest($input: CreateApprovalRequestInput!) {
+  createApprovalRequest(input: $input) {
+    __typename
+    ... on ApprovalRequestSummary {
+      id
+      approvalType
+      status
+      reason
+      timeCreated
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    `;e.s(["useBudgetIncreaseRequestPreflightQuery",0,function(e){let t={...n,...e};return s.useQuery(i,t)},"useCreateBudgetIncreaseApprovalRequestMutation",0,function(e){let t={...n,...e};return a.useMutation(r,t)}])},381838,e=>{e.v({buttonWrapper:"OrgAlertThresholdExceededMessage-module__9_NTnG__buttonWrapper"})},234089,e=>{"use strict";var t=e.i(276385),s=e.i(15801),a=e.i(389959),n=e.i(330666),i=e.i(940584),r=e.i(76112);e.i(214847);var o=e.i(864300),u=e.i(753451),l=e.i(776065),d=e.i(174474),c=e.i(448942),g=e.i(919073),p=e.i(643484),m=e.i(480890),h=e.i(528710),f=e.i(33583),y=e.i(8047),b=e.i(61732),x=e.i(381838);function C({title:e,type:s,onViewUsage:a}){return(0,t.jsxs)(b.View,{gap:8,align:"center",children:[(0,t.jsx)(y.Text,{variant:"subheadDefault",textAlign:"center",children:e}),(0,t.jsx)(w,{type:s,legacy:!0}),(0,t.jsx)(b.View,{clsx:x.default.buttonWrapper,children:(0,t.jsx)(v,{onClick:a})})]})}function v({onClick:e}){let s=(0,o.useIntl)();return(0,t.jsx)(p.Button,{iconLeft:(0,t.jsx)(r.default,{}),text:s.formatMessage({id:"workspace.orgAlertThresholdExceededViewUsage",defaultMessage:"View usage"}),onClick:e,stretch:!0})}function w({type:e,canRequestIncrease:s=!1,legacy:a=!1}){let n=(0,o.useIntl)();return(0,t.jsx)(y.Text,{color:"dimmer",textAlign:a?"center":void 0,children:n.formatMessage(s?{id:"workspace.orgAlertThresholdExceededRequestAvailableMessage",defaultMessage:"Your usage has reached the threshold set by your admin."}:{id:"workspace.orgAlertThresholdExceededMessage",defaultMessage:"Your {scope, select, user {usage} other {workspace}} has reached the threshold set by your admin. Request a budget increase from your admin to continue building."},{scope:e})})}function M({title:e,orgId:s,onViewUsage:r}){let u=(0,o.useIntl)(),l=(0,a.useId)(),[d,c]=(0,a.useState)({type:"action"}),x=(0,a.useRef)(!1),S=(0,a.useRef)(!1),U=(0,a.useCallback)(e=>e?.focus(),[]),k=(0,a.useCallback)(e=>{e&&x.current&&(x.current=!1,e.focus())},[]),{data:j}=(0,i.useBudgetIncreaseRequestPreflightQuery)({variables:{orgId:s},fetchPolicy:"network-only",ssr:!1}),[I,{loading:T}]=(0,i.useCreateBudgetIncreaseApprovalRequestMutation)(),R=j?.approvalRequestPreflight.__typename==="ApprovalRequestPreflight"?j.approvalRequestPreflight.results:[],q=R.find(e=>e.isAuthorized),F=R.find(e=>e.pendingRequest),P=F?.pendingRequest,_=(0,t.jsx)(n.VisuallyHidden,{children:(0,t.jsx)("span",{role:"status","aria-live":"polite","aria-atomic":"true",children:"submitted"===d.type?u.formatMessage({id:"workspace.orgAlertThresholdExceededRequestSent",defaultMessage:"Request sent"}):null})}),D=async()=>{if("form"!==d.type||T||S.current||!q)return;let e=d.reason.trim();if(e){S.current=!0,c({...d,hasSubmitError:!1});try{let{data:t}=await I({variables:{input:{approvalType:q.approvalType,target:{targetType:"ORG",orgId:s},data:{},reason:e}}}),a=t?.createApprovalRequest;a?.__typename==="ApprovalRequestSummary"?c({type:"submitted",request:a}):c(e=>"form"===e.type?{...e,hasSubmitError:!0}:e)}catch{c(e=>"form"===e.type?{...e,hasSubmitError:!0}:e)}finally{S.current=!1}}};return"submitted"===d.type?(0,t.jsxs)(t.Fragment,{children:[_,(0,t.jsx)(A,{title:e,request:d.request,onViewUsage:r})]}):q?"action"===d.type?(0,t.jsxs)(t.Fragment,{children:[_,(0,t.jsxs)(b.View,{gap:8,width:"100%",children:[(0,t.jsx)(y.Text,{variant:"subheadDefault",children:e}),(0,t.jsx)(w,{type:"user",canRequestIncrease:!0}),(0,t.jsxs)(b.View,{row:!0,wrap:!0,gap:8,width:"100%",children:[(0,t.jsx)(b.View,{grow:!0,basis:160,children:(0,t.jsx)(v,{onClick:r})}),(0,t.jsx)(b.View,{grow:!0,basis:160,children:(0,t.jsx)(p.Button,{ref:k,text:u.formatMessage({id:"workspace.orgAlertThresholdExceededRequestIncrease",defaultMessage:"Request increase"}),colorway:"primary",onClick:()=>c({type:"form",reason:"",hasSubmitError:!1}),stretch:!0})})]})]})]}):(0,t.jsxs)(t.Fragment,{children:[_,(0,t.jsxs)(b.View,{gap:8,width:"100%",children:[(0,t.jsx)(y.Text,{variant:"subheadDefault",children:e}),(0,t.jsx)(w,{type:"user",canRequestIncrease:!0}),(0,t.jsxs)(g.ShadesSurface,{colorShade:"themeDefault",elevate:!1,p:12,gap:8,br:8,width:"100%",children:[(0,t.jsx)(y.Text,{variant:"subheadDefault",children:u.formatMessage({id:"workspace.orgAlertThresholdExceededRequestIncrease",defaultMessage:"Request increase"})}),(0,t.jsx)(y.Text,{color:"dimmer",children:u.formatMessage({id:"workspace.orgAlertThresholdExceededRequestIncreaseDescription",defaultMessage:"Send a request for a budget increase to your admin. You'll get an email as soon as it's approved."})}),(0,t.jsxs)(b.View,{gap:4,children:[(0,t.jsx)(f.Label,{htmlFor:l,children:u.formatMessage({id:"workspace.orgAlertThresholdExceededReasonLabel",defaultMessage:"Add a reason"})}),(0,t.jsx)(h.MultiLineInput,{ref:U,id:l,value:d.reason,onChange:e=>c({type:"form",reason:e.target.value,hasSubmitError:!1}),rows:2,maxLength:2e3})]}),d.hasSubmitError?(0,t.jsx)("div",{role:"alert",children:(0,t.jsx)(m.FieldErrorText,{children:u.formatMessage({id:"workspace.orgAlertThresholdExceededSendRequestError",defaultMessage:"Couldn't send your request. Try again."})})}):null,(0,t.jsxs)(b.View,{row:!0,wrap:!0,gap:8,width:"100%",children:[(0,t.jsx)(b.View,{grow:!0,basis:160,children:(0,t.jsx)(p.Button,{text:u.formatMessage({id:"workspace.orgAlertThresholdExceededCancel",defaultMessage:"Cancel"}),onClick:()=>{x.current=!0,c({type:"action"})},disabled:T,stretch:!0})}),(0,t.jsx)(b.View,{grow:!0,basis:160,children:(0,t.jsx)(p.Button,{text:u.formatMessage({id:"workspace.orgAlertThresholdExceededSendRequest",defaultMessage:"Send request"}),colorway:"primary",loading:T,disabled:!d.reason.trim(),onClick:()=>void D(),stretch:!0})})]})]})]})]}):P?(0,t.jsx)(A,{title:e,request:P,onViewUsage:r}):(0,t.jsx)(C,{title:e,type:"user",onViewUsage:r})}function A({title:e,request:s,onViewUsage:a}){let n=(0,o.useIntl)();return(0,t.jsxs)(b.View,{gap:8,width:"100%",children:[(0,t.jsx)(y.Text,{variant:"subheadDefault",children:e}),(0,t.jsx)(w,{type:"user",canRequestIncrease:!0}),(0,t.jsxs)(g.ShadesSurface,{colorShade:"themeNotice",elevate:!1,p:12,gap:8,br:8,width:"100%",children:[(0,t.jsx)(y.Text,{variant:"subheadDefault",children:n.formatMessage({id:"workspace.orgAlertThresholdExceededRequestSent",defaultMessage:"Request sent"})}),(0,t.jsx)(y.Text,{color:"dimmer",children:n.formatMessage({id:"workspace.orgAlertThresholdExceededRequestPendingDescription",defaultMessage:"A request is waiting for an admin to review. The requester will get an email when it's approved."})}),(0,t.jsxs)(b.View,{gap:4,children:[(0,t.jsx)(y.Text,{variant:"small",color:"dimmer",children:n.formatMessage({id:"workspace.orgAlertThresholdExceededSubmittedReasonLabel",defaultMessage:"Reason"})}),(0,t.jsx)(y.Text,{preserveNewlines:!0,children:s.reason})]})]}),(0,t.jsx)(b.View,{width:"100%",children:(0,t.jsx)(v,{onClick:a})})]})}e.s(["OrgAlertThresholdExceededMessage",0,function({type:e,orgId:n,orgSlug:i}){let r=(0,o.useIntl)(),g=(0,s.useRouter)(),p=(0,u.useIsInMobileWorkspace)(),m="user"===e?r.formatMessage({id:"workspace.orgAlertThresholdExceededTitleUser",defaultMessage:"You have reached your usage threshold"}):r.formatMessage({id:"workspace.orgAlertThresholdExceededTitleGroup",defaultMessage:"Your workspace has reached its usage threshold"}),h=(0,a.useCallback)(()=>{if(p){let e=i?(0,c.orgLinks)({slug:i}).usage.href.toString():"/usage";window.open(e,"_blank");return}(0,l.updatePathWithQueryParams)({router:g,params:[...(0,d.settingsQueryParams)("workspaceUsage"),...i?[{mode:"add",key:"orgSlug",value:i}]:[]]})},[p,i,g]);return"user"===e&&n?(0,t.jsx)(M,{title:m,orgId:n,onViewUsage:h},n):(0,t.jsx)(C,{title:m,type:e,onViewUsage:h})}])},627957,e=>{"use strict";var t=e.i(351623),s=e.i(344480),a=e.i(975473);let n={},i=t.gql`
+    query GetAgentFreeUsageV2($incremental: Boolean) {
+  currentUser {
+    id
+    aiFreeUsageLimits {
+      ... on UserAiFreeUsageLimitResult {
+        agentUsageV2(incremental: $incremental) {
+          ... on FreemiumAiUsageLimitsV2 {
+            dailyUsage
+            dailyLimit
+            monthlyUsage
+            monthlyLimit
+            isUnderQuota
+            isUnderDailyQuota
+            isUnderMonthlyQuota
+            nextCreditsAt
+          }
+          ... on UnauthorizedError {
+            message
+          }
+        }
+      }
+    }
+  }
+}
+    `;e.s(["useGetAgentFreeUsageV2LazyQuery",0,function(e){let t={...n,...e};return a.useLazyQuery(i,t)},"useGetAgentFreeUsageV2Query",0,function(e){let t={...n,...e};return s.useQuery(i,t)}])},934440,e=>{"use strict";var t=e.i(627957),s=e.i(978139);function a(e){let t=e?.currentUser?.aiFreeUsageLimits.__typename==="UserAiFreeUsageLimitResult"?e.currentUser.aiFreeUsageLimits:null,a=t?.agentUsageV2??null;if(a?.__typename!=="FreemiumAiUsageLimitsV2")return null;let{dailyUsage:n,dailyLimit:i,monthlyUsage:r,monthlyLimit:o,...u}=a,{usage:l,limit:d}=(0,s.resolveFreemiumV2Usage)({dailyUsage:n,dailyLimit:i,monthlyUsage:r,monthlyLimit:o});return{...u,usage:l,limit:d}}e.s(["useGetAgentFreeUsage",0,function({skip:e}={}){let{data:s,loading:n,error:i,refetch:r}=(0,t.useGetAgentFreeUsageV2Query)({skip:e});return{loading:n,error:i,agentUsageV2:a(s),refetch:r}},"useGetFreshAgentFreeUsageV2",0,function({skip:e}){let{data:s,loading:n,error:i}=(0,t.useGetAgentFreeUsageV2Query)({skip:e,fetchPolicy:"network-only",ssr:!1});return{agentUsageV2:a(s),loading:n,error:i}}])},978139,e=>{"use strict";e.s(["resolveFreemiumV2Usage",0,function(e){let t=e.monthlyLimit-e.monthlyUsage,s=Math.min(e.dailyLimit,e.dailyUsage+t);return t<=0?{usage:1,limit:1}:{usage:e.dailyUsage,limit:s}},"resolveMostConstrainedFreemiumV2Usage",0,function({dailyUsage:e,dailyLimit:t,monthlyUsage:s,monthlyLimit:a}){let n=(t>0?e/t:1)>=(a>0?s/a:1)?{usage:e,limit:t}:{usage:s,limit:a};return n.limit>0?n:{usage:1,limit:1}}])}]);
+
+//# debugId=be5d3678-5d1b-17eb-904d-e5c4fce92500
+//# sourceMappingURL=2dvn8g74fe1ox.js.map

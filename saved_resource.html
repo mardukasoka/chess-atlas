@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!-- saved from url=(0089)https://51f84428-7afc-41ad-9f25-0ba2388f706f-00-20y16a4b5lj8m.riker.replit.dev/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./injected.js.download" onerror="parent.postMessage({event:&#39;error&#39;,payload:&#39;script.onerror: Failed to load &#39;+event.target.src},&#39;https://replit.com&#39;)"></script>
+
+
+
+
+
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Chess Atlas
+  </title>
+
+  <link rel="stylesheet" href="./style.css">
+
+<script type="text/javascript" src="./replit-bridge.js.download"></script></head>
+
+
+<body>
+
+  <main>
+
+    <header class="atlas-header">
+
+      <h1>
+        Chess Atlas
+      </h1>
+
+      <p>
+        World × History × Strategy
+      </p>
+
+    </header>
+
+
+    <section class="timeline-card" aria-label="Historical timeline">
+
+      <button id="timeline-up" class="timeline-arrow" aria-label="Move forward through time">
+        ▲
+      </button>
+
+
+      <div class="timeline-spine">
+
+        <span class="timeline-dot"></span>
+
+
+        <strong id="atlas-year">2500 BCE</strong>
+
+
+        <span id="atlas-period">Ancient World</span>
+
+
+        <small id="atlas-description">Early states, trade networks and race games.</small>
+
+      </div>
+
+
+      <button id="timeline-down" class="timeline-arrow" aria-label="Move backward through time" disabled="">
+        ▼
+      </button>
+
+    </section>
+
+
+    <nav class="atlas-modes" aria-label="Atlas representation">
+
+      <button class="atlas-mode active" data-mode="chess">
+        ♟ Chess
+      </button>
+
+
+      <button class="atlas-mode" data-mode="diplomacy">
+        🤝 Diplomacy
+      </button>
+
+<a class="atlas-mode" href="https://51f84428-7afc-41ad-9f25-0ba2388f706f-00-20y16a4b5lj8m.riker.replit.dev/board.html">
+  ◉ Futures
+</a>
+      
+
+    </nav>
+
+
+    <section id="campaign-panel" class="campaign-panel" hidden="">
+    <small>ACTIVE CAMPAIGN</small>
+
+    <h2 id="campaign-title"></h2>
+
+    <p id="campaign-sides"></p>
+
+    <p id="campaign-status"></p>
+
+    <div class="campaign-actions">
+      <button id="resolve-history">
+        ▶ Historical outcome
+      </button>
+    </div>
+
+    <p id="campaign-result"></p>
+  </section><section id="game-space">
+
+      <div class="variant-control">
+
+        <div class="variant-label">
+          <label for="game-variant">
+            Historical game
+          </label>
+
+          <small id="game-variant-context">Unavailable · no chess-family game at 2500 BCE</small>
+        </div>
+
+
+        <select id="game-variant" aria-label="Unavailable · no chess-family game at 2500 BCE">
+
+          <option value="" disabled="">
+            Unavailable
+          </option>
+
+          <option value="chaturanga">
+            🇮🇳 Chaturanga
+          </option>
+
+
+          <option value="shatranj">
+            🕌 Shatranj
+          </option>
+
+<option value="acedrex">
+  👑 Acedrex — Spain 1283
+</option>
+
+          <option value="modern" selected="">
+            ♟ Modern Chess
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div id="board" data-variant="chaturanga" hidden=""><button type="button" id="square-0-0" data-row="0" data-col="0" class="square light">♜</button><button type="button" id="square-0-1" data-row="0" data-col="1" class="square dark">♞</button><button type="button" id="square-0-2" data-row="0" data-col="2" class="square light">🐘</button><button type="button" id="square-0-3" data-row="0" data-col="3" class="square dark">♚</button><button type="button" id="square-0-4" data-row="0" data-col="4" class="square light">◇</button><button type="button" id="square-0-5" data-row="0" data-col="5" class="square dark">🐘</button><button type="button" id="square-0-6" data-row="0" data-col="6" class="square light">♞</button><button type="button" id="square-0-7" data-row="0" data-col="7" class="square dark">♜</button><button type="button" id="square-1-0" data-row="1" data-col="0" class="square dark">♟</button><button type="button" id="square-1-1" data-row="1" data-col="1" class="square light">♟</button><button type="button" id="square-1-2" data-row="1" data-col="2" class="square dark">♟</button><button type="button" id="square-1-3" data-row="1" data-col="3" class="square light">♟</button><button type="button" id="square-1-4" data-row="1" data-col="4" class="square dark">♟</button><button type="button" id="square-1-5" data-row="1" data-col="5" class="square light">♟</button><button type="button" id="square-1-6" data-row="1" data-col="6" class="square dark">♟</button><button type="button" id="square-1-7" data-row="1" data-col="7" class="square light">♟</button><button type="button" id="square-2-0" data-row="2" data-col="0" class="square light"></button><button type="button" id="square-2-1" data-row="2" data-col="1" class="square dark"></button><button type="button" id="square-2-2" data-row="2" data-col="2" class="square light"></button><button type="button" id="square-2-3" data-row="2" data-col="3" class="square dark"></button><button type="button" id="square-2-4" data-row="2" data-col="4" class="square light"></button><button type="button" id="square-2-5" data-row="2" data-col="5" class="square dark"></button><button type="button" id="square-2-6" data-row="2" data-col="6" class="square light"></button><button type="button" id="square-2-7" data-row="2" data-col="7" class="square dark"></button><button type="button" id="square-3-0" data-row="3" data-col="0" class="square dark"></button><button type="button" id="square-3-1" data-row="3" data-col="1" class="square light"></button><button type="button" id="square-3-2" data-row="3" data-col="2" class="square dark"></button><button type="button" id="square-3-3" data-row="3" data-col="3" class="square light"></button><button type="button" id="square-3-4" data-row="3" data-col="4" class="square dark"></button><button type="button" id="square-3-5" data-row="3" data-col="5" class="square light"></button><button type="button" id="square-3-6" data-row="3" data-col="6" class="square dark"></button><button type="button" id="square-3-7" data-row="3" data-col="7" class="square light"></button><button type="button" id="square-4-0" data-row="4" data-col="0" class="square light"></button><button type="button" id="square-4-1" data-row="4" data-col="1" class="square dark"></button><button type="button" id="square-4-2" data-row="4" data-col="2" class="square light"></button><button type="button" id="square-4-3" data-row="4" data-col="3" class="square dark"></button><button type="button" id="square-4-4" data-row="4" data-col="4" class="square light"></button><button type="button" id="square-4-5" data-row="4" data-col="5" class="square dark"></button><button type="button" id="square-4-6" data-row="4" data-col="6" class="square light"></button><button type="button" id="square-4-7" data-row="4" data-col="7" class="square dark"></button><button type="button" id="square-5-0" data-row="5" data-col="0" class="square dark"></button><button type="button" id="square-5-1" data-row="5" data-col="1" class="square light"></button><button type="button" id="square-5-2" data-row="5" data-col="2" class="square dark"></button><button type="button" id="square-5-3" data-row="5" data-col="3" class="square light"></button><button type="button" id="square-5-4" data-row="5" data-col="4" class="square dark"></button><button type="button" id="square-5-5" data-row="5" data-col="5" class="square light"></button><button type="button" id="square-5-6" data-row="5" data-col="6" class="square dark"></button><button type="button" id="square-5-7" data-row="5" data-col="7" class="square light"></button><button type="button" id="square-6-0" data-row="6" data-col="0" class="square light">♙</button><button type="button" id="square-6-1" data-row="6" data-col="1" class="square dark">♙</button><button type="button" id="square-6-2" data-row="6" data-col="2" class="square light">♙</button><button type="button" id="square-6-3" data-row="6" data-col="3" class="square dark">♙</button><button type="button" id="square-6-4" data-row="6" data-col="4" class="square light">♙</button><button type="button" id="square-6-5" data-row="6" data-col="5" class="square dark">♙</button><button type="button" id="square-6-6" data-row="6" data-col="6" class="square light">♙</button><button type="button" id="square-6-7" data-row="6" data-col="7" class="square dark">♙</button><button type="button" id="square-7-0" data-row="7" data-col="0" class="square dark">♖</button><button type="button" id="square-7-1" data-row="7" data-col="1" class="square light">♘</button><button type="button" id="square-7-2" data-row="7" data-col="2" class="square dark">🐘</button><button type="button" id="square-7-3" data-row="7" data-col="3" class="square light">◆</button><button type="button" id="square-7-4" data-row="7" data-col="4" class="square dark">♔</button><button type="button" id="square-7-5" data-row="7" data-col="5" class="square light">🐘</button><button type="button" id="square-7-6" data-row="7" data-col="6" class="square dark">♘</button><button type="button" id="square-7-7" data-row="7" data-col="7" class="square light">♖</button></div>
+
+
+      <div id="chess-controls">
+
+        
+
+
+        <p id="status">No historically valid chess-family game is available at 2500 BCE. Choose a ruleset above only for manual exploration.</p>
+
+
+<div class="state-controls" hidden="">
+
+  <button id="state-back" type="button">
+  ◀ Previous State
+</button>
+
+
+<select id="state-forward" aria-label="Choose future state"><option value="">Future States</option></select>
+
+
+<button id="reset" type="button">
+  Reset Game
+</button>
+
+</div>
+
+      </div>
+
+
+      <section id="world-panel" class="world-panel" hidden="" aria-labelledby="world-mode-title">
+        <div class="world-panel-heading">
+          <div>
+            <p class="eyebrow">Common Atlas geography</p>
+            <h2 id="world-mode-title">World Map</h2>
+          </div>
+          <div class="world-map-actions">
+            <button id="reset-world" type="button">Reset World</button>
+            <button id="focus-selection" type="button">Focus Selection</button>
+          </div>
+        </div>
+
+        <p id="world-mode-status" class="world-map-status"></p>
+
+        <div id="world-map" class="world-map" role="application" aria-label="Interactive Atlas world map">
+          <canvas class="world-map-canvas" aria-hidden="true"></canvas>
+          <canvas class="world-map-hit-canvas" aria-hidden="true"></canvas>
+        </div>
+
+        <p id="world-map-summary" class="world-map-summary" aria-live="polite">No region selected. Tap a landmass or Atlas navigation region.</p>
+
+        <small id="world-mode-detail"></small>
+      </section>
+
+    </section>
+
+  </main>
+
+
+<script src="./geometry.js.download"></script>
+
+<script src="./rules.js.download"></script>
+
+<script src="./dense-board-adapter.js.download"></script>
+
+<script src="./modern-rules.js.download"></script>
+
+<script src="./shatranj-rules.js.download"></script>
+
+<script src="./chaturanga-rules.js.download"></script>
+
+<script src="./acedrex-rules.js.download"></script>
+
+<script src="./stateGraph.js.download"></script>
+
+<script src="./engine.js.download"></script>
+
+<script src="./chess.js.download"></script>
+
+<script src="./geography.js.download"></script>
+
+<script src="./map-camera.js.download"></script>
+
+<script src="./map-input.js.download"></script>
+
+<script src="./map-renderer.js.download"></script>
+
+  <script src="./atlas.js.download"></script>
+
+
+
+</body></html>

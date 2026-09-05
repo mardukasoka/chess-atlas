@@ -1,0 +1,255 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="5477768c-54d5-ae32-5646-f6700891d7d7")}catch(e){}}();
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,837512,e=>{"use strict";var t=e.i(346319),a=e.i(226949),i=e.i(434080),n=e.i(675654),r=e.i(389959),s=e.i(614161),l=e.i(844483),o=e.i(899905),u=e.i(237566),d=e.i(278052);let c={keyboard:{start:"dragDescriptionKeyboard",end:"endDragKeyboard"},touch:{start:"dragDescriptionTouch",end:"endDragTouch"},virtual:{start:"dragDescriptionVirtual",end:"endDragVirtual"}};e.s(["useDrag",0,function(e){var p;let{hasDragButton:g,isDisabled:m}=e,f=(0,d.useLocalizedStringFormatter)((p=n.default)&&p.__esModule?p.default:p,"@react-aria/dnd"),h=(0,r.useRef)({options:e,x:0,y:0}).current;h.options=e;let y=(0,r.useRef)(!1),[T,b]=(0,r.useState)(!1),v=e=>{y.current=e,b(e)},{addGlobalListener:x,removeAllGlobalListeners:_}=(0,s.useGlobalListeners)(),k=(0,r.useRef)(null);(0,l.useLayoutEffect)(()=>()=>{if(y.current){if("function"==typeof h.options.onDragEnd){let e={type:"dragend",x:0,y:0,dropOperation:a.DROP_EFFECT_TO_DROP_OPERATION[i.globalDropEffect||"none"]};h.options.onDragEnd(e)}v(!1),(0,i.setGlobalAllowedDropOperations)(a.DROP_OPERATION.none),(0,i.setGlobalDropEffect)(void 0)}},[h]);let A=e=>{if("function"==typeof h.options.onDragStart){let t=e.getBoundingClientRect();h.options.onDragStart({type:"dragstart",x:t.x+t.width/2,y:t.y+t.height/2})}(0,t.beginDragging)({element:e,items:h.options.getItems(),allowedDropOperations:"function"==typeof h.options.getAllowedDropOperations?h.options.getAllowedDropOperations():["move","copy","link"],onDragEnd(e){v(!1),"function"==typeof h.options.onDragEnd&&h.options.onDragEnd(e)}},f),v(!0)},M=(0,i.useDragModality)(),I=T?c[M].end:c[M].start,R=(0,o.useDescription)(f.format(I)),w={};return(g||(w={...R,onPointerDown(e){if(k.current=(0,u.isVirtualPointerEvent)(e.nativeEvent)?"virtual":e.pointerType,e.width<1&&e.height<1)k.current="virtual";else{let t=e.currentTarget.getBoundingClientRect(),a=e.clientX-t.x,i=e.clientY-t.y,n=t.width/2,r=t.height/2;.5>=Math.abs(a-n)&&.5>=Math.abs(i-r)?k.current="virtual":k.current=e.pointerType}},onKeyDownCapture(e){e.target===e.currentTarget&&"Enter"===e.key&&(e.preventDefault(),e.stopPropagation())},onKeyUpCapture(e){e.target===e.currentTarget&&"Enter"===e.key&&(e.preventDefault(),e.stopPropagation(),A(e.target))},onClick(e){((0,u.isVirtualClick)(e.nativeEvent)||"virtual"===k.current)&&(e.preventDefault(),e.stopPropagation(),A(e.target))}}),m)?{dragProps:{draggable:"false"},dragButtonProps:{},isDragging:!1}:{dragProps:{...w,draggable:"true",onDragStart:t=>{var n;if(t.defaultPrevented)return;if(t.stopPropagation(),"virtual"===k.current){t.preventDefault(),A(t.target),k.current=null;return}"function"==typeof e.onDragStart&&e.onDragStart({type:"dragstart",x:t.clientX,y:t.clientY});let r=e.getItems();(0,i.writeToDataTransfer)(t.dataTransfer,r);let s=a.DROP_OPERATION.all;if("function"==typeof e.getAllowedDropOperations){let t=e.getAllowedDropOperations();for(let e of(s=a.DROP_OPERATION.none,t))s|=a.DROP_OPERATION[e]||a.DROP_OPERATION.none}(0,i.setGlobalAllowedDropOperations)(s),t.dataTransfer.effectAllowed=a.EFFECT_ALLOWED[s]||"none","function"==typeof(null==(n=e.preview)?void 0:n.current)&&e.preview.current(r,e=>{if(!e)return;let a=e.getBoundingClientRect(),i=t.currentTarget.getBoundingClientRect(),n=t.clientX-i.x,r=t.clientY-i.y;(n>a.width||r>a.height)&&(n=a.width/2,r=a.height/2);let s=2*Math.round(a.height/2);e.style.height=`${s}px`,t.dataTransfer.setDragImage(e,n,r)}),x(window,"drop",e=>{e.preventDefault(),e.stopPropagation(),console.warn("Drags initiated from the React Aria useDrag hook may only be dropped on a target created with useDrop. This ensures that a keyboard and screen reader accessible alternative is available.")},{once:!0}),h.x=t.clientX,h.y=t.clientY,requestAnimationFrame(()=>{v(!0)})},onDrag:t=>{t.stopPropagation(),(t.clientX!==h.x||t.clientY!==h.y)&&("function"==typeof e.onDragMove&&e.onDragMove({type:"dragmove",x:t.clientX,y:t.clientY}),h.x=t.clientX,h.y=t.clientY)},onDragEnd:t=>{if(t.stopPropagation(),"function"==typeof e.onDragEnd){let n={type:"dragend",x:t.clientX,y:t.clientY,dropOperation:a.DROP_EFFECT_TO_DROP_OPERATION[t.dataTransfer.dropEffect]};i.globalDropEffect&&(n.dropOperation=a.DROP_EFFECT_TO_DROP_OPERATION[i.globalDropEffect]),e.onDragEnd(n)}v(!1),_(),(0,i.setGlobalAllowedDropOperations)(a.DROP_OPERATION.none),(0,i.setGlobalDropEffect)(void 0)}},dragButtonProps:{...R,onPress:e=>{("keyboard"===e.pointerType||"virtual"===e.pointerType)&&A(e.target)}},isDragging:T}}])},85085,e=>{"use strict";var t=e.i(351623),a=e.i(730029);let i=t.gql`
+    fragment LayoutHeaderAvatarDropdownCurrentUser on CurrentUser {
+  id
+  url
+  username
+  fullName
+  image
+  userSubscriptionType
+  ...CoreSubscriptionPlanStatus
+}
+    ${a.CoreSubscriptionPlanStatusFragmentDoc}`,n=t.gql`
+    fragment OrgSwitcherOrg on Org {
+  id
+  name
+  type
+  slug
+  currentUserRole
+  image
+  dealContext {
+    dealType
+    salesContactEmail
+  }
+}
+    `,r=t.gql`
+    fragment OrgSwitcherOrganizationConnectionFragment on CurrentUserOrganizationConnection {
+  items {
+    org {
+      ...OrgSwitcherOrg
+    }
+    type
+  }
+}
+    ${n}`,s=t.gql`
+    fragment OrgSwitcherCurrentUser on CurrentUser {
+  id
+  image
+  username
+  url
+  fullName
+  firstName
+  email
+  isMemberOfAnyOrg
+  userSubscriptionType
+  orgs(count: 50) {
+    __typename
+    ... on CurrentUserOrganizationConnection {
+      ...OrgSwitcherOrganizationConnectionFragment
+    }
+    ... on Error {
+      message
+    }
+    ... on NotFoundError {
+      message
+    }
+    ... on UserError {
+      message
+    }
+  }
+  ...CoreSubscriptionPlanStatus
+}
+    ${r}
+${a.CoreSubscriptionPlanStatusFragmentDoc}`;e.s(["LayoutHeaderAvatarDropdownCurrentUserFragmentDoc",0,i,"OrgSwitcherCurrentUserFragmentDoc",0,s])},140134,e=>{"use strict";var t=e.i(276385),a=e.i(908796),i=e.i(182409),n=e.i(379334),r=e.i(381110);e.i(214847);var s=e.i(614852),l=e.i(864300),o=e.i(8047),u=e.i(244945),d=e.i(61732);e.s(["BuildStatusesBadge",0,function({deployment:e,small:c}){let p=(0,l.useIntl)(),{currentBuild:g}=e,{title:m,titleId:f,color:h}=r.buildStatuses[g.status],y=(0,s.formatRelativeTime)(new Date(g.timeCreated),{locale:p.locale}),T=p.formatMessage({id:"deployments.publishedTimeByUser",defaultMessage:"Published {time} by {user}"},{time:y,user:g.user?.displayName??n.DELETED_USER_DISPLAY_NAME}),b=g.status===a.HostingBuildStatus.Success?p.formatMessage({id:"deployments.statusPublished",defaultMessage:"Published"}):p.formatMessage({id:f,defaultMessage:m});return(0,t.jsx)(u.Tooltip,{tooltip:T,children:(0,t.jsxs)(d.View,{row:!0,gap:4,align:"center",children:[(0,t.jsx)(i.default,{size:c?12:16,color:h}),(0,t.jsx)(o.Text,{variant:c?"small":void 0,color:"dimmest",multiline:!1,children:b})]})})}])},338796,e=>{"use strict";e.s(["default",0,function(e){return e.replace("GraphQL error: ","")}])},655032,e=>{"use strict";var t=e.i(351623),a=e.i(913864),i=e.i(458511),n=e.i(85085),r=e.i(575872);let s=t.gql`
+    fragment MobileWorkspaceRepl on Repl {
+  id
+  language
+  isOwner
+  title
+  iconUrl
+  rootOriginReplUrl
+  layoutState(input: {environment: mobile})
+  source {
+    release {
+      id
+      repl {
+        id
+        title
+        owner {
+          ... on User {
+            id
+            username
+          }
+          ... on Team {
+            id
+            username
+          }
+        }
+      }
+    }
+  }
+  user {
+    id
+  }
+  slug
+  url
+  config {
+    gitRemoteUrl
+    isAgentRepl
+    isAgentStack
+    isExpertMode
+    isInPlanningPhase
+    zipImportSource
+    zipImportStatus
+  }
+  org {
+    id
+    slug
+  }
+  authorizations {
+    ...WorkspaceConnectAuthorization
+  }
+  ...WorkspaceToolPanesRepl
+}
+    ${a.WorkspaceConnectAuthorizationFragmentDoc}
+${i.WorkspaceToolPanesReplFragmentDoc}`,l=t.gql`
+    fragment MobileWorkspaceCurrentUser on CurrentUser {
+  id
+  email
+  timeCreated
+  isAdmin: hasRole(role: ADMIN)
+  keybindings(environment: $environment, platform: $platform) {
+    keybindings
+  }
+  ...LayoutHeaderAvatarDropdownCurrentUser
+  ...WorkspaceDoGitProviderImportCurrentUser
+  isUserActiveOnMobile
+  workspacePreferences
+}
+    ${n.LayoutHeaderAvatarDropdownCurrentUserFragmentDoc}
+${r.WorkspaceDoGitProviderImportCurrentUserFragmentDoc}`;e.s(["MobileWorkspaceCurrentUserFragmentDoc",0,l,"MobileWorkspaceReplFragmentDoc",0,s])},700995,e=>{"use strict";var t=e.i(351623),a=e.i(764992);let i=t.gql`
+    fragment ReplEnvironmentMobileRepl on Repl {
+  id
+  title
+  description
+  url
+  ...CrosisContextRepl
+  user {
+    id
+    image
+  }
+  org {
+    id
+  }
+  rootOriginReplUrl
+  source {
+    release {
+      id
+    }
+  }
+  config {
+    isAgentRepl
+    zealot
+    agentHarness
+  }
+}
+    ${a.CrosisContextReplFragmentDoc}`;e.s(["ReplEnvironmentMobileReplFragmentDoc",0,i])},855763,e=>{"use strict";var t=e.i(351623),a=e.i(989074);let i=t.gql`
+    fragment BulkDeleteConfirmationModalRepl on Repl {
+  id
+  iconUrl
+  title
+  hostingDeployment {
+    ... on HostingDeployment {
+      id
+      replitAppSubdomain
+      timeCreated
+      ...BuildStatusBadgeHostingDeployment
+    }
+  }
+}
+    ${a.BuildStatusBadgeHostingDeploymentFragmentDoc}`;e.s(["BulkDeleteConfirmationModalReplFragmentDoc",0,i])},222921,e=>{e.v({repls:"BulkDeleteConfirmationModal-module__jX9Dya__repls"})},88904,e=>{"use strict";var t=e.i(276385),a=e.i(389959),i=e.i(491194),n=e.i(403649),r=e.i(140134);e.i(214847);var s=e.i(20397),l=e.i(864300),o=e.i(595996),u=e.i(643484),d=e.i(528710),c=e.i(528326),p=e.i(108431),g=e.i(8047),m=e.i(61732),f=e.i(222921);let h=({repl:e,onConfirmedChange:i})=>{let s=(0,l.useIntl)(),[u,c]=(0,a.useState)(""),f=e.hostingDeployment?.__typename==="HostingDeployment"?e.hostingDeployment:null,h=(0,a.useRef)(!1),y=f?.replitAppSubdomain?f.replitAppSubdomain:e.title;return(0,t.jsxs)(m.View,{gap:8,children:[(0,t.jsxs)(m.View,{row:!0,gap:8,align:"center",children:[(0,t.jsx)(o.default,{size:24,iconUrl:e.iconUrl,alt:""}),(0,t.jsx)(g.Text,{height:"singleLine",multiline:!1,children:e.title}),f?(0,t.jsx)(r.BuildStatusesBadge,{deployment:f}):null]},e.id),f?(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(p.StatusBanner,{icon:(0,t.jsx)(n.default,{}),colorway:"red",text:s.formatMessage({id:"replsDashboard.bulkDeleteRowDeployedWarning",defaultMessage:"This App has been deployed. If you delete this App, the associated production deployment will also be shut down and deleted. To proceed, please type: {confirmation}"},{confirmation:y})}),(0,t.jsx)(d.Input,{placeholder:s.formatMessage({id:"replsDashboard.bulkDeleteRowConfirmPlaceholder",defaultMessage:"Type here"}),value:u,onChange:e=>{let{value:t}=e.currentTarget;c(t);let a=t.trim()===y;a!==h.current&&i(a),h.current=a}})]}):null]})};e.s(["default",0,({selectedRepls:e,isOpen:n,onClose:r,onDelete:o,deleting:d,dataAnalyticsId:p})=>{let y=(0,l.useIntl)(),T=e.length,b=e.filter(e=>e.hostingDeployment?.__typename==="HostingDeployment").length,[v,x]=(0,a.useState)(0);return(0,a.useEffect)(()=>{n||x(0)},[n]),(0,t.jsx)(c.Modal,{isOpen:n,onRequestClose:r,dataAnalyticsId:p,children:(0,t.jsxs)(m.View,{gap:16,children:[(0,t.jsx)(g.Header,{variant:"subheadBig",level:2,children:(0,t.jsx)(s.FormattedMessage,{id:"replsDashboard.bulkDeleteTitle",defaultMessage:"Delete {appCount, plural, one {App} other {Apps}}{deploymentCount, plural, =0 {} one { & Deployment} other { & Deployments}}?",values:{appCount:T,deploymentCount:b}})}),(0,t.jsx)(g.Text,{color:"dimmer",children:(0,t.jsx)(s.FormattedMessage,{id:"replsDashboard.bulkDeleteBody",defaultMessage:"Are you sure? This cannot be undone. Some Apps may take a few minutes to finish deleting."})}),(0,t.jsx)(m.View,{clsx:f.default.repls,children:e.map(e=>(0,t.jsx)(h,{repl:e,onConfirmedChange:e=>x(t=>t+(e?1:-1))},e.id))}),(0,t.jsxs)(m.View,{row:!0,gap:12,justify:"end",children:[(0,t.jsx)(u.Button,{text:y.formatMessage({id:"replsDashboard.bulkDeleteCancel",defaultMessage:"Cancel"}),onClick:r,disabled:d}),(0,t.jsx)(u.Button,{iconLeft:(0,t.jsx)(i.default,{}),onClick:o,disabled:d||v<b,text:y.formatMessage({id:"replsDashboard.bulkDeleteConfirm",defaultMessage:"Yes, delete {appCount, plural, one {App} other {# Apps}}{deploymentCount, plural, =0 {} one { & Deployment} other { & # Deployments}}"},{appCount:T,deploymentCount:b}),colorway:"negative"})]})]})})}])},567307,e=>{"use strict";var t=e.i(351623),a=e.i(748538),i=e.i(299020);let n={},r=t.gql`
+    fragment ReplInfoEditFormRepl on Repl {
+  ...EditReplFormRepl
+  id
+  title
+  description
+  isPrivate
+  iconUrl
+  publishedAs
+  templateLabel
+  org {
+    id
+    type
+  }
+  templateInfo {
+    iconUrl
+  }
+  authorizations {
+    editMetadata {
+      isAuthorized
+      message
+    }
+    editVisibility {
+      isAuthorized
+      code
+      message
+    }
+    editTemplateMetadata {
+      isAuthorized
+      message
+    }
+  }
+}
+    ${a.EditReplFormReplFragmentDoc}`,s=t.gql`
+    mutation ReplInfoEditFormUpdateRepl($input: UpdateReplInput!) {
+  updateRepl(input: $input) {
+    repl {
+      id
+      ...ReplInfoEditFormRepl
+    }
+  }
+}
+    ${r}`;e.s(["ReplInfoEditFormReplFragmentDoc",0,r,"useReplInfoEditFormUpdateReplMutation",0,function(e){let t={...n,...e};return i.useMutation(s,t)}])},61541,e=>{e.v({validationIcon:"EditReplForm-module__jQDoRq__validationIcon",validationText:"EditReplForm-module__jQDoRq__validationText"})},845772,e=>{"use strict";var t=e.i(276385),a=e.i(389959),i=e.i(908796),n=e.i(567307),r=e.i(269848),s=e.i(403649),l=e.i(371884),o=e.i(320216);e.i(214847);var u=e.i(20397),d=e.i(864300),c=e.i(402841),p=e.i(270749),g=e.i(906316),m=e.i(643484),f=e.i(528710),h=e.i(8047),y=e.i(61732),T=e.i(61541);function b({message:e,id:a}){return(0,t.jsxs)(y.View,{id:a,row:!0,gap:4,align:"center",children:[(0,t.jsx)(s.default,{clsx:T.default.validationIcon}),(0,t.jsx)(y.View,{grow:!0,shrink:!0,children:(0,t.jsx)(h.Text,{variant:"small",clsx:T.default.validationText,children:e})})]})}e.s(["EditReplForm",0,function({repl:e,onClose:s,autoSizeDescription:T=!0}){let v=(0,d.useIntl)(),{showConfirm:x,showError:_}=(0,o.default)(),[k,{loading:A}]=(0,n.useReplInfoEditFormUpdateReplMutation)({onError:e=>{_(e.message)}}),M=(0,l.useFormField)(e.title,e=>{let t=e.trim();return 0===t.length?{message:v.formatMessage({id:"workspace.replInfoNameRequired",defaultMessage:"Please enter a name"})}:t.length>60?{message:v.formatMessage({id:"workspace.replInfoNameTooLong",defaultMessage:"Name must be {max} characters or less"},{max:60})}:void 0}),I=(0,l.useFormField)(e.description??"",e=>{if(e.length>c.REPL_DESCRIPTION_MAX_LENGTH)return{message:v.formatMessage({id:"workspace.replInfoDescriptionTooLong",defaultMessage:"Description must be {max} characters or less"},{max:c.REPL_DESCRIPTION_MAX_LENGTH})}}),[R,w]=(0,a.useState)(e.templateLabel),[C,D]=(0,a.useState)(!1),j=e.title,P=e.description??"",E=e.templateLabel,S=e.publishedAs===i.PublishedReplKind.Template,U=(0,a.useId)(),L=(0,a.useId)(),O=(0,a.useId)(),B=(0,a.useId)(),F=(0,a.useId)(),N=!!M.error||!!I.error,G=M.value!==j||I.value!==P||R!==E,V=async()=>{if(!A&&null==M.validate()&&null==I.validate())try{await k({variables:{input:{id:e.id,title:M.value.trim(),description:I.value,templateLabel:e.authorizations.editTemplateMetadata.isAuthorized?R:void 0}}}),x(v.formatMessage({id:"workspace.replInfoDetailsUpdated",defaultMessage:"App details updated"})),s?.()}catch(e){}};return(0,t.jsxs)(y.View,{gap:16,children:[(0,t.jsx)(p.ReplIconInput,{replId:e.id,authz:e.authorizations.editMetadata,initialIconUrl:e.iconUrl,originIconUrl:e.templateInfo?.iconUrl??e.iconUrl}),(0,t.jsxs)(y.View,{gap:4,children:[(0,t.jsx)("label",{htmlFor:U,children:(0,t.jsx)(h.Text,{variant:"small",color:"dimmer",multiline:!1,children:(0,t.jsx)(u.FormattedMessage,{id:"workspace.replInfoNameLabel",defaultMessage:"Name"})})}),(0,t.jsx)(f.Input,{disabled:!e.authorizations.editMetadata.isAuthorized,maxLength:60,value:M.value,onChange:e=>M.setValue(e.target.value),onFocus:()=>D(!0),spellCheck:!1,id:U,"aria-describedby":L,dataCy:"ws-repl-info-title-input"}),M.value.length>=60?(0,t.jsx)(b,{message:v.formatMessage({id:"workspace.replInfoCharLimitReached",defaultMessage:"You've reached the {max} character limit"},{max:60})}):null,M.error?(0,t.jsx)(b,{message:M.error.message,id:L}):null]}),(0,t.jsxs)(y.View,{gap:4,children:[(0,t.jsx)("label",{htmlFor:O,children:(0,t.jsx)(h.Text,{variant:"small",color:"dimmer",multiline:!1,children:(0,t.jsx)(u.FormattedMessage,{id:"workspace.replInfoDescriptionLabel",defaultMessage:"Description"})})}),(0,t.jsx)(f.MultiLineInput,{disabled:!e.authorizations.editMetadata.isAuthorized,maxLength:c.REPL_DESCRIPTION_MAX_LENGTH,value:I.value,onChange:e=>I.setValue(e.target.value),onFocus:()=>D(!0),placeholder:v.formatMessage({id:"workspace.replInfoDescriptionPlaceholder",defaultMessage:"What does this App do?"}),autoSize:T,id:O,"aria-describedby":B}),I.value.length>=c.REPL_DESCRIPTION_MAX_LENGTH?(0,t.jsx)(b,{message:v.formatMessage({id:"workspace.replInfoCharLimitReached",defaultMessage:"You've reached the {max} character limit"},{max:c.REPL_DESCRIPTION_MAX_LENGTH})}):null,I.error?(0,t.jsx)(b,{message:I.error.message,id:B}):null]}),S&&e.authorizations.editTemplateMetadata.isAuthorized?(0,t.jsxs)(y.View,{gap:4,children:[(0,t.jsx)("label",{htmlFor:F,children:(0,t.jsx)(h.Text,{variant:"small",color:"dimmer",multiline:!1,children:(0,t.jsx)(u.FormattedMessage,{id:"workspace.replInfoTemplateLabel",defaultMessage:"Template label"})})}),(0,t.jsx)(f.Input,{value:R,maxLength:60,placeholder:v.formatMessage({id:"workspace.replInfoTemplateLabel",defaultMessage:"Template label"}),spellCheck:!1,onChange:e=>w(e.target.value),onFocus:()=>D(!0),id:F})]}):null,(0,t.jsx)(g.TaskAutomationSettings,{replId:e.id}),C?(0,t.jsx)(y.View,{row:!0,gap:8,justify:"end",children:(0,t.jsx)(m.Button,{text:v.formatMessage({id:"workspace.replInfoSaveChanges",defaultMessage:"Save changes"}),colorway:"primary",onClick:V,disabled:A||N||!G||!e.authorizations.editMetadata.isAuthorized,iconLeft:A?(0,t.jsx)(r.default,{}):void 0,dataCy:"repl-info-save-changes-button"})}):null]})}])},962587,e=>{"use strict";var t=e.i(351623),a=e.i(299020);let i={},n=t.gql`
+    mutation ReplInfoReplIconUpdate($input: UpdateReplInput!) {
+  updateRepl(input: $input) {
+    repl {
+      id
+      iconUrl
+    }
+  }
+}
+    `;e.s(["useReplInfoReplIconUpdateMutation",0,function(e){let t={...i,...e};return a.useMutation(n,t)}])},270749,e=>{"use strict";var t=e.i(276385),a=e.i(389959),i=e.i(962587),n=e.i(349597),r=e.i(956264),s=e.i(320216);e.i(214847);var l=e.i(20397),o=e.i(864300),u=e.i(345219),d=e.i(643484),c=e.i(186416),p=e.i(8047),g=e.i(244945),m=e.i(61732),f=e.i(365757);e.s(["ReplIconInput",0,function({replId:e,authz:h,initialIconUrl:y,originIconUrl:T}){let b=(0,o.useIntl)(),{showError:v,showConfirm:x}=(0,s.default)(),[_,k]=(0,a.useState)(y),A=(0,a.useRef)(null),[M,{loading:I}]=(0,i.useReplInfoReplIconUpdateMutation)({onError:()=>{v(b.formatMessage({id:"workspace.replIconUpdateError",defaultMessage:"Something unexpected happened"}))},onCompleted:e=>{e.updateRepl.repl&&x(b.formatMessage({id:"workspace.replIconUpdated",defaultMessage:"App icon updated successfully"}))}}),R=_!==T?b.formatMessage({id:"workspace.replIconUploadNew",defaultMessage:"Upload new"}):b.formatMessage({id:"workspace.replIconUpload",defaultMessage:"Upload icon"}),w=(0,r.default)({onUpload:async({url:t})=>{await M({variables:{input:{id:e,iconUrl:t}}}),k(t),A.current&&(URL.revokeObjectURL(A.current),A.current=null)},onUploadPreview:()=>{x(b.formatMessage({id:"workspace.replIconUploading",defaultMessage:"Uploading App icon"}))},onError:e=>v(e.message)});(0,a.useEffect)(()=>{k(y)},[y]),(0,a.useEffect)(()=>()=>{A.current&&URL.revokeObjectURL(A.current)},[]);let C=e=>{A.current&&URL.revokeObjectURL(A.current);let t=URL.createObjectURL(e);A.current=t,k(t),w.uploadImage(e,n.ImageUploadContexts.ReplIcon)},D=async e=>{let t=e.items.filter(e=>"file"===e.kind).map(e=>e.getFile()),a=(await Promise.all(t)).filter(e=>null!==e);if(a.length>0){let e=a[0];if(!u.ACCEPTABLE_IMAGE_UPLOAD_TYPES.includes(e.type))return void v(b.formatMessage({id:"workspace.replIconUnsupportedType",defaultMessage:"Only PNG, JPEG, GIF, and WebP images are supported"}));C(e)}};return h.isAuthorized?(0,t.jsxs)(m.View,{gap:4,children:[(0,t.jsx)(p.Text,{variant:"small",color:"dimmer",multiline:!1,children:(0,t.jsx)(l.FormattedMessage,{id:"workspace.replIconLabel",defaultMessage:"Icon"})}),(0,t.jsx)(c.FileUploadInput,{onSelect:e=>{if(e&&e.length>0){let t=e[0];if(!u.ACCEPTABLE_IMAGE_UPLOAD_TYPES.includes(t.type))return void v(b.formatMessage({id:"workspace.replIconUnsupportedType",defaultMessage:"Only PNG, JPEG, GIF, and WebP images are supported"}));C(t)}},onDrop:D,acceptedFileTypes:u.ACCEPTABLE_IMAGE_UPLOAD_TYPES,children:(0,t.jsxs)(m.View,{row:!0,gap:12,align:"start",children:[(0,t.jsx)(f.default,{alt:"",size:48,iconUrl:_??""}),(0,t.jsxs)(m.View,{gap:4,align:"start",children:[(0,t.jsx)(d.Button,{text:R,size:"small",loading:I}),(0,t.jsx)(p.Text,{variant:"small",color:"dimmer",children:(0,t.jsx)(l.FormattedMessage,{id:"workspace.replIconShouldBeSquare",defaultMessage:"Icon should be square"})})]})]})})]}):(0,t.jsxs)(m.View,{gap:4,children:[(0,t.jsx)(p.Text,{variant:"small",color:"dimmer",multiline:!1,children:(0,t.jsx)(l.FormattedMessage,{id:"workspace.replIconLabel",defaultMessage:"Icon"})}),(0,t.jsxs)(m.View,{row:!0,gap:12,align:"start",children:[(0,t.jsx)(f.default,{alt:"",size:48,iconUrl:_??""}),(0,t.jsxs)(m.View,{gap:4,align:"start",children:[(0,t.jsx)(g.Tooltip,{tooltip:b.formatMessage({id:"workspace.replIconNotAllowed",defaultMessage:"Not allowed to update icon"}),children:(0,t.jsx)(d.Button,{text:R,disabled:!0,size:"small"})}),(0,t.jsx)(p.Text,{variant:"small",color:"dimmer",children:(0,t.jsx)(l.FormattedMessage,{id:"workspace.replIconShouldBeSquare",defaultMessage:"Icon should be square"})})]})]})]})}])},906316,e=>{"use strict";var t=e.i(276385),a=e.i(389959),i=e.i(908796),n=e.i(709485),r=e.i(320216);e.i(214847);var s=e.i(20397),l=e.i(864300),o=e.i(415541),u=e.i(577671),d=e.i(640277),c=e.i(203675),p=e.i(86145),g=e.i(8047),m=e.i(61732);e.s(["TaskAutomationSettings",0,function({replId:e}){let f=(0,l.useIntl)(),{showError:h}=(0,r.default)(),{loading:y,taskSettings:T,updateSettings:b}=(0,u.useCurrentUserReplSettings)(e),{autoApprovePlan:v,loading:x,logTaskAutoApprovalExposure:_}=(0,d.useExperimentTaskAutomationSettings)({replId:e}),[k,A]=(0,a.useState)(!1);(0,a.useEffect)(()=>{x||_()},[x,_]);let M=e=>"isAutoApprovePlanEnabled"===e?v:T?.[e]??!1,I=async(e,t)=>{if(k)return;let a="isAutoApprovePlanEnabled"===e?v:T?.[e]??!1;A(!0);let r=await b({taskSettings:{[e]:t}});(A(!1),r)?"isAutoApprovePlanEnabled"===e&&(0,o.trackV2)(n.eventsV2.TASK_AUTO_APPROVAL_PREFERENCE_UPDATED,{previous_value:a,next_value:t,was_default:!T?.explicitFields.includes(i.UserReplTaskSettingsField.IsAutoApprovePlanEnabled)}):h(f.formatMessage({id:"workspace.replInfoTaskAutomationSaveError",defaultMessage:"Couldn't save task settings. Please try again."}))},R=f.formatMessage({id:"workspace.replInfoAutoApprovePlan",defaultMessage:"Automatically approve task plans"}),w=f.formatMessage({id:"workspace.replInfoAutoMergeDefault",defaultMessage:"Automatically apply changes for finished tasks"});return(0,t.jsxs)(m.View,{gap:8,children:[(0,t.jsxs)(m.View,{gap:2,children:[(0,t.jsx)(g.Text,{variant:"small",color:"dimmer",multiline:!1,children:(0,t.jsx)(s.FormattedMessage,{id:"workspace.replInfoTaskAutomationHeading",defaultMessage:"Task automation"})}),(0,t.jsx)(g.Text,{variant:"small",color:"dimmer",multiline:!0,children:(0,t.jsx)(s.FormattedMessage,{id:"workspace.replInfoTaskAutomationOnlyYou",defaultMessage:"These settings only apply to you in this App."})})]}),(0,t.jsx)(c.TaskSettingsRow,{controlPosition:"left",label:R,children:(0,t.jsx)(p.Checkbox,{ariaLabel:R,checked:M("isAutoApprovePlanEnabled"),disabled:x||k,onChange:e=>I("isAutoApprovePlanEnabled",e),size:"small"})}),(0,t.jsx)(c.TaskSettingsRow,{controlPosition:"left",label:w,children:(0,t.jsx)(p.Checkbox,{ariaLabel:w,checked:M("isAutoMergeEnabled"),disabled:y||k,onChange:e=>I("isAutoMergeEnabled",e),size:"small"})})]})}])},946860,e=>{"use strict";var t=e.i(276385),a=e.i(534141),i=e.i(87046),n=e.i(536262),r=e.i(295231);e.s(["PlanningChatActionMenuItems",0,function({chatId:e,onStartRename:s,onArchive:l,onRestore:o}){return(0,t.jsxs)(t.Fragment,{children:[s?(0,t.jsx)(r.MenuItem,{label:"Rename",icon:(0,t.jsx)(a.default,{}),onAction:s}):null,l?(0,t.jsx)(r.MenuItem,{label:"Archive",icon:(0,t.jsx)(i.default,{}),onAction:()=>l(e)}):null,o?(0,t.jsx)(r.MenuItem,{label:"Restore",icon:(0,t.jsx)(n.default,{}),onAction:()=>o(e)}):null]})}])},316831,e=>{"use strict";var t=e.i(276385),a=e.i(389959);e.i(293163);var i=e.i(429733),n=e.i(855496),r=e.i(5484),s=e.i(776801),l=e.i(844430);let o=(0,a.memo)(function({chat:e,replId:a}){let i=(0,r.usePlanningSessionHasProposedTasks)(a,e.id),n=c(e);return(0,t.jsx)(u,{isWorking:n,hasProposedTasks:i})});function u({isWorking:e,hasProposedTasks:a,size:i=16}){return(0,t.jsx)(l.BlockSpinner,{...d(e,a),size:i})}function d(e,t){return e?s.TASK_SPINNERS.planning:t?s.TASK_SPINNERS.planned:s.TASK_SPINNERS.draft}function c(e){let{data:t}=(0,n.useAgent)(e.agentId);return t?.status===i.AgentStatus.RUNNING}e.s(["PlanningChatIcon",0,o,"PlanningChatStatusIcon",0,u,"getPlanningChatSpinner",0,d,"usePlanningAgentWorking",0,c])},73509,e=>{"use strict";var t=e.i(276385),a=e.i(96250),i=e.i(183035),n=e.i(602686),r=e.i(534141),s=e.i(105068),l=e.i(82130);e.i(616869);var o=e.i(751707),u=e.i(955410);e.i(214847);var d=e.i(864300),c=e.i(695798),p=e.i(46085),g=e.i(905511),m=e.i(312549),f=e.i(295231);e.s(["TaskActionMenuItems",0,function({task:e,onMerge:h,onReplan:y,onReviewChanges:T,onStartRename:b,onCancel:v,onCancelApplyingChanges:x,isCancellingApplyingChanges:_,setIsCancellingApplyingChanges:k,isMerging:A,setIsMerging:M,isReplanning:I,setIsReplanning:R,hideMergeAction:w=!1,isCancelDisabled:C=!1}){let D=(0,d.useIntl)(),{trackClick:j}=(0,u.useTrackClick)(),P=!0===_,E=(0,c.useWorkspaceHasRepl)(),S=e.kind===o.TaskKind.SECURITY_SCAN,U=!E&&null!=e.subreplRunId&&(0,m.canStopTask)(e),L=!w&&!!h&&(0,m.canMergeTask)(e),O=!E&&!!y&&(0,m.canReplanTask)(e),B=!!T&&(0,m.canReviewTask)(e),F=!!x&&(0,m.canCancelApplyingChanges)(e),N=!!(b||B||U||F||O||v&&(0,m.canCancelTask)(e)),{isCheckingTaskAgentState:G,isStoppingTaskAgent:V,isStopDisabled:z,stopTaskAgent:Q}=(0,g.useTaskAgentStop)({task:e,enabled:U}),q="Stop";G?q="Checking…":V&&(q="Stopping…");let $=async()=>{z||(j({productArea:p.TASKS_PRODUCT_AREA,target:p.TaskClickTarget.STOP_MENU_ITEM,properties:{task_id:e.id,task_state:e.state}}),await Q())};return(0,t.jsxs)(t.Fragment,{children:[L?(0,t.jsx)(f.MenuItem,{label:A?"Applying changes…":"Apply changes",icon:(0,t.jsx)(i.default,{}),isDisabled:A,onAction:async()=>{if(h){j({productArea:p.TASKS_PRODUCT_AREA,target:p.TaskClickTarget.APPLY_CHANGES_MENU_ITEM,properties:{task_id:e.id,task_state:e.state}}),M(!0);try{await h(e.id)}finally{M(!1)}}}}):null,L&&N?(0,t.jsx)(f.Separator,{}):null,b?(0,t.jsx)(f.MenuItem,{label:D.formatMessage({id:"workspace.renameTask",defaultMessage:"Rename"}),icon:(0,t.jsx)(r.default,{}),isDisabled:S,description:S?D.formatMessage({id:"workspace.renameTaskSecurityScanHint",defaultMessage:"Security scans keep their given name"}):void 0,onAction:b}):null,B?(0,t.jsx)(f.MenuItem,{label:"Review changes",icon:(0,t.jsx)(s.default,{}),onAction:()=>{T?.(e.id)}}):null,U?(0,t.jsx)(f.MenuItem,{label:q,icon:(0,t.jsx)(l.default,{}),isDisabled:z,onAction:$}):null,F?(0,t.jsx)(f.MenuItem,{label:P?"Cancelling…":"Cancel applying changes",icon:(0,t.jsx)(n.default,{}),isDisabled:P,onAction:async()=>{if(x){j({productArea:p.TASKS_PRODUCT_AREA,target:p.TaskClickTarget.CANCEL_MENU_ITEM,properties:{task_id:e.id,task_state:e.state}}),k?.(!0);try{await x(e.id)}finally{k?.(!1)}}}}):null,O?(0,t.jsx)(f.MenuItem,{label:I?"Re-planning…":"Re-plan",icon:(0,t.jsx)(a.default,{}),isDisabled:I,onAction:async()=>{if(y){j({productArea:p.TASKS_PRODUCT_AREA,target:p.TaskClickTarget.REPLAN_MENU_ITEM,properties:{task_id:e.id,task_state:e.state}}),R?.(!0);try{await y(e.id)}finally{R?.(!1)}}}}):null,v&&(0,m.canCancelTask)(e)?(0,t.jsx)(f.MenuItem,{label:"Cancel",icon:(0,t.jsx)(n.default,{}),isDisabled:C,onAction:()=>{j({productArea:p.TASKS_PRODUCT_AREA,target:p.TaskClickTarget.CANCEL_MENU_ITEM,properties:{task_id:e.id,task_state:e.state}}),v(e.id)}}):null]})}])},616846,e=>{e.v({attributionRow:"TaskListButton-module__9QyinG__attributionRow",avatarCell:"TaskListButton-module__9QyinG__avatarCell",button:"TaskListButton-module__9QyinG__button",buttonMatchSubtitle:"TaskListButton-module__9QyinG__buttonMatchSubtitle",buttonSubtitle:"TaskListButton-module__9QyinG__buttonSubtitle",buttonSubtitleAttribution:"TaskListButton-module__9QyinG__buttonSubtitleAttribution",compact:"TaskListButton-module__9QyinG__compact",iconButton:"TaskListButton-module__9QyinG__iconButton",iconButtonPresence:"TaskListButton-module__9QyinG__iconButtonPresence",iconCell:"TaskListButton-module__9QyinG__iconCell",interactiveButton:"TaskListButton-module__9QyinG__interactiveButton",interactiveButtonMatchSubtitle:"TaskListButton-module__9QyinG__interactiveButtonMatchSubtitle",interactiveButtonSubtitle:"TaskListButton-module__9QyinG__interactiveButtonSubtitle",interactiveButtonSubtitleAttribution:"TaskListButton-module__9QyinG__interactiveButtonSubtitleAttribution",interactiveIconButton:"TaskListButton-module__9QyinG__interactiveIconButton",isMenuOpen:"TaskListButton-module__9QyinG__isMenuOpen",presenceCell:"TaskListButton-module__9QyinG__presenceCell",reserveActionStrip:"TaskListButton-module__9QyinG__reserveActionStrip",rowActions:"TaskListButton-module__9QyinG__rowActions",rowWrapper:"TaskListButton-module__9QyinG__rowWrapper",sidebarV2:"TaskListButton-module__9QyinG__sidebarV2",subtitleRow:"TaskListButton-module__9QyinG__subtitleRow",subtitleText:"TaskListButton-module__9QyinG__subtitleText",text:"TaskListButton-module__9QyinG__text",titleAccessory:"TaskListButton-module__9QyinG__titleAccessory",titleCell:"TaskListButton-module__9QyinG__titleCell",titleText:"TaskListButton-module__9QyinG__titleText"})},584485,e=>{"use strict";var t=e.i(276385),a=e.i(389959),i=e.i(255615);e.i(214847);var n=e.i(864300),r=e.i(46085),s=e.i(521937),l=e.i(704446),o=e.i(776801),u=e.i(532225),d=e.i(223620),c=e.i(565931),p=e.i(8047),g=e.i(61732),m=e.i(616846);let f={control:d.rui.themeTextInput,primary:d.rui.themePrimary,negative:d.rui.themeDestructive,positive:d.rui.themePositive,warning:d.rui.themeWarning,red:d.rui.themeError,green:d.rui.themeSuccess,blue:d.rui.themeNotice,magenta:d.rui.themeReference,blurple:d.rui.themeBlurple,yellow:d.rui.themeWarning,orange:d.rui.themeBrandInverted,brand:d.rui.themeBrand};function h({state:e,blockedBy:t,isSelected:a,colorway:i,variant:n}){let r=e?(0,o.getTaskAttentionColorway)({state:e,blockedBy:t}):void 0,s=n;return s||(s=a?"filledAndOutlined":"nofill"),{colorway:i??r??"halfDefault",variant:s}}function y(e){return"nofill"!==e?null:["border","border-transparent"]}let T=(0,a.forwardRef)(function({state:e,blockedBy:a,isSelected:p,isCurrent:g,onPress:f,isDisabled:T,presence:b,"aria-label":v,icon:x,colorway:_,className:k,variant:A,analyticsId:M,analyticsDestination:I,analyticsLabel:R},w){let C=(0,n.useIntl)(),D=x??(e?(0,t.jsx)("span",{"data-sidebar-icon":"true",children:(0,t.jsx)(l.TaskIcon,{state:e,blockedBy:a,size:16,showTooltip:!1})}):(0,t.jsx)("span",{"data-main-version-icon":"true",children:(0,t.jsx)(s.MainVersionIcon,{})})),j=h({state:e,blockedBy:a,isSelected:p,colorway:_,variant:A}),P=(0,u.useCreateInteractiveRuiClasses)({variant:j.variant,colorway:j.colorway}),E=y(j.variant),S=v??(e?`Task: ${(0,o.getTaskStateLabel)(C,e,a)}`:r.MAIN_VERSION_TITLE);return(0,t.jsxs)(i.Button,{ref:w,"aria-label":S,"aria-current":g?"page":void 0,"data-selected":p,"data-analytics-id":M,"data-analytics-destination":I,"data-analytics-label":R,clsx:(0,d.twMerge)(P,E,m.default.interactiveIconButton,k),onPress:f,isDisabled:T,children:[D,b&&b.length>0?(0,t.jsx)("span",{clsx:m.default.iconButtonPresence,children:(0,t.jsx)(c.default,{size:12,activeUsers:b,visibleNumOfUsers:2})}):null]})});e.s(["TaskListButton",0,function({text:e,state:a,blockedBy:n,isSelected:r,isCurrent:o,onPress:T,isDisabled:b,presence:v,subtitleLeft:x,subtitleRight:_,attributionIcon:k,attributionText:A,titleAccessory:M,icon:I,hideIcon:R,colorway:w,variant:C,forceHover:D,reserveActionStrip:j,className:P,compact:E,analyticsId:S,analyticsDestination:U,analyticsLabel:L,"aria-label":O}){let B=!!(x||_),F=!!(k&&A),N=null;R||(N=I??(a?(0,t.jsx)("span",{"data-sidebar-icon":"true",children:(0,t.jsx)(l.TaskIcon,{state:a,blockedBy:n,size:16})}):(0,t.jsx)("span",{"data-main-version-icon":"true",children:(0,t.jsx)(s.MainVersionIcon,{})})));let G=h({state:a,blockedBy:n,isSelected:r,colorway:w,variant:C}),V=(0,u.useCreateInteractiveRuiClasses)({variant:G.variant,colorway:G.colorway}),z=y(G.variant),Q=function({variant:e,colorway:t,forceHover:a,isDisabled:i}){return!a||i?null:"filled"===e||"filledAndOutlined"===e||"default"===e?d.rui.surface2:"underlined"===e||"underlinedOnHover"===e?null:"halfDefault"===t?d.rui.surface:"default"===t?d.rui.surface2:f[t]}({variant:G.variant,colorway:G.colorway,forceHover:D,isDisabled:b});return(0,t.jsxs)(i.Button,{"aria-label":O,"aria-current":o?"page":void 0,"data-selected":r,"data-analytics-id":S,"data-analytics-destination":U,"data-analytics-label":L,clsx:(0,d.twMerge)(V,z,Q,P,m.default.interactiveButton,B&&m.default.interactiveButtonSubtitle,B&&F&&m.default.interactiveButtonSubtitleAttribution,E&&m.default.compact,j&&!!v?.length&&m.default.reserveActionStrip),onPress:T,isDisabled:b,children:[B?(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(g.View,{clsx:m.default.iconCell,children:N}),(0,t.jsxs)(g.View,{row:!0,align:"center",gap:6,clsx:m.default.titleCell,children:[(0,t.jsx)(p.Text,{variant:"text",multiline:!1,clsx:[m.default.text,m.default.titleText],children:e}),M?(0,t.jsx)(g.View,{row:!0,align:"center",clsx:m.default.titleAccessory,children:M}):null]}),(0,t.jsxs)(g.View,{row:!0,align:"center",gap:4,clsx:m.default.subtitleRow,title:"",children:[x?(0,t.jsxs)(p.Text,{variant:"small",color:"dimmest",multiline:!1,clsx:m.default.subtitleText,children:[x,_?" ·":null]}):null,_]}),F?(0,t.jsx)(g.View,{clsx:m.default.avatarCell,children:k}):null,A?(0,t.jsxs)(g.View,{row:!0,align:"center",gap:4,clsx:m.default.attributionRow,children:[F?null:k,(0,t.jsx)(p.Text,{variant:"small",color:"dimmest",multiline:!1,children:A})]}):null]}):(0,t.jsxs)(t.Fragment,{children:[N,(0,t.jsx)(p.Text,{variant:"text",multiline:!1,clsx:m.default.text,children:e})]}),v&&v.length>0?(0,t.jsx)(g.View,{clsx:m.default.presenceCell,shrink:0,children:(0,t.jsx)(c.default,{size:16,activeUsers:v})}):null]})},"TaskListIconButton",0,T,"TaskListRowActionWrapper",0,function({children:e,actions:a,isMenuOpen:i=!1}){return(0,t.jsxs)(g.View,{grow:!0,shrink:!0,clsx:[m.default.rowWrapper,{[m.default.isMenuOpen]:i}],children:[e,a?(0,t.jsx)(g.View,{clsx:m.default.rowActions,row:!0,gap:4,children:a}):null]})}])},869034,e=>{"use strict";var t=e.i(389959),a=e.i(730497),i=e.i(312549);function n(e,t){let a=new Map;for(let e of t)a.set(e.id,e.state);let n=new Set((function(e){let t=new Map;for(let a of e){if(!(0,i.isStandaloneFollowUpTask)(a))continue;let e=t.get(a.createdAt);e?e.push(a):t.set(a.createdAt,[a])}let a="",n=[];for(let[e,i]of t)e>a&&(a=e,n=i);return n.some(e=>"CANCELLED"!==e.state&&"MERGED"!==e.state)&&n.length<=4?n:[]})(t).map(e=>e.id)),r=new Map;for(let e of t)e.proposedFromTaskId&&r.set(e.proposedFromTaskId,(r.get(e.proposedFromTaskId)??0)+1);let s=[];for(let t of e)"PROPOSED"===t.state&&(null!=t.proposedFromTaskId&&"MERGED"===a.get(t.proposedFromTaskId)&&(r.get(t.proposedFromTaskId)??0)<=4||n.has(t.id))&&s.push(t);return s.sort((e,t)=>t.createdAt.localeCompare(e.createdAt)),s}e.s(["getSuggestedTaskCountsById",0,function(e){let t=new Map;for(let a of e){let e=a.proposedFromTaskId??`standalone:${a.createdAt}`;t.set(e,(t.get(e)??0)+1)}return new Map(e.map(e=>[e.id,t.get(e.proposedFromTaskId??`standalone:${e.createdAt}`)??1]))},"selectFollowUpDrafts",0,n,"useFollowUpTasks",0,function(e,a){return(0,t.useMemo)(()=>n(e,a),[e,a])},"useFollowUpTasksEnabled",0,function(){return(0,a.useFlag)({controlName:"flag-agent-proposed-followup-tasks"})}])},474586,e=>{"use strict";var t=e.i(351623),a=e.i(344480);e.i(975473);let i={},n=t.gql`
+    query IsMultiplayerProject($replId: String!) {
+  getRepl(id: $replId) {
+    ... on Repl {
+      id
+      config {
+        isMultiplayerProject
+      }
+    }
+  }
+}
+    `;e.s(["useIsMultiplayerProjectQuery",0,function(e){let t={...i,...e};return a.useQuery(n,t)}])},633123,e=>{"use strict";var t=e.i(474586);e.s(["useIsMultiplayerProject",0,function(e){let{data:a,loading:i}=(0,t.useIsMultiplayerProjectQuery)({variables:{replId:e}});return{isMultiplayerProject:a?.getRepl?.__typename==="Repl"&&(a.getRepl.config?.isMultiplayerProject??!1),loading:i}}])},867919,e=>{"use strict";var t=e.i(389959),a=e.i(797562),i=e.i(570438),n=e.i(815881),r=e.i(633123);function s({replId:e,allTasks:n,planningChats:l,enabled:o=!0,resolvePlanningChatCreators:u=!0}){var d;let c=function(e){if(null==e)return null;let t=Number(e);return Number.isFinite(t)?t:null}((0,i.useCurrentUserId)()),{isMultiplayerProject:p,loading:g}=(0,r.useIsMultiplayerProject)(e),[m]=(0,a.useSetMultiplayerProjectMutation)(),f=o&&!p&&!g,h=(d=o&&u,(0,t.useMemo)(()=>{let e=new Map;if(!d)return e;for(let t of l)e.set(t.id,t.thread.createdBy);return e},[d,l])),y=(0,t.useRef)(!1),T=(0,t.useMemo)(()=>{if(p)return y.current=!0,!0;if(y.current)return!0;if(!f||null==c)return!1;for(let e of n)if(function(e,t){return e.events.some(e=>e.userId!==t)}(e,c))return y.current=!0,!0;if(u)for(let e of l){let t=h.get(e.id);if(null!=t&&t!==c)return y.current=!0,!0}return!1},[n,c,p,h,l,u,f]),b=(0,t.useRef)(!1);return(0,t.useEffect)(()=>{!T||p||b.current||(b.current=!0,m({variables:{input:{id:e,isMultiplayerProject:!0}},optimisticResponse:{__typename:"RootMutationType",updateRepl:{__typename:"UpdateReplPayload",repl:{__typename:"Repl",id:e,config:{__typename:"ReplConfig",isMultiplayerProject:!0}}}}}))},[T,p,e,m]),{isMultiplayer:T,planningChatCreatorUserIds:h}}e.s(["useProjectMultiplayer",0,function(e){let{tasks:t}=(0,n.useAllTasks)(e.replId,"");return s({...e,allTasks:t})},"useProjectMultiplayerFromTasks",0,s])},151369,e=>{"use strict";var t=e.i(36163);async function a(e){return e.thread.createdBy}e.s(["getPlanningChatCreatorUserId",0,a,"usePlanningChatCreatorUserId",0,function(e,t){return t&&e?e.thread.createdBy:null},"usePlanningChatLastActivity",0,function(e,t=!0){if(!t)return null;let a=new Date(e.thread.updatedAt);return Number.isNaN(a.getTime())?null:a},"usePlanningChatTitle",0,function(e){return e.thread.title},"usePlanningChatTitleById",0,function(e){return(0,t.usePlanningChatById)(e)?.thread.title??null}])},5484,e=>{"use strict";var t=e.i(723892),a=e.i(209677);e.i(121908);var i=e.i(815845),n=e.i(312549);e.s(["usePlanningSessionHasProposedTasks",0,function(e,r){let s=(0,i.useTasksCollection)(),{data:l}=(0,a.useLiveQuery)(a=>e&&r?a.from({taskItems:s}).where(a=>(0,t.and)((0,t.eq)(a.taskItems.replId,e),(0,t.eq)(a.taskItems.state,"PROPOSED"),(0,t.or)((0,t.eq)(a.taskItems.planningSessionId,r),(0,t.eq)(a.taskItems.threadId,r)))):a.from({taskItems:s}).where(()=>(0,t.eq)(1,0)),[r,e,s]);return(l??[]).some(e=>!(0,n.isStandaloneFollowUpTask)(e))}])},797562,e=>{"use strict";var t=e.i(351623),a=e.i(299020);let i={},n=t.gql`
+    mutation SetMultiplayerProject($input: UpdateReplInput!) {
+  updateRepl(input: $input) {
+    repl {
+      id
+      config {
+        isMultiplayerProject
+      }
+    }
+  }
+}
+    `;e.s(["useSetMultiplayerProjectMutation",0,function(e){let t={...i,...e};return a.useMutation(n,t)}])},905511,e=>{"use strict";var t=e.i(389959);e.s(["useTaskAgentStop",0,function(e){return{isCheckingTaskAgentState:!1,isStoppingTaskAgent:!1,isTaskAgentRunning:null,isStopDisabled:!0,stopTaskAgent:(0,t.useCallback)(async()=>!1,[])}}])},410073,e=>{"use strict";var t=e.i(351623),a=e.i(344480);e.i(975473);let i={},n=t.gql`
+    query TaskCreatorUser($userId: Int!) {
+  user(id: $userId) {
+    id
+    username
+    fullName
+    image
+  }
+}
+    `;e.s(["useTaskCreatorUserQuery",0,function(e){let t={...i,...e};return a.useQuery(n,t)}])},557684,e=>{"use strict";var t=e.i(410073);function a(e){let t=e.find(e=>"APPROVED"===e.event);return t?t.userId:null}function i(e){let t=e.find(e=>"CREATED"===e.event);return t?t.userId:null}e.s(["getTaskApproverUserId",0,a,"getTaskAttribution",0,function(e,t){let n=e.events.find(e=>"MERGED"===e.event),r=e.events.find(e=>"CANCELLED"===e.event),s=n??r;if(s)return{userId:s.userId,label:n?t.formatMessage({id:"workspace.taskAttributionAppliedBy",defaultMessage:"Applied by"}):t.formatMessage({id:"workspace.taskAttributionCancelledBy",defaultMessage:"Cancelled by"})};let l=a(e.events);if(null!=l)return{userId:l,label:t.formatMessage({id:"workspace.taskAttributionAcceptedBy",defaultMessage:"Accepted by"})};let o=i(e.events);return null!=o?{userId:o,label:t.formatMessage({id:"workspace.taskAttributionCreatedBy",defaultMessage:"Created by"})}:{userId:null,label:""}},"getTaskCreatorUserId",0,i,"useCreatorUser",0,function(e){let{data:a}=(0,t.useTaskCreatorUserQuery)({variables:{userId:e??0},skip:null==e});if(a?.user)return{username:a.user.username,fullName:a.user.fullName,image:a.user.image??null}}])},310231,e=>{"use strict";e.s(["getTaskTimestamp",0,function(e){let t,a,i=Date.parse(e.createdAt),n=Date.parse(e.updatedAt),r=NaN;for(let t of e.events){let e=Date.parse(t.createdAt);Number.isFinite(e)&&(!Number.isFinite(r)||e>r)&&(r=e)}if(Number.isFinite(r)&&r>n)t=r,a=new Date(r).toISOString();else{if(!Number.isFinite(n))return{label:"Created",value:e.createdAt};t=n,a=e.updatedAt}return Number.isFinite(i)&&t>i?{label:"Updated",value:a}:{label:"Created",value:e.createdAt}}])},604275,e=>{"use strict";var t=e.i(276385),a=e.i(983420);e.s(["default",0,function(e){return(0,t.jsx)(a.default,{...e,children:(0,t.jsx)("path",{fillRule:"evenodd",d:"M6 3.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5M2.25 6a3.75 3.75 0 1 1 4.527 3.67 8.25 8.25 0 0 0 7.554 7.553A3.751 3.751 0 0 1 21.75 18a3.75 3.75 0 0 1-7.43.726 9.75 9.75 0 0 1-7.57-4.53V21a.75.75 0 0 1-1.5 0V9.675A3.75 3.75 0 0 1 2.25 6M18 15.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5",clipRule:"evenodd"})})}])}]);
+
+//# debugId=5477768c-54d5-ae32-5646-f6700891d7d7
+//# sourceMappingURL=12k8usjdyybbx.js.map

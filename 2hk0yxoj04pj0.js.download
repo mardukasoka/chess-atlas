@@ -1,0 +1,13 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="70495881-8c19-b1bf-2cae-08445d99790e")}catch(e){}}();
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,597842,e=>{"use strict";var s=e.i(351623),t=e.i(344480);e.i(975473);let r={},u=s.gql`
+    query PersonalRoutinesPage {
+  currentUser {
+    id
+    isVerified
+    personalOrgId
+  }
+}
+    `;e.s(["usePersonalRoutinesPageQuery",0,function(e){let s={...r,...e};return t.useQuery(u,s)}])},636390,e=>{"use strict";var s=e.i(276385),t=e.i(597842),r=e.i(95919),u=e.i(609579),i=e.i(933302);e.s(["default",0,function(){let e=(0,i.useIsStatsigClientResolved)(),o=(0,i.useScopedFeatureGate)("gate_routines_ux"),{data:n,loading:a,error:l}=(0,t.usePersonalRoutinesPageQuery)({skip:!o});return e?o?a?null:l?(0,s.jsx)(r.default,{statusCode:500}):n?.currentUser?.isVerified===!0&&n.currentUser.personalOrgId?(0,s.jsx)(u.RoutinesPage,{orgId:n.currentUser.personalOrgId}):(0,s.jsx)(r.default,{statusCode:404}):(0,s.jsx)(r.default,{statusCode:404}):null}])},384305,(e,s,t)=>{let r="/routines";(window.__NEXT_P=window.__NEXT_P||[]).push([r,()=>e.r(636390)]),s.hot&&s.hot.dispose(function(){window.__NEXT_P.push([r])})}]);
+
+//# debugId=70495881-8c19-b1bf-2cae-08445d99790e
+//# sourceMappingURL=0_ojcl9z9zokg.js.map

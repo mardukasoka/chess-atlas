@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!-- saved from url=(0141)https://51f84428-7afc-41ad-9f25-0ba2388f706f-00-20y16a4b5lj8m.riker.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=wvc1hne943-1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <style>
+      html,
+      body,
+      iframe {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+        height: 100%;
+        width: 100%;
+      }
+      body {
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe id="iframe" sandbox="allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals allow-downloads allow-downloads-without-user-activation allow-presentation allow-orientation-lock allow-scripts allow-pointer-lock" allow="accelerometer; ambient-light-sensor; autoplay; battery; camera; display-capture; encrypted-media; execution-while-not-rendered; execution-while-out-of-viewport; fullscreen; gamepad; geolocation; gyroscope; layout-animations; legacy-image-formats; magnetometer; microphone; midi; navigation-override; oversized-images; payment; picture-in-picture; publickey-credentials; speaker-selection; sync-xhr; unoptimized-images; unsized-media; serial; usb; screen-wake-lock; web-share; xr-spatial-tracking; clipboard-read; clipboard-write" allowfullscreen="true" allowtransparency="true" allowpaymentrequest="true" allowpopups="true" src="./saved_resource.html"></iframe>
+    <script>
+      const iframe = document.getElementById('iframe');
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialPath = urlParams.get('initialPath') || '/';
+      const webviewId = urlParams.get('id') || null;
+
+      const WORKSPACE_ORIGINS = [
+        'https://replit.com',
+        'https://staging.replit.com',
+        'https://replit-staging.com',
+        'https://firewalledreplit.com',
+        'https://staging.firewalledreplit.com',
+        'http://localhost:3000',
+        'https://rp-humain.com',
+        'https://replit.corp.repl.it',
+      ];
+
+      
+
+      function postMessageToWorkspace(data) {
+        const dataWithPaneId = { ...data, id: webviewId };
+
+        for (const origin of WORKSPACE_ORIGINS) {
+          parent?.postMessage(dataWithPaneId, origin);
+        }
+      }
+
+      window.addEventListener('message', (event) => {
+        if (
+          typeof event.data !== 'object' ||
+          event.data === null ||
+          !('type' in event.data)
+        ) {
+          
+          return;
+        }
+
+        if (event.origin === window.location.origin) {
+          
+          postMessageToWorkspace(event.data);
+
+          return;
+        }
+
+        if (WORKSPACE_ORIGINS.indexOf(event.origin) === -1) {
+          return;
+        }
+
+        iframe.contentWindow.postMessage(event.data, window.location.origin);
+      });
+
+      function canAccessIframeWindow() {
+        try {
+          iframe.contentWindow.document.body;
+          return true;
+        } catch (err) {
+          return false;
+        }
+      }
+
+      
+      
+      
+      
+      async function checkThirdPartyCookie() {
+        let enabled = false;
+        if ('hasStorageAccess' in document) {
+          enabled = await document.hasStorageAccess();
+        }
+
+        if (!enabled) {
+          const testCookieName = '__replit_third_party_cookie_test__';
+          document.cookie = `${testCookieName}=1;`;
+          enabled = document.cookie.indexOf(testCookieName) !== -1;
+          
+          document.cookie = `${testCookieName}=1; max-age=0;`;
+        }
+        
+        postMessageToWorkspace({
+          type: 'third-party-cookie-check',
+          payload: {
+            enabled
+          }
+        });
+      }
+
+      function postLocation() {
+        if (!canAccessIframeWindow()) {
+          postMessageToWorkspace({
+            type: 'page-navigation',
+            payload: {
+              isExternal: true,
+            },
+          });
+
+          return;
+        }
+
+        postMessageToWorkspace({
+          type: 'page-navigation',
+          payload: {
+            isExternal: false,
+            relativeUrl:
+              iframe.contentWindow.location.pathname +
+              iframe.contentWindow.location.search +
+              iframe.contentWindow.location.hash,
+          },
+        });
+      }
+      function onIframeLoad() {
+        
+        
+        postLocation();
+        
+        
+        checkThirdPartyCookie();
+
+        if (canAccessIframeWindow()) {
+          let navigationStarted = false;
+          function postNavigationStart() {
+            if (navigationStarted) {
+              return;
+            }
+
+            navigationStarted = true;
+            postMessageToWorkspace({ type: 'page-navigation-start' });
+          }
+
+          iframe.contentWindow.addEventListener('pagehide', postNavigationStart);
+          iframe.contentWindow.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+              navigationStarted = false;
+              postLocation();
+            }
+          });
+
+          
+          const script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.src = 'https://replit.com/public/js/replit-bridge.js';
+          iframe.contentDocument.head.appendChild(script);
+          
+          
+          iframe.contentWindow.addEventListener('popstate', postLocation);
+          iframe.contentWindow.addEventListener('hashchange', postLocation);
+          iframe.contentWindow.addEventListener('__replit-history-event', postLocation);
+        }
+      }
+      iframe.addEventListener('load', onIframeLoad);
+      const resolvedUrl = new URL(initialPath, window.location.origin);
+      
+      
+      
+      
+      if (resolvedUrl.origin === window.location.origin) {
+        iframe.src = resolvedUrl.href;
+      } else {
+        iframe.src = new URL('/', window.location.origin).href;
+      }
+    </script>
+  
+
+</body></html>

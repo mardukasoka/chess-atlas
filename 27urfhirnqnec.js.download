@@ -1,0 +1,152 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="ee372633-19be-68f5-aed1-71d7948aa400")}catch(e){}}();
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,565282,e=>{"use strict";var t=e.i(276385),s=e.i(389959),i=e.i(138716),a=e.i(602686),r=e.i(549645),n=e.i(590563),o=e.i(644647),l=e.i(955410);e.i(214847);var d=e.i(800686),u=e.i(864300),c=e.i(89148),p=e.i(919073),g=e.i(643484),m=e.i(419635),y=e.i(488299),h=e.i(8047),b=e.i(61732);let f=(0,d.defineMessages)({title:{id:"billing.ubbInvoicePaymentFailedTitle",defaultMessage:"Payment failed"},titleSuspended:{id:"billing.ubbInvoicePaymentSuspendedTitle",defaultMessage:"Services suspended"},description:{id:"billing.ubbInvoicePaymentFailedDescription",defaultMessage:"We were unable to process your payment for your usage based billing invoice."},descriptionSuspended:{id:"billing.ubbInvoicePaymentSuspendedDescription",defaultMessage:"Your account has been suspended due to a failed payment. Pay your outstanding invoices to restore access."},consequencesHeading:{id:"billing.ubbInvoicePaymentFailedConsequencesHeading",defaultMessage:"What happens if this is not resolved"},consequencesHeadingSuspended:{id:"billing.ubbInvoicePaymentSuspendedConsequencesHeading",defaultMessage:"What this means"},consequenceAccountSuspended:{id:"billing.ubbInvoicePaymentFailedConsequenceAccountSuspended",defaultMessage:"Your account will be suspended"},consequenceAccountSuspendedActive:{id:"billing.ubbInvoicePaymentSuspendedConsequenceAccountSuspended",defaultMessage:"Your account is currently suspended"},consequenceAgent:{id:"billing.ubbInvoicePaymentFailedConsequenceAgent",defaultMessage:"No access to Replit Agent"},consequenceDeployments:{id:"billing.ubbInvoicePaymentFailedConsequenceDeployments",defaultMessage:"Active deployments will go offline"},consequenceDeploymentsActive:{id:"billing.ubbInvoicePaymentSuspendedConsequenceDeployments",defaultMessage:"Active deployments are offline and inaccessible"},consequenceDatabases:{id:"billing.ubbInvoicePaymentFailedConsequenceDatabases",defaultMessage:"Databases and storage will be paused"},consequenceDatabasesActive:{id:"billing.ubbInvoicePaymentSuspendedConsequenceDatabases",defaultMessage:"Databases and storage are paused"},consequenceImmediateSuspension:{id:"billing.ubbInvoicePaymentFailedConsequenceImmediateSuspension",defaultMessage:"Repeated payment failures increase the risk of suspension"},payInvoiceCta:{id:"billing.ubbInvoicePaymentFailedPayInvoice",defaultMessage:"Pay invoice"},dismiss:{id:"billing.dismiss",defaultMessage:"Dismiss"},updatePaymentMethodButton:{id:"billing.ubbInvoicePaymentFailedUpdatePaymentMethodButton",defaultMessage:"Update payment method"},updatePaymentMethodFormTitle:{id:"billing.ubbInvoicePaymentFailedUpdatePaymentMethodFormTitle",defaultMessage:"Update Payment Method"},backButtonAlt:{id:"billing.ubbInvoicePaymentFailedBackButtonAlt",defaultMessage:"Back"}});function v({onDone:e,onBack:s}){let a=(0,u.useIntl)();return(0,t.jsxs)(b.View,{gap:16,children:[(0,t.jsxs)(b.View,{row:!0,gap:8,align:"center",children:[(0,t.jsx)(y.IconButton,{alt:a.formatMessage(f.backButtonAlt),onClick:s,children:(0,t.jsx)(i.default,{})}),(0,t.jsx)(h.Text,{variant:"subheadDefault",multiline:!1,children:a.formatMessage(f.updatePaymentMethodFormTitle)})]}),(0,t.jsx)(n.NewPaymentMethodForm,{onClose:e,context:"suspension_grace_period"})]})}e.s(["PaymentMethodForm",0,v,"UBBSuspensionGracePeriod",0,function({onDone:e,customerId:i,variant:n="grace_period"}){let d=(0,u.useIntl)(),{trackClick:y}=(0,l.useTrackClick)(),[x,w]=(0,s.useState)(!1),S=(0,o.usePayInvoicesRedirect)(),C="suspended"===n,D=C?[d.formatMessage(f.consequenceAccountSuspendedActive),d.formatMessage(f.consequenceAgent),d.formatMessage(f.consequenceDeploymentsActive),d.formatMessage(f.consequenceDatabasesActive)]:[d.formatMessage(f.consequenceAccountSuspended),d.formatMessage(f.consequenceAgent),d.formatMessage(f.consequenceDeployments),d.formatMessage(f.consequenceDatabases),d.formatMessage(f.consequenceImmediateSuspension)],M=`/orb-customer-portal/customer/${i}`,A=C&&!S.shouldRedirect;return x?(0,t.jsx)(v,{onDone:e,onBack:()=>w(!1)}):(0,t.jsxs)(b.View,{p:16,gap:24,children:[(0,t.jsxs)(b.View,{gap:8,children:[(0,t.jsx)(h.Header,{variant:"headerDefault",level:1,children:d.formatMessage(C?f.titleSuspended:f.title)}),(0,t.jsx)(h.Text,{color:"dimmer",children:d.formatMessage(C?f.descriptionSuspended:f.description)})]}),(0,t.jsxs)(p.ShadesSurface,{elevate:"1x",border:"subtle",br:"container",p:16,gap:12,children:[(0,t.jsx)(h.Text,{color:"dimmer",children:d.formatMessage(C?f.consequencesHeadingSuspended:f.consequencesHeading)}),(0,t.jsx)(b.View,{gap:12,children:D.map(e=>(0,t.jsxs)(b.View,{row:!0,gap:12,align:"center",children:[(0,t.jsx)(b.View,{shrink:0,children:(0,t.jsx)(a.default,{size:16,color:c.tokens.accentNegativeStrongest})}),(0,t.jsx)(b.View,{grow:1,shrink:1,style:{minWidth:0},children:(0,t.jsx)(h.Text,{children:e})})]},e))})]}),(0,t.jsxs)(b.View,{row:!0,gap:8,children:[(0,t.jsx)(b.View,{grow:.45,shrink:1,basis:0,style:{minWidth:0},children:(0,t.jsx)(p.ShadesSurface,{colorShade:"themePopup",background:!1,children:(0,t.jsx)(g.Button,{stretch:!0,variant:"nofill",text:d.formatMessage(f.dismiss),onClick:e})})}),(0,t.jsx)(b.View,{grow:1,shrink:1,basis:0,style:{minWidth:0},children:S.shouldRedirect?(0,t.jsx)(g.Button,{colorway:"primary",stretch:!0,text:d.formatMessage(f.payInvoiceCta),onClick:()=>{y({productArea:"billing",target:"ubb_invoice_payment_failed_pay_invoice_button"}),S.openBillingTab(),e()}}):(0,t.jsx)(m.ButtonLink,{colorway:"primary",stretch:!0,href:M,text:d.formatMessage(f.payInvoiceCta),onClick:()=>{y({productArea:"billing",target:"ubb_invoice_payment_failed_pay_invoice_button"}),e()}})})]}),A?(0,t.jsx)(g.Button,{stretch:!0,variant:"nofill",iconLeft:(0,t.jsx)(r.default,{}),text:d.formatMessage(f.updatePaymentMethodButton),onClick:()=>w(!0)}):null]})}])},39358,e=>{"use strict";e.s(["extractCustomerAlerts",0,function(e){let t=e.usageInterval.spendingControls,s="CustomerSpendingControls"===t.__typename?t.alerts:void 0;return{customerId:e.id,alerts:s}}])},426899,e=>{"use strict";var t=e.i(351623),s=e.i(846545);let i={},a=t.gql`
+    subscription CreditDepletionRecovery {
+  usageBasedBillingCreditBalanceDepletedNotifications {
+    id
+    customer {
+      id
+    }
+  }
+}
+    `;e.s(["useCreditDepletionRecoverySubscription",0,function(e){let t={...i,...e};return s.useSubscription(a,t)}])},89579,e=>{"use strict";var t=e.i(426899);e.s(["useCreditDepletionRecovery",0,function({customerId:e,onMaybeRecovered:s}){(0,t.useCreditDepletionRecoverySubscription)({skip:null==e,onData:({data:{data:t}})=>{let i=t?.usageBasedBillingCreditBalanceDepletedNotifications;!i||i.some(t=>t.customer?.id===e)||Promise.resolve(s()).catch(()=>void 0)}})}])},123066,e=>{e.v({buttonContainer:"AgentInputUbbBanned-module__UbUGAG__buttonContainer",ubbBannedContainer:"AgentInputUbbBanned-module__UbUGAG__ubbBannedContainer"})},524134,e=>{"use strict";var t=e.i(276385),s=e.i(15801),i=e.i(389959),a=e.i(908796),r=e.i(549645),n=e.i(706323),o=e.i(496090),l=e.i(565282),d=e.i(815598),u=e.i(644647),c=e.i(662898),p=e.i(476601);e.i(214847);var g=e.i(800686),m=e.i(864300);e.i(174474);var y=e.i(327711),h=e.i(919073),b=e.i(643484),f=e.i(419635),v=e.i(528326),x=e.i(8047),w=e.i(61732),S=e.i(123066);let C=(0,g.defineMessages)({heading:{id:"billing.topUpCreditsExhaustedTitle",defaultMessage:"Agent is locked, add credits to continue"},description:{id:"billing.topUpCreditsExhaustedBody",defaultMessage:"You have used all your credits, so the agent is unavailable and your published projects are offline. Top up credits to keep using Agent."},cta:{id:"billing.topUpFreeModeBannerAddCredits",defaultMessage:"Add credits to continue"}}),D=(0,i.lazy)(()=>e.A(797097).then(e=>({default:e.CreditBalanceDepletedUBBModal})));e.s(["default",0,function({context:e}){let g,M=(0,m.useIntl)(),[A,P]=(0,i.useState)(!1),[q,j]=(0,i.useState)(!1),U=(0,i.useRef)(!1),R=(0,i.useRef)(!1),T=(0,s.useRouter)(),{notification:I}=(0,c.usePendingPayAsYouGoNotification)({context:"user"===e.type?{type:"user"}:{type:"org",orgId:e.orgId},skip:!e.isSuspended}),{onDismiss:k,onSuspend:B,onAcknowledge:_}=(0,c.useUbbCreditBalanceDepletedNotificationActions)(),{refetchBanStatus:V}=(0,d.useIsUBBBanned)({skip:"user"!==e.type||!e.isSuspended}),F=()=>{"user"===e.type&&(0,o.startPayAsYouGoRecoveryPoll)(()=>V())},O="true"===T.query[y.SETTINGS_SHOW_PARAM];(0,i.useEffect)(()=>{if(U.current){if(O){R.current=!0;return}R.current&&(R.current=!1,U.current=!1,"user"===e.type&&(0,o.startPayAsYouGoRecoveryPoll)(()=>V()))}},[e.type,V,O]);let E=M.formatMessage({id:"createRepl.ubbBannedViewAndPayInvoices",defaultMessage:"View and pay invoices"}),G=(0,u.usePayInvoicesRedirect)("org"===e.type?e.orgId:void 0),L="org"===e.type&&e.orgDealContext?.dealType!==a.OrgDealType.Trial&&e.orgDealContext?.dealType!==a.OrgDealType.EnterpriseTrial&&e?.canEditPaymentMethod||"user"===e.type,Q=G.shouldRedirect||G.isLoading,{headingText:N,subheadingText:z}=(0,p.getUbbSuspensionDescription)("org"===e.type?{type:"org",isAdmin:e.isAdmin,isSuspended:e.isSuspended,orgDealContext:e.orgDealContext,isRazorpay:Q}:{type:"user",isSuspended:e.isSuspended,isRazorpay:Q});if(I){let s=I.customer?.id;return(0,t.jsxs)(w.View,{gap:12,align:"center",clsx:S.default.ubbBannedContainer,children:[(0,t.jsx)(x.Text,{variant:"subheadDefault",children:M.formatMessage(C.heading)}),(0,t.jsx)(x.Text,{children:M.formatMessage(C.description)}),(0,t.jsx)(b.Button,{"data-analytics-id":"ubb_payg_recovery_options_button",colorway:"primary",text:M.formatMessage(C.cta),onClick:()=>j(!0)}),q&&null!=s?(0,t.jsx)(i.Suspense,{fallback:null,children:(0,t.jsx)(D,{notification:I,creditDepletedCustomerId:s,isPersonalCustomer:"user"===e.type,onDismissCreditBalanceDepletedNotifications:async e=>{await k(e),j(!1)},onSuspendCreditBalanceDepletedNotifications:async e=>{await B(e),j(!1)},onCloseCreditBalanceDepletedNotifications:async()=>{j(!1)},onAcknowledgeCreditBalanceDepletedNotifications:async e=>{await (0,o.notifyPayAsYouGoRecoveryComplete)(()=>_(e)),j(!1)},onCreditPackPurchaseSuccess:()=>{j(!1),F()}})}):null]})}let H=null,Y=null;return G.shouldRedirect?g=(0,t.jsx)(b.Button,{iconLeft:(0,t.jsx)(n.default,{}),text:E,colorway:"primary",onClick:()=>{U.current=!0,G.openBillingTab()}}):(g=(0,t.jsx)(f.ButtonLink,{iconLeft:(0,t.jsx)(n.default,{}),text:E,href:"org"===e.type?`/orb-customer-portal/org/${e.orgId}`:"/orb-customer-portal",target:"_blank",onClick:()=>{"user"===e.type&&(0,o.startUbbRecoveryPollOnFocus)(()=>V())}}),G.isLoading||(H=(0,t.jsx)(w.View,{gap:8,children:(0,t.jsx)(b.Button,{iconLeft:(0,t.jsx)(r.default,{}),text:M.formatMessage({id:"createRepl.ubbBannedUpdatePaymentMethod",defaultMessage:"Update payment method"}),colorway:"primary",onClick:()=>P(!0)})}),Y=(0,t.jsx)(v.Modal,{isOpen:A,onRequestClose:()=>P(!1),children:(0,t.jsx)(l.PaymentMethodForm,{onDone:()=>{P(!1),F()},onBack:async()=>P(!1)})}))),(0,t.jsxs)(h.ShadesSurface,{colorShade:"themePopup",elevate:"1x",border:"regular",br:12,p:12,gap:12,align:"center",clsx:S.default.ubbBannedContainer,children:[(0,t.jsx)(x.Text,{variant:"subheadDefault",children:N}),(0,t.jsx)(x.Text,{children:z}),L?(0,t.jsxs)(w.View,{row:!0,clsx:S.default.buttonContainer,gap:12,children:[(0,t.jsx)(w.View,{gap:8,children:g}),H]}):null,Y]})}])},143189,e=>{"use strict";var t=e.i(351623),s=e.i(344480);e.i(975473);let i={},a=t.gql`
+    query HomeTopUpCreditDepletion {
+  currentUser {
+    id
+    customer {
+      id
+      isSuspendedForCreditDepletion
+      authorizations {
+        startAutoTopUp {
+          isAuthorized
+        }
+      }
+      topUpState {
+        ... on CustomerTopUpState {
+          autoTopUpConfigStatus
+          topUpConfig {
+            triggerThresholdUsd
+            rechargeAmountUsd
+            monthlyCapCents
+          }
+        }
+      }
+    }
+  }
+}
+    `;e.s(["useHomeTopUpCreditDepletionQuery",0,function(e){let t={...i,...e};return s.useQuery(a,t)}])},469302,e=>{"use strict";var t=e.i(389959),s=e.i(143189),i=e.i(652207);e.s(["useHomeTopUpCreditDepletion",0,function(e={}){let{data:a,previousData:r,loading:n,error:o,refetch:l}=(0,s.useHomeTopUpCreditDepletionQuery)({fetchPolicy:e.fetchPolicy??"cache-and-network",notifyOnNetworkStatusChange:!0,ssr:!1,skip:e.skip}),d=(0,t.useCallback)(()=>{l()},[l]),u=(0,t.useCallback)(async()=>{try{let e=await l();return e.data?.currentUser?.customer?.isSuspendedForCreditDepletion??!0}catch{return!0}},[l]),c=(a??r)?.currentUser?.customer??null,p=c?.topUpState.__typename==="CustomerTopUpState"?c.topUpState:null;return{loading:n,isSuspendedForCreditDepletion:c?.isSuspendedForCreditDepletion??!1,customerId:c?.id??null,shouldOpenAutoReload:!n&&!o&&c?.authorizations.startAutoTopUp?.isAuthorized===!0&&p?.autoTopUpConfigStatus==="DISABLED",autoReloadConfig:(0,i.autoReloadConfigFromUsd)(p?.topUpConfig),refetch:d,refetchIsSuspended:u}}])},749236,e=>{"use strict";var t=e.i(351623),s=e.i(344480);e.i(975473);let i={},a=t.gql`
+    query CustomerSettings($orgId: String!) {
+  currentUser {
+    id
+    org(orgId: $orgId) {
+      ... on Org {
+        id
+        currentUserRole
+        customer {
+          ... on Customer {
+            id
+            subscriptionSummary {
+              __typename
+            }
+            settings {
+              requirePrivateDeployments
+              requirePrivateDevUrls
+              disablePasswordProtectedDeployments
+              adminOnlyPasswordProtectedDeploymentsBypass
+              banSourceCodeExport
+              banAttachmentUploads
+              adminOnlyPublicDeployments
+              higherPowerModelDisabled
+              modelfarmDisabled
+              openrouterDisabled
+              openaiDisabled
+              anthropicDisabled
+              geminiDisabled
+              scimViewerUpgradeLink
+              requireGitRemoteBeforeDeployment
+              adminOnlyGitRemoteBeforeDeploymentBypass
+              requirePrivateRemote
+              adminOnlyPrivateRemoteBypass
+              allowedGitProvider
+              allowedGitRemoteTarget
+              requireSecurityScanOnDeployment
+              adminOnlySecurityScanOnDeploymentBypass
+              disableImport
+              disableIntegrations
+              disableFrameworks
+              agentInboxPolicy
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;e.s(["useCustomerSettingsQuery",0,function(e){let t={...i,...e};return s.useQuery(a,t)}])},410458,e=>{"use strict";var t=e.i(908796),s=e.i(749236),i=e.i(151027);e.s(["default",0,function(e){let{orgRole:a}=(0,i.useCurrentUserStoredOrgContext)(),{data:r,loading:n,error:o}=(0,s.useCustomerSettingsQuery)({skip:!e,variables:{orgId:e}});if(n||o)return{loading:n,error:o,customerSettingsResolved:!1,requirePrivateDeployments:void 0,requirePrivateDevUrls:void 0,adminOnlyPublicDeployments:void 0,disablePasswordProtectedDeployments:void 0,adminOnlyPasswordProtectedDeploymentsBypass:void 0,banAttachmentUploads:void 0,requireGitRemoteBeforeDeployment:void 0,adminOnlyGitRemoteBeforeDeploymentBypass:void 0,requirePrivateRemote:void 0,adminOnlyPrivateRemoteBypass:void 0,allowedGitProvider:void 0,allowedGitRemoteTarget:void 0,requireSecurityScanOnDeployment:void 0,adminOnlySecurityScanOnDeploymentBypass:void 0,queriedOrgIsAdmin:void 0,disableImport:void 0,disableIntegrations:void 0,disableFrameworks:void 0,agentInboxPolicy:void 0,higherPowerModelDisabled:void 0,modelfarmDisabled:void 0,openrouterDisabled:void 0,openaiDisabled:void 0,anthropicDisabled:void 0,geminiDisabled:void 0,scimViewerUpgradeLink:""};let l=r?.currentUser?.org,d=l?.__typename==="Org"?l.customer:void 0,u=d?.__typename==="Customer"?d.settings:void 0,c=d?.__typename==="Customer"&&d.subscriptionSummary?.__typename==="CustomerSubscriptionSummarySalesContract",p=u?.requirePrivateDeployments??!1,g=u?.requirePrivateDevUrls??!1,m=u?.disablePasswordProtectedDeployments??!1,y=u?.adminOnlyPasswordProtectedDeploymentsBypass??!1,h=u?.banSourceCodeExport??!1,b=u?.banAttachmentUploads??!1,f=u?.adminOnlyPublicDeployments??!1,v=u?.higherPowerModelDisabled??!1,x=u?.modelfarmDisabled??null,w=!1;w=null!=x?x:!!c;let S=u?.openrouterDisabled??!1,C=u?.openaiDisabled??!1,D=u?.anthropicDisabled??!1,M=u?.geminiDisabled??!1,A=u?.scimViewerUpgradeLink??null,P=u?.requireGitRemoteBeforeDeployment??!1,q=u?.adminOnlyGitRemoteBeforeDeploymentBypass??!1,j=u?.requirePrivateRemote??!1,U=u?.adminOnlyPrivateRemoteBypass??!1,R=u?.allowedGitProvider??null,T=u?.allowedGitRemoteTarget??null,I=u?.requireSecurityScanOnDeployment??!1,k=u?.adminOnlySecurityScanOnDeploymentBypass??!1,B=l?.__typename==="Org"&&l.currentUserRole===t.SystemOrgGroupType.SystemAdmins,_=u?.disableImport??!1,V=u?.disableIntegrations??!1,F=u?.disableFrameworks??!1,O=u?.agentInboxPolicy??null;return{loading:n,error:o,customerSettingsResolved:void 0!==u,requirePrivateDeployments:p,requirePrivateDevUrls:g,disablePasswordProtectedDeployments:m,adminOnlyPasswordProtectedDeploymentsBypass:y,banSourceCodeExport:h,banAttachmentUploads:b,adminOnlyPublicDeployments:f,higherPowerModelDisabled:v,modelfarmDisabled:w,openrouterDisabled:S,openaiDisabled:C,anthropicDisabled:D,geminiDisabled:M,isAdmin:a&&a===t.SystemOrgGroupType.SystemAdmins,scimViewerUpgradeLink:A,requireGitRemoteBeforeDeployment:P,adminOnlyGitRemoteBeforeDeploymentBypass:q,requirePrivateRemote:j,adminOnlyPrivateRemoteBypass:U,allowedGitProvider:R,allowedGitRemoteTarget:T,requireSecurityScanOnDeployment:I,adminOnlySecurityScanOnDeploymentBypass:k,queriedOrgIsAdmin:B,disableImport:_,disableIntegrations:V,disableFrameworks:F,agentInboxPolicy:O}}])},940584,e=>{"use strict";var t=e.i(351623),s=e.i(344480);e.i(975473);var i=e.i(299020);let a={},r=t.gql`
+    query BudgetIncreaseRequestPreflight($orgId: String!) {
+  approvalRequestPreflight(
+    checks: [{clientKey: "user", approvalType: "user_budget_increase", target: {targetType: ORG, orgId: $orgId}, data: {}}, {clientKey: "org", approvalType: "org_budget_increase", target: {targetType: ORG, orgId: $orgId}, data: {}}]
+  ) {
+    __typename
+    ... on ApprovalRequestPreflight {
+      results {
+        approvalType
+        isAuthorized
+        pendingRequest {
+          id
+          approvalType
+          status
+          reason
+          timeCreated
+        }
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    `,n=t.gql`
+    mutation CreateBudgetIncreaseApprovalRequest($input: CreateApprovalRequestInput!) {
+  createApprovalRequest(input: $input) {
+    __typename
+    ... on ApprovalRequestSummary {
+      id
+      approvalType
+      status
+      reason
+      timeCreated
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    `;e.s(["useBudgetIncreaseRequestPreflightQuery",0,function(e){let t={...a,...e};return s.useQuery(r,t)},"useCreateBudgetIncreaseApprovalRequestMutation",0,function(e){let t={...a,...e};return i.useMutation(n,t)}])},381838,e=>{e.v({buttonWrapper:"OrgAlertThresholdExceededMessage-module__9_NTnG__buttonWrapper"})},234089,e=>{"use strict";var t=e.i(276385),s=e.i(15801),i=e.i(389959),a=e.i(330666),r=e.i(940584),n=e.i(76112);e.i(214847);var o=e.i(864300),l=e.i(753451),d=e.i(776065),u=e.i(174474),c=e.i(448942),p=e.i(919073),g=e.i(643484),m=e.i(480890),y=e.i(528710),h=e.i(33583),b=e.i(8047),f=e.i(61732),v=e.i(381838);function x({title:e,type:s,onViewUsage:i}){return(0,t.jsxs)(f.View,{gap:8,align:"center",children:[(0,t.jsx)(b.Text,{variant:"subheadDefault",textAlign:"center",children:e}),(0,t.jsx)(S,{type:s,legacy:!0}),(0,t.jsx)(f.View,{clsx:v.default.buttonWrapper,children:(0,t.jsx)(w,{onClick:i})})]})}function w({onClick:e}){let s=(0,o.useIntl)();return(0,t.jsx)(g.Button,{iconLeft:(0,t.jsx)(n.default,{}),text:s.formatMessage({id:"workspace.orgAlertThresholdExceededViewUsage",defaultMessage:"View usage"}),onClick:e,stretch:!0})}function S({type:e,canRequestIncrease:s=!1,legacy:i=!1}){let a=(0,o.useIntl)();return(0,t.jsx)(b.Text,{color:"dimmer",textAlign:i?"center":void 0,children:a.formatMessage(s?{id:"workspace.orgAlertThresholdExceededRequestAvailableMessage",defaultMessage:"Your usage has reached the threshold set by your admin."}:{id:"workspace.orgAlertThresholdExceededMessage",defaultMessage:"Your {scope, select, user {usage} other {workspace}} has reached the threshold set by your admin. Request a budget increase from your admin to continue building."},{scope:e})})}function C({title:e,orgId:s,onViewUsage:n}){let l=(0,o.useIntl)(),d=(0,i.useId)(),[u,c]=(0,i.useState)({type:"action"}),v=(0,i.useRef)(!1),M=(0,i.useRef)(!1),A=(0,i.useCallback)(e=>e?.focus(),[]),P=(0,i.useCallback)(e=>{e&&v.current&&(v.current=!1,e.focus())},[]),{data:q}=(0,r.useBudgetIncreaseRequestPreflightQuery)({variables:{orgId:s},fetchPolicy:"network-only",ssr:!1}),[j,{loading:U}]=(0,r.useCreateBudgetIncreaseApprovalRequestMutation)(),R=q?.approvalRequestPreflight.__typename==="ApprovalRequestPreflight"?q.approvalRequestPreflight.results:[],T=R.find(e=>e.isAuthorized),I=R.find(e=>e.pendingRequest),k=I?.pendingRequest,B=(0,t.jsx)(a.VisuallyHidden,{children:(0,t.jsx)("span",{role:"status","aria-live":"polite","aria-atomic":"true",children:"submitted"===u.type?l.formatMessage({id:"workspace.orgAlertThresholdExceededRequestSent",defaultMessage:"Request sent"}):null})}),_=async()=>{if("form"!==u.type||U||M.current||!T)return;let e=u.reason.trim();if(e){M.current=!0,c({...u,hasSubmitError:!1});try{let{data:t}=await j({variables:{input:{approvalType:T.approvalType,target:{targetType:"ORG",orgId:s},data:{},reason:e}}}),i=t?.createApprovalRequest;i?.__typename==="ApprovalRequestSummary"?c({type:"submitted",request:i}):c(e=>"form"===e.type?{...e,hasSubmitError:!0}:e)}catch{c(e=>"form"===e.type?{...e,hasSubmitError:!0}:e)}finally{M.current=!1}}};return"submitted"===u.type?(0,t.jsxs)(t.Fragment,{children:[B,(0,t.jsx)(D,{title:e,request:u.request,onViewUsage:n})]}):T?"action"===u.type?(0,t.jsxs)(t.Fragment,{children:[B,(0,t.jsxs)(f.View,{gap:8,width:"100%",children:[(0,t.jsx)(b.Text,{variant:"subheadDefault",children:e}),(0,t.jsx)(S,{type:"user",canRequestIncrease:!0}),(0,t.jsxs)(f.View,{row:!0,wrap:!0,gap:8,width:"100%",children:[(0,t.jsx)(f.View,{grow:!0,basis:160,children:(0,t.jsx)(w,{onClick:n})}),(0,t.jsx)(f.View,{grow:!0,basis:160,children:(0,t.jsx)(g.Button,{ref:P,text:l.formatMessage({id:"workspace.orgAlertThresholdExceededRequestIncrease",defaultMessage:"Request increase"}),colorway:"primary",onClick:()=>c({type:"form",reason:"",hasSubmitError:!1}),stretch:!0})})]})]})]}):(0,t.jsxs)(t.Fragment,{children:[B,(0,t.jsxs)(f.View,{gap:8,width:"100%",children:[(0,t.jsx)(b.Text,{variant:"subheadDefault",children:e}),(0,t.jsx)(S,{type:"user",canRequestIncrease:!0}),(0,t.jsxs)(p.ShadesSurface,{colorShade:"themeDefault",elevate:!1,p:12,gap:8,br:8,width:"100%",children:[(0,t.jsx)(b.Text,{variant:"subheadDefault",children:l.formatMessage({id:"workspace.orgAlertThresholdExceededRequestIncrease",defaultMessage:"Request increase"})}),(0,t.jsx)(b.Text,{color:"dimmer",children:l.formatMessage({id:"workspace.orgAlertThresholdExceededRequestIncreaseDescription",defaultMessage:"Send a request for a budget increase to your admin. You'll get an email as soon as it's approved."})}),(0,t.jsxs)(f.View,{gap:4,children:[(0,t.jsx)(h.Label,{htmlFor:d,children:l.formatMessage({id:"workspace.orgAlertThresholdExceededReasonLabel",defaultMessage:"Add a reason"})}),(0,t.jsx)(y.MultiLineInput,{ref:A,id:d,value:u.reason,onChange:e=>c({type:"form",reason:e.target.value,hasSubmitError:!1}),rows:2,maxLength:2e3})]}),u.hasSubmitError?(0,t.jsx)("div",{role:"alert",children:(0,t.jsx)(m.FieldErrorText,{children:l.formatMessage({id:"workspace.orgAlertThresholdExceededSendRequestError",defaultMessage:"Couldn't send your request. Try again."})})}):null,(0,t.jsxs)(f.View,{row:!0,wrap:!0,gap:8,width:"100%",children:[(0,t.jsx)(f.View,{grow:!0,basis:160,children:(0,t.jsx)(g.Button,{text:l.formatMessage({id:"workspace.orgAlertThresholdExceededCancel",defaultMessage:"Cancel"}),onClick:()=>{v.current=!0,c({type:"action"})},disabled:U,stretch:!0})}),(0,t.jsx)(f.View,{grow:!0,basis:160,children:(0,t.jsx)(g.Button,{text:l.formatMessage({id:"workspace.orgAlertThresholdExceededSendRequest",defaultMessage:"Send request"}),colorway:"primary",loading:U,disabled:!u.reason.trim(),onClick:()=>void _(),stretch:!0})})]})]})]})]}):k?(0,t.jsx)(D,{title:e,request:k,onViewUsage:n}):(0,t.jsx)(x,{title:e,type:"user",onViewUsage:n})}function D({title:e,request:s,onViewUsage:i}){let a=(0,o.useIntl)();return(0,t.jsxs)(f.View,{gap:8,width:"100%",children:[(0,t.jsx)(b.Text,{variant:"subheadDefault",children:e}),(0,t.jsx)(S,{type:"user",canRequestIncrease:!0}),(0,t.jsxs)(p.ShadesSurface,{colorShade:"themeNotice",elevate:!1,p:12,gap:8,br:8,width:"100%",children:[(0,t.jsx)(b.Text,{variant:"subheadDefault",children:a.formatMessage({id:"workspace.orgAlertThresholdExceededRequestSent",defaultMessage:"Request sent"})}),(0,t.jsx)(b.Text,{color:"dimmer",children:a.formatMessage({id:"workspace.orgAlertThresholdExceededRequestPendingDescription",defaultMessage:"A request is waiting for an admin to review. The requester will get an email when it's approved."})}),(0,t.jsxs)(f.View,{gap:4,children:[(0,t.jsx)(b.Text,{variant:"small",color:"dimmer",children:a.formatMessage({id:"workspace.orgAlertThresholdExceededSubmittedReasonLabel",defaultMessage:"Reason"})}),(0,t.jsx)(b.Text,{preserveNewlines:!0,children:s.reason})]})]}),(0,t.jsx)(f.View,{width:"100%",children:(0,t.jsx)(w,{onClick:i})})]})}e.s(["OrgAlertThresholdExceededMessage",0,function({type:e,orgId:a,orgSlug:r}){let n=(0,o.useIntl)(),p=(0,s.useRouter)(),g=(0,l.useIsInMobileWorkspace)(),m="user"===e?n.formatMessage({id:"workspace.orgAlertThresholdExceededTitleUser",defaultMessage:"You have reached your usage threshold"}):n.formatMessage({id:"workspace.orgAlertThresholdExceededTitleGroup",defaultMessage:"Your workspace has reached its usage threshold"}),y=(0,i.useCallback)(()=>{if(g){let e=r?(0,c.orgLinks)({slug:r}).usage.href.toString():"/usage";window.open(e,"_blank");return}(0,d.updatePathWithQueryParams)({router:p,params:[...(0,u.settingsQueryParams)("workspaceUsage"),...r?[{mode:"add",key:"orgSlug",value:r}]:[]]})},[g,r,p]);return"user"===e&&a?(0,t.jsx)(C,{title:m,orgId:a,onViewUsage:y},a):(0,t.jsx)(x,{title:m,type:e,onViewUsage:y})}])},627957,e=>{"use strict";var t=e.i(351623),s=e.i(344480),i=e.i(975473);let a={},r=t.gql`
+    query GetAgentFreeUsageV2($incremental: Boolean) {
+  currentUser {
+    id
+    aiFreeUsageLimits {
+      ... on UserAiFreeUsageLimitResult {
+        agentUsageV2(incremental: $incremental) {
+          ... on FreemiumAiUsageLimitsV2 {
+            dailyUsage
+            dailyLimit
+            monthlyUsage
+            monthlyLimit
+            isUnderQuota
+            isUnderDailyQuota
+            isUnderMonthlyQuota
+            nextCreditsAt
+          }
+          ... on UnauthorizedError {
+            message
+          }
+        }
+      }
+    }
+  }
+}
+    `;e.s(["useGetAgentFreeUsageV2LazyQuery",0,function(e){let t={...a,...e};return i.useLazyQuery(r,t)},"useGetAgentFreeUsageV2Query",0,function(e){let t={...a,...e};return s.useQuery(r,t)}])},934440,e=>{"use strict";var t=e.i(627957),s=e.i(978139);function i(e){let t=e?.currentUser?.aiFreeUsageLimits.__typename==="UserAiFreeUsageLimitResult"?e.currentUser.aiFreeUsageLimits:null,i=t?.agentUsageV2??null;if(i?.__typename!=="FreemiumAiUsageLimitsV2")return null;let{dailyUsage:a,dailyLimit:r,monthlyUsage:n,monthlyLimit:o,...l}=i,{usage:d,limit:u}=(0,s.resolveFreemiumV2Usage)({dailyUsage:a,dailyLimit:r,monthlyUsage:n,monthlyLimit:o});return{...l,usage:d,limit:u}}e.s(["useGetAgentFreeUsage",0,function({skip:e}={}){let{data:s,loading:a,error:r,refetch:n}=(0,t.useGetAgentFreeUsageV2Query)({skip:e});return{loading:a,error:r,agentUsageV2:i(s),refetch:n}},"useGetFreshAgentFreeUsageV2",0,function({skip:e}){let{data:s,loading:a,error:r}=(0,t.useGetAgentFreeUsageV2Query)({skip:e,fetchPolicy:"network-only",ssr:!1});return{agentUsageV2:i(s),loading:a,error:r}}])},978139,e=>{"use strict";e.s(["resolveFreemiumV2Usage",0,function(e){let t=e.monthlyLimit-e.monthlyUsage,s=Math.min(e.dailyLimit,e.dailyUsage+t);return t<=0?{usage:1,limit:1}:{usage:e.dailyUsage,limit:s}},"resolveMostConstrainedFreemiumV2Usage",0,function({dailyUsage:e,dailyLimit:t,monthlyUsage:s,monthlyLimit:i}){let a=(t>0?e/t:1)>=(i>0?s/i:1)?{usage:e,limit:t}:{usage:s,limit:i};return a.limit>0?a:{usage:1,limit:1}}])}]);
+
+//# debugId=ee372633-19be-68f5-aed1-71d7948aa400
+//# sourceMappingURL=2kuno15-6pgd8.js.map

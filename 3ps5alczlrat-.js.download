@@ -1,0 +1,200 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="b048cb7e-573b-88b4-258b-c25e0ccdda48")}catch(e){}}();
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,856654,e=>{"use strict";var t=e.i(351623),s=e.i(344480);e.i(975473);var a=e.i(299020);let r={},i=t.gql`
+    fragment SharedSecret on SharedSecret {
+  id
+  name
+  description
+  version
+  value
+  timeCreated
+  timeUpdated
+  links {
+    items {
+      id
+      resource {
+        __typename
+        ... on Repl {
+          id
+          url
+          title
+          iconUrl
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      nextCursor
+      previousCursor
+    }
+    totalCount
+  }
+  owner {
+    __typename
+    ... on User {
+      id
+    }
+  }
+}
+    `,l=t.gql`
+    query AccountSecrets($secretsInput: SecretsInput) {
+  currentUser {
+    id
+    secrets(input: $secretsInput) {
+      ... on SharedSecretConnection {
+        items {
+          ...SharedSecret
+        }
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          nextCursor
+          previousCursor
+        }
+      }
+    }
+  }
+}
+    ${i}`,n=t.gql`
+    mutation CreateSharedSecrets($input: CreateSharedSecretsInput!) {
+  createSharedSecrets(input: $input) {
+    __typename
+    ... on CreateSharedSecretsResult {
+      createdSecrets {
+        ...SharedSecret
+      }
+    }
+    ... on UnauthorizedError {
+      message
+    }
+    ... on UserError {
+      message
+    }
+  }
+}
+    ${i}`,o=t.gql`
+    mutation UpdateSharedSecrets($input: UpdateSharedSecretsInput!) {
+  updateSharedSecrets(input: $input) {
+    __typename
+    ... on UpdateSharedSecretsResult {
+      updatedSecrets {
+        ...SharedSecret
+      }
+    }
+    ... on NotFoundError {
+      message
+    }
+    ... on UnauthorizedError {
+      message
+    }
+    ... on UserError {
+      message
+    }
+  }
+}
+    ${i}`,c=t.gql`
+    mutation DeleteSharedSecret($id: ID!) {
+  deleteSharedSecret(id: $id) {
+    __typename
+    ... on DeleteSharedSecretResult {
+      __typename
+    }
+    ... on NotFoundError {
+      message
+    }
+    ... on UnauthorizedError {
+      message
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    `;e.s(["SharedSecretFragmentDoc",0,i,"useAccountSecretsQuery",0,function(e){let t={...r,...e};return s.useQuery(l,t)},"useCreateSharedSecretsMutation",0,function(e){let t={...r,...e};return a.useMutation(n,t)},"useDeleteSharedSecretMutation",0,function(e){let t={...r,...e};return a.useMutation(c,t)},"useUpdateSharedSecretsMutation",0,function(e){let t={...r,...e};return a.useMutation(o,t)}])},630643,e=>{e.v({clickableText:"AccountSecrets-module__qK9kRa__clickableText",deleteModalRoot:"AccountSecrets-module__qK9kRa__deleteModalRoot",disclaimer:"AccountSecrets-module__qK9kRa__disclaimer",editorRoot:"AccountSecrets-module__qK9kRa__editorRoot",emptyState:"AccountSecrets-module__qK9kRa__emptyState",footer:"AccountSecrets-module__qK9kRa__footer",footerGroup:"AccountSecrets-module__qK9kRa__footerGroup",formField:"AccountSecrets-module__qK9kRa__formField",formFieldLabel:"AccountSecrets-module__qK9kRa__formFieldLabel",formFields:"AccountSecrets-module__qK9kRa__formFields",replList:"AccountSecrets-module__qK9kRa__replList",replListDisclaimer:"AccountSecrets-module__qK9kRa__replListDisclaimer",replListRoot:"AccountSecrets-module__qK9kRa__replListRoot",secretEditContainer:"AccountSecrets-module__qK9kRa__secretEditContainer",secretItem:"AccountSecrets-module__qK9kRa__secretItem",secretList:"AccountSecrets-module__qK9kRa__secretList",secretName:"AccountSecrets-module__qK9kRa__secretName",secretTimestamp:"AccountSecrets-module__qK9kRa__secretTimestamp",secretValue:"AccountSecrets-module__qK9kRa__secretValue",secretValueText:"AccountSecrets-module__qK9kRa__secretValueText",secretValueWrapper:"AccountSecrets-module__qK9kRa__secretValueWrapper",section:"AccountSecrets-module__qK9kRa__section",titleWrapper:"AccountSecrets-module__qK9kRa__titleWrapper"})},558725,e=>{"use strict";var t=e.i(276385),s=e.i(36454),a=e.i(389959),r=e.i(830675),i=e.i(912206),l=e.i(856654),n=e.i(908796),o=e.i(534141),c=e.i(712771),d=e.i(979530),u=e.i(995691),m=e.i(40916),h=e.i(491194),S=e.i(709485),f=e.i(570438),p=e.i(320216);e.i(214847);var g=e.i(614852),y=e.i(20397),x=e.i(864300),_=e.i(415541),j=e.i(836176),M=e.i(89148),k=e.i(919073),K=e.i(643484),v=e.i(142406),b=e.i(580519),C=e.i(480890),w=e.i(190545),E=e.i(488299),T=e.i(528710),U=e.i(33583),A=e.i(528326),R=e.i(773222),V=e.i(8047),I=e.i(845415),D=e.i(61732),L=e.i(365757),F=e.i(630643);let P=({name:e,links:s,isOpen:r,onClose:i,onDelete:l,isLoading:n})=>{let o=(0,x.useIntl)(),[c,d]=(0,a.useState)(!1);return(0,t.jsx)(A.Modal,{isOpen:r,onRequestClose:()=>i(),clsx:F.default.deleteModalRoot,children:(0,t.jsx)(v.default,{prompt:o.formatMessage({id:"account.accountSecretsDeletePrompt",defaultMessage:"Delete {name}?"},{name:e}),desc:(0,t.jsxs)(t.Fragment,{children:[s&&s.totalCount>0?(0,t.jsxs)(R.PopoverTrigger,{label:"affected-repls",isOpen:c,onOpenChange:d,children:[(0,t.jsx)("div",{children:(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsDeleteLoseAccess",defaultMessage:"{count, plural, one {# Repl} other {# Repls}} will immediately lose access to this secret",values:{count:s.totalCount}})}),(0,t.jsx)(H,{links:s})]}):(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsDeleteNoApps",defaultMessage:"No Apps are currently using this secret"}),(0,t.jsx)("br",{}),(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsDeleteIrreversible",defaultMessage:"This action cannot be undone."})]}),onConfirm:l,onCancel:i,confirmText:o.formatMessage({id:"account.accountSecretsDeleteConfirm",defaultMessage:"Yes, delete this secret"}),icon:(0,t.jsx)(h.default,{}),danger:!0,loading:n})})},q=({value:e})=>{let s=(0,x.useIntl)(),[r,i]=(0,a.useState)(!1);return(0,t.jsxs)(D.View,{clsx:F.default.secretValue,row:!0,align:"center","data-sensitive":!r,children:[(0,t.jsx)(b.CopyIconButton,{textToCopy:e}),(0,t.jsx)(D.View,{clsx:F.default.secretValueWrapper,children:(0,t.jsx)("span",{clsx:F.default.secretValueText,children:r?e:"****************"})}),(0,t.jsx)(E.IconButton,{onClick:()=>i(!r),alt:r?s.formatMessage({id:"account.accountSecretsHide",defaultMessage:"Hide"}):s.formatMessage({id:"account.accountSecretsShow",defaultMessage:"Show"}),children:r?(0,t.jsx)(d.default,{size:16}):(0,t.jsx)(c.default,{size:16})})]})},H=({links:e})=>(0,t.jsxs)(D.View,{clsx:F.default.replListRoot,children:[(0,t.jsx)(V.Text,{children:(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsAffectedAppsHeading",defaultMessage:"The following Apps will be affected:"})}),(0,t.jsx)("ul",{clsx:F.default.replList,children:e.items.map(e=>"Repl"===e.resource.__typename?(0,t.jsxs)("li",{children:[(0,t.jsx)(L.default,{size:16,iconUrl:e.resource.iconUrl,alt:e.resource.title}),(0,t.jsx)(s.default,{href:e.resource.url,target:"_blank",children:e.resource.title},e.id)]},e.id):null)}),(0,t.jsx)(V.Text,{color:"dimmer",children:(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsRefreshHint",defaultMessage:"Please refresh the App page, then Stop and Run the App<br></br> to use the updated linked secrets.",values:{br:()=>(0,t.jsx)("br",{})}})})]}),B=({name:e,value:s,onSave:i,onCancel:l,onDelete:n,isNew:o,secrets:u})=>{let m=(0,x.useIntl)(),S=(0,a.useMemo)(()=>u.find(t=>t.name===e),[u,e]),f=S?.links,g=(0,p.default)(),[_,M]=(0,a.useState)(e),[k,v]=(0,a.useState)(s),[b,A]=(0,a.useState)(!0),[V,L]=(0,a.useState)(!1),[q,B]=(0,a.useState)(!1),[$,O]=(0,a.useState)(!1),z=(0,a.useMemo)(()=>null!==_.match(j.POSIX_ENV_VAR_PATTERN),[_]),N=(0,a.useMemo)(()=>!u.some(t=>t.name===_&&t.name!==e),[e,_,u]),[W,Y]=(0,a.useState)(!1),[G,Q]=(0,a.useState)(null);(0,a.useEffect)(()=>{N?!z&&_?Q((0,j.posixEnvVarError)(m)):Q(null):Q(m.formatMessage({id:"account.accountSecretsKeyMustBeUnique",defaultMessage:"Key must be unique"}))},[N,z,_,m]);let Z=(0,a.useCallback)(async()=>{O(!0);try{await n()}catch(e){r.captureException(e),g.showError(m.formatMessage({id:"account.accountSecretsGenericError",defaultMessage:"Something went wrong. Please try again."}))}O(!1)},[n,g,m]),J=(0,a.useCallback)(async()=>{if(N&&z){L(!0);try{await i({name:_,value:k})}catch(e){Q(e.message)}L(!1)}},[N,z,_,k,i]);return(0,t.jsxs)(w.Form,{clsx:F.default.editorRoot,onSubmit:e=>{e.preventDefault(),J()},children:[(0,t.jsxs)(D.View,{clsx:F.default.formFields,children:[(0,t.jsx)(D.View,{clsx:F.default.formField,children:(0,t.jsxs)(I.TextField,{validate:()=>N?!z&&_?(0,j.posixEnvVarError)(m):void 0:m.formatMessage({id:"account.accountSecretsKeyMustBeUnique",defaultMessage:"Key must be unique"}),validationBehavior:"aria",isRequired:!0,minLength:1,maxLength:j.SECRET_KEY_MAX_LENGTH,name:"secretName",value:_,onChange:e=>M(e),isInvalid:null!==G,children:[(0,t.jsx)(U.Label,{color:"dimmer",multiline:!1,clsx:F.default.formFieldLabel,children:(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsKeyLabel",defaultMessage:"Key"})}),(0,t.jsx)(T.Input,{autoFocus:!0,autoComplete:"off","data-1p-ignore":!0}),(0,t.jsx)(C.FieldError,{children:G})]})}),(0,t.jsx)(D.View,{clsx:F.default.formField,children:(0,t.jsxs)(I.TextField,{isRequired:!0,minLength:1,name:"secretValue",value:k,onChange:e=>v(e),children:[(0,t.jsxs)(U.Label,{color:"dimmer",multiline:!1,clsx:F.default.formFieldLabel,children:[(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsValueLabel",defaultMessage:"Value"})," ",(0,t.jsx)(E.IconButton,{alt:b?m.formatMessage({id:"account.accountSecretsHide",defaultMessage:"Hide"}):m.formatMessage({id:"account.accountSecretsShow",defaultMessage:"Show"}),size:12,onClick:()=>A(!b),children:b?(0,t.jsx)(d.default,{}):(0,t.jsx)(c.default,{})})]}),(0,t.jsx)(T.Input,{"data-sensitive":b,autoComplete:"off"})]})})]}),(0,t.jsx)(D.View,{clsx:F.default.disclaimer,children:(0,t.jsx)(t.Fragment,{children:f&&f.totalCount>0?(0,t.jsxs)(D.View,{clsx:F.default.replListDisclaimer,row:!0,align:"center",children:[(0,t.jsxs)(R.PopoverTrigger,{label:"affected-repls",isOpen:W,onOpenChange:Y,placement:"bottom start",children:[(0,t.jsxs)("span",{clsx:F.default.clickableText,children:[(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsAffectedReplCount",defaultMessage:"{count, plural, one {# Repl} other {# Repls}}",values:{count:f.totalCount}})," "]}),(0,t.jsx)(H,{links:f})]}),(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsAffectedByChange",defaultMessage:"will be affected by this change."})]}):null})}),(0,t.jsxs)(D.View,{clsx:F.default.footer,children:[o?(0,t.jsx)("div",{}):(0,t.jsx)(K.Button,{text:m.formatMessage({id:"account.accountSecretsDelete",defaultMessage:"Delete"}),colorway:"negative",onClick:()=>B(!0),iconLeft:(0,t.jsx)(h.default,{})}),(0,t.jsxs)(D.View,{clsx:F.default.footerGroup,children:[(0,t.jsx)(K.Button,{text:m.formatMessage({id:"account.accountSecretsCancel",defaultMessage:"Cancel"}),onClick:l,disabled:V}),(0,t.jsx)(K.Button,{text:m.formatMessage({id:"account.accountSecretsSave",defaultMessage:"Save"}),colorway:"primary",loading:V,disabled:!N||!z||!_.length,onClick:J,type:"submit"})]})]}),(0,t.jsx)(P,{name:e,links:f,isOpen:q,onClose:()=>B(!1),onDelete:Z,isLoading:$})]})},$=({id:e,name:s,value:i,timeUpdated:c,onRemoveSecret:d,secrets:u,version:m})=>{let h=(0,x.useIntl)(),j="0"===m,[M,k]=(0,a.useState)(j),K=(0,a.useRef)(null),v=(0,a.useCallback)(()=>{setTimeout(()=>K.current?.focus(),0)},[]),[b]=(()=>{let e=(0,x.useIntl)(),t=(0,f.useCurrentUserId)(),{showError:s}=(0,p.default)(),[a,i]=(0,l.useCreateSharedSecretsMutation)({update(e,{data:a}){if(a?.createSharedSecrets?.__typename==="CreateSharedSecretsResult"){let s=a.createSharedSecrets.createdSecrets;e.modify({id:e.identify({__typename:"CurrentUser",id:t}),fields:{secrets(t={items:[]}){let a=s.map(t=>e.writeFragment({data:t,fragment:l.SharedSecretFragmentDoc}));return{...t,items:[...a,...t.items]}}}})}else a?.createSharedSecrets&&s(a.createSharedSecrets.message)},onError:t=>{s(e.formatMessage({id:"account.accountSecretsCreateFailed",defaultMessage:"Failed to create secret. Please try again."})),r.captureException(t)}});return[a,i]})(),[C]=(()=>{let e=(0,x.useIntl)(),t=(0,f.useCurrentUserId)(),{showError:s}=(0,p.default)(),[a,i]=(0,l.useUpdateSharedSecretsMutation)({update(e,{data:a}){if(a?.updateSharedSecrets?.__typename==="UpdateSharedSecretsResult"){let s=a.updateSharedSecrets.updatedSecrets;e.modify({id:e.identify({__typename:"CurrentUser",id:t}),fields:{secrets(t={items:[]}){let a=t.items.map(t=>{let a=s.find(e=>e.id===t.id);return a?e.writeFragment({data:a,fragment:l.SharedSecretFragmentDoc}):t});return{...t,items:a}}}})}else a?.updateSharedSecrets&&s(a.updateSharedSecrets.message)},onError:t=>{s(e.formatMessage({id:"account.accountSecretsUpdateFailed",defaultMessage:"Failed to update secret. Please try again."})),r.captureException(t)}});return[a,i]})(),[w]=(()=>{let e=(0,x.useIntl)(),t=(0,f.useCurrentUserId)(),{showError:s}=(0,p.default)(),[a,i]=(0,l.useDeleteSharedSecretMutation)({update(e,{data:a},{variables:r}){let i=r?.id;i&&a?.deleteSharedSecret?.__typename==="DeleteSharedSecretResult"?e.modify({id:e.identify({__typename:"CurrentUser",id:t}),fields:{secrets:(e={items:[]},{readField:t})=>({...e,items:e.items.filter(e=>t("id",e)!==i)})}}):a?.deleteSharedSecret&&"message"in a.deleteSharedSecret&&s(a.deleteSharedSecret.message)},onError:t=>{s(e.formatMessage({id:"account.accountSecretsDeleteFailed",defaultMessage:"Failed to delete secret. Please try again."})),r.captureException(t)}});return[a,i]})(),T=(0,a.useCallback)(async t=>{j?(await b({variables:{input:{ownerType:n.SharedSecretOwnerType.Account,secrets:[t]}}}),(0,_.track)(S.events.SHARED_SECRETS_USED,{ownerType:"account",action:"create",source:"account"})):(await C({variables:{input:{ownerType:n.SharedSecretOwnerType.Account,secrets:[{...t,id:e}]}}}),(0,_.track)(S.events.SHARED_SECRETS_USED,{ownerType:"account",action:"update",source:"account"})),k(!1)},[b,e,j,C]),U=(0,a.useCallback)(()=>{k(!1),j?d():v()},[j,d,v]);return M||!c?(0,t.jsx)(B,{secrets:u,isNew:j,name:s,value:i,onDelete:async()=>{await w({variables:{id:e}}),(0,_.track)(S.events.SHARED_SECRETS_USED,{ownerType:"account",action:"delete",source:"account"}),d()},onSave:T,onCancel:U}):(0,t.jsxs)(D.View,{clsx:F.default.secretItem,children:[(0,t.jsx)(D.View,{clsx:F.default.secretName,children:s}),(0,t.jsx)(q,{value:i}),(0,t.jsx)(D.View,{clsx:F.default.secretTimestamp,children:(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsUpdatedAt",defaultMessage:"Updated {date}",values:{date:(0,g.formatDate)(c,{preset:"short"})}})}),(0,t.jsx)(D.View,{clsx:F.default.secretEditContainer,align:"end",children:(0,t.jsx)(E.IconButton,{alt:h.formatMessage({id:"account.accountSecretsEdit",defaultMessage:"Edit"}),onClick:()=>k(!0),ref:K,children:(0,t.jsx)(o.default,{})})})]})};e.s(["default",0,function({hideHeader:e=!1}){let s=(0,x.useIntl)(),{data:r}=(0,l.useAccountSecretsQuery)(),[n,o]=(0,a.useState)(r?.currentUser?.secrets?.__typename==="SharedSecretConnection"?r.currentUser.secrets.items:[]);(0,a.useEffect)(()=>{o(r?.currentUser?.secrets?.__typename==="SharedSecretConnection"?r.currentUser.secrets.items:[])},[r?.currentUser?.secrets]);let c=(0,a.useCallback)(()=>{o(e=>[{__typename:"SharedSecret",id:`temp-${(0,i.v4)()}`,name:"",value:"",timeUpdated:new Date().toISOString(),timeCreated:new Date().toISOString(),version:"0"},...e])},[]),d=(0,a.useCallback)(e=>{o(t=>t.filter((t,s)=>s!==e))},[]);return(0,t.jsxs)(D.View,{gap:8,children:[(0,t.jsxs)(D.View,{row:!0,justify:e?"end":"space-between",children:[e?null:(0,t.jsx)(D.View,{clsx:F.default.titleWrapper,row:!0,gap:8,children:(0,t.jsx)(V.Text,{variant:"subheadBig",multiline:!1,children:(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsTitle",defaultMessage:"Account Secrets"})})}),(0,t.jsx)(D.View,{align:"center",row:!0,gap:8,children:(0,t.jsx)(K.Button,{text:s.formatMessage({id:"account.accountSecretsNewSecret",defaultMessage:"New secret"}),iconLeft:(0,t.jsx)(m.default,{}),size:"small",colorway:"primary",onClick:c})})]}),(0,t.jsxs)(k.ShadesSurface,{clsx:F.default.section,children:[(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsDescription",defaultMessage:"Add secrets to your account to access them in any of your Apps."}),0===n.length?(0,t.jsxs)(D.View,{clsx:F.default.emptyState,gap:8,children:[(0,t.jsx)(u.default,{size:24,color:M.tokens.foregroundDimmest}),(0,t.jsx)(V.Text,{color:"dimmer",children:(0,t.jsx)(y.FormattedMessage,{id:"account.accountSecretsEmptyState",defaultMessage:"You haven't added any account secrets yet."})})]}):(0,t.jsx)(k.ShadesSurface,{clsx:F.default.secretList,elevate:"2x",children:n.map((e,s)=>(0,t.jsx)($,{secrets:n,onRemoveSecret:()=>d(s),...e},e.id))})]})]})}])},188541,e=>{e.v({inputErrorMessage:"AddSshKeyDialog-module__WJ9nzW__inputErrorMessage",keyInput:"AddSshKeyDialog-module__WJ9nzW__keyInput"})},236760,e=>{"use strict";var t=e.i(276385),s=e.i(15801),a=e.i(306644),r=e.i(183035),i=e.i(569910),l=e.i(255614),n=e.i(371884),o=e.i(320216);e.i(214847);var c=e.i(864300),d=e.i(415541),u=e.i(709485),m=e.i(716070),h=e.i(803426),S=e.i(521299),f=e.i(835685),p=e.i(643484),g=e.i(528710),y=e.i(8047),x=e.i(61732),_=e.i(188541);let j=e=>{let t=(0,l.default)(e);return t?{message:t,severity:"error"}:null};e.s(["AddSshKeyDialog",0,({onConfirm:e})=>{let M,k=(0,c.useIntl)(),{showConfirm:K,showError:v}=(0,o.default)(),b=(0,s.useRouter)(),C=(0,h.default)(),w=(0,S.useIdSeed)(),E=(0,n.useFormField)("",j),T=(0,n.useFormField)("",(M=k,e=>""===e.trim()?{message:M.formatMessage({id:"ssh.addKeyLabelEmpty",defaultMessage:"Label cannot be empty"}),severity:"error"}:null)),[U,{loading:A}]=(0,a.useAddSshKeyMutation)({onCompleted:t=>{switch(t.addPublicSshKey?.__typename){case"UserError":case"UnauthorizedError":case"ServiceUnavailable":v(t.addPublicSshKey.message);break;case"CurrentUser":E.setValue(""),T.setValue(""),K(k.formatMessage({id:"ssh.addKeySuccess",defaultMessage:"SSH key added"})),e();break;case void 0:case null:v(k.formatMessage({id:"ssh.addKeyUnknownError",defaultMessage:"An unkown error occurred. Please try again."}));break;default:(0,i.default)(t.addPublicSshKey)}},onError:e=>{v(k.formatMessage({id:"ssh.addKeyError",defaultMessage:"Error adding SSH key: {message}"},{message:e.message}))}}),R=k.formatMessage({id:"ssh.addKeyShellCommandHeader",defaultMessage:"Shell command"}),V=`[ -s ${C}/.ssh/replit.pub ] || ssh-keygen -t ed25519 -f ${C}/.ssh/replit -q -N "" && cat ${C}/.ssh/replit.pub`,I=l.VALID_KEY_TYPES.map(e=>`'${e}'`),D=k.formatMessage({id:"ssh.addKeyKeyPlaceholder",defaultMessage:"Begins with {prefixes}, or {last}"},{prefixes:I.slice(0,-1).join(", "),last:I[I.length-1]});return(0,t.jsxs)(x.View,{gap:16,children:[(0,t.jsx)(y.Text,{variant:"headerDefault",children:k.formatMessage({id:"ssh.addKeyTitle",defaultMessage:"Add a new SSH key"})}),(0,t.jsxs)(x.View,{gap:8,children:[(0,t.jsx)(x.View,{tag:"label",htmlFor:w("label-input"),children:k.formatMessage({id:"ssh.addKeyLabelLabel",defaultMessage:"Label"})}),(0,t.jsx)(g.Input,{id:w("label-input"),placeholder:k.formatMessage({id:"ssh.addKeyLabelPlaceholder",defaultMessage:"Enter a label to identify this SSH key..."}),value:T.value,onChange:e=>T.setValue(e.target.value,{preventValidation:!0}),onBlur:T.handleBlur}),T.error?(0,t.jsx)(y.Text,{multiline:!1,variant:"small",clsx:_.default.inputErrorMessage,children:T.error.message}):null]}),(0,t.jsxs)(x.View,{gap:8,children:[(0,t.jsx)(x.View,{tag:"label",htmlFor:w("key-input"),children:k.formatMessage({id:"ssh.addKeyKeyLabel",defaultMessage:"Key"})}),(0,t.jsx)(g.MultiLineInput,{autoSize:!0,id:w("key-input"),placeholder:D,value:E.value,clsx:_.default.keyInput,onChange:e=>E.setValue(e.target.value,{preventValidation:!0}),onBlur:E.handleBlur}),E.error?(0,t.jsx)(y.Text,{multiline:!1,variant:"small",clsx:_.default.inputErrorMessage,children:E.error.message}):null]}),(0,t.jsx)(f.AccordionItem,{headerContent:(0,t.jsx)(y.Text,{color:"dimmer",children:k.formatMessage({id:"ssh.addKeyAccordionHeader",defaultMessage:"Learn how to generate an SSH key"})}),headerProps:{style:{justifyContent:"start"}},children:(0,t.jsxs)(x.View,{px:6,gap:4,children:[(0,t.jsx)(y.Text,{color:"dimmer",children:k.formatMessage({id:"ssh.addKeyGenerateInstructions",defaultMessage:"To generate an SSH key, run this shell command locally on your machine. The value it returns can be pasted into the key field."})}),(0,t.jsx)(m.default,{code:V,header:R,multiline:!0})]})}),(0,t.jsx)(x.View,{row:!0,children:(0,t.jsx)(p.Button,{disabled:A||!!E.error||!!T.error,colorway:"primary",text:k.formatMessage({id:"ssh.addKeySubmit",defaultMessage:"Add SSH key"}),type:"submit",iconLeft:(0,t.jsx)(r.default,{}),onClick:async()=>{let e=await E.validate(),t=await T.validate();e?v(e.message):t?v(t.message):((0,d.track)(u.events.WORKSPACE,{action:"ssh_key_added",path:b.pathname}),await U({variables:{input:{key:E.value.trim(),label:T.value.trim()}}}))}})})]})}])},135905,e=>{"use strict";var t=e.i(276385),s=e.i(403649);e.i(214847);var a=e.i(864300),r=e.i(643484),i=e.i(528326),l=e.i(108431),n=e.i(8047),o=e.i(61732);e.s(["DeleteSshKeyModal",0,({onClose:e,onConfirm:c,keyId:d})=>{let u=(0,a.useIntl)();return(0,t.jsx)(i.Modal,{centered:!0,isOpen:null!==d,onRequestClose:e,children:(0,t.jsxs)(o.View,{gap:16,children:[(0,t.jsx)(n.Text,{variant:"headerDefault",children:u.formatMessage({id:"ssh.deleteKeyTitle",defaultMessage:"Delete SSH key"})}),(0,t.jsx)(l.StatusBanner,{icon:(0,t.jsx)(s.default,{}),colorway:"warning",text:u.formatMessage({id:"ssh.deleteKeyConfirmQuestion",defaultMessage:"Are you sure you want to permanently delete this SSH key?"})}),(0,t.jsx)(n.Text,{multiline:!0,children:u.formatMessage({id:"ssh.deleteKeyExplanation",defaultMessage:"This action cannot be undone. If you want to use this key again in the future, you can add it again."})}),(0,t.jsxs)(o.View,{row:!0,gap:16,justify:"start",children:[(0,t.jsx)(r.Button,{text:u.formatMessage({id:"ssh.deleteKeyCancel",defaultMessage:"Cancel"}),onClick:e}),(0,t.jsx)(r.Button,{colorway:"negative",text:u.formatMessage({id:"ssh.deleteKeyConfirm",defaultMessage:"Confirm and delete SSH key"}),onClick:null!==d?()=>c(d):()=>{}})]})]})})}])},127110,e=>{e.v({body:"ShellCommandCopy-module__oqYHla__body",root:"ShellCommandCopy-module__oqYHla__root"})},716070,e=>{"use strict";var t=e.i(276385),s=e.i(402099);e.i(214847);var a=e.i(864300),r=e.i(20639),i=e.i(919073),l=e.i(488299),n=e.i(8047),o=e.i(61732),c=e.i(127110);e.s(["default",0,function({code:e,header:d,multiline:u,onCopy:m}){let h=(0,a.useIntl)();return(0,t.jsxs)(i.ShadesSurface,{tag:"pre",clsx:c.default.root,br:4,p:8,gap:4,elevate:!1,children:[(0,t.jsxs)(o.View,{row:!0,justify:"space-between",children:[(0,t.jsx)(n.Text,{color:"dimmer",children:d}),(0,t.jsx)(l.IconButton,{onClick:()=>{m?.(),(0,r.default)(e)},alt:h.formatMessage({id:"ssh.shellCommandCopyAlt",defaultMessage:"Copy"}),children:(0,t.jsx)(s.default,{})})]}),(0,t.jsx)(o.View,{children:(0,t.jsx)(n.Text,{variant:"code",multiline:u,clsx:c.default.body,maxLines:u?void 0:1,children:e})})]})}])},970262,e=>{"use strict";var t=e.i(276385),s=e.i(917255);e.i(214847);var a=e.i(864300),r=e.i(955751),i=e.i(419635);e.s(["SshKeyTip",0,()=>{let e=(0,a.useIntl)();return(0,t.jsx)(i.ButtonLink,{href:r.SSH_DOCS_HREF,target:"_blank",rel:"noopener",text:e.formatMessage({id:"ssh.keyTipReadDocs",defaultMessage:"Need help? Read the docs"}),variant:"underlinedOnHover",colorway:"primary",iconLeft:(0,t.jsx)(s.default,{})})}])},303944,e=>{"use strict";var t=e.i(351623);let s=t.gql`
+    fragment UserSshKeyListKey on PublicSshKey {
+  id
+  key
+  label
+  timeCreated
+}
+    `;e.s(["UserSshKeyListKeyFragmentDoc",0,s])},813355,e=>{e.v({emptyState:"UserSshKeyList-module__8ZIuhG__emptyState",keyLabelText:"UserSshKeyList-module__8ZIuhG__keyLabelText",keyTime:"UserSshKeyList-module__8ZIuhG__keyTime",keyValuePrefix:"UserSshKeyList-module__8ZIuhG__keyValuePrefix",keyValueSuffix:"UserSshKeyList-module__8ZIuhG__keyValueSuffix"})},449722,e=>{"use strict";var t=e.i(276385),s=e.i(15801),a=e.i(389959),r=e.i(306644),i=e.i(402099),l=e.i(844941),n=e.i(491194),o=e.i(569910),c=e.i(709485),d=e.i(968323),u=e.i(320216);e.i(214847);var m=e.i(614852),h=e.i(864300),S=e.i(20639),f=e.i(415541),p=e.i(135905),g=e.i(89148),y=e.i(919073),x=e.i(488299),_=e.i(8047),j=e.i(61732),M=e.i(813355);let k=({sshKey:e})=>{let s=K(e),[a,r]=s.ok?[`${s.value.keyType} ${s.value.encodedKey.slice(0,-8)}`,`${s.value.encodedKey.slice(-8)} ${s.value.comment}`]:[e.slice(0,-8),e.slice(-8)];return(0,t.jsxs)(j.View,{shrink:!0,row:!0,gap:0,children:[(0,t.jsx)(_.Text,{variant:"small",color:"dimmer",maxLines:1,clsx:M.default.keyValuePrefix,children:a}),(0,t.jsx)(_.Text,{variant:"small",color:"dimmer",maxLines:1,clsx:M.default.keyValueSuffix,children:r})]})},K=e=>{let t=e.split(" ");return t.length<3?d.default.Err("Key is in an unexpected format"):d.default.Ok({keyType:t[0],encodedKey:t[1],comment:t[2]})};e.s(["UserSshKeyList",0,({keys:e})=>{let d=(0,h.useIntl)(),K=(0,s.useRouter)(),{showConfirm:v,showError:b}=(0,u.default)(),[C,w]=(0,a.useState)(null),[E,{loading:T}]=(0,r.useDeleteSshKeyMutation)({onCompleted:e=>{if(!e.deletePublicSshKey)throw Error("Expected response");switch(e.deletePublicSshKey.__typename){case"UnauthorizedError":case"ServiceUnavailable":case"NotFoundError":b(e.deletePublicSshKey.message);break;case"CurrentUser":v(d.formatMessage({id:"ssh.keyDeleted",defaultMessage:"SSH key deleted"}));break;default:(0,o.default)(e.deletePublicSshKey)}},onError:e=>{b(d.formatMessage({id:"ssh.keyDeleteUnexpectedError",defaultMessage:"Something unexpected happened while deleting the SSH key"}))}});return 0===e.length?(0,t.jsxs)(j.View,{clsx:M.default.emptyState,gap:8,align:"center",justify:"center",br:4,py:24,px:12,children:[(0,t.jsx)(l.default,{size:24,color:g.tokens.foregroundDimmest}),(0,t.jsx)(_.Text,{color:"dimmer",children:d.formatMessage({id:"ssh.noKeysYet",defaultMessage:"You haven't added any SSH keys yet."})})]}):(0,t.jsxs)(j.View,{tag:"ul",gap:8,children:[e.map(({timeCreated:e,label:s,key:a,id:r})=>(0,t.jsxs)(y.ShadesSurface,{p:8,gap:4,tag:"li",children:[(0,t.jsxs)(j.View,{row:!0,gap:8,justify:"space-between",align:"center",children:[(0,t.jsx)(_.Text,{variant:"small",clsx:M.default.keyLabelText,children:s}),(0,t.jsxs)(j.View,{row:!0,gap:4,children:[(0,t.jsx)(x.IconButton,{alt:d.formatMessage({id:"ssh.keyCopyAlt",defaultMessage:"Copy"}),onClick:()=>{(0,S.default)(a)},children:(0,t.jsx)(i.default,{size:16})}),(0,t.jsx)(x.IconButton,{alt:d.formatMessage({id:"ssh.keyDeleteAlt",defaultMessage:"Delete public SSH key"}),disabled:T,onClick:()=>{w(r)},children:(0,t.jsx)(n.default,{size:16})})]})]}),(0,t.jsxs)(j.View,{row:!0,gap:8,align:"center",children:[(0,t.jsx)(l.default,{color:g.tokens.foregroundDimmer}),(0,t.jsx)(k,{sshKey:a})]}),(0,t.jsx)(j.View,{clsx:M.default.keyTime,tag:"time",dateTime:e,children:(0,t.jsx)(_.Text,{variant:"small",color:"dimmer",children:d.formatMessage({id:"ssh.keyAddedOn",defaultMessage:"Added on {date}"},{date:(0,m.formatDate)(e,{preset:"long",locale:d.locale})})})})]},r)),(0,t.jsx)(p.DeleteSshKeyModal,{keyId:C,onClose:()=>w(null),onConfirm:e=>{(0,f.track)(c.events.WORKSPACE,{action:"ssh_key_removed",path:K.pathname}),E({variables:{input:{id:e}}}),w(null)}})]})}])},955751,e=>{"use strict";e.s(["SSH_AUTHORIZED_KEYS_FILE_PATH",0,".config/ssh/.authorized_keys","SSH_DOCS_HREF",0,"https://docs.replit.com/replit-workspace/ssh"])},306644,e=>{"use strict";var t=e.i(351623),s=e.i(303944),a=e.i(299020),r=e.i(344480);e.i(975473);let i={},l=t.gql`
+    mutation AddSshKey($input: AddPublicSshKeyInput!) {
+  addPublicSshKey(input: $input) {
+    __typename
+    ... on CurrentUser {
+      id
+      publicSshKeys {
+        ... on PublicSshKeysOutput {
+          __typename
+          keys {
+            ...UserSshKeyListKey
+          }
+        }
+        ... on UnauthorizedError {
+          __typename
+          message
+        }
+      }
+    }
+    ... on UserError {
+      message
+    }
+    ... on UnauthorizedError {
+      message
+    }
+    ... on ServiceUnavailable {
+      message
+    }
+  }
+}
+    ${s.UserSshKeyListKeyFragmentDoc}`,n=t.gql`
+    mutation DeleteSshKey($input: DeletePublicSshKeyInput!) {
+  deletePublicSshKey(input: $input) {
+    __typename
+    ... on CurrentUser {
+      id
+      publicSshKeys {
+        ... on PublicSshKeysOutput {
+          __typename
+          keys {
+            ...UserSshKeyListKey
+          }
+        }
+        ... on UnauthorizedError {
+          __typename
+          message
+        }
+      }
+    }
+    ... on UnauthorizedError {
+      message
+    }
+    ... on NotFoundError {
+      message
+    }
+    ... on ServiceUnavailable {
+      message
+    }
+  }
+}
+    ${s.UserSshKeyListKeyFragmentDoc}`,o=t.gql`
+    query SshKeysCurrentUser {
+  currentUser {
+    id
+    __typename
+    publicSshKeys {
+      ... on PublicSshKeysOutput {
+        keys {
+          ...UserSshKeyListKey
+        }
+      }
+      ... on UnauthorizedError {
+        message
+      }
+    }
+  }
+}
+    ${s.UserSshKeyListKeyFragmentDoc}`;e.s(["useAddSshKeyMutation",0,function(e){let t={...i,...e};return a.useMutation(l,t)},"useDeleteSshKeyMutation",0,function(e){let t={...i,...e};return a.useMutation(n,t)},"useSshKeysCurrentUserQuery",0,function(e){let t={...i,...e};return r.useQuery(o,t)}])},803426,e=>{"use strict";var t=e.i(68701);e.s(["default",0,function(){return(0,t.useIsWindows)()?"%HOMEPATH%":"~"}])},811081,e=>{"use strict";e.s(["SSH_KEY_LIMIT",0,20])},255614,e=>{"use strict";let t=["ssh-rsa","ssh-dss","ecdsa-sha2-nistp256","sk-ecdsa-sha2-nistp256@openssh.com","ecdsa-sha2-nistp384","ecdsa-sha2-nistp521","ssh-ed25519","sk-ssh-ed25519@openssh.com"];e.s(["VALID_KEY_TYPES",0,t,"default",0,function(e){let s=e.trim();if(""===s)return"Key cannot be empty";let a=s.split(" ");if(a.length<3||a.length>4)return"Key must have either 3 or 4 separate components";let r=3===a.length?a[0]:a[1];return t.includes(r)?null:`${r} is not a valid key type`}])}]);
+
+//# debugId=b048cb7e-573b-88b4-258b-c25e0ccdda48
+//# sourceMappingURL=4535zl9721oo4.js.map
