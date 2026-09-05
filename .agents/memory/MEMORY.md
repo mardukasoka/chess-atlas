@@ -1,0 +1,1 @@
+- [Browser script scope](browser-script-scope.md) — classic scripts share top-level lexical declarations; use distinct local aliases for browser integrations.

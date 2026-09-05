@@ -84,4 +84,4 @@ jobs:
 
 
       - name: Run historical board-state tests
-        run: npx jest chess.test.js --runInBand
+        run: npx jest --runInBand

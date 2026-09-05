@@ -1,3 +1,11 @@
+const GeometryApi =
+  typeof module !==
+    "undefined" &&
+  module.exports
+    ? require("./geometry.js")
+    : window.Geometry;
+
+
 const GLYPHS = {
   wK: "♔",
   bK: "♚",
@@ -241,11 +249,9 @@ function inside(
   row,
   col
 ) {
-  return (
-    row >= 0 &&
-    row < 8 &&
-    col >= 0 &&
-    col < 8
+  return GeometryApi.inBounds(
+    [row, col],
+    [8, 8]
   );
 }
 
@@ -625,11 +631,17 @@ restoreState(
       of offsets
     ) {
 
+      const destination =
+        GeometryApi.add(
+          [row, col],
+          [rowOffset, colOffset]
+        );
+
       const targetRow =
-        row + rowOffset;
+        destination[0];
 
       const targetCol =
-        col + colOffset;
+        destination[1];
 
 
       if (
@@ -642,7 +654,7 @@ restoreState(
       }
 
 
-      const target =
+      const pieceAtTarget =
         board[
           targetRow
         ][
@@ -651,8 +663,8 @@ restoreState(
 
 
       if (
-        !target ||
-        colourOf(target) !==
+        !pieceAtTarget ||
+        colourOf(pieceAtTarget) !==
           colour
       ) {
 
@@ -697,51 +709,51 @@ restoreState(
       of directions
     ) {
 
-      let targetRow =
-        row + rowOffset;
-
-      let targetCol =
-        col + colOffset;
+      let target =
+        GeometryApi.add(
+          [row, col],
+          [rowOffset, colOffset]
+        );
 
 
       while (
         inside(
-          targetRow,
-          targetCol
+          target[0],
+          target[1]
         )
       ) {
 
-        const target =
+        const pieceAtTarget =
           board[
-            targetRow
+            target[0]
           ][
-            targetCol
+            target[1]
           ];
 
 
-        if (!target) {
+        if (!pieceAtTarget) {
 
           moves.push({
             row:
-              targetRow,
+              target[0],
 
             col:
-              targetCol
+              target[1]
           });
 
         } else {
 
           if (
-            colourOf(target) !==
+            colourOf(pieceAtTarget) !==
             colour
           ) {
 
             moves.push({
               row:
-                targetRow,
+                target[0],
 
               col:
-                targetCol
+                target[1]
             });
 
           }
@@ -750,11 +762,11 @@ restoreState(
         }
 
 
-        targetRow +=
-          rowOffset;
-
-        targetCol +=
-          colOffset;
+        target =
+          GeometryApi.step(
+            target,
+            [rowOffset, colOffset]
+          );
 
       }
 
