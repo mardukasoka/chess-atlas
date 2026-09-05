@@ -39,6 +39,8 @@ const PROFILES = {
   chaturanga: {
     name: "Chaturanga",
 
+    dimensions: [8, 8],
+
     backRank: [
       "R",
       "N",
@@ -79,6 +81,8 @@ const PROFILES = {
   shatranj: {
     name: "Shatranj",
 
+    dimensions: [8, 8],
+
     backRank: [
       "R",
       "N",
@@ -118,6 +122,8 @@ const PROFILES = {
 
 acedrex: {
   name: "Acedrex — Alfonso X, 1283",
+
+  dimensions: [8, 8],
 
   backRank: [
     "R",
@@ -169,6 +175,8 @@ acedrex: {
 
   modern: {
     name: "Modern Chess",
+
+    dimensions: [8, 8],
 
     backRank: [
       "R",
@@ -247,11 +255,11 @@ const KNIGHT_MOVES = [
 
 function inside(
   row,
-  col
+  col,
+  boardShape
 ) {
-  return GeometryApi.inBounds(
-    [row, col],
-    [8, 8]
+  return boardShape.contains(
+    [row, col]
   );
 }
 
@@ -335,33 +343,48 @@ class ChessEngine {
     this.profile =
       PROFILES[profile];
 
+    this.boardShape =
+      GeometryApi.createBoardShape(
+        this.profile
+          .dimensions
+      );
+
     return this.resetGame();
   }
 
 
   createStartingBoard() {
 
+    const [
+      rows,
+      columns
+    ] =
+      this.boardShape
+        .dimensions;
+
     const board =
       Array.from(
         {
-          length: 8
+          length: rows
         },
         () =>
-          Array(8)
+          Array(columns)
             .fill("")
       );
 
 
     for (
       let col = 0;
-      col < 8;
+      col < columns;
       col++
     ) {
 
       board[1][col] =
         "bP";
 
-      board[6][col] =
+      board[
+        rows - 2
+      ][col] =
         "wP";
 
     }
@@ -375,7 +398,9 @@ class ChessEngine {
           col
         ) => {
 
-          board[7][col] =
+          board[
+            rows - 1
+          ][col] =
             `w${piece}`;
 
         }
@@ -444,6 +469,12 @@ this.status =
 
       profileName:
         this.profile.name,
+
+      dimensions:
+        [
+          ...this.boardShape
+            .dimensions
+        ],
 
       board:
         cloneBoard(
@@ -525,6 +556,12 @@ restoreState(
       snapshot.profile
     ];
 
+  this.boardShape =
+    GeometryApi.createBoardShape(
+      this.profile
+        .dimensions
+    );
+
   this.board =
     cloneBoard(
       snapshot.board
@@ -576,28 +613,20 @@ restoreState(
   ) {
 
     for (
-      let row = 0;
-      row < 8;
-      row++
+      const [row, col]
+      of this.boardShape
+        .coordinates()
     ) {
 
-      for (
-        let col = 0;
-        col < 8;
-        col++
+      if (
+        board[row][col] ===
+        `${colour}K`
       ) {
 
-        if (
-          board[row][col] ===
-          `${colour}K`
-        ) {
-
-          return {
-            row,
-            col
-          };
-
-        }
+        return {
+          row,
+          col
+        };
 
       }
 
@@ -647,7 +676,8 @@ restoreState(
       if (
         !inside(
           targetRow,
-          targetCol
+          targetCol,
+          this.boardShape
         )
       ) {
         continue;
@@ -719,7 +749,8 @@ restoreState(
       while (
         inside(
           target[0],
-          target[1]
+          target[1],
+          this.boardShape
         )
       ) {
 
@@ -796,7 +827,11 @@ restoreState(
 
     const startingRow =
       colour === "w"
-        ? 6
+        ? (
+            this.boardShape
+              .dimensions[0] -
+            2
+          )
         : 1;
 
     const moves = [];
@@ -809,7 +844,8 @@ restoreState(
     if (
       inside(
         oneStep,
-        col
+        col,
+        this.boardShape
       ) &&
       !board[
         oneStep
@@ -879,7 +915,8 @@ row ===
       if (
         !inside(
           captureRow,
-          captureCol
+          captureCol,
+          this.boardShape
         )
       ) {
         continue;
@@ -1085,7 +1122,8 @@ if (
         if (
           inside(
             targetRow,
-            targetCol
+            targetCol,
+            this.boardShape
           ) &&
           !board[
             targetRow
@@ -1178,16 +1216,13 @@ if (
   ) {
 
     for (
-      let pieceRow = 0;
-      pieceRow < 8;
-      pieceRow++
+      const [
+        pieceRow,
+        pieceCol
+      ]
+      of this.boardShape
+        .coordinates()
     ) {
-
-      for (
-        let pieceCol = 0;
-        pieceCol < 8;
-        pieceCol++
-      ) {
 
         const piece =
           board[
@@ -1257,8 +1292,6 @@ if (
           return true;
 
         }
-
-      }
 
     }
 
@@ -1357,16 +1390,10 @@ if (
   ) {
 
     for (
-      let row = 0;
-      row < 8;
-      row++
+      const [row, col]
+      of this.boardShape
+        .coordinates()
     ) {
-
-      for (
-        let col = 0;
-        col < 8;
-        col++
-      ) {
 
         if (
           colourOf(
@@ -1392,8 +1419,6 @@ if (
           return true;
 
         }
-
-      }
 
     }
 
@@ -1678,7 +1703,10 @@ if (
 
   (
     row === 0 ||
-    row === 7
+    row ===
+      this.boardShape
+        .dimensions[0] -
+        1
   )
 ) {
 

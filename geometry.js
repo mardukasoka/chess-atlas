@@ -203,6 +203,296 @@ function inBounds(
 }
 
 
+function coordinateKey(
+  coordinate,
+  expectedDimension
+) {
+  return JSON.stringify(
+    validateCoordinate(
+      coordinate,
+      expectedDimension
+    )
+  );
+}
+
+
+function coordinateFromKey(
+  key,
+  expectedDimension
+) {
+  if (typeof key !== "string") {
+    throw new TypeError(
+      "Coordinate key must be a string"
+    );
+  }
+
+  let coordinate;
+
+  try {
+    coordinate =
+      JSON.parse(key);
+  } catch {
+    throw new TypeError(
+      "Invalid coordinate key"
+    );
+  }
+
+  return validateCoordinate(
+    coordinate,
+    expectedDimension
+  );
+}
+
+
+function* iterateCoordinates(
+  dimensions
+) {
+  const sizes =
+    validateDimensions(dimensions);
+
+  if (
+    sizes.some(
+      size =>
+        size === null ||
+        size === Infinity
+    )
+  ) {
+    throw new RangeError(
+      "Coordinate iteration requires finite dimensions"
+    );
+  }
+
+  if (sizes.length === 0) {
+    yield [];
+    return;
+  }
+
+  const coordinate =
+    Array(sizes.length)
+      .fill(0);
+
+  while (true) {
+    yield [...coordinate];
+
+    let axis =
+      coordinate.length - 1;
+
+    while (axis >= 0) {
+      coordinate[axis]++;
+
+      if (
+        coordinate[axis] <
+        sizes[axis]
+      ) {
+        break;
+      }
+
+      coordinate[axis] = 0;
+      axis--;
+    }
+
+    if (axis < 0) {
+      return;
+    }
+  }
+}
+
+
+function createBoardShape(
+  dimensions
+) {
+  const sizes =
+    Object.freeze(
+      validateDimensions(dimensions)
+    );
+
+  const bounded =
+    sizes.every(
+      size =>
+        size !== null &&
+        size !== Infinity
+    );
+
+  const shape = {
+    dimensions: sizes,
+    bounded,
+    size:
+      bounded
+        ? sizes.reduce(
+            (
+              total,
+              size
+            ) =>
+              total * size,
+            1
+          )
+        : null,
+
+    contains(coordinate) {
+      return inBounds(
+        coordinate,
+        sizes
+      );
+    },
+
+    key(coordinate) {
+      if (
+        !this.contains(
+          coordinate
+        )
+      ) {
+        throw new RangeError(
+          "Coordinate is outside the board shape"
+        );
+      }
+
+      return coordinateKey(
+        coordinate,
+        sizes.length
+      );
+    },
+
+    coordinate(key) {
+      const coordinate =
+        coordinateFromKey(
+          key,
+          sizes.length
+        );
+
+      if (
+        !this.contains(
+          coordinate
+        )
+      ) {
+        throw new RangeError(
+          "Coordinate is outside the board shape"
+        );
+      }
+
+      return coordinate;
+    },
+
+    coordinates() {
+      return iterateCoordinates(
+        sizes
+      );
+    }
+  };
+
+  return Object.freeze(shape);
+}
+
+
+class CoordinateMap {
+
+  constructor(
+    dimensions
+  ) {
+    this.shape =
+      createBoardShape(
+        dimensions
+      );
+
+    this.store =
+      new Map();
+  }
+
+
+  get dimensions() {
+    return this.shape
+      .dimensions;
+  }
+
+
+  get size() {
+    return this.store.size;
+  }
+
+
+  set(
+    coordinate,
+    value
+  ) {
+    this.store.set(
+      this.shape.key(
+        coordinate
+      ),
+      value
+    );
+
+    return this;
+  }
+
+
+  get(coordinate) {
+    return this.store.get(
+      this.shape.key(
+        coordinate
+      )
+    );
+  }
+
+
+  has(coordinate) {
+    return this.store.has(
+      this.shape.key(
+        coordinate
+      )
+    );
+  }
+
+
+  delete(coordinate) {
+    return this.store.delete(
+      this.shape.key(
+        coordinate
+      )
+    );
+  }
+
+
+  clear() {
+    this.store.clear();
+  }
+
+
+  *entries() {
+    for (
+      const [key, value]
+      of this.store
+    ) {
+      yield [
+        this.shape.coordinate(
+          key
+        ),
+        value
+      ];
+    }
+  }
+
+
+  *keys() {
+    for (
+      const [coordinate]
+      of this.entries()
+    ) {
+      yield coordinate;
+    }
+  }
+
+
+  values() {
+    return this.store
+      .values();
+  }
+
+
+  [Symbol.iterator]() {
+    return this.entries();
+  }
+}
+
+
 function ray(
   origin,
   direction,
@@ -309,6 +599,11 @@ const Geometry = {
   difference,
   step,
   inBounds,
+  coordinateKey,
+  coordinateFromKey,
+  iterateCoordinates,
+  createBoardShape,
+  CoordinateMap,
   ray
 };
 

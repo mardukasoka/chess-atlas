@@ -60,6 +60,16 @@ describe(
           engine.board
         ).toHaveLength(8);
 
+        expect(
+          engine.boardShape
+            .dimensions
+        ).toEqual([8, 8]);
+
+        expect(
+          engine.getState()
+            .dimensions
+        ).toEqual([8, 8]);
+
         engine.board.forEach(
           row => {
             expect(row)

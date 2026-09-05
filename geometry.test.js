@@ -193,6 +193,187 @@ describe(
 
 
     test(
+      "represents rectangular, 3D and 4D board shapes",
+      () => {
+        const chess =
+          Geometry.createBoardShape(
+            [8, 8]
+          );
+        const rectangular =
+          Geometry.createBoardShape(
+            [10, 8]
+          );
+        const threeDimensional =
+          Geometry.createBoardShape(
+            [4, 4, 2]
+          );
+        const fourDimensional =
+          Geometry.createBoardShape(
+            [4, 4, 2, 2]
+          );
+
+        expect(chess.size)
+          .toBe(64);
+        expect(rectangular.size)
+          .toBe(80);
+        expect(
+          rectangular.contains(
+            [9, 7]
+          )
+        ).toBe(true);
+        expect(
+          rectangular.contains(
+            [10, 7]
+          )
+        ).toBe(false);
+        expect(threeDimensional.size)
+          .toBe(32);
+        expect(fourDimensional.size)
+          .toBe(64);
+      }
+    );
+
+
+    test(
+      "iterates every coordinate on finite boards",
+      () => {
+        expect(
+          Array.from(
+            Geometry
+              .iterateCoordinates(
+                [2, 3]
+              )
+          )
+        ).toEqual([
+          [0, 0],
+          [0, 1],
+          [0, 2],
+          [1, 0],
+          [1, 1],
+          [1, 2]
+        ]);
+
+        expect(
+          Array.from(
+            Geometry
+              .iterateCoordinates(
+                [4, 4, 2]
+              )
+          )
+        ).toHaveLength(32);
+
+        expect(
+          Array.from(
+            Geometry
+              .iterateCoordinates(
+                [4, 4, 2, 2]
+              )
+          )
+        ).toHaveLength(64);
+      }
+    );
+
+
+    test(
+      "serializes coordinates without key collisions",
+      () => {
+        const first =
+          Geometry.coordinateKey(
+            [1, 23]
+          );
+        const second =
+          Geometry.coordinateKey(
+            [12, 3]
+          );
+
+        expect(first)
+          .not.toBe(second);
+        expect(
+          Geometry.coordinateFromKey(
+            first,
+            2
+          )
+        ).toEqual([1, 23]);
+      }
+    );
+
+
+    test(
+      "stores bounded and unbounded boards sparsely",
+      () => {
+        const bounded =
+          new Geometry.CoordinateMap(
+            [4, 4, 2]
+          );
+
+        bounded
+          .set(
+            [3, 1, 0],
+            "white-knight"
+          )
+          .set(
+            [0, 0, 1],
+            "black-king"
+          );
+
+        expect(
+          bounded.get(
+            [3, 1, 0]
+          )
+        ).toBe("white-knight");
+        expect(
+          [...bounded]
+        ).toEqual([
+          [
+            [3, 1, 0],
+            "white-knight"
+          ],
+          [
+            [0, 0, 1],
+            "black-king"
+          ]
+        ]);
+        expect(
+          () =>
+            bounded.set(
+              [4, 0, 0],
+              "outside"
+            )
+        ).toThrow(
+          "outside"
+        );
+
+        const unbounded =
+          new Geometry.CoordinateMap(
+            [null, null]
+          );
+
+        unbounded.set(
+          [-1000000, 2500000],
+          "piece"
+        );
+
+        expect(
+          unbounded.get(
+            [-1000000, 2500000]
+          )
+        ).toBe("piece");
+        expect(unbounded.shape.size)
+          .toBeNull();
+        expect(
+          () =>
+            Array.from(
+              unbounded.shape
+                .coordinates()
+            )
+        ).toThrow(
+          "finite dimensions"
+        );
+      }
+    );
+
+
+    test(
       "rejects invalid dimensionality and geometry",
       () => {
         expect(

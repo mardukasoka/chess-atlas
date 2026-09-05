@@ -9,6 +9,21 @@ const path =
   require("path");
 
 
+if (
+  typeof global
+    .structuredClone !==
+  "function"
+) {
+  global.structuredClone =
+    value =>
+      JSON.parse(
+        JSON.stringify(
+          value
+        )
+      );
+}
+
+
 const indexHtml =
   fs.readFileSync(
     path.join(
