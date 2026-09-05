@@ -1,0 +1,189 @@
+You are working in the existing "mardukasoka/chess-atlas" repository.
+
+Your task is to begin a careful architectural refactor that prepares Chess Atlas to support many board games and chess variants without breaking the existing application.
+
+IMPORTANT CONSTRAINTS
+
+1. Keep the app lightweight, mobile-first, browser-native, and dependency-minimal.
+2. Do not rewrite the project from scratch.
+3. Do not replace working existing historical chess logic unless necessary.
+4. Do not add a framework such as React, Vue, Angular, Three.js, or a large game engine.
+5. Do not import entire external repositories.
+6. Do not add 4D Chess, Quantum Chess, Infinite Chess, or 5D Chess as isolated standalone applications.
+7. Preserve current public behavior unless this task explicitly requires a change.
+8. Existing tests must continue to pass.
+9. Add tests for every new geometric primitive.
+10. Make changes in small, understandable modules.
+
+PROJECT DIRECTION
+
+Chess Atlas needs to support a large game family including:
+
+- Chaturanga
+- Shatranj
+- Acedrex / medieval chess
+- Modern Chess
+- 3D chess variants
+- 4D spatial chess
+- Infinite Chess
+- Quantum Chess
+- 5D Chess / timeline chess
+- Stockfish and other machine players
+- Royal Game of Ur
+- Senet
+- backgammon-family games
+- checkers-family games including Kōnane
+- other historical board games
+
+Do not attempt to implement all of these now.
+
+The purpose of this task is to build a compact substrate that can support them later.
+
+ARCHITECTURAL PRINCIPLE
+
+Separate four concerns:
+
+A. Geometry
+Where positions exist and how vectors/rays/adjacency work.
+
+B. Rules
+What pieces/entities are allowed to do.
+
+C. State
+Whose turn it is, board contents, history, captures, quantum state, branches, timeline relationships, etc.
+
+D. Rendering
+How a particular geometry/state is displayed.
+
+Time/history must NOT simply become another spatial coordinate.
+
+For example:
+
+2D chess:
+position = [x, y]
+
+4D spatial chess:
+position = [x, y, z, w]
+
+5D/timeline chess:
+spatial board coordinates + a separate timeline/state graph
+
+Quantum chess:
+ordinary or multidimensional board geometry + quantum state represented separately from physical board coordinates.
+
+FIRST IMPLEMENTATION STEP
+
+Create a small geometry module, preferably "geometry.js".
+
+It should provide generic primitives such as:
+
+- coordinate equality
+- vector addition
+- coordinate difference
+- bounds checking
+- stepping along a vector
+- ray generation
+- dimensionality validation
+- sparse/unbounded board compatibility where possible
+
+The API should work for arbitrary coordinate arrays such as:
+
+[3, 4]
+[1, 2, 0]
+[2, 3, 1, 0]
+
+Do not hard-code 8×8 assumptions inside the generic geometry module.
+
+A bounded geometry may be represented by dimensions such as:
+
+[8, 8]
+[4, 4, 2, 2]
+
+Allow an axis to be unbounded or handled by a sparse board in future, so this design does not block Infinite Chess.
+
+SECOND STEP
+
+Adapt existing 2D Chess movement helpers to use the new geometry primitives where safe.
+
+Current logic such as:
+
+[row, col]
+[dr, dc]
+
+should gradually become generic coordinate/vector operations.
+
+However, retain compatibility with the existing ChessEngine API for now.
+
+Do NOT break current callers.
+
+THIRD STEP
+
+Add automated tests proving that the geometry layer correctly handles:
+
+- 2 dimensions
+- 3 dimensions
+- 4 dimensions
+- bounds
+- vector movement
+- rays
+- invalid dimensionality
+- arbitrary board dimensions
+
+Also verify all existing chess tests still pass.
+
+FUTURE EXTENSION POINTS
+
+Design the modules so these can later be added without redesigning the engine:
+
+1. 4D Chess
+   Generalized vector movement over [x,y,z,w].
+
+2. Infinite Chess
+   Sparse Map-based position storage rather than allocating an infinite array.
+
+3. Quantum Chess
+   A state layer capable of representing:
+
+- superposition
+- split moves
+- entanglement/relationships
+- measurement/collapse
+  without encoding quantum state in geometry itself.
+
+4. 5D Chess
+   A timeline/state graph above ordinary board states.
+
+5. Historical non-chess games
+   Some games will not use chess pieces, check/checkmate, or even square grids. Therefore do not make the generic geometry module depend on ChessEngine concepts.
+
+6. AI participants
+   Human, Stockfish, browser AI, remote personal AI, and observer/commentator agents should eventually interact through a player/agent interface rather than being embedded into game rules.
+
+DO NOT YET
+
+- build a tesseract renderer
+- implement Quantum Chess
+- implement Infinite Chess
+- implement timeline branching
+- import Stockfish
+- change the main UI substantially
+- remove current historical profiles
+- merge unrelated repositories
+- add dependencies unless absolutely necessary
+
+DELIVERABLE
+
+Make the smallest useful refactor that establishes the generalized geometry substrate.
+
+Then report:
+
+1. files changed
+2. new API introduced
+3. tests added
+4. existing tests result
+5. any assumptions made
+6. any parts of current "engine.js" that remain 8×8-specific
+7. recommended next refactor step
+
+Do not commit speculative large rewrites.
+Prefer a small clean foundation over feature count.
