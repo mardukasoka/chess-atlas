@@ -19,6 +19,13 @@ const ShatranjChessRulesApi =
     ? require("./shatranj-rules.js")
     : window.ChessAtlasShatranjRules;
 
+const ChaturangaChessRulesApi =
+  typeof module !==
+    "undefined" &&
+  module.exports
+    ? require("./chaturanga-rules.js")
+    : window.ChessAtlasChaturangaRules;
+
 
 const GLYPHS = {
   wK: "♔",
@@ -1092,6 +1099,42 @@ row ===
   }
 
 
+  chaturangaMoveCandidates(
+    row,
+    col,
+    board = this.board
+  ) {
+    return ChaturangaChessRulesApi
+      .generateMoves({
+        board,
+        shape:
+          this.boardShape,
+        row,
+        col
+      });
+  }
+
+
+  chaturangaPseudoMoves(
+    row,
+    col,
+    board = this.board
+  ) {
+    return this
+      .chaturangaMoveCandidates(
+        row,
+        col,
+        board
+      )
+      .map(
+        move => ({
+          row: move.to[0],
+          col: move.to[1]
+        })
+      );
+  }
+
+
   pseudoMoves(
     row,
     col,
@@ -1115,6 +1158,18 @@ row ===
     ) {
       return this
         .shatranjPseudoMoves(
+          row,
+          col,
+          board
+        );
+    }
+
+    if (
+      this.profileId ===
+      "chaturanga"
+    ) {
+      return this
+        .chaturangaPseudoMoves(
           row,
           col,
           board
