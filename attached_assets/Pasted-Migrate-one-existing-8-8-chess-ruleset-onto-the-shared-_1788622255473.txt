@@ -1,0 +1,120 @@
+Migrate one existing 8×8 chess ruleset onto the shared generic rule kernel while preserving existing behavior exactly.
+
+Use Modern Chess as the first migration target unless inspection reveals a strong technical reason to choose another profile.
+
+Do NOT remove the legacy ChessEngine implementation yet.
+
+GOAL
+
+Prove that the new generic geometry + rule kernel can reproduce an existing Chess Atlas ruleset exactly before using it for 4D, Infinite Chess, Quantum Chess, or additional historical games.
+
+ARCHITECTURE
+
+Create a small adapter between the existing dense 2D board representation and the generic occupancy interface expected by "rules.js".
+
+Prefer an adapter over rewriting board storage.
+
+The migration should look conceptually like:
+
+existing board/state
+↓
+dense-board occupancy adapter
+↓
+generic Rules.generateMoves(...)
+↓
+existing ChessEngine-compatible move/state handling
+
+Keep public APIs unchanged.
+
+PARITY REQUIREMENT
+
+The legacy Modern Chess move generator remains the reference implementation during this task.
+
+For representative positions, generate legal/pseudo-legal moves through both paths and assert equivalence.
+
+Compare destinations, captures, promotion conditions, and any relevant metadata.
+
+Do not delete the legacy movement code yet.
+
+MOVEMENT MAPPING
+
+Map existing Modern Chess pieces to generic definitions:
+
+- rook → sliding rook vectors
+- bishop → sliding bishop vectors
+- queen → combined/general queen vectors
+- king → king step vectors
+- knight → knight jump vectors
+- pawn → configured pawn movement
+
+Preserve current Chess Atlas behavior for:
+
+- pawn starting rank
+- pawn double move
+- pawn captures
+- promotion
+- friendly-piece blocking
+- enemy capture
+- sliding-piece blocking
+
+Special rules already implemented outside basic move generation should remain where they are unless migration is obviously safe.
+
+CHECK / CHECKMATE
+
+Do not simplify or reinterpret check legality.
+
+If the existing engine filters pseudo-legal moves by king safety, retain that behavior.
+
+The new rule kernel may generate movement candidates, but ChessEngine remains responsible for game-specific legality where appropriate.
+
+TESTS
+
+Add parity tests covering at minimum:
+
+- starting position
+- rook on open board
+- blocked rook
+- bishop
+- queen
+- king
+- knight
+- pawn one-step
+- pawn double-step
+- pawn capture
+- promotion boundary
+- friendly blocking
+- enemy capture
+- king-in-check filtering
+- a short sequence of ordinary legal moves
+
+The old and new paths must produce the same legal destinations.
+
+All existing tests must continue to pass.
+
+IMPORTANT
+
+Do not:
+
+- expose 4D Chess yet
+- migrate all historical profiles in one task
+- delete the legacy engine
+- redesign state management
+- add dependencies
+- change rendering
+- add quantum state
+- add timeline branching
+
+DELIVERABLE
+
+Report:
+
+1. files changed
+2. adapter API
+3. which Modern Chess rules now use the shared kernel
+4. which rules remain legacy
+5. parity-test results
+6. full test-suite results
+7. any discrepancies discovered
+8. recommended next migration target
+
+If parity cannot be achieved without changing observable game behavior, stop and report the discrepancy rather than altering the historical behavior.
