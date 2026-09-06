@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess Atlas — Pachisi</title>
+  <link rel="stylesheet" href="historical-play.css?v=1">
+  <link rel="stylesheet" href="pachisi-play.css?v=1">
+</head>
+<body>
+  <main class="history-shell">
+    <header class="history-header">
+      <div>
+        <p class="eyebrow">Atlas · historical board games</p>
+        <h1>Pachisi</h1>
+        <p class="subtitle">A lightweight six-cowrie profile. Traditional Pachisi rules vary by place and period, so this implementation names the rules profile instead of presenting it as universal.</p>
+      </div>
+      <a class="back-link" href="historical-play.html">← Historical Games</a>
+    </header>
+
+    <section class="control-card">
+      <button id="pachisi-reset" type="button">Reset</button>
+    </section>
+
+    <section class="status-card" aria-live="polite">
+      <strong id="pachisi-status">Loading…</strong>
+      <span id="pachisi-detail"></span>
+    </section>
+
+    <section class="game-card">
+      <div id="pachisi-actions" class="actions"></div>
+      <div id="pachisi-board" class="pachisi-board" aria-label="Pachisi cross board"></div>
+    </section>
+
+    <section class="note-card">
+      <strong>Rules profile</strong>
+      <span>Four colours in two partnerships; six cowries; 6, 10 and 25 are grace throws; twelve castles are safe; captures return pieces to the Charkoni; exact re-entry is required.</span>
+    </section>
+  </main>
+
+  <script src="randomizer.js?v=1"></script>
+  <script src="pachisi.js?v=1"></script>
+  <script src="pachisi-play.js?v=1"></script>
+</body>
+</html>

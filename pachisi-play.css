@@ -1,0 +1,67 @@
+.pachisi-board {
+  display: grid;
+  grid-template-columns: repeat(17, minmax(0, 1fr));
+  gap: 2px;
+  width: min(100%, 720px);
+  margin: 0 auto;
+  aspect-ratio: 1;
+}
+
+.pachisi-cell {
+  min-width: 0;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  font-size: clamp(.55rem, 2.3vw, .9rem);
+  position: relative;
+  background: rgba(255,255,255,.04);
+}
+
+.pachisi-cell.castle::after {
+  content: "✦";
+  position: absolute;
+  inset: 1px auto auto 2px;
+  font-size: .55em;
+  opacity: .65;
+}
+
+.pachisi-cell.center {
+  grid-row: 9;
+  grid-column: 9;
+  border-radius: 50%;
+  font-size: .7rem;
+}
+
+.pachisi-piece-stack {
+  display: inline-flex;
+  gap: 1px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  line-height: 1;
+}
+
+.pachisi-piece {
+  font-size: 1.1em;
+  text-shadow: 0 0 2px #000;
+}
+
+.pachisi-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .45rem;
+  margin-top: .8rem;
+}
+
+.pachisi-summary div {
+  padding: .55rem;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 8px;
+}
+
+@media (max-width: 520px) {
+  .pachisi-board { gap: 1px; }
+  .pachisi-cell { border-radius: 2px; }
+  .pachisi-summary { grid-template-columns: 1fr; }
+}
