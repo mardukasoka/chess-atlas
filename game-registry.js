@@ -43,6 +43,14 @@ const GAMES = Object.freeze([
   Object.freeze({ id: "nine-mens-morris", name: "Nine Men's Morris / Merels", family: "graph-placement-capture", sortEra: 500, origin: "Historically widespread; early chronology is debated", implementation: "playable", uncertainty: "medium" }),
   Object.freeze({ id: "chaturanga", name: "Chaturanga", family: "chess", sortEra: 600, origin: "Early medieval South Asia, commonly c. 6th century CE", implementation: "playable", uncertainty: "medium" }),
   Object.freeze({ id: "shatranj", name: "Shatranj", family: "chess", sortEra: 800, origin: "Early Islamic world, c. 7th–10th centuries CE", implementation: "playable", uncertainty: "low" }),
+  Object.freeze({
+    id: "alquerque", name: "Alquerque de Doze", family: "line-leaping-capture", sortEra: 1283,
+    origin: "Arabic-speaking world before its 13th-century Castilian documentation; earliest complete surviving rules description in Alfonso X's Libro de los Juegos (1283)",
+    uncertainty: "medium",
+    rulesProfiles: Object.freeze([
+      profile("alfonso-1283", "Alfonso X, Libro de los Juegos", 1283, "playable", "contemporary-textual-evidence", "Primary Atlas profile follows the securely attested 5x5 line board, twelve men per side, adjacent line movement, hop capture, and elimination objective. Later compulsory-capture, huffing, chained-capture, and stalemate conventions are not silently imported into this profile.")
+    ])
+  }),
   Object.freeze({ id: "acedrex", name: "Acedrex — Alfonso X", family: "chess", sortEra: 1283, origin: "Alfonso X manuscript, 1283 CE", authors: Object.freeze(["Alfonso X manuscript tradition"]), implementation: "playable", uncertainty: "low" }),
   Object.freeze({ id: "pachisi", name: "Pachisi / Chaupar family", family: "cross-circle-race", sortEra: 1500, origin: "South Asian historical tradition; forms and dating vary", implementation: "playable-profile", uncertainty: "high" }),
   Object.freeze({ id: "modern", name: "Modern Chess", family: "chess", sortEra: 1500, origin: "Late 15th century CE onward", implementation: "playable", uncertainty: "low" }),
