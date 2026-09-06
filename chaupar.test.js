@@ -101,6 +101,21 @@ describe("Chaupar three-long-dice profile", () => {
     expect(red[1].progress).toBe(-1);
   });
 
+  test("captured pieces can re-enter from Charkoni on a later throw", () => {
+    const game = new ChauparGame({ turn: "red" });
+    const red = game.piecesFor("red")[0];
+    red.progress = -1;
+    game.setDice([1, 2, 5]);
+
+    const move = game.legalMoves().find(candidate => candidate.pieceIndex === 0 && candidate.distance === 2);
+    expect(move).toBeDefined();
+    expect(move.from).toBe(-1);
+    expect(move.to).toBe(2);
+
+    game.move(0, move.diceIndices);
+    expect(red.progress).toBe(2);
+  });
+
   test("requires exact home and enforces partner finishing order", () => {
     const game = new ChauparGame();
     const yellow = game.piecesFor("yellow");
