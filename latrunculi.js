@@ -64,16 +64,10 @@
       if (this.at(row, col) !== player) return [];
       const enemy = this.opponent(player);
       const pairs = [];
-
       for (const [[dr1, dc1], [dr2, dc2]] of ENCLOSURE_AXES) {
         const a = [row + dr1, col + dc1];
         const b = [row + dr2, col + dc2];
-        if (
-          this.inside(...a) &&
-          this.inside(...b) &&
-          this.at(...a) === enemy &&
-          this.at(...b) === enemy
-        ) {
+        if (this.inside(...a) && this.inside(...b) && this.at(...a) === enemy && this.at(...b) === enemy) {
           pairs.push([a, b]);
         }
       }
@@ -81,17 +75,32 @@
     }
 
     refreshTraps() {
-      this.trapped.clear();
+      const rawTrapped = new Set();
+      const rawPairs = new Map();
       for (const [cell, player] of this.board.entries()) {
         const [row, col] = parse(cell);
-        if (this.trappingPairs(row, col, player).length) this.trapped.add(cell);
+        const pairs = this.trappingPairs(row, col, player);
+        if (pairs.length) {
+          rawTrapped.add(cell);
+          rawPairs.set(cell, pairs);
+        }
+      }
+
+      this.trapped.clear();
+      for (const cell of rawTrapped) {
+        const pairs = rawPairs.get(cell);
+        // Schädler 1994: an enclosed man is immediately freed if either
+        // enclosing enemy is itself surrounded. An alternative free pair can
+        // still keep the man trapped.
+        if (pairs.some(pair => pair.every(([r, c]) => !rawTrapped.has(key(r, c))))) {
+          this.trapped.add(cell);
+        }
       }
     }
 
     adjacentMoves(row, col) {
       if (this.phase !== "movement" || this.at(row, col) !== this.turn || this.isTrapped(row, col)) return [];
-      return DIRECTIONS
-        .map(([dr, dc]) => [row + dr, col + dc])
+      return DIRECTIONS.map(([dr, dc]) => [row + dr, col + dc])
         .filter(([r, c]) => this.inside(r, c) && !this.at(r, c));
     }
 
@@ -101,14 +110,22 @@
       const start = key(row, col);
 
       const visit = (r, c, path, visited) => {
+        const current = key(r, c);
+        const occupied = (rr, cc) => {
+          const cell = key(rr, cc);
+          if (cell === current) return true;
+          if (cell === start) return false;
+          return Boolean(this.at(rr, cc));
+        };
+
         for (const [dr, dc] of DIRECTIONS) {
           const mr = r + dr;
           const mc = c + dc;
           const lr = r + 2 * dr;
           const lc = c + 2 * dc;
-          if (!this.inside(lr, lc) || !this.at(mr, mc) || this.at(lr, lc)) continue;
+          if (!this.inside(lr, lc) || !occupied(mr, mc) || occupied(lr, lc)) continue;
           const landing = key(lr, lc);
-          if (visited.has(landing) || landing === start) continue;
+          if (visited.has(landing)) continue;
           const nextPath = [...path, [lr, lc]];
           results.push(nextPath);
           const nextVisited = new Set(visited);
@@ -127,12 +144,8 @@
       for (const [cell, player] of this.board.entries()) {
         if (player !== this.turn) continue;
         const [row, col] = parse(cell);
-        for (const to of this.adjacentMoves(row, col)) {
-          moves.push({ type: "step", from: [row, col], to });
-        }
-        for (const path of this.jumpSequences(row, col)) {
-          moves.push({ type: "jump", from: [row, col], path, to: path[path.length - 1] });
-        }
+        for (const to of this.adjacentMoves(row, col)) moves.push({ type: "step", from: [row, col], to });
+        for (const path of this.jumpSequences(row, col)) moves.push({ type: "jump", from: [row, col], path, to: path[path.length - 1] });
       }
       return moves;
     }
@@ -140,10 +153,8 @@
     move(fromRow, fromCol, toRow, toCol, path = null) {
       if (this.phase !== "movement" || this.winner) throw new Error("Not in movement phase");
       const legal = this.legalMoves().find(move =>
-        move.from[0] === fromRow &&
-        move.from[1] === fromCol &&
-        move.to[0] === toRow &&
-        move.to[1] === toCol &&
+        move.from[0] === fromRow && move.from[1] === fromCol &&
+        move.to[0] === toRow && move.to[1] === toCol &&
         (!path || JSON.stringify(move.path || []) === JSON.stringify(path))
       );
       if (!legal) throw new Error("Illegal Latrunculi move");
@@ -164,17 +175,13 @@
         const [row, col] = parse(cell);
         if (this.at(row, col) !== enemy) continue;
         const pairs = this.trappingPairs(row, col, enemy);
-        if (pairs.some(pair => pair.every(([r, c]) => this.at(r, c) === this.turn && !this.isTrapped(r, c)))) {
-          result.push([row, col]);
-        }
+        if (pairs.some(pair => pair.every(([r, c]) => this.at(r, c) === this.turn && !this.isTrapped(r, c)))) result.push([row, col]);
       }
       return result;
     }
 
     capture(row, col) {
-      if (!this.capturable().some(([r, c]) => r === row && c === col)) {
-        throw new Error("Piece is not capturable this turn");
-      }
+      if (!this.capturable().some(([r, c]) => r === row && c === col)) throw new Error("Piece is not capturable this turn");
       const victim = this.at(row, col);
       this.set(row, col, null);
       this.captured[victim] += 1;
@@ -197,17 +204,10 @@
 
     snapshot() {
       return {
-        profile: "latrunculi-schadler-1994",
-        rows: this.rows,
-        cols: this.cols,
-        piecesPerPlayer: this.piecesPerPlayer,
-        phase: this.phase,
-        turn: this.turn,
-        winner: this.winner,
-        placed: { ...this.placed },
-        captured: { ...this.captured },
-        board: Object.fromEntries(this.board),
-        trapped: [...this.trapped]
+        profile: "latrunculi-schadler-1994", rows: this.rows, cols: this.cols,
+        piecesPerPlayer: this.piecesPerPlayer, phase: this.phase, turn: this.turn,
+        winner: this.winner, placed: { ...this.placed }, captured: { ...this.captured },
+        board: Object.fromEntries(this.board), trapped: [...this.trapped]
       };
     }
   }
