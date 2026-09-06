@@ -29,6 +29,10 @@
       historicalGame: null,
       boardGame: "ur"
     });
+
+    currentNodeIndex = ATLAS_WORLD.nodes.findIndex(
+      node => node.id === "present"
+    );
   }
 
   const futureNode = ATLAS_WORLD.nodes.find(
