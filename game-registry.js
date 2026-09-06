@@ -34,10 +34,10 @@ const GAMES = Object.freeze([
   }),
   Object.freeze({
     id: "latrunculi", name: "Ludus Latrunculorum", family: "capture", sortEra: -100,
-    origin: "Roman antiquity",
+    origin: "Roman antiquity, attested by the late Republic / early Imperial period; exact origin and canonical board size remain uncertain",
     uncertainty: "high",
     rulesProfiles: Object.freeze([
-      profile("schadler-1994", "Ulrich Schädler", 1994, "documented-not-yet-implemented", "reconstruction", "Modern reconstruction from archaeological and textual evidence; should become an independently playable profile.")
+      profile("schadler-1994", "Ulrich Schädler", 1994, "playable", "reconstruction", "Primary Atlas profile: an explicitly attributed scholarly reconstruction from archaeological and textual evidence, used for play at the game's earliest attested Atlas position without pretending the full Roman rules survive.")
     ])
   }),
   Object.freeze({ id: "nine-mens-morris", name: "Nine Men's Morris / Merels", family: "graph-placement-capture", sortEra: 500, origin: "Historically widespread; early chronology is debated", implementation: "playable", uncertainty: "medium" }),
