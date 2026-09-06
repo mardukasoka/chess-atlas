@@ -55,6 +55,14 @@ const GAMES = Object.freeze([
   Object.freeze({ id: "pachisi", name: "Pachisi / Chaupar family", family: "cross-circle-race", sortEra: 1500, origin: "South Asian historical tradition; forms and dating vary", implementation: "playable-profile", uncertainty: "high" }),
   Object.freeze({ id: "modern", name: "Modern Chess", family: "chess", sortEra: 1500, origin: "Late 15th century CE onward", implementation: "playable", uncertainty: "low" }),
   Object.freeze({ id: "konane", name: "Kōnane", family: "orthogonal-capture", sortEra: 1700, origin: "Traditional pre-contact Hawaiʻi; exact origin date unknown", implementation: "playable", uncertainty: "medium" }),
+  Object.freeze({
+    id: "tablut", name: "Tablut", family: "tafl", sortEra: 1732,
+    origin: "Sámi tafl game documented by Carl Linnaeus during his 1732 Lapland journey; broader tafl traditions are older, but Tablut's surviving rule account is 18th century",
+    uncertainty: "medium",
+    rulesProfiles: Object.freeze([
+      profile("tablut-linnaeus-1732-salmi", "Carl Linnaeus (1732), interpreted through Olli Salmi's corrected translation", 1732, "playable", "historical-text-with-explicit-reconstruction", "Primary Atlas Tablut profile: 9x9 asymmetric tafl, 16 attackers, king plus 8 defenders, orthogonal movement, custodial capture, edge escape, and explicit throne/king-capture interpretations where Linnaeus's brief account leaves ambiguity.")
+    ])
+  }),
   Object.freeze({ id: "infinite", name: "Infinite Chess", family: "advanced-chess", sortEra: 2000, origin: "Modern mathematical/online variants", authors: Object.freeze([]), implementation: "engine-substrate", uncertainty: "variant-dependent" }),
   Object.freeze({ id: "4d", name: "4D Spatial Chess", family: "advanced-chess", sortEra: 2000, origin: "Modern multidimensional variants", authors: Object.freeze([]), implementation: "engine-substrate", uncertainty: "variant-dependent" }),
   Object.freeze({ id: "quantum", name: "Quantum Chess", family: "advanced-chess", sortEra: 2010, origin: "21st-century quantum-inspired variants", authors: Object.freeze([]), implementation: "engine-substrate", uncertainty: "variant-dependent" }),
