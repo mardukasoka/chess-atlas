@@ -121,13 +121,13 @@
       const legal = [];
       const seen = new Set();
       for (const piece of this.piecesFor()) {
-        if (piece.progress < 0 || piece.progress >= 84) continue;
+        if (piece.progress >= 84) continue;
         const group = this.groupForPiece(piece);
         const representative = Math.min(...group.map(member => member.index));
         if (piece.index !== representative) continue;
 
         for (const option of subsets(this.dice)) {
-          const target = piece.progress + option.total;
+          const target = piece.progress < 0 ? option.total : piece.progress + option.total;
           if (target > 84) continue;
           const boardCell = target === 84 ? "charkoni" : routeCell(piece.color, target);
           const enemyGroups = target === 84 ? [] : this.enemyGroupsAt(boardCell, piece.color);
