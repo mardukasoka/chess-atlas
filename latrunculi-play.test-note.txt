@@ -1,1 +1,0 @@
-Manual UI verification target after CI: placement alternates correctly; movement selection highlights legal destinations; enclosed pieces cannot move; capture becomes available only when the enclosing player receives the next turn; reset returns to a fresh Schädler 1994 profile.
