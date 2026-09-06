@@ -27,7 +27,7 @@ let view = "slices";
 let game = null;
 let selected = null;
 let legalDestinations = [];
-let viewport = { x: -1, y: -1, size: 10 };
+let viewport = { x: 0, y: 0, size: 8 };
 
 function piece(side, type) {
   return { side, type };
@@ -60,7 +60,7 @@ function createInfiniteStart() {
 function resetGame() {
   selected = null;
   legalDestinations = [];
-  viewport = { x: -1, y: -1, size: 10 };
+  viewport = { x: 0, y: 0, size: 8 };
 
   if (mode === "4d") {
     game = new FutureLegality.AdvancedChessGame({
@@ -182,15 +182,15 @@ function render4DSlices() {
 function renderInfinite() {
   sliceBoards.replaceChildren();
   const card = document.createElement("section");
-  card.className = "slice-card";
+  card.className = "slice-card infinite-card";
 
   const label = document.createElement("p");
   label.className = "slice-label";
-  label.innerHTML = `<strong>Viewport</strong><span>x ${viewport.x}…${viewport.x + viewport.size - 1}, y ${viewport.y}…${viewport.y + viewport.size - 1}</span>`;
+  label.innerHTML = `<strong>Infinite viewport</strong><span>x ${viewport.x}…${viewport.x + viewport.size - 1}, y ${viewport.y}…${viewport.y + viewport.size - 1}</span>`;
   card.appendChild(label);
 
   const grid = document.createElement("div");
-  grid.className = "slice-grid";
+  grid.className = "slice-grid infinite-grid";
   grid.style.gridTemplateColumns = `repeat(${viewport.size}, 1fr)`;
   grid.style.gridTemplateRows = `repeat(${viewport.size}, 1fr)`;
 
@@ -226,6 +226,7 @@ function render() {
   viewSelect.querySelector('option[value="tesseract"]').disabled = !is4D;
   viewLabel.title = is4D ? "" : "Tesseract view requires four spatial dimensions";
   panControls.hidden = is4D;
+  slicePanel.classList.toggle("infinite-mode", !is4D);
 
   slicePanel.hidden = view !== "slices";
   tesseractPanel.hidden = view !== "tesseract";
@@ -237,8 +238,8 @@ function render() {
   const side = game.turn === "w" ? "White" : "Black";
   status.textContent = `${side} to move${game.inCheck() ? " — check" : ""}`;
   detail.textContent = is4D
-    ? "4D experimental profile · [x, y, z, w] · W is spatial, not time"
-    : "Sparse unbounded board · viewport does not limit legal space";
+    ? "2200 CE speculative profile · [x, y, z, w] · W is spatial, not time"
+    : "Sparse unbounded board · 8×8 mobile viewport · pan to continue beyond the visible board";
 
   if (selected) {
     readout.textContent = `${coordKey(selected)} · ${legalDestinations.length} legal destination${legalDestinations.length === 1 ? "" : "s"} shown`;
@@ -262,13 +263,13 @@ resetButton.addEventListener("click", resetGame);
 panControls.addEventListener("click", event => {
   const button = event.target.closest("button[data-pan]");
   if (!button) return;
-  const step = 4;
+  const step = 2;
   switch (button.dataset.pan) {
     case "left": viewport.x -= step; break;
     case "right": viewport.x += step; break;
     case "up": viewport.y += step; break;
     case "down": viewport.y -= step; break;
-    case "center": viewport = { x: -1, y: -1, size: 10 }; break;
+    case "center": viewport = { x: 0, y: 0, size: 8 }; break;
     default: return;
   }
   render();
