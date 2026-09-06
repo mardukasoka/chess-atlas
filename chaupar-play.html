@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess Atlas — Chaupar / Chausar</title>
+  <link rel="stylesheet" href="historical-play.css?v=1">
+  <link rel="stylesheet" href="pachisi-play.css?v=1">
+</head>
+<body>
+  <main class="history-shell">
+    <header class="history-header">
+      <div>
+        <p class="eyebrow">Atlas · historical board games</p>
+        <h1>Chaupar / Chausar</h1>
+        <p class="subtitle">A playable documented profile using three long dice. Chaupar rules vary across sources and traditions; this page does not present the profile as a universal ancient rule set.</p>
+      </div>
+      <a class="back-link" href="historical-play.html">← Historical Games</a>
+    </header>
+
+    <section class="control-card">
+      <button id="chaupar-reset" type="button">Reset</button>
+    </section>
+
+    <section class="status-card" aria-live="polite">
+      <strong id="chaupar-status">Loading…</strong>
+      <span id="chaupar-detail"></span>
+    </section>
+
+    <section class="game-card">
+      <div id="chaupar-actions" class="actions"></div>
+      <div id="chaupar-board" class="pachisi-board" aria-label="Chaupar cross board"></div>
+    </section>
+
+    <section class="note-card">
+      <strong>Rules profile</strong>
+      <span>Typical documented Chaupar/Chausar profile: three long dice with values 1, 2, 5 and 6; fixed starts; split throws; no Pachisi castles or grace throws; same-colour pieces may form conglomerates; exact home and partnership finishing order apply. Captured pieces return to the Charkoni and re-enter on a later throw.</span>
+    </section>
+  </main>
+
+  <script src="randomizer.js?v=1"></script>
+  <script src="pachisi.js?v=1"></script>
+  <script src="chaupar.js?v=1"></script>
+  <script src="chaupar-play.js?v=1"></script>
+</body>
+</html>
