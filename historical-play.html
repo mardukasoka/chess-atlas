@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess Atlas — Historical Games</title>
+  <link rel="stylesheet" href="historical-play.css?v=1">
+</head>
+<body>
+  <main class="history-shell">
+    <header class="history-header">
+      <div>
+        <p class="eyebrow">Chess Atlas · historical board games</p>
+        <h1>Games Through Time</h1>
+        <p class="subtitle">Playable lightweight reconstructions and documented rule sets. Uncertain ancient rules are labelled as reconstructions rather than presented as settled fact.</p>
+      </div>
+      <a class="back-link" href="index.html">← Atlas</a>
+    </header>
+
+    <section class="control-card">
+      <label>Game
+        <select id="history-mode">
+          <option value="ur">Royal Game of Ur</option>
+          <option value="senet">Senet — Kendall-style reconstruction</option>
+          <option value="morris">Nine Men's Morris</option>
+          <option value="konane">Kōnane</option>
+        </select>
+      </label>
+      <button id="history-reset" type="button">Reset</button>
+    </section>
+
+    <section class="status-card" aria-live="polite">
+      <strong id="history-status">Loading…</strong>
+      <span id="history-detail"></span>
+    </section>
+
+    <section class="game-card">
+      <div id="history-actions" class="actions"></div>
+      <div id="history-board" class="history-board"></div>
+    </section>
+
+    <section class="note-card">
+      <strong id="history-note-title"></strong>
+      <span id="history-note"></span>
+    </section>
+  </main>
+
+  <script src="randomizer.js?v=1"></script>
+  <script src="historical-games.js?v=1"></script>
+  <script src="senet.js?v=1"></script>
+  <script src="graph-games.js?v=1"></script>
+  <script src="konane.js?v=1"></script>
+  <script src="historical-play.js?v=1"></script>
+</body>
+</html>
