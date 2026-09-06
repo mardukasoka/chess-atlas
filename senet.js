@@ -119,6 +119,16 @@ class SenetKendallGame {
       return { side: this.turn, pieceIndex, from: piece.position, to: HOUSE.OFF, roll, exit: true };
     }
 
+    // In this reconstruction the final three houses are waiting houses: once
+    // a piece reaches 28, 29, or 30 it can only bear off on its exact throw.
+    if (
+      piece.position === HOUSE.THREE_TRUTHS ||
+      piece.position === HOUSE.RE_ATOUM ||
+      piece.position === HOUSE.HORUS
+    ) {
+      return null;
+    }
+
     const destination = piece.position + roll;
     if (destination > HOUSE.HORUS) return null;
 
