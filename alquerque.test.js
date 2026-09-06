@@ -40,6 +40,7 @@ describe("Alquerque de Doze — Alfonso X 1283 profile", () => {
     const game = new AlfonsoAlquerqueGame({ setup: false });
     game.set(2, 0, "white");
     game.set(2, 1, "black");
+    game.set(4, 4, "black");
     const capture = { type: "capture", from: [2, 0], over: [2, 1], to: [2, 2] };
     expect(game.capturesFrom(2, 0)).toContainEqual(capture);
     game.apply(capture);
