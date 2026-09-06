@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess Atlas — Timeline & Quantum Chess</title>
+  <link rel="stylesheet" href="advanced-state.css?v=1">
+</head>
+<body>
+  <main class="state-shell">
+    <header class="state-header">
+      <div>
+        <p class="eyebrow">Chess Atlas · advanced state space</p>
+        <h1>Timeline & Quantum Chess</h1>
+        <p class="subtitle">Space stays on the board. Time is a branch graph. Quantum possibility is a separate state layer.</p>
+      </div>
+      <a class="back-link" href="advanced-play.html">← Future Chess</a>
+    </header>
+
+    <section class="mode-card" aria-label="Advanced state mode">
+      <button type="button" data-mode="timeline" class="active">5D timeline</button>
+      <button type="button" data-mode="quantum">Quantum lab</button>
+      <button id="state-reset" type="button">Reset</button>
+    </section>
+
+    <section id="timeline-mode">
+      <div class="status-card">
+        <strong id="timeline-status">White to move</strong>
+        <span id="timeline-detail">Time is graph metadata, not a board axis.</span>
+      </div>
+
+      <section class="board-card">
+        <div id="timeline-board" class="chess-board" aria-label="Timeline chess board"></div>
+      </section>
+
+      <section class="timeline-card">
+        <div class="timeline-title">
+          <strong>Timeline graph</strong>
+          <span id="timeline-readout">t0 · ply 0</span>
+        </div>
+        <div id="timeline-nodes" class="timeline-nodes"></div>
+        <button id="fork-here" type="button">Fork from selected node</button>
+        <p class="hint">Select an earlier state, fork it, then make a legal move. The new position becomes a new timeline branch.</p>
+      </section>
+    </section>
+
+    <section id="quantum-mode" hidden>
+      <div class="status-card">
+        <strong>Quantum state lab</strong>
+        <span>Split and measurement are independent of spatial geometry.</span>
+      </div>
+
+      <section class="quantum-card">
+        <div id="quantum-board" class="quantum-board" aria-label="Quantum state board"></div>
+        <div class="quantum-controls">
+          <button id="quantum-split" type="button">Split knight</button>
+          <button id="quantum-measure" type="button">Measure knight</button>
+        </div>
+        <p id="quantum-readout" class="hint"></p>
+      </section>
+    </section>
+  </main>
+
+  <script src="geometry.js?v=1"></script>
+  <script src="rules.js?v=1"></script>
+  <script src="advanced-variants.js?v=1"></script>
+  <script src="spatial-legality.js?v=1"></script>
+  <script src="randomizer.js?v=1"></script>
+  <script src="timeline-state.js?v=1"></script>
+  <script src="quantum-state.js?v=1"></script>
+  <script src="advanced-state.js?v=1"></script>
+</body>
+</html>
