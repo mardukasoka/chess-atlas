@@ -10,7 +10,7 @@ body { margin: 0; background: #101114; }
 button, select { font: inherit; }
 
 .future-shell {
-  width: min(100%, 760px);
+  width: min(100%, 820px);
   margin: 0 auto;
   padding: 18px 14px 28px;
 }
@@ -66,6 +66,7 @@ button, select { font: inherit; }
 }
 
 .board-panel { margin-top: 10px; padding: 12px; overflow: hidden; }
+.board-panel.infinite-mode { padding-inline: 8px; }
 .slice-boards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .slice-card { min-width: 0; }
 .slice-label { display: flex; justify-content: space-between; gap: 8px; margin: 0 0 6px; color: #bfc3cb; font-size: .78rem; }
@@ -78,6 +79,9 @@ button, select { font: inherit; }
   background: #0d0f12;
   aspect-ratio: 1;
 }
+
+.infinite-card { width: 100%; }
+.infinite-grid { width: 100%; max-width: 680px; margin: 0 auto; }
 
 .board-cell {
   position: relative;
@@ -110,7 +114,7 @@ button, select { font: inherit; }
 
 .tesseract-help { display: grid; gap: 4px; color: #c3c6cd; margin-bottom: 8px; }
 .tesseract-help span { font-size: .82rem; color: #9da2ad; }
-.tesseract-board { width: 100%; max-height: 540px; display: block; background: #0d0f12; border-radius: 12px; }
+.tesseract-board { width: 100%; max-height: 600px; display: block; background: #0d0f12; border-radius: 12px; }
 .tesseract-edges line { stroke: #555b66; stroke-width: .9; opacity: .48; }
 .tesseract-cell circle { fill: #22262d; stroke: #8a909b; stroke-width: 1.2; }
 .tesseract-cell text { fill: #fff; font-size: 8px; font-weight: 800; pointer-events: none; }
@@ -146,6 +150,9 @@ button, select { font: inherit; }
   .future-header { align-items: stretch; }
   .back-link { align-self: flex-start; }
   #coordinate-readout { margin-left: 0; width: 100%; }
+  .board-panel.infinite-mode { padding-inline: 4px; }
+  .infinite-mode .slice-boards { grid-template-columns: 1fr; }
+  .infinite-grid .board-cell { font-size: clamp(1rem, 7vw, 1.5rem); }
 }
 
 @media (max-width: 360px) {
