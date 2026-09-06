@@ -8,7 +8,7 @@ function loadAtlas(){jest.resetModules();document.body.innerHTML=bodyHtml;localS
 function moveToTimelineIndex(index){const timelineDown=document.getElementById("timeline-down");for(let step=0;step<index;step+=1)timelineDown.click();}
 describe("Atlas historical game alignment",()=>{
   const timelineCases=[
-    {name:"2500 BCE Senet",index:8,value:"",visible:false,ancient:"Senet",game:"senet"},
+    {name:"2500 BCE Senet",index:7,value:"",visible:false,ancient:"Senet",game:"senet"},
     {name:"218 BCE",index:6,value:"",visible:false},
     {name:"216 BCE",index:5,value:"",visible:false},
     {name:"600 CE",index:4,value:"chaturanga",visible:true},
