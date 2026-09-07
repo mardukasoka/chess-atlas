@@ -62,8 +62,6 @@ const HISTORICAL_PROFILES = Object.freeze({
 const UR_PIECES_PER_SIDE = 7;
 const UR_EXIT = 14;
 const UR_ROSETTES = new Set([3, 7, 13]);
-// Logical progress 4..11 is the shared central lane in the common Finkel-style
-// reconstruction. The protected rosette at progress 7 cannot be captured.
 const UR_SHARED_START = 4;
 const UR_SHARED_END = 11;
 
@@ -72,17 +70,13 @@ class RoyalGameOfUr {
     this.sides = options.sides ?? ["w", "b"];
     this.turnIndex = 0;
     this.random = options.random ?? new HistoricalRandomizer.SeededRandom(options.seed ?? 1);
-    this.pieces = new Map(this.sides.map(side => [
-      side,
-      Array(UR_PIECES_PER_SIDE).fill(-1)
-    ]));
+    this.pieces = new Map(this.sides.map(side => [side, Array(UR_PIECES_PER_SIDE).fill(-1)]));
     this.lastRoll = null;
     this.winner = null;
+    if (options.snapshot) this.restore(options.snapshot);
   }
 
-  get turn() {
-    return this.sides[this.turnIndex];
-  }
+  get turn() { return this.sides[this.turnIndex]; }
 
   cast() {
     const result = HistoricalRandomizer.rollFaces(this.random, [0, 1], 4)
@@ -91,85 +85,77 @@ class RoyalGameOfUr {
     return result;
   }
 
-  opponent(side) {
-    return this.sides.find(candidate => candidate !== side);
-  }
-
-  occupiedBy(side, progress) {
-    return this.pieces.get(side).findIndex(value => value === progress);
-  }
-
-  isShared(progress) {
-    return progress >= UR_SHARED_START && progress <= UR_SHARED_END;
-  }
+  opponent(side) { return this.sides.find(candidate => candidate !== side); }
+  occupiedBy(side, progress) { return this.pieces.get(side).findIndex(value => value === progress); }
+  isShared(progress) { return progress >= UR_SHARED_START && progress <= UR_SHARED_END; }
 
   legalMoves(roll = this.lastRoll) {
-    if (this.winner || !Number.isInteger(roll) || roll < 1 || roll > 4) {
-      return [];
-    }
-
+    if (this.winner || !Number.isInteger(roll) || roll < 1 || roll > 4) return [];
     const side = this.turn;
     const own = this.pieces.get(side);
     const opponent = this.opponent(side);
-
     return own.flatMap((progress, pieceIndex) => {
       if (progress === UR_EXIT) return [];
       const destination = progress + roll;
       if (destination > UR_EXIT) return [];
       if (this.occupiedBy(side, destination) !== -1 && destination !== UR_EXIT) return [];
-
       if (this.isShared(destination)) {
         const enemyIndex = this.occupiedBy(opponent, destination);
         if (enemyIndex !== -1 && UR_ROSETTES.has(destination)) return [];
       }
-
       return [{ side, pieceIndex, from: progress, to: destination, roll }];
     });
   }
 
   move(pieceIndex, roll = this.lastRoll) {
     const legal = this.legalMoves(roll).find(move => move.pieceIndex === pieceIndex);
-    if (!legal) {
-      throw new RangeError("Illegal Royal Game of Ur move");
-    }
-
+    if (!legal) throw new RangeError("Illegal Royal Game of Ur move");
     const side = this.turn;
     const opponent = this.opponent(side);
     const own = this.pieces.get(side);
     own[pieceIndex] = legal.to;
-
     if (this.isShared(legal.to) && !UR_ROSETTES.has(legal.to)) {
       const enemyIndex = this.occupiedBy(opponent, legal.to);
-      if (enemyIndex !== -1) {
-        this.pieces.get(opponent)[enemyIndex] = -1;
-      }
+      if (enemyIndex !== -1) this.pieces.get(opponent)[enemyIndex] = -1;
     }
-
     if (own.every(progress => progress === UR_EXIT)) {
       this.winner = side;
       return { ...legal, capture: false, extraTurn: false, winner: side };
     }
-
     const extraTurn = UR_ROSETTES.has(legal.to);
-    if (!extraTurn) {
-      this.turnIndex = (this.turnIndex + 1) % this.sides.length;
-    }
+    if (!extraTurn) this.turnIndex = (this.turnIndex + 1) % this.sides.length;
     this.lastRoll = null;
-
     return { ...legal, extraTurn, winner: null };
   }
 
   passIfNoMove(roll = this.lastRoll) {
-    if (this.legalMoves(roll).length !== 0) {
-      throw new RangeError("Cannot pass while a legal Ur move exists");
-    }
+    if (this.legalMoves(roll).length !== 0) throw new RangeError("Cannot pass while a legal Ur move exists");
     this.turnIndex = (this.turnIndex + 1) % this.sides.length;
     this.lastRoll = null;
     return this;
   }
 
+  restore(snapshot) {
+    if (!snapshot || !snapshot.pieces || !this.sides.includes(snapshot.turn)) {
+      throw new TypeError("Invalid Royal Game of Ur snapshot");
+    }
+    for (const side of this.sides) {
+      const values = snapshot.pieces[side];
+      if (!Array.isArray(values) || values.length !== UR_PIECES_PER_SIDE) {
+        throw new TypeError("Invalid Royal Game of Ur piece state");
+      }
+      this.pieces.set(side, [...values]);
+    }
+    this.turnIndex = this.sides.indexOf(snapshot.turn);
+    this.lastRoll = snapshot.lastRoll ?? null;
+    this.winner = snapshot.winner ?? null;
+    if (snapshot.random) this.random.restore(snapshot.random);
+    return this;
+  }
+
   snapshot() {
     return Object.freeze({
+      profile: "finkel-basic",
       turn: this.turn,
       pieces: Object.freeze(Object.fromEntries(
         [...this.pieces.entries()].map(([side, values]) => [side, Object.freeze([...values])])
@@ -181,9 +167,7 @@ class RoyalGameOfUr {
   }
 }
 
-function historicalProfile(id) {
-  return HISTORICAL_PROFILES[id] ?? null;
-}
+function historicalProfile(id) { return HISTORICAL_PROFILES[id] ?? null; }
 
 const HistoricalGames = {
   profiles: HISTORICAL_PROFILES,
@@ -198,10 +182,5 @@ const HistoricalGames = {
   })
 };
 
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = HistoricalGames;
-}
-
-if (typeof window !== "undefined") {
-  window.ChessAtlasHistoricalGames = HistoricalGames;
-}
+if (typeof module !== "undefined" && module.exports) module.exports = HistoricalGames;
+if (typeof window !== "undefined") window.ChessAtlasHistoricalGames = HistoricalGames;
