@@ -37,7 +37,7 @@ function render(family=""){
     return `<article class="card"><strong>${esc(x.name)}</strong><div class="meta"><span class="badge">${esc(x.family)}</span><span class="badge">${esc(x.status)}</span><br>${esc(x.composition)}<br>${esc(x.evidence)}<br>Use: ${esc(x.use)}<br>Lifetime: ${esc(x.lifetimeClass)}${measured}<br>${sources}</div></article>`;
   }).join("");
 }
-buttons.forEach(button=>button.onclick=()=>{buttons.forEach(b=>b.classList.remove("active"));button.classList.add("active"));render(button.dataset.family);});
+buttons.forEach(button=>button.onclick=()=>{buttons.forEach(b=>b.classList.remove("active"));button.classList.add("active");render(button.dataset.family);});
 render();
 </script>
 </body>
