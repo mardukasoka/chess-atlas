@@ -12,13 +12,11 @@ describe("Nine Men's Morris graph", () => {
 
   test("placement that forms a mill requires a capture", () => {
     const game = new GraphGames.MorrisGame();
-
-    game.place("a7"); // w
-    game.place("b6"); // b
-    game.place("d7"); // w
-    game.place("d6"); // b
-    game.place("g7"); // w forms mill
-
+    game.place("a7");
+    game.place("b6");
+    game.place("d7");
+    game.place("d6");
+    game.place("g7");
     expect(game.pendingCapture).toBe(true);
     expect(game.turn).toBe("w");
     game.capture("b6");
@@ -60,6 +58,14 @@ describe("Royal Game of Ur", () => {
     game.pieces.get("b")[0] = 7;
     game.lastRoll = 1;
     expect(game.legalMoves(1).some(move => move.pieceIndex === 0)).toBe(false);
+  });
+
+  test("snapshot restores exactly for state graph navigation", () => {
+    const game = new Historical.RoyalGameOfUr({ seed: "graph" });
+    game.cast();
+    const snapshot = game.snapshot();
+    const restored = new Historical.RoyalGameOfUr({ snapshot });
+    expect(restored.snapshot()).toEqual(snapshot);
   });
 
   test("historically uncertain games are labelled as reconstructions", () => {
