@@ -8,10 +8,7 @@ const SenetRandomizer =
 /*
  * Senet does not have a surviving complete ancient rulebook. This module is
  * deliberately named as a reconstruction. It implements a compact
- * Kendall-style five-piece ruleset: alternating opening row, four casting
- * sticks, swaps with vulnerable single opponents, protected groups, a
- * three-piece blockade, mandatory House 26, Water returning toward House 15,
- * and exact exits from the final houses.
+ * Kendall-style five-piece ruleset.
  */
 
 const HOUSE = Object.freeze({
@@ -24,9 +21,7 @@ const HOUSE = Object.freeze({
   OFF: 31
 });
 
-function otherSide(side) {
-  return side === "w" ? "b" : "w";
-}
+function otherSide(side) { return side === "w" ? "b" : "w"; }
 
 class SenetKendallGame {
   constructor(options = {}) {
@@ -40,6 +35,7 @@ class SenetKendallGame {
       ["w", [1, 3, 5, 7, 9].map(position => ({ position, passedHappiness: false }))],
       ["b", [2, 4, 6, 8, 10].map(position => ({ position, passedHappiness: false }))]
     ]);
+    if (options.snapshot) this.restore(options.snapshot);
   }
 
   cast() {
@@ -83,9 +79,7 @@ class SenetKendallGame {
     );
     const starts = [];
     for (let position = 1; position <= 28; position++) {
-      if (positions.has(position) && positions.has(position + 1) && positions.has(position + 2)) {
-        starts.push(position);
-      }
+      if (positions.has(position) && positions.has(position + 1) && positions.has(position + 2)) starts.push(position);
     }
     return starts;
   }
@@ -114,32 +108,17 @@ class SenetKendallGame {
   forwardMoveFor(pieceIndex, roll = this.lastThrow) {
     const piece = this.pieces.get(this.turn)?.[pieceIndex];
     if (!piece || piece.position === HOUSE.OFF || !Number.isInteger(roll) || roll < 1 || roll > 5) return null;
-
     if (this.exitAllowed(piece.position, roll)) {
       return { side: this.turn, pieceIndex, from: piece.position, to: HOUSE.OFF, roll, exit: true };
     }
-
-    // In this reconstruction the final three houses are waiting houses: once
-    // a piece reaches 28, 29, or 30 it can only bear off on its exact throw.
-    if (
-      piece.position === HOUSE.THREE_TRUTHS ||
-      piece.position === HOUSE.RE_ATOUM ||
-      piece.position === HOUSE.HORUS
-    ) {
-      return null;
-    }
-
+    if ([HOUSE.THREE_TRUTHS, HOUSE.RE_ATOUM, HOUSE.HORUS].includes(piece.position)) return null;
     const destination = piece.position + roll;
     if (destination > HOUSE.HORUS) return null;
-
-    // Every piece must land exactly on House 26 before entering the final run.
     if (!piece.passedHappiness && piece.position < HOUSE.HAPPINESS && destination > HOUSE.HAPPINESS) return null;
     if (this.crossesBlockade(piece.position, destination)) return null;
-
     const occupant = this.occupiedAt(destination);
     if (occupant && occupant.side === this.turn) return null;
     if (occupant && this.protectedEnemyAt(destination, this.turn)) return null;
-
     return {
       side: this.turn,
       pieceIndex,
@@ -155,35 +134,27 @@ class SenetKendallGame {
 
   legalMoves(roll = this.lastThrow) {
     if (this.winner) return [];
-    return this.pieces.get(this.turn)
-      .map((_, index) => this.forwardMoveFor(index, roll))
-      .filter(Boolean);
+    return this.pieces.get(this.turn).map((_, index) => this.forwardMoveFor(index, roll)).filter(Boolean);
   }
 
   move(pieceIndex, roll = this.lastThrow) {
     const move = this.forwardMoveFor(pieceIndex, roll);
     if (!move) throw new RangeError("Illegal Senet reconstruction move");
-
     const side = this.turn;
     const movingPiece = this.pieces.get(side)[pieceIndex];
-
     if (move.exit) {
       movingPiece.position = HOUSE.OFF;
     } else {
-      if (move.swap) {
-        this.pieces.get(move.swap.side)[move.swap.pieceIndex].position = move.from;
-      }
+      if (move.swap) this.pieces.get(move.swap.side)[move.swap.pieceIndex].position = move.from;
       movingPiece.position = move.to;
       if (move.happiness) movingPiece.passedHappiness = true;
       if (move.water) movingPiece.position = this.waterReturnPosition();
     }
-
     if (this.pieces.get(side).every(piece => piece.position === HOUSE.OFF)) {
       this.winner = side;
       this.lastThrow = null;
       return { ...move, winner: side, bonusTurn: false };
     }
-
     const bonusTurn = this.bonusTurn;
     this.lastThrow = null;
     this.bonusTurn = false;
@@ -201,11 +172,33 @@ class SenetKendallGame {
     return this;
   }
 
+  restore(snapshot) {
+    if (!snapshot || !snapshot.pieces || !this.sides.includes(snapshot.turn)) {
+      throw new TypeError("Invalid Senet snapshot");
+    }
+    for (const side of this.sides) {
+      const pieces = snapshot.pieces[side];
+      if (!Array.isArray(pieces) || pieces.length !== 5) throw new TypeError("Invalid Senet piece state");
+      this.pieces.set(side, pieces.map(piece => ({
+        position: piece.position,
+        passedHappiness: Boolean(piece.passedHappiness)
+      })));
+    }
+    this.turn = snapshot.turn;
+    this.lastThrow = snapshot.lastThrow ?? null;
+    this.bonusTurn = Boolean(snapshot.bonusTurn);
+    this.winner = snapshot.winner ?? null;
+    if (snapshot.random) this.random.restore(snapshot.random);
+    return this;
+  }
+
   snapshot() {
     return Object.freeze({
       reconstruction: "kendall-style-five-piece",
+      profile: "kendall-1978",
       turn: this.turn,
       lastThrow: this.lastThrow,
+      bonusTurn: this.bonusTurn,
       winner: this.winner,
       pieces: Object.freeze(Object.fromEntries(
         [...this.pieces.entries()].map(([side, pieces]) => [side, Object.freeze(
@@ -217,10 +210,7 @@ class SenetKendallGame {
   }
 }
 
-const Senet = {
-  HOUSE,
-  SenetKendallGame
-};
+const Senet = { HOUSE, SenetKendallGame };
 
 if (typeof module !== "undefined" && module.exports) module.exports = Senet;
 if (typeof window !== "undefined") window.ChessAtlasSenet = Senet;
