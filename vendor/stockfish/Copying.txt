@@ -1,0 +1,9 @@
+Stockfish browser engine assets are licensed under GNU GPL version 3.
+
+The complete GPLv3 license text and corresponding source are provided by the upstream Stockfish.js project:
+https://github.com/nmrugg/stockfish.js/blob/master/Copying.txt
+https://github.com/nmrugg/stockfish.js
+
+Pinned browser distribution target for Chess Atlas: stockfish npm package 18.0.8, `stockfish-18-lite-single.js` and `stockfish-18-lite-single.wasm`.
+
+When distributing those engine files with Chess Atlas, retain the upstream copyright/license notices and make the corresponding source available as required by GPLv3.
