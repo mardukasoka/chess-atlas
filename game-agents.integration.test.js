@@ -25,7 +25,7 @@ test("agent runner applies a legal move through a real Hnefatafl module", async 
   });
 
   assert.strictEqual(result.status, "applied");
-  assert.strictEqual(result.action, legal[0]);
+  assert.deepStrictEqual(result.action, legal[0]);
   assert.strictEqual(game.turn, "defenders");
   assert.notDeepStrictEqual(Modules.snapshot(gameId, game).board, before.board);
 });
