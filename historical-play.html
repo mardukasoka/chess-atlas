@@ -12,12 +12,14 @@
     <section class="control-card">
       <label>Game <select id="history-mode"><option value="ur">Royal Game of Ur</option><option value="senet">Senet — Kendall-style reconstruction</option><option value="morris">Nine Men's Morris</option><option value="konane">Kōnane</option></select></label>
       <button id="history-reset" type="button">Reset</button>
+      <button id="history-state-back" type="button">← Previous state</button>
+      <label>Forward <select id="history-state-forward"><option value="">Future states</option></select></label>
       <a class="back-link" href="pachisi-play.html">Pachisi →</a><a class="back-link" href="chaupar-play.html">Chaupar / Chausar →</a><a class="back-link" href="latrunculi-play.html">Ludus Latrunculorum →</a><a class="back-link" href="alquerque-play.html">Alquerque de Doze →</a><a class="back-link" href="hnefatafl-play.html">Hnefatafl →</a><a class="back-link" href="tablut-play.html">Tablut →</a>
     </section>
     <section class="status-card" aria-live="polite"><strong id="history-status">Loading…</strong><span id="history-detail"></span></section>
     <section class="game-card"><div id="history-actions" class="actions"></div><div id="history-board" class="history-board"></div></section>
     <section class="note-card"><strong id="history-note-title"></strong><span id="history-note"></span></section>
   </main>
-  <script src="randomizer.js?v=1"></script><script src="historical-games.js?v=1"></script><script src="senet.js?v=1"></script><script src="graph-games.js?v=1"></script><script src="konane.js?v=1"></script><script src="historical-route.js?v=1"></script><script src="historical-play.js?v=1"></script>
+  <script src="randomizer.js?v=1"></script><script src="stateGraph.js?v=2"></script><script src="historical-games.js?v=2"></script><script src="senet.js?v=2"></script><script src="graph-games.js?v=1"></script><script src="konane.js?v=1"></script><script src="historical-route.js?v=1"></script><script src="historical-play.js?v=2"></script>
 </body>
 </html>
