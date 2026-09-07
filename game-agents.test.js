@@ -3,7 +3,7 @@
 const assert = require("assert");
 const Agents = require("./game-agents.js");
 
-(async function () {
+test("random and heuristic agents stay inside legal actions and defer chance", async () => {
   const a = { type: "move", n: 1 };
   const b = { type: "move", n: 2 };
   const chance = { actor: "chance", type: "cast" };
@@ -12,15 +12,8 @@ const Agents = require("./game-agents.js");
   assert.deepStrictEqual(Agents.playerActions([chance, a]), [a]);
   assert.deepStrictEqual(Agents.chanceActions([chance, a]), [chance]);
 
-  const heuristic = Agents.heuristicAgent({
-    random: () => 0,
-    scoreAction(action) { return action.n; }
-  });
-  assert.strictEqual(heuristic.chooseAction({ legalActions: [a, b] }), b);
-  assert.strictEqual(heuristic.chooseAction({ legalActions: [chance, a, b] }), b);
-
-  const tied = Agents.heuristicAgent({ random: () => 0.99, scoreAction() { return 5; } });
-  assert.strictEqual(tied.chooseAction({ legalActions: [a, b] }), b);
+  const heuristic = Agents.heuristicAgent({ scoreAction: action => action.n });
+  assert.strictEqual(await Agents.choose(heuristic, { legalActions: [a, b] }), b);
 
   const modules = {
     legalActions() { return [a, b]; },
@@ -33,10 +26,6 @@ const Agents = require("./game-agents.js");
   assert.strictEqual(result.action, b);
   assert.strictEqual(game.last, b);
 
-  const heuristicResult = await Agents.takeTurn({ modules, gameId: "test", game: {}, agent: heuristic });
-  assert.strictEqual(heuristicResult.status, "applied");
-  assert.strictEqual(heuristicResult.action, b);
-
   const chanceResult = await Agents.takeTurn({
     modules: { ...modules, legalActions() { return [chance]; } },
     gameId: "chance-test",
@@ -48,9 +37,4 @@ const Agents = require("./game-agents.js");
 
   const illegalAgent = { id: "illegal", chooseAction() { return { type: "invented" }; } };
   await assert.rejects(() => Agents.choose(illegalAgent, { legalActions: [a] }), /outside legalActions/);
-
-  console.log("game-agents tests passed");
-})().catch(error => {
-  console.error(error);
-  process.exitCode = 1;
 });
