@@ -25,7 +25,7 @@
         "https://www.metmuseum.org/de/essays/board-games-from-ancient-egypt-and-the-near-east"
       ])
     }),
-    fiftyEightHoles: Object.freeze({
+    "fifty-eight-holes": Object.freeze({
       id: "fifty-eight-holes",
       name: "Fifty-Eight Holes / Hounds and Jackals",
       region: "Egypt and Bronze Age Near East",
