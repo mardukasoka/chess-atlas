@@ -1,0 +1,3 @@
+"use strict";
+const modules=require("./game-modules.js");
+describe("Hnefatafl module",()=>{beforeEach(()=>modules.clear());test("exposes shared agent-facing contract",()=>{jest.resetModules();const registry=require("./game-modules.js");registry.clear();const def=require("./hnefatafl-module.js");const game=registry.create(def.id);const actions=registry.legalActions(def.id,game);expect(actions.length).toBeGreaterThan(0);const before=registry.snapshot(def.id,game);registry.applyAction(def.id,game,actions[0]);const after=registry.snapshot(def.id,game);expect(after.board).not.toEqual(before.board);});});
