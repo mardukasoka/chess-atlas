@@ -45,6 +45,34 @@
     });
   }
 
+  function heuristicAgent(options) {
+    const opts = options || {};
+    const scoreAction = typeof opts.scoreAction === "function" ? opts.scoreAction : (() => 0);
+    const random = typeof opts.random === "function" ? opts.random : Math.random;
+    return Object.freeze({
+      id: opts.id || "heuristic",
+      name: opts.name || "Heuristic",
+      chooseAction(context) {
+        const actions = playerActions(context.legalActions || []);
+        if (!actions.length) return null;
+        let bestScore = -Infinity;
+        let best = [];
+        for (const action of actions) {
+          const score = Number(scoreAction(action, context));
+          const value = Number.isFinite(score) ? score : -Infinity;
+          if (value > bestScore) {
+            bestScore = value;
+            best = [action];
+          } else if (value === bestScore) {
+            best.push(action);
+          }
+        }
+        if (!best.length) return actions[0];
+        return best[Math.floor(random() * best.length)];
+      }
+    });
+  }
+
   async function choose(agent, context) {
     validateAgent(agent);
     const actions = Array.isArray(context && context.legalActions) ? context.legalActions : [];
@@ -81,5 +109,5 @@
     return Object.freeze({ status: "applied", actions: [], action, result });
   }
 
-  return Object.freeze({ validateAgent, randomAgent, choose, takeTurn, playerActions, chanceActions });
+  return Object.freeze({ validateAgent, randomAgent, heuristicAgent, choose, takeTurn, playerActions, chanceActions });
 });
