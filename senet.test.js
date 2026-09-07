@@ -29,7 +29,6 @@ describe("Senet Kendall-style reconstruction", () => {
     const game = new Senet.SenetKendallGame();
     game.pieces.get("w")[0] = { position: 11, passedHappiness: false };
     game.pieces.get("b")[0] = { position: 13, passedHappiness: false };
-    // Move other black pieces away so 13 is not protected by an adjacent pair.
     game.pieces.get("b")[1].position = 20;
     game.pieces.get("b")[2].position = 22;
     game.pieces.get("b")[3].position = 24;
@@ -37,7 +36,6 @@ describe("Senet Kendall-style reconstruction", () => {
     game.turn = "w";
     game.lastThrow = 2;
     game.bonusTurn = false;
-
     game.move(0, 2);
     expect(game.pieces.get("w")[0].position).toBe(13);
     expect(game.pieces.get("b")[0].position).toBe(11);
@@ -50,7 +48,6 @@ describe("Senet Kendall-style reconstruction", () => {
     game.turn = "w";
     game.lastThrow = 1;
     game.bonusTurn = true;
-
     game.move(0, 1);
     expect(game.pieces.get("w")[0].position).toBe(15);
   });
@@ -60,5 +57,13 @@ describe("Senet Kendall-style reconstruction", () => {
     game.pieces.get("w")[0] = { position: 28, passedHappiness: true };
     expect(game.forwardMoveFor(0, 2)).toBeNull();
     expect(game.forwardMoveFor(0, 3)).toMatchObject({ to: 31, exit: true });
+  });
+
+  test("snapshot restores exactly for state graph navigation", () => {
+    const game = new Senet.SenetKendallGame({ seed: "graph" });
+    game.cast();
+    const snapshot = game.snapshot();
+    const restored = new Senet.SenetKendallGame({ snapshot });
+    expect(restored.snapshot()).toEqual(snapshot);
   });
 });
