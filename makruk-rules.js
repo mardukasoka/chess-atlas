@@ -15,7 +15,7 @@ const ROOKS = MakrukRuleKernelApi.vectors.rook(2);
 const KINGS = MakrukRuleKernelApi.vectors.king(2);
 const KNIGHTS = MakrukRuleKernelApi.vectors.knight(2);
 
-const MAKRUК_MOVEMENTS = Object.freeze({
+const MAKRUK_MOVEMENTS = Object.freeze({
   R: MakrukRuleKernelApi.slide(ROOKS),
   K: MakrukRuleKernelApi.step(KINGS),
   N: MakrukRuleKernelApi.jump(KNIGHTS),
@@ -42,8 +42,8 @@ const MAKRUК_MOVEMENTS = Object.freeze({
 
 function movementFor(piece) {
   if (typeof piece !== "string" || piece.length < 2) return null;
-  if (piece[1] === "P" || piece[1] === "B") return MAKRUК_MOVEMENTS[piece] || null;
-  return MAKRUК_MOVEMENTS[piece[1]] || null;
+  if (piece[1] === "P" || piece[1] === "B") return MAKRUK_MOVEMENTS[piece] || null;
+  return MAKRUK_MOVEMENTS[piece[1]] || null;
 }
 
 function generateMoves({ board, shape, row, col }) {
@@ -62,7 +62,7 @@ function generateMoves({ board, shape, row, col }) {
 }
 
 const MakrukRules = Object.freeze({
-  movements: MAKRUК_MOVEMENTS,
+  movements: MAKRUK_MOVEMENTS,
   movementFor,
   generateMoves
 });
