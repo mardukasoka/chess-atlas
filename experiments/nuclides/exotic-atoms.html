@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Nuclide Atlas — Exotic Atoms</title>
 <style>
-:root{color-scheme:dark;font-family:system-ui,sans-serif}body{margin:0;background:#101216;color:#eee}main{padding:14px;max-width:920px;margin:auto}h1{font-size:1.5rem;margin:0 0 4px}.sub{color:#aaa;margin-bottom:14px}.filters{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}button{border:0;border-radius:8px;padding:10px 12px;background:#292e37;color:#fff}button.active{background:#5967e8}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.card{border:1px solid #343a46;border-radius:10px;padding:12px;background:#1d2128}.meta{font-size:.84rem;line-height:1.45;color:#c2c8d0}.badge{display:inline-block;border:1px solid #4a5260;border-radius:999px;padding:2px 7px;margin:3px 4px 6px 0;font-size:.72rem}.measured{margin-top:6px;color:#ffd84d}.note{margin-top:14px;color:#aaa;font-size:.85rem;line-height:1.45}a{color:#9eb0ff}
+:root{color-scheme:dark;font-family:system-ui,sans-serif}body{margin:0;background:#101216;color:#eee}main{padding:14px;max-width:920px;margin:auto}h1{font-size:1.5rem;margin:0 0 4px}.back{display:inline-block;margin:2px 0 14px;color:#9eb0ff;text-decoration:none}.sub{color:#aaa;margin-bottom:14px}.filters{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}button{border:0;border-radius:8px;padding:10px 12px;background:#292e37;color:#fff}button.active{background:#5967e8}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.card{border:1px solid #343a46;border-radius:10px;padding:12px;background:#1d2128}.meta{font-size:.84rem;line-height:1.45;color:#c2c8d0}.badge{display:inline-block;border:1px solid #4a5260;border-radius:999px;padding:2px 7px;margin:3px 4px 6px 0;font-size:.72rem}.measured{margin-top:6px;color:#ffd84d}.note{margin-top:14px;color:#aaa;font-size:.85rem;line-height:1.45}a{color:#9eb0ff}
 </style>
 </head>
 <body>
 <main>
-<h1>Exotic Atomic Systems</h1>
-<div class="sub">Muon-, pion-, and tau-substituted atomic systems connected to the Nuclide Atlas.</div>
+<a class="back" href="../../index.html">← Return to Atlas</a>
+<h1>Nuclide Atlas — Exotic Atomic Systems</h1>
+<div class="sub">Muon-, pion-, and tau-substituted atomic systems. A lightweight Atlas science page.</div>
 <div class="filters" id="filters">
   <button class="active" data-family="">All</button>
   <button data-family="muonic atom">Muonic</button>
@@ -36,7 +37,7 @@ function render(family=""){
     return `<article class="card"><strong>${esc(x.name)}</strong><div class="meta"><span class="badge">${esc(x.family)}</span><span class="badge">${esc(x.status)}</span><br>${esc(x.composition)}<br>${esc(x.evidence)}<br>Use: ${esc(x.use)}<br>Lifetime: ${esc(x.lifetimeClass)}${measured}<br>${sources}</div></article>`;
   }).join("");
 }
-buttons.forEach(button=>button.onclick=()=>{buttons.forEach(b=>b.classList.remove("active"));button.classList.add("active");render(button.dataset.family);});
+buttons.forEach(button=>button.onclick=()=>{buttons.forEach(b=>b.classList.remove("active"));button.classList.add("active"));render(button.dataset.family);});
 render();
 </script>
 </body>
