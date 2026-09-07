@@ -28,6 +28,22 @@ const HISTORICAL_PROFILES = Object.freeze({
     certainty: "reconstructed-rules-vary",
     randomizer: "casting-sticks"
   }),
+  mehen: Object.freeze({
+    id: "mehen",
+    name: "Mehen",
+    family: "spiral-race-archaeological",
+    period: "Predynastic / Early Dynastic and Old Kingdom Egypt",
+    certainty: "board-and-pieces-attested-rules-unknown",
+    playable: false
+  }),
+  fiftyEightHoles: Object.freeze({
+    id: "fifty-eight-holes",
+    name: "Fifty-Eight Holes / Hounds and Jackals",
+    family: "two-track-peg-race",
+    period: "Middle Kingdom Egypt and Bronze Age Near East",
+    certainty: "race-structure-attested-complete-rules-unknown",
+    playableProfile: "carter-carnarvon-1912-basic"
+  }),
   nineMensMorris: Object.freeze({
     id: "nine-mens-morris",
     name: "Nine Men's Morris / Merels",
