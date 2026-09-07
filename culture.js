@@ -7,7 +7,7 @@
   const returnLink = document.getElementById("return-map");
 
   returnLink.href = returnState
-    ? `index.html#${encodeURIComponent(returnState)}`
+    ? `index.html#${returnState}`
     : "index.html";
 
   if (!culture) {
