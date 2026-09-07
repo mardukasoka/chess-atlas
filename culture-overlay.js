@@ -37,6 +37,15 @@
     if (atlasMap) atlasMap.setCulturalFeatures(activeCultures());
   }
 
+  function restoreMapWhenReady(state, attempts = 0) {
+    if (!state || attempts > 120) return;
+    if (atlasMap) {
+      AtlasReturnState.restoreMap(atlasMap, state);
+      return;
+    }
+    requestAnimationFrame(() => restoreMapWhenReady(state, attempts + 1));
+  }
+
   const baseRenderTimeline = renderTimeline;
   renderTimeline = function () {
     baseRenderTimeline();
@@ -59,22 +68,24 @@
         const culture = AtlasCultureData.get(atlasMap.selectedId);
         if (!culture) return;
         const node = getCurrentNode();
-        const returnState = `atlas=${encodeURIComponent(node.id)}&mode=${encodeURIComponent(currentMode)}`;
+        const returnState = AtlasReturnState.encode({
+          atlas: node.id,
+          mode: currentMode,
+          camera: atlasMap.camera,
+          selectedId: atlasMap.selectedId
+        });
         location.href = `culture.html?id=${encodeURIComponent(culture.slug)}&return=${encodeURIComponent(returnState)}`;
       });
     });
 
-    const requested = location.hash.startsWith("#atlas=")
-      ? new URLSearchParams(location.hash.slice(1))
-      : null;
+    const requested = AtlasReturnState.decode(location.hash);
     if (requested) {
-      const nodeId = requested.get("atlas");
-      const mode = requested.get("mode");
-      const index = ATLAS_WORLD.nodes.findIndex(node => node.id === nodeId);
+      const index = ATLAS_WORLD.nodes.findIndex(node => node.id === requested.atlas);
       if (index >= 0) currentNodeIndex = index;
       renderTimeline();
       applyTimelineGame();
-      if (mode === "diplomacy" || mode === "chess") setMode(mode);
+      if (requested.mode === "diplomacy" || requested.mode === "chess") setMode(requested.mode);
+      restoreMapWhenReady(requested);
     }
   });
 })();
