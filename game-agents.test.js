@@ -12,6 +12,16 @@ const Agents = require("./game-agents.js");
   assert.deepStrictEqual(Agents.playerActions([chance, a]), [a]);
   assert.deepStrictEqual(Agents.chanceActions([chance, a]), [chance]);
 
+  const heuristic = Agents.heuristicAgent({
+    random: () => 0,
+    scoreAction(action) { return action.n; }
+  });
+  assert.strictEqual(heuristic.chooseAction({ legalActions: [a, b] }), b);
+  assert.strictEqual(heuristic.chooseAction({ legalActions: [chance, a, b] }), b);
+
+  const tied = Agents.heuristicAgent({ random: () => 0.99, scoreAction() { return 5; } });
+  assert.strictEqual(tied.chooseAction({ legalActions: [a, b] }), b);
+
   const modules = {
     legalActions() { return [a, b]; },
     snapshot() { return { turn: 1 }; },
@@ -22,6 +32,10 @@ const Agents = require("./game-agents.js");
   assert.strictEqual(result.status, "applied");
   assert.strictEqual(result.action, b);
   assert.strictEqual(game.last, b);
+
+  const heuristicResult = await Agents.takeTurn({ modules, gameId: "test", game: {}, agent: heuristic });
+  assert.strictEqual(heuristicResult.status, "applied");
+  assert.strictEqual(heuristicResult.action, b);
 
   const chanceResult = await Agents.takeTurn({
     modules: { ...modules, legalActions() { return [chance]; } },
