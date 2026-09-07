@@ -30,6 +30,50 @@
     return normalizeUci(match[1]);
   }
 
+  function fenPiece(piece) {
+    if (!piece || typeof piece !== "string" || piece.length < 2) return "";
+    const letter = piece[1].toLowerCase();
+    return piece[0] === "w" ? letter.toUpperCase() : letter;
+  }
+
+  function boardToFen(board) {
+    if (!Array.isArray(board) || board.length !== 8) throw new TypeError("Stockfish requires an 8x8 board");
+    return board.map(row => {
+      if (!Array.isArray(row) || row.length !== 8) throw new TypeError("Stockfish requires an 8x8 board");
+      let text = "";
+      let empty = 0;
+      for (const piece of row) {
+        if (!piece) {
+          empty += 1;
+          continue;
+        }
+        if (empty) {
+          text += String(empty);
+          empty = 0;
+        }
+        text += fenPiece(piece);
+      }
+      if (empty) text += String(empty);
+      return text;
+    }).join("/");
+  }
+
+  function snapshotToFen(snapshot) {
+    if (!snapshot || snapshot.profile !== "modern") throw new Error("Stockfish currently supports the modern chess profile only");
+    const side = snapshot.turnCode === "b" ? "b" : "w";
+    // Chess Atlas does not yet model castling rights or en-passant state, so we
+    // explicitly disable both in FEN. This prevents Stockfish proposing moves
+    // the current rules engine cannot represent.
+    return `${boardToFen(snapshot.board)} ${side} - - 0 1`;
+  }
+
+  function positionFromContext(context) {
+    if (context && typeof context.uciPosition === "string") return context.uciPosition;
+    if (context && typeof context.position === "string") return context.position;
+    if (context && context.snapshot) return `fen ${snapshotToFen(context.snapshot)}`;
+    return null;
+  }
+
   function createUciTransport(options) {
     const opts = options || {};
     if (typeof opts.send !== "function") throw new TypeError("UCI transport requires send(command)");
@@ -59,8 +103,8 @@
       async chooseAction(context) {
         const actions = Array.isArray(context && context.legalActions) ? context.legalActions : [];
         if (!actions.length) return null;
-        const position = context && (context.uciPosition || context.position);
-        if (!position) throw new Error("Stockfish agent requires context.uciPosition");
+        const position = positionFromContext(context);
+        if (!position) throw new Error("Stockfish agent requires a chess position or snapshot");
         const uci = await transport.bestMove(position, opts.go || "go depth 10");
         const selected = actions.find(action => actionUci(action) === uci);
         if (!selected) throw new Error(`Stockfish selected move outside legalActions: ${uci}`);
@@ -69,5 +113,5 @@
     });
   }
 
-  return Object.freeze({ normalizeUci, actionUci, parseBestmove, createUciTransport, stockfishAgent });
+  return Object.freeze({ normalizeUci, actionUci, parseBestmove, fenPiece, boardToFen, snapshotToFen, positionFromContext, createUciTransport, stockfishAgent });
 });
