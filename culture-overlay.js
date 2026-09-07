@@ -12,10 +12,42 @@
       historicalGame: null
     },
     {
+      id: "catalhoyuk",
+      year: -7000,
+      label: "Çatalhöyük",
+      description: "Neolithic settlement complex on the Konya plain. The map marks a site-based archaeological layer, not a polity.",
+      games: [],
+      historicalGame: null
+    },
+    {
+      id: "lbk",
+      year: -5300,
+      label: "Linear Pottery culture (LBK)",
+      description: "Early farming horizon across temperate Europe. The envelope represents archaeological distribution, not ethnicity or language.",
+      games: [],
+      historicalGame: null
+    },
+    {
+      id: "cucuteni-trypillia",
+      year: -4100,
+      label: "Cucuteni–Trypillia complex",
+      description: "Neolithic–Chalcolithic cultural complex of parts of present-day Romania, Moldova and Ukraine, including later megasites.",
+      games: [],
+      historicalGame: null
+    },
+    {
       id: "yamnaya",
       year: -2900,
       label: "Yamnaya horizon",
       description: "Pontic–Caspian Early Bronze Age archaeological horizon. Polygon is an evidence envelope, not a state border.",
+      games: [],
+      historicalGame: null
+    },
+    {
+      id: "corded-ware",
+      year: -2600,
+      label: "Corded Ware horizon",
+      description: "Late Neolithic–Early Bronze Age archaeological horizon across broad parts of Europe, with substantial regional variation.",
       games: [],
       historicalGame: null
     }
