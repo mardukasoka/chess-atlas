@@ -5,7 +5,7 @@ const Modules = require("./game-modules.js");
 const Agents = require("./game-agents.js");
 const HnefataflModule = require("./hnefatafl-module.js");
 
-(async function () {
+test("agent runner applies a legal move through a real Hnefatafl module", async () => {
   Modules.clear();
   Modules.register(HnefataflModule);
 
@@ -28,9 +28,4 @@ const HnefataflModule = require("./hnefatafl-module.js");
   assert.strictEqual(result.action, legal[0]);
   assert.strictEqual(game.turn, "defenders");
   assert.notDeepStrictEqual(Modules.snapshot(gameId, game).board, before.board);
-
-  console.log("game-agents integration tests passed");
-})().catch(error => {
-  console.error(error);
-  process.exitCode = 1;
 });
