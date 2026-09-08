@@ -17,11 +17,7 @@
       "name": "Infinite Chess",
       "repository": "https://github.com/Infinite-Chess/infinitechess.org",
       "role": "Reference implementation for unbounded chess boards, navigation, rendering, and infinite-board interaction.",
-      "atlas_domains": [
-        "chess",
-        "spatial-navigation",
-        "interface"
-      ],
+      "atlas_domains": ["chess", "spatial-navigation", "interface"],
       "integration": "reference",
       "adapter_path": "adapters/infinite-chess/",
       "upstream_commit": null,
@@ -33,12 +29,7 @@
       "name": "5D Chess Designer",
       "repository": "https://github.com/adri326/5dchess-designer",
       "role": "Reference implementation for branching timelines, multidimensional chess state, and 5D chess representation.",
-      "atlas_domains": [
-        "chess",
-        "time",
-        "branching-worlds",
-        "interface"
-      ],
+      "atlas_domains": ["chess", "time", "branching-worlds", "interface"],
       "integration": "reference",
       "adapter_path": "adapters/five-d-chess/",
       "upstream_commit": null,
@@ -46,15 +37,37 @@
       "modified": false
     },
     {
+      "id": "fairy-stockfish",
+      "name": "Fairy-Stockfish",
+      "repository": "https://github.com/fairy-stockfish/Fairy-Stockfish",
+      "fork": "https://github.com/mardukasoka/Fairy-Stockfish",
+      "role": "Variant-engine reference and future rules/opponent backend for regional, historical and modern chess-family games.",
+      "atlas_domains": ["chess", "historical-games", "regional-chess", "variant-engine", "agents"],
+      "integration": "reference-adapt",
+      "adapter_path": "adapters/fairy-stockfish/",
+      "upstream_commit": "c19b5f6c66894fdb0e88d0dd100e3885f744760a",
+      "license": "GPL-3.0-or-later",
+      "modified": false
+    },
+    {
+      "id": "fairy-stockfish-wasm",
+      "name": "Fairy-Stockfish WebAssembly",
+      "repository": "https://github.com/fairy-stockfish/fairy-stockfish.wasm",
+      "fork": "https://github.com/mardukasoka/fairy-stockfish.wasm",
+      "role": "Browser-side Fairy-Stockfish port suitable for optional client-side analysis and AI opponents without making the Atlas UI depend on a server engine.",
+      "atlas_domains": ["chess", "webassembly", "mobile", "local-analysis", "agents"],
+      "integration": "candidate-dependency-adapter",
+      "adapter_path": "adapters/fairy-stockfish/",
+      "upstream_commit": null,
+      "license": "GPL-3.0-or-later - VERIFY EXACT DISTRIBUTED BUILD TERMS",
+      "modified": false
+    },
+    {
       "id": "llm-council",
       "name": "Karpathy LLM Council",
       "repository": "https://github.com/karpathy/llm-council",
       "role": "Reference architecture for independent model responses, peer comparison, and chairman synthesis.",
-      "atlas_domains": [
-        "ai-council",
-        "deliberation",
-        "epistemology"
-      ],
+      "atlas_domains": ["ai-council", "deliberation", "epistemology"],
       "integration": "reference-adapt",
       "adapter_path": "adapters/llm-council/",
       "upstream_commit": null,
@@ -66,12 +79,7 @@
       "name": "Galaxy of Nuclides",
       "repository": "https://github.com/Frencil/galaxy_of_nuclides",
       "role": "Reference implementation for interactive transitions between the periodic table, elements, isotopes, and the chart of nuclides.",
-      "atlas_domains": [
-        "nuclear-physics",
-        "periodic-table",
-        "nuclides",
-        "visualisation"
-      ],
+      "atlas_domains": ["nuclear-physics", "periodic-table", "nuclides", "visualisation"],
       "integration": "reference-adapt",
       "adapter_path": "adapters/galaxy-nuclides/",
       "upstream_commit": null,
@@ -83,13 +91,7 @@
       "name": "WorldDynamics.jl",
       "repository": "https://github.com/worlddynamics/WorldDynamics.jl",
       "role": "Julia framework for integrated assessment and world-system dynamics, providing an executable quantitative modelling reference for the Atlas.",
-      "atlas_domains": [
-        "julia",
-        "earth-systems",
-        "civilisation",
-        "integrated-assessment",
-        "simulation"
-      ],
+      "atlas_domains": ["julia", "earth-systems", "civilisation", "integrated-assessment", "simulation"],
       "integration": "dependency-adapter",
       "adapter_path": "adapters/worlddynamics/",
       "upstream_commit": null,
@@ -99,34 +101,13 @@
   ],
   "atlas_architecture": {
     "layers": [
-      {
-        "name": "Reality",
-        "question": "What exists?"
-      },
-      {
-        "name": "Observation",
-        "question": "What has been measured or recorded?"
-      },
-      {
-        "name": "Knowledge Graph",
-        "question": "What is known, with what provenance?"
-      },
-      {
-        "name": "Julia",
-        "question": "What does the quantitative model predict?"
-      },
-      {
-        "name": "AI Council",
-        "question": "How should competing evidence, models, and interpretations be compared?"
-      },
-      {
-        "name": "Inform7",
-        "question": "What relationships, actions, and transitions are permitted?"
-      },
-      {
-        "name": "Interface",
-        "question": "What does the user see and explore?"
-      }
+      {"name": "Reality", "question": "What exists?"},
+      {"name": "Observation", "question": "What has been measured or recorded?"},
+      {"name": "Knowledge Graph", "question": "What is known, with what provenance?"},
+      {"name": "Julia", "question": "What does the quantitative model predict?"},
+      {"name": "AI Council", "question": "How should competing evidence, models, and interpretations be compared?"},
+      {"name": "Inform7", "question": "What relationships, actions, and transitions are permitted?"},
+      {"name": "Interface", "question": "What does the user see and explore?"}
     ],
     "guiding_principle": "Facts are not simulations. Simulations are not judgments. Judgments are not laws. Laws are not interfaces."
   }
