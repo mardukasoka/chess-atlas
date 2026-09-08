@@ -116,7 +116,11 @@
       if (index >= 0) currentNodeIndex = index;
       renderTimeline();
       applyTimelineGame();
-      if (["civilisation", "diplomacy", "chess"].includes(requested.mode)) setMode(requested.mode);
+      updateAvailability();
+      const requestedMode = requested.mode;
+      if (requestedMode === "chess" && getCurrentNode().year < FIRST_CHESS_YEAR) setMode("civilisation");
+      else if (requestedMode === "games" && getCurrentNode().year < FIRST_GAME_YEAR) setMode("civilisation");
+      else if (["games", "civilisation", "diplomacy", "chess"].includes(requestedMode)) setMode(requestedMode);
       restoreMapWhenReady(requested);
     }
   });
