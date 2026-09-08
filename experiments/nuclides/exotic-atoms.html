@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Nuclide Atlas — Exotic Atoms</title>
 <style>
-:root{color-scheme:dark;font-family:system-ui,sans-serif}body{margin:0;background:#101216;color:#eee}main{padding:14px;max-width:920px;margin:auto}h1{font-size:1.5rem;margin:0 0 4px}.back{display:inline-block;margin:2px 0 14px;color:#9eb0ff;text-decoration:none}.sub{color:#aaa;margin-bottom:14px}.filters{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}button{border:0;border-radius:8px;padding:10px 12px;background:#292e37;color:#fff}button.active{background:#5967e8}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.card{border:1px solid #343a46;border-radius:10px;padding:12px;background:#1d2128}.meta{font-size:.84rem;line-height:1.45;color:#c2c8d0}.badge{display:inline-block;border:1px solid #4a5260;border-radius:999px;padding:2px 7px;margin:3px 4px 6px 0;font-size:.72rem}.measured{margin-top:6px;color:#ffd84d}.note{margin-top:14px;color:#aaa;font-size:.85rem;line-height:1.45}a{color:#9eb0ff}
+:root{color-scheme:dark;font-family:system-ui,sans-serif}body{margin:0;background:#101216;color:#eee}main{padding:14px;max-width:920px;margin:auto}h1{font-size:1.5rem;margin:0 0 4px}.back{display:inline-block;margin:2px 0 14px;color:#9eb0ff;text-decoration:none}.sub{color:#aaa;margin-bottom:14px}.filters{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}button{border:0;border-radius:8px;padding:10px 12px;background:#292e37;color:#fff}button.active{background:#5967e8}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.card,.visualizer{border:1px solid #343a46;border-radius:10px;padding:12px;background:#1d2128}.visualizer{margin:12px 0 16px}.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:10px 0 12px}.control{display:grid;gap:5px}.control label{font-size:.78rem;color:#aeb6c2}.control select{width:100%;min-height:42px;border:1px solid #414957;border-radius:8px;background:#151920;color:#fff;padding:8px;font-size:1rem}.atom-stage{position:relative;min-height:290px;border:1px solid #303744;border-radius:10px;overflow:hidden;background:radial-gradient(circle at center,#1a202a 0,#11151b 62%,#0d1015 100%)}.nucleus{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:#c96363;color:#fff;font-weight:700;z-index:3;border:2px solid #f1a1a1}.orbit{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:2px solid #7382ff;border-radius:50%;box-shadow:0 0 20px rgba(115,130,255,.2)}.particle{position:absolute;left:50%;top:50%;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:#8fa0ff;color:#0d1020;font-size:.7rem;font-weight:800;z-index:4}.scale-line{position:absolute;left:12px;right:12px;bottom:12px;font-size:.72rem;color:#89919d}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}.stat{padding:8px;border-radius:8px;background:#151920}.stat b{display:block;font-size:.72rem;color:#99a3b0;font-weight:500}.stat span{font-size:.95rem}.warning{margin-top:9px;font-size:.78rem;color:#b9c0c9;line-height:1.4}.meta{font-size:.84rem;line-height:1.45;color:#c2c8d0}.badge{display:inline-block;border:1px solid #4a5260;border-radius:999px;padding:2px 7px;margin:3px 4px 6px 0;font-size:.72rem}.measured{margin-top:6px;color:#ffd84d}.note{margin-top:14px;color:#aaa;font-size:.85rem;line-height:1.45}a{color:#9eb0ff}@media(max-width:520px){.atom-stage{min-height:250px}.nucleus{width:48px;height:48px}}
 </style>
 </head>
 <body>
@@ -13,6 +13,28 @@
 <a class="back" href="../../index.html">← Return to Atlas</a>
 <h1>Nuclide Atlas — Exotic Atomic Systems</h1>
 <div class="sub">Muon-, pion-, and tau-substituted atomic systems. A lightweight Atlas science page.</div>
+
+<section class="visualizer" aria-labelledby="viz-title">
+  <strong id="viz-title">Exotic atom structure visualizer</strong>
+  <div class="controls">
+    <div class="control"><label for="particleSelect">Bound negative particle</label><select id="particleSelect"><option value="electron">Electron e−</option><option value="muon" selected>Muon μ−</option><option value="pion">Pion π−</option><option value="tau">Tau τ−</option></select></div>
+    <div class="control"><label for="nucleusSelect">Nucleus</label><select id="nucleusSelect"><option value="H1">Hydrogen-1</option><option value="H2">Deuterium</option><option value="He3">Helium-3</option><option value="He4">Helium-4</option></select></div>
+  </div>
+  <div class="atom-stage" id="atomStage" role="img" aria-label="Hydrogenic exotic atom scale comparison">
+    <div class="orbit" id="orbit"></div>
+    <div class="nucleus" id="nucleusLabel">p</div>
+    <div class="particle" id="particleDot">μ−</div>
+    <div class="scale-line">Visual radius is logarithmically compressed so electron and exotic atoms can be compared on one screen.</div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>Hydrogenic radius scale</b><span id="radiusFm">—</span></div>
+    <div class="stat"><b>Relative to ordinary H</b><span id="relativeRadius">—</span></div>
+    <div class="stat"><b>Reduced mass</b><span id="reducedMass">—</span></div>
+    <div class="stat"><b>Atlas status</b><span id="atlasStatus">—</span></div>
+  </div>
+  <div class="warning" id="vizNote">The radius uses the Coulombic hydrogen-like scale a = ħc/(αZμ). It is a comparison model, not a full strong-interaction wavefunction. Pionic helium metastable states are structurally more complex because an electron can remain bound.</div>
+</section>
+
 <div class="filters" id="filters">
   <button class="active" data-family="">All</button>
   <button data-family="muonic atom">Muonic</button>
@@ -38,7 +60,52 @@ function render(family=""){
   }).join("");
 }
 buttons.forEach(button=>button.onclick=()=>{buttons.forEach(b=>b.classList.remove("active"));button.classList.add("active");render(button.dataset.family);});
-render();
+
+const particleSelect=document.getElementById("particleSelect");
+const nucleusSelect=document.getElementById("nucleusSelect");
+const orbit=document.getElementById("orbit");
+const particleDot=document.getElementById("particleDot");
+const nucleusLabel=document.getElementById("nucleusLabel");
+const radiusFm=document.getElementById("radiusFm");
+const relativeRadius=document.getElementById("relativeRadius");
+const reducedMass=document.getElementById("reducedMass");
+const atlasStatus=document.getElementById("atlasStatus");
+const atomStage=document.getElementById("atomStage");
+const PARTICLES={electron:{label:"e−",mass:0.51099895,family:null},muon:{label:"μ−",mass:105.6583755,family:"muonic atom"},pion:{label:"π−",mass:139.57039,family:"pionic atom"},tau:{label:"τ−",mass:1776.86,family:"tauonic atom"}};
+const NUCLEI={H1:{label:"p",mass:938.27208816,Z:1,A:1,id:"hydrogen"},H2:{label:"d",mass:1875.61294257,Z:1,A:2,id:"deuterium"},He3:{label:"³He",mass:2808.39160743,Z:2,A:3,id:"helium-3"},He4:{label:"α",mass:3727.3794066,Z:2,A:4,id:"helium-4"}};
+const HBARC=197.3269804,ALPHA=1/137.035999084;
+const baseMu=PARTICLES.electron.mass*NUCLEI.H1.mass/(PARTICLES.electron.mass+NUCLEI.H1.mass);
+const baseRadius=HBARC/(ALPHA*baseMu);
+function findCatalogueStatus(particleKey,nucleusKey){
+  if(particleKey==="electron") return "ordinary baseline";
+  const p=PARTICLES[particleKey],n=NUCLEI[nucleusKey];
+  const match=ChessAtlasExoticAtoms.systems.find(x=>x.family===p.family&&x.id.includes(n.id));
+  if(match) return match.status;
+  if(particleKey==="tau"&&nucleusKey.startsWith("He")) return "theoretical";
+  return "comparison only";
+}
+function updateVisualizer(){
+  const p=PARTICLES[particleSelect.value],n=NUCLEI[nucleusSelect.value];
+  const mu=p.mass*n.mass/(p.mass+n.mass);
+  const r=HBARC/(ALPHA*n.Z*mu);
+  const ratio=r/baseRadius;
+  const logMin=Math.log10(20),logMax=Math.log10(baseRadius),logR=Math.log10(Math.max(20,Math.min(baseRadius,r)));
+  const visual=70+190*(logR-logMin)/(logMax-logMin);
+  const d=Math.max(70,Math.min(260,visual));
+  orbit.style.width=d+"px";orbit.style.height=d+"px";
+  const angle=-0.65;
+  const pr=d/2;
+  particleDot.style.transform=`translate(calc(-50% + ${Math.cos(angle)*pr}px),calc(-50% + ${Math.sin(angle)*pr}px))`;
+  particleDot.textContent=p.label;nucleusLabel.textContent=n.label;
+  radiusFm.textContent=r>=1000?(r/1e5).toFixed(4)+" Å":r.toFixed(1)+" fm";
+  relativeRadius.textContent=ratio>=0.1?ratio.toFixed(3)+" ×":(1/ratio).toFixed(0)+"× smaller";
+  reducedMass.textContent=mu.toFixed(mu<10?3:1)+" MeV/c²";
+  atlasStatus.textContent=findCatalogueStatus(particleSelect.value,nucleusSelect.value);
+  atomStage.setAttribute("aria-label",`${particleSelect.options[particleSelect.selectedIndex].text} bound to ${nucleusSelect.options[nucleusSelect.selectedIndex].text}; hydrogenic radius ${r.toFixed(1)} femtometres`);
+}
+particleSelect.addEventListener("change",updateVisualizer);
+nucleusSelect.addEventListener("change",updateVisualizer);
+render();updateVisualizer();
 </script>
 </body>
 </html>
