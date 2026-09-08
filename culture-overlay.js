@@ -8,7 +8,7 @@
       year: -12500,
       label: "Natufian cultural complex",
       description: "Late Epipalaeolithic Levant. Cultural geometry represents archaeological evidence, not territory.",
-      games: ["race"],
+      games: ["race", "civilisation"],
       historicalGame: null
     },
     {
@@ -16,7 +16,7 @@
       year: -7000,
       label: "Çatalhöyük",
       description: "Neolithic settlement complex on the Konya plain. The map marks a site-based archaeological layer, not a polity.",
-      games: [],
+      games: ["civilisation"],
       historicalGame: null
     },
     {
@@ -24,7 +24,7 @@
       year: -5300,
       label: "Linear Pottery culture (LBK)",
       description: "Early farming horizon across temperate Europe. The envelope represents archaeological distribution, not ethnicity or language.",
-      games: [],
+      games: ["civilisation"],
       historicalGame: null
     },
     {
@@ -32,7 +32,7 @@
       year: -4100,
       label: "Cucuteni–Trypillia complex",
       description: "Neolithic–Chalcolithic cultural complex of parts of present-day Romania, Moldova and Ukraine, including later megasites.",
-      games: [],
+      games: ["civilisation"],
       historicalGame: null
     },
     {
@@ -40,7 +40,7 @@
       year: -2900,
       label: "Yamnaya horizon",
       description: "Pontic–Caspian Early Bronze Age archaeological horizon. Polygon is an evidence envelope, not a state border.",
-      games: [],
+      games: ["civilisation"],
       historicalGame: null
     },
     {
@@ -48,7 +48,7 @@
       year: -2600,
       label: "Corded Ware horizon",
       description: "Late Neolithic–Early Bronze Age archaeological horizon across broad parts of Europe, with substantial regional variation.",
-      games: [],
+      games: ["civilisation"],
       historicalGame: null
     }
   ];
@@ -116,7 +116,7 @@
       if (index >= 0) currentNodeIndex = index;
       renderTimeline();
       applyTimelineGame();
-      if (requested.mode === "diplomacy" || requested.mode === "chess") setMode(requested.mode);
+      if (["civilisation", "diplomacy", "chess"].includes(requested.mode)) setMode(requested.mode);
       restoreMapWhenReady(requested);
     }
   });
