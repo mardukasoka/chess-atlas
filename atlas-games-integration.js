@@ -56,6 +56,7 @@
   if (registry) {
     registry.chronologicalGames()
       .filter(game => !excludedFamilies.has(game.family))
+      .filter(game => game.timelineEligible !== false)
       .filter(game => playableRoutes[game.id])
       .forEach(game => {
         const id = `game-${game.id}`;
