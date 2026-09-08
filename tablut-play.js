@@ -10,8 +10,16 @@
   let selected = null;
 
   const same = (a, b) => a && b && a[0] === b[0] && a[1] === b[1];
-  const glyph = piece => piece === "attacker" ? "●" : piece === "defender" ? "○" : piece === "king" ? "♚" : "";
   const side = piece => piece === "attacker" ? "attackers" : (piece === "defender" || piece === "king" ? "defenders" : null);
+
+  function pieceElement(piece) {
+    if (!piece) return null;
+    const token = document.createElement("span");
+    token.className = `tablut-piece ${piece}`;
+    token.textContent = piece === "king" ? "♚" : "";
+    token.setAttribute("aria-hidden", "true");
+    return token;
+  }
 
   function legalFromSelected() {
     return selected ? game.movesFrom(selected[0], selected[1]) : [];
@@ -23,7 +31,7 @@
       detailEl.textContent = "";
       return;
     }
-    statusEl.textContent = game.turn === "attackers" ? "Attackers to move" : "Defenders to move";
+    statusEl.textContent = game.turn === "attackers" ? "Red attackers to move" : "White defenders to move";
     detailEl.textContent = `Captured: ${game.captured.attackers} attackers · ${game.captured.defenders} defenders`;
   }
 
@@ -42,7 +50,8 @@
         if (same(selected, [row, col])) button.classList.add("selected");
         if (legal.some(move => same(move.to, [row, col]))) button.dataset.legal = "true";
         const piece = game.at(row, col);
-        button.textContent = glyph(piece);
+        const token = pieceElement(piece);
+        if (token) button.appendChild(token);
         button.setAttribute("aria-label", piece ? `${piece} at row ${row + 1}, column ${col + 1}` : `empty row ${row + 1}, column ${col + 1}`);
         button.addEventListener("click", onCellClick);
         boardEl.appendChild(button);
