@@ -35,8 +35,12 @@
       {id:"diplomacy",type:"system",title:"Diplomacy",text:"Actors, alliances, negotiation and strategic geography.",x:1360,y:300},
       {id:"conflict",type:"conflict",title:"Future Conflict",text:"Energy, water, migration, governance or orbital resources.",x:1360,y:700},
       {id:"chess",type:"system",title:"Chess / Battle",text:"One possible engine for resolving bounded conflict.",x:1680,y:500},
-      {id:"council",type:"system",title:"LLM Council",text:"Models analyse scenarios and propose alternative futures.",x:1040,y:850},
-      {id:"compute",type:"resource",title:"Compute",text:"Browser → Saturn Cloud → Vast.ai burst compute.",x:720,y:850},
+      {id:"council",type:"system",title:"LLM Council",text:"Open and remote models compare evidence, delegate research, test scenarios and maintain Atlas accuracy.",x:1040,y:850},
+      {id:"compute",type:"resource",title:"Cloud / Compute Backbone",text:"DigitalOcean primary services + storage; Runpod / Vast.ai burst GPU; Saturn Cloud research workspace; Cloudinary media; Cloudflare delivery.",x:620,y:850},
+      {id:"open-model-lab",type:"system",title:"Open Model Laboratory",text:"Run open-model repos, benchmark specialists, fine-tune with LoRA/QLoRA, preserve adapters/checkpoints and promote only evaluated improvements.",x:620,y:1120},
+      {id:"agent-harness",type:"system",title:"Advanced Agent Layer",text:"Council delegates bounded work through Sim / Oh My Pi patterns, with HumanLayer context discipline and reviewable task results.",x:1040,y:1120},
+      {id:"game-agents",type:"system",title:"Games Research Agents",text:"Rules archaeology, reconstruction, self-play, legality testing and engine-backed verification for Chess Atlas and historical games.",x:1400,y:1050},
+      {id:"accuracy-agents",type:"system",title:"Atlas Accuracy Agents",text:"Discover candidate updates, retrieve evidence, independently verify claims, record provenance/confidence and propose promotion to the Atlas.",x:1400,y:1250},
       {id:"heritage-reconstruction",type:"heritage",title:"Heritage Reconstruction",text:"Map → dated city/site → building → floor plan → object/text. Evidence graded; compact first, expansive later.",x:1960,y:1050},
       {id:"sketchfab-heritage",type:"resource",title:"Sketchfab Cultural Heritage",text:"3D scans, photogrammetry and reconstructions from museums, researchers and heritage projects.",url:"https://sketchfab.com/museums",x:2280,y:850},
       {id:"scan-the-world",type:"resource",title:"Scan the World",text:"Open 3D cultural objects and sculpture scans; useful for returning museum objects to historical spatial context.",url:"https://artsandculture.google.com/partner/scan-the-world",x:2280,y:1050},
@@ -49,6 +53,7 @@
     ];
     const links=[
       ["present","solarpunk"],["solarpunk","civilisation"],["civilisation","diplomacy"],["civilisation","conflict"],["diplomacy","chess"],["conflict","chess"],["council","civilisation"],["compute","council"],
+      ["compute","open-model-lab"],["open-model-lab","council"],["council","agent-harness"],["agent-harness","game-agents"],["agent-harness","accuracy-agents"],["game-agents","chess"],["accuracy-agents","heritage-reconstruction"],
       ["civilisation","heritage-reconstruction"],["heritage-reconstruction","sketchfab-heritage"],["heritage-reconstruction","scan-the-world"],["heritage-reconstruction","google-heritage"],["heritage-reconstruction","history-cartography"],["sketchfab-heritage","cyark"],["scan-the-world","atlas-library"],["google-heritage","atlas-library"],["history-cartography","atlas-library"],["history-cartography","alexandria"],["cyark","alexandria"],["atlas-library","alexandria"],["atlas-library","agi-atlas"]
     ];
     const viewport=document.getElementById("viewport"),world=document.getElementById("world"),cards=document.getElementById("cards"),edges=document.getElementById("edges");
