@@ -37,67 +37,34 @@
       {id:"chess",type:"system",title:"Chess / Battle",text:"One possible engine for resolving bounded conflict.",x:1680,y:500},
       {id:"council",type:"system",title:"LLM Council",text:"Models analyse scenarios and propose alternative futures.",x:1040,y:850},
       {id:"compute",type:"resource",title:"Compute",text:"Browser → Saturn Cloud → Vast.ai burst compute.",x:720,y:850},
-
       {id:"heritage-reconstruction",type:"heritage",title:"Heritage Reconstruction",text:"Map → dated city/site → building → floor plan → object/text. Evidence graded; compact first, expansive later.",x:1960,y:1050},
       {id:"sketchfab-heritage",type:"resource",title:"Sketchfab Cultural Heritage",text:"3D scans, photogrammetry and reconstructions from museums, researchers and heritage projects.",url:"https://sketchfab.com/museums",x:2280,y:850},
       {id:"scan-the-world",type:"resource",title:"Scan the World",text:"Open 3D cultural objects and sculpture scans; useful for returning museum objects to historical spatial context.",url:"https://artsandculture.google.com/partner/scan-the-world",x:2280,y:1050},
       {id:"google-heritage",type:"resource",title:"Google Arts & Culture — Heritage",text:"Digital cultural-preservation projects, 3D objects, imagery, stories and virtual heritage experiences.",url:"https://artsandculture.google.com/project/preservation/heritage",x:2280,y:1250},
       {id:"cyark",type:"resource",title:"CyArk",text:"Large-scale heritage documentation using photogrammetry and laser scanning; site/building-scale source layer.",url:"https://www.cyark.org/",x:2600,y:950},
       {id:"atlas-library",type:"heritage",title:"Atlas Library / Museum",text:"Federated index: historical libraries, texts, manuscripts, sites and objects linked to trusted repositories rather than duplicated initially.",x:2600,y:1200},
+      {id:"history-cartography",type:"resource",title:"The History of Cartography",text:"Foundational scholarly reference: prehistoric, ancient, medieval and global mapping traditions; guides primary-map discovery and interpretation.",url:"https://geography.wisc.edu/histcart/publications/",x:2600,y:1450},
       {id:"agi-atlas",type:"resource",title:"AGI Atlas — Classics",text:"Cross-civilisational classics with modern Japanese translations; useful as a translation/provenance reference model.",url:"https://atlas.agi-labo.com/",x:2920,y:1200},
       {id:"alexandria",type:"heritage",title:"Alexandria Reconstruction",text:"Prototype: physical map → ancient city → Mouseion/library candidate sites → floor plans → catalogue/text repositories.",x:2920,y:950}
     ];
-
     const links=[
       ["present","solarpunk"],["solarpunk","civilisation"],["civilisation","diplomacy"],["civilisation","conflict"],["diplomacy","chess"],["conflict","chess"],["council","civilisation"],["compute","council"],
-      ["civilisation","heritage-reconstruction"],["heritage-reconstruction","sketchfab-heritage"],["heritage-reconstruction","scan-the-world"],["heritage-reconstruction","google-heritage"],["sketchfab-heritage","cyark"],["scan-the-world","atlas-library"],["google-heritage","atlas-library"],["cyark","alexandria"],["atlas-library","alexandria"],["atlas-library","agi-atlas"]
+      ["civilisation","heritage-reconstruction"],["heritage-reconstruction","sketchfab-heritage"],["heritage-reconstruction","scan-the-world"],["heritage-reconstruction","google-heritage"],["heritage-reconstruction","history-cartography"],["sketchfab-heritage","cyark"],["scan-the-world","atlas-library"],["google-heritage","atlas-library"],["history-cartography","atlas-library"],["history-cartography","alexandria"],["cyark","alexandria"],["atlas-library","alexandria"],["atlas-library","agi-atlas"]
     ];
-
     const viewport=document.getElementById("viewport"),world=document.getElementById("world"),cards=document.getElementById("cards"),edges=document.getElementById("edges");
     let camera={x:20,y:20,scale:.8},drag=null,pan=null;
     const node=id=>nodes.find(item=>item.id===id);
-
-    function drawCards(){
-      cards.innerHTML="";
-      nodes.forEach(item=>{
-        const card=document.createElement("div");
-        card.className="card "+item.type;card.dataset.id=item.id;card.style.left=item.x+"px";card.style.top=item.y+"px";
-        card.innerHTML=`<h3>${item.title}</h3><p>${item.text}</p>${item.url?`<a class="source" href="${item.url}" target="_blank" rel="noopener noreferrer">Open resource ↗</a>`:""}<br><span class="tag">${item.type}</span>`;
-        cards.appendChild(card);
-      });
-    }
-
-    function drawEdges(){
-      edges.innerHTML="";
-      links.forEach(([from,to])=>{
-        const a=node(from),b=node(to);if(!a||!b)return;
-        const line=document.createElementNS("http://www.w3.org/2000/svg","line");
-        line.setAttribute("x1",a.x+105);line.setAttribute("y1",a.y+55);line.setAttribute("x2",b.x+105);line.setAttribute("y2",b.y+55);edges.appendChild(line);
-      });
-    }
-
+    function drawCards(){cards.innerHTML="";nodes.forEach(item=>{const card=document.createElement("div");card.className="card "+item.type;card.dataset.id=item.id;card.style.left=item.x+"px";card.style.top=item.y+"px";card.innerHTML=`<h3>${item.title}</h3><p>${item.text}</p>${item.url?`<a class="source" href="${item.url}" target="_blank" rel="noopener noreferrer">Open resource ↗</a>`:""}<br><span class="tag">${item.type}</span>`;cards.appendChild(card)})}
+    function drawEdges(){edges.innerHTML="";links.forEach(([from,to])=>{const a=node(from),b=node(to);if(!a||!b)return;const line=document.createElementNS("http://www.w3.org/2000/svg","line");line.setAttribute("x1",a.x+105);line.setAttribute("y1",a.y+55);line.setAttribute("x2",b.x+105);line.setAttribute("y2",b.y+55);edges.appendChild(line)})}
     function applyCamera(){world.style.transform=`translate(${camera.x}px,${camera.y}px) scale(${camera.scale})`}
     function screenToWorld(x,y){const rect=viewport.getBoundingClientRect();return{x:(x-rect.left-camera.x)/camera.scale,y:(y-rect.top-camera.y)/camera.scale}}
-
-    viewport.addEventListener("pointerdown",event=>{
-      if(event.target.closest("a.source"))return;
-      const card=event.target.closest(".card");viewport.setPointerCapture(event.pointerId);
-      if(card){const item=node(card.dataset.id),point=screenToWorld(event.clientX,event.clientY);drag={id:event.pointerId,item,dx:point.x-item.x,dy:point.y-item.y}}
-      else pan={id:event.pointerId,startX:event.clientX,startY:event.clientY,x:camera.x,y:camera.y};
-    });
-
-    viewport.addEventListener("pointermove",event=>{
-      if(drag&&drag.id===event.pointerId){const point=screenToWorld(event.clientX,event.clientY);drag.item.x=point.x-drag.dx;drag.item.y=point.y-drag.dy;const card=document.querySelector(`[data-id="${drag.item.id}"]`);card.style.left=drag.item.x+"px";card.style.top=drag.item.y+"px";drawEdges()}
-      else if(pan&&pan.id===event.pointerId){camera.x=pan.x+event.clientX-pan.startX;camera.y=pan.y+event.clientY-pan.startY;applyCamera()}
-    });
-
+    viewport.addEventListener("pointerdown",event=>{if(event.target.closest("a.source"))return;const card=event.target.closest(".card");viewport.setPointerCapture(event.pointerId);if(card){const item=node(card.dataset.id),point=screenToWorld(event.clientX,event.clientY);drag={id:event.pointerId,item,dx:point.x-item.x,dy:point.y-item.y}}else pan={id:event.pointerId,startX:event.clientX,startY:event.clientY,x:camera.x,y:camera.y}});
+    viewport.addEventListener("pointermove",event=>{if(drag&&drag.id===event.pointerId){const point=screenToWorld(event.clientX,event.clientY);drag.item.x=point.x-drag.dx;drag.item.y=point.y-drag.dy;const card=document.querySelector(`[data-id="${drag.item.id}"]`);card.style.left=drag.item.x+"px";card.style.top=drag.item.y+"px";drawEdges()}else if(pan&&pan.id===event.pointerId){camera.x=pan.x+event.clientX-pan.startX;camera.y=pan.y+event.clientY-pan.startY;applyCamera()}});
     function release(event){if(drag&&drag.id===event.pointerId)drag=null;if(pan&&pan.id===event.pointerId)pan=null}
     viewport.addEventListener("pointerup",release);viewport.addEventListener("pointercancel",release);
     viewport.addEventListener("wheel",event=>{event.preventDefault();const factor=event.deltaY<0?1.1:.9;camera.scale=Math.max(.25,Math.min(2,camera.scale*factor));applyCamera()},{passive:false});
-
     document.getElementById("centre").addEventListener("click",()=>{camera={x:20,y:20,scale:.8};applyCamera()});
     document.getElementById("add").addEventListener("click",()=>{nodes.push({id:"idea-"+Date.now(),type:"future",title:"New Future State",text:"A new scenario, idea or resource.",x:900,y:600});drawCards();drawEdges()});
-
     drawCards();drawEdges();applyCamera();
   </script>
 </body>
