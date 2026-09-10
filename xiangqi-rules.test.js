@@ -7,13 +7,13 @@ describe('Xiangqi lightweight rules core',()=>{
     expect(X.sideOf(b[0][4])).toBe('black');expect(X.sideOf(b[9][4])).toBe('red');
   });
   test('elephants cannot cross the river and can be blocked at the eye',()=>{
-    const b=Array.from({length:10},()=>Array(9).fill(null));b[2][4]='象';b[9][4]='帥';b[0][4]='將';
+    const b=Array.from({length:10},()=>Array(9).fill(null));b[2][4]='象';b[9][4]='帥';b[0][3]='將';
     expect(X.isLegalMove(b,[2,4],[4,6],'black')).toBe(true);
     b[3][5]='卒';expect(X.isLegalMove(b,[2,4],[4,6],'black')).toBe(false);
     b[3][5]=null;expect(X.isLegalMove(b,[4,6],[6,4],'black')).toBe(false);
   });
   test('horse leg blocks a horse',()=>{
-    const b=Array.from({length:10},()=>Array(9).fill(null));b[9][4]='帥';b[0][4]='將';b[7][4]='傌';
+    const b=Array.from({length:10},()=>Array(9).fill(null));b[9][4]='帥';b[0][3]='將';b[7][4]='傌';
     expect(X.isLegalMove(b,[7,4],[5,5],'red')).toBe(true);
     b[6][4]='兵';expect(X.isLegalMove(b,[7,4],[5,5],'red')).toBe(false);
   });
