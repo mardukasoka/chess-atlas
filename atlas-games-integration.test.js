@@ -24,6 +24,7 @@ const integrationSource = fs.readFileSync(
 );
 
 test("Atlas routes ancient and future game nodes without changing chess rules", () => {
+  jest.resetModules();
   document.body.innerHTML = bodyHtml;
   localStorage.clear();
 
@@ -35,6 +36,7 @@ test("Atlas routes ancient and future game nodes without changing chess rules", 
     focusSelection() {}
   };
   window.ChessEngine = require("./engine.js");
+  window.ChessAtlasGameRegistry = require("./game-registry.js");
   require("./stateGraph.js");
   require("./chess.js");
 
