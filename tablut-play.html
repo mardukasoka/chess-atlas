@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tablut — Chess Atlas</title>
   <link rel="stylesheet" href="historical-play.css?v=1">
+  <link rel="stylesheet" href="board-viewport.css?v=1">
   <style>
     .tablut-shell{max-width:760px;margin:0 auto}.tablut-board{display:grid;grid-template-columns:repeat(9,1fr);width:min(94vw,630px);aspect-ratio:1;margin:1rem auto;border:3px solid #6b4226;background:#d8b77d}.tablut-cell{position:relative;border:1px solid #8d6a3f;background:#d8b77d;color:#111;min-width:0;aspect-ratio:1;font:inherit;font-size:clamp(1rem,5.5vw,2rem);padding:0}.tablut-cell:nth-child(even){background:#cfaa6d}.tablut-cell.throne{background:#8d6a3f}.tablut-cell.selected{outline:4px solid #ffd54a;outline-offset:-4px}.tablut-cell[data-legal="true"]::after{content:"";position:absolute;width:22%;aspect-ratio:1;border-radius:50%;background:#183153;opacity:.55;left:39%;top:39%}.tablut-piece{display:inline-grid;place-items:center;width:64%;aspect-ratio:1;border-radius:50%;font-weight:800;line-height:1;box-shadow:0 1px 3px #0008}.tablut-piece.defender{background:#f5f2e8;color:#171717;border:2px solid #fff}.tablut-piece.attacker{background:#b3262d;color:#fff;border:2px solid #e96969}.tablut-piece.king{background:#fff;color:#111;border:3px solid #d7b84a;font-size:1.05em}.tablut-actions{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap}.tablut-note{line-height:1.45;opacity:.82}.tablut-legend{text-align:center;opacity:.9}
   </style>
@@ -20,9 +21,9 @@
       <a class="back-link" href="historical-play.html">← Historical games</a>
     </header>
     <section class="status-card" aria-live="polite"><strong id="tablut-status">Loading…</strong><span id="tablut-detail"></span></section>
-    <section class="game-card"><div class="tablut-actions"><button id="tablut-reset" type="button">Reset</button></div><div id="tablut-board" class="tablut-board" aria-label="9 by 9 Tablut board"></div><p class="tablut-legend">♚ king · white defenders · red attackers · select a piece, then a marked destination</p></section>
+    <section class="game-card"><div class="tablut-actions"><button id="tablut-reset" type="button">Reset</button></div><div id="tablut-board" class="tablut-board" data-atlas-zoom-board aria-label="9 by 9 Tablut board"></div><p class="tablut-legend">♚ king · white defenders · red attackers · select a piece, then a marked destination</p></section>
     <section class="note-card"><strong>Historical profile</strong><span class="tablut-note">Sixteen attackers face a king and eight defenders. Pieces move orthogonally without jumping. Ordinary soldiers are captured by custodial enclosure; the king escapes at the edge. Throne and king-capture details are explicit profile choices where the historical description leaves interpretation.</span></section>
   </main>
-  <script src="atlas-time-state.js?v=1"></script><script src="atlas-game-shell.js?v=1"></script><script src="tablut.js?v=1"></script><script src="tablut-play.js?v=2"></script>
+  <script src="atlas-time-state.js?v=1"></script><script src="atlas-game-shell.js?v=1"></script><script src="tablut.js?v=1"></script><script src="tablut-play.js?v=2"></script><script src="board-viewport.js?v=1"></script>
 </body>
 </html>
