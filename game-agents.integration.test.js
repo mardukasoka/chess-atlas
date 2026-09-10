@@ -5,6 +5,8 @@ const Modules = require("./game-modules.js");
 const Agents = require("./game-agents.js");
 const HnefataflModule = require("./hnefatafl-module.js");
 const GoModule = require("./go-module.js");
+const Backgammon = require("./backgammon.js");
+const BackgammonModule = require("./backgammon-module.js");
 
 test("agent runner applies a legal move through a real Hnefatafl module", async () => {
   Modules.clear();
@@ -50,4 +52,33 @@ test("shared agent runner can play a legal Go turn", async () => {
   assert.strictEqual(result.status, "applied");
   assert.deepStrictEqual(result.action, legal[0]);
   assert.strictEqual(Modules.snapshot("go", game).turn, "white");
+});
+
+test("Backgammon exposes dice as chance and checker movement as agent action", async () => {
+  Modules.clear();
+  Modules.register(BackgammonModule);
+  let game = Modules.create("backgammon");
+
+  let result = await Agents.takeTurn({
+    modules: Modules,
+    gameId: "backgammon",
+    game,
+    agent: Agents.randomAgent({ id: "bg-test-agent", random: () => 0 })
+  });
+  assert.strictEqual(result.status, "chance");
+  assert.strictEqual(result.actions[0].type, "opening-roll");
+
+  game = Backgammon.start(game, 2, 6);
+  const legal = Modules.legalActions("backgammon", game);
+  assert.ok(legal.length > 0);
+  assert.ok(legal.every(action => action.type === "move" && action.actor !== "chance"));
+
+  result = await Agents.takeTurn({
+    modules: Modules,
+    gameId: "backgammon",
+    game,
+    agent: Agents.randomAgent({ id: "bg-test-agent", random: () => 0 })
+  });
+  assert.strictEqual(result.status, "applied");
+  assert.strictEqual(result.action.type, "move");
 });
