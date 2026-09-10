@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chess Atlas — Historical Games</title>
   <link rel="stylesheet" href="historical-play.css?v=1">
+  <link rel="stylesheet" href="board-viewport.css?v=1">
 </head>
 <body>
   <main class="history-shell">
@@ -18,9 +19,9 @@
       <a class="back-link" href="pachisi-play.html">Pachisi →</a><a class="back-link" href="chaupar-play.html">Chaupar / Chausar →</a><a class="back-link" href="latrunculi-play.html">Ludus Latrunculorum →</a><a class="back-link" href="alquerque-play.html">Alquerque de Doze →</a><a class="back-link" href="hnefatafl-play.html">Hnefatafl →</a><a class="back-link" href="tablut-play.html">Tablut →</a>
     </section>
     <section class="status-card" aria-live="polite"><strong id="history-status">Loading…</strong><span id="history-detail"></span></section>
-    <section class="game-card"><div id="history-actions" class="actions"></div><div id="history-board" class="history-board"></div></section>
+    <section class="game-card"><div id="history-actions" class="actions"></div><div id="history-board" class="history-board" data-atlas-zoom-board></div></section>
     <section class="note-card"><strong id="history-note-title"></strong><span id="history-note"></span></section>
   </main>
-  <script src="atlas-time-state.js?v=1"></script><script src="atlas-game-shell.js?v=1"></script><script src="randomizer.js?v=1"></script><script src="stateGraph.js?v=2"></script><script src="game-agent.js?v=1"></script><script src="historical-games.js?v=2"></script><script src="senet.js?v=2"></script><script src="graph-games.js?v=1"></script><script src="konane.js?v=1"></script><script src="historical-route.js?v=1"></script><script src="historical-play.js?v=3"></script><script src="historical-agent-integration.js?v=1"></script>
+  <script src="atlas-time-state.js?v=1"></script><script src="atlas-game-shell.js?v=1"></script><script src="randomizer.js?v=1"></script><script src="stateGraph.js?v=2"></script><script src="game-agent.js?v=1"></script><script src="historical-games.js?v=2"></script><script src="senet.js?v=2"></script><script src="graph-games.js?v=1"></script><script src="konane.js?v=1"></script><script src="historical-route.js?v=1"></script><script src="historical-play.js?v=3"></script><script src="historical-agent-integration.js?v=1"></script><script src="board-viewport.js?v=1"></script>
 </body>
 </html>
