@@ -4,6 +4,7 @@ const assert = require("assert");
 const Modules = require("./game-modules.js");
 const Agents = require("./game-agents.js");
 const HnefataflModule = require("./hnefatafl-module.js");
+const GoModule = require("./go-module.js");
 
 test("agent runner applies a legal move through a real Hnefatafl module", async () => {
   Modules.clear();
@@ -28,4 +29,25 @@ test("agent runner applies a legal move through a real Hnefatafl module", async 
   assert.deepStrictEqual(result.action, legal[0]);
   assert.strictEqual(game.turn, "defenders");
   assert.notDeepStrictEqual(Modules.snapshot(gameId, game).board, before.board);
+});
+
+test("shared agent runner can play a legal Go turn", async () => {
+  Modules.clear();
+  Modules.register(GoModule);
+  const game = Modules.create("go", { size: 9 });
+  const before = Modules.snapshot("go", game);
+  const legal = Modules.legalActions("go", game);
+  assert.ok(legal.length > 0);
+  assert.strictEqual(before.turn, "black");
+
+  const result = await Agents.takeTurn({
+    modules: Modules,
+    gameId: "go",
+    game,
+    agent: Agents.randomAgent({ id: "go-test-agent", random: () => 0 })
+  });
+
+  assert.strictEqual(result.status, "applied");
+  assert.deepStrictEqual(result.action, legal[0]);
+  assert.strictEqual(Modules.snapshot("go", game).turn, "white");
 });
