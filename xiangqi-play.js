@@ -11,6 +11,7 @@
     grid.textContent='';const legalKeys=new Set(legal.map(key));
     for(let r=0;r<10;r++)for(let c=0;c<9;c++){
       const cell=document.createElement('button');cell.className='sq';cell.type='button';
+      cell.style.left=`${(c/8)*100}%`;cell.style.top=`${(r/9)*100}%`;
       const p=board[r][c];cell.setAttribute('aria-label',`row ${r+1}, column ${c+1}${p?', '+p:''}`);
       if(selected&&selected[0]===r&&selected[1]===c)cell.classList.add('selected');
       if(legalKeys.has(`${r},${c}`))cell.classList.add('legal');
