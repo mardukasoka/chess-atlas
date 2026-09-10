@@ -7,13 +7,17 @@ describe('regional engine serialization',()=>{
   test('Xiangqi initial position matches generalized Fairy-Stockfish FEN placement',()=>{
     expect(S.xiangqiFen(X.initialPosition(),'red')).toBe('rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1');
   });
-  test('Shogi initial state matches standard SFEN',()=>{
-    expect(S.shogiSfen(Shogi.initialState())).toBe('lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1');
+  test('Shogi initial state keeps standard SFEN and produces Fairy generalized FEN',()=>{
+    const s=Shogi.initialState();
+    expect(S.shogiSfen(s)).toBe('lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1');
+    expect(S.shogiFen(s)).toBe('lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL[-] w - - 0 1');
   });
-  test('Shogi SFEN preserves promoted pieces and pieces in hand',()=>{
+  test('Shogi SFEN and engine FEN preserve promoted pieces and pieces in hand',()=>{
     const s=Shogi.initialState();s.board[6][0]=null;s.board[5][0]='+P';s.hands.black.P=2;s.hands.white.B=1;s.turn='white';
     expect(S.shogiSfen(s,7)).toContain('+P8');
     expect(S.shogiSfen(s,7)).toMatch(/ w 2Pb 7$/);
+    expect(S.shogiFen(s,7)).toContain('+P8');
+    expect(S.shogiFen(s,7)).toMatch(/\[PPb\] b - - 0 7$/);
   });
   test('Janggi initial position preserves our orientation while encoding Cho as side-to-move white',()=>{
     const fen=S.janggiFen(J.initialPosition(),'cho');
