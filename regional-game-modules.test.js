@@ -15,7 +15,7 @@ describe('regional game-module agent seam',()=>{
   test('Fairy-Stockfish Xiangqi proposal maps back through Atlas legality',async()=>{
     Modules.register(X);const game=Modules.create('xiangqi'),legal=Modules.legalActions('xiangqi',game),chosen=legal[0];
     const agent=Fairy.create({gameId:'xiangqi',transport:{bestMove:async req=>{expect(req.variant).toBe('xiangqi');expect(req.position).toContain(' w ');return chosen.engineMove;}}});
-    const result=await Agents.takeTurn({modules:Modules,gameId:'xiangqi',game,agent});expect(result.status).toBe('applied');expect(result.action).toBe(chosen);
+    const result=await Agents.takeTurn({modules:Modules,gameId:'xiangqi',game,agent});expect(result.status).toBe('applied');expect(result.action).toStrictEqual(chosen);
   });
 
   test('Fairy-Stockfish rejects a regional move outside Atlas legalActions',async()=>{
