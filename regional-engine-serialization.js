@@ -8,19 +8,29 @@
   ]);
   function xiangqiFen(board,turn='red'){
     if(!Array.isArray(board)||board.length!==10)throw new TypeError('Xiangqi board must be 10 ranks');
-    const placement=board.map(row=>{if(!Array.isArray(row)||row.length!==9)throw new TypeError('Xiangqi board must be 9 files');return compressRow(row.map(p=>p?XIANGQI_MAP.get(p):null));}).join('/');
-    if(placement.includes('undefined'))throw new Error('Unknown Xiangqi piece');
+    const placement=board.map(row=>{
+      if(!Array.isArray(row)||row.length!==9)throw new TypeError('Xiangqi board must be 9 files');
+      return compressRow(row.map(p=>{if(!p)return null;const ch=XIANGQI_MAP.get(p);if(!ch)throw new Error(`Unknown Xiangqi piece: ${p}`);return ch;}));
+    }).join('/');
     return `${placement} ${turn==='black'?'b':'w'} - - 0 1`;
   }
 
   const JANGGI_CHAR={r:'r',h:'n',e:'b',a:'a',k:'k',c:'c',p:'p'};
   function janggiFen(board,turn='cho'){
     if(!Array.isArray(board)||board.length!==10)throw new TypeError('Janggi board must be 10 ranks');
-    const placement=board.map(row=>{if(!Array.isArray(row)||row.length!==9)throw new TypeError('Janggi board must be 9 files');return compressRow(row.map(p=>{if(!p)return null;const ch=JANGGI_CHAR[p.type];if(!ch)throw new Error(`Unknown Janggi piece type: ${p.type}`);return p.side==='han'?ch.toUpperCase():ch;}));}).join('/');
-    return `${placement} ${turn==='cho'?'b':'w'} - - 0 1`;
+    const placement=board.map(row=>{
+      if(!Array.isArray(row)||row.length!==9)throw new TypeError('Janggi board must be 9 files');
+      return compressRow(row.map(p=>{
+        if(!p)return null;const ch=JANGGI_CHAR[p.type];if(!ch)throw new Error(`Unknown Janggi piece type: ${p.type}`);
+        // Cho moves first and is encoded as the engine's white side regardless
+        // of screen orientation; our UI currently renders Cho above Han.
+        return p.side==='cho'?ch.toUpperCase():ch;
+      }));
+    }).join('/');
+    return `${placement} ${turn==='cho'?'w':'b'} - - 0 1`;
   }
 
-  function shogiPiece(piece){if(!piece)return null;const promoted=piece[0]==='+';const base=promoted?piece.slice(1):piece;const ch=base;return promoted?`+${ch}`:ch;}
+  function shogiPiece(piece){if(!piece)return null;const promoted=piece[0]==='+';const base=promoted?piece.slice(1):piece;return promoted?`+${base}`:base;}
   function shogiHands(hands){const order=['R','B','G','S','N','L','P'];let out='';for(const side of ['black','white'])for(const t of order){const n=hands?.[side]?.[t]||0;if(!n)continue;const ch=side==='black'?t:t.toLowerCase();out+=(n>1?String(n):'')+ch;}return out||'-';}
   function shogiSfen(state,moveNumber=1){
     const board=state?.board;if(!Array.isArray(board)||board.length!==9)throw new TypeError('Shogi board must be 9 ranks');
