@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ludus Latrunculorum — Chess Atlas</title>
   <link rel="stylesheet" href="historical-play.css" />
+  <link rel="stylesheet" href="board-viewport.css?v=1" />
   <style>
     .latrunculi-shell { max-width: 760px; margin: 0 auto; }
     .latrunculi-board { display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px; width: min(92vw, 620px); aspect-ratio: 1; margin: 1rem auto; }
@@ -30,7 +31,7 @@
       <div class="latrunculi-actions">
         <button id="latrunculi-reset" type="button">Reset</button>
       </div>
-      <div id="latrunculi-board" class="latrunculi-board" aria-label="Ludus Latrunculorum board"></div>
+      <div id="latrunculi-board" class="latrunculi-board" data-atlas-zoom-board aria-label="Ludus Latrunculorum board"></div>
       <p class="latrunculi-note">Profile: alternating placement, orthogonal movement, leaps over occupied pieces, custodial immobilisation, delayed capture, and defeat when reduced to one piece. Board dimensions are a reconstruction choice; archaeological boards vary.</p>
     </section>
   </main>
@@ -39,5 +40,6 @@
   <script src="atlas-game-shell.js?v=1"></script>
   <script src="latrunculi.js"></script>
   <script src="latrunculi-play.js"></script>
+  <script src="board-viewport.js?v=1"></script>
 </body>
 </html>
