@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Alquerque de Doze — Chess Atlas</title>
   <link rel="stylesheet" href="historical-play.css" />
+  <link rel="stylesheet" href="board-viewport.css?v=1" />
   <style>
     .alquerque-shell { max-width: 760px; margin: 0 auto; }
     .alquerque-board { position:relative; display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(5,1fr); width:min(92vw,560px); aspect-ratio:1; margin:1rem auto; gap:0; }
@@ -30,7 +31,7 @@
     <section class="historical-card">
       <p id="alquerque-status" aria-live="polite"></p>
       <div class="alquerque-actions"><button id="alquerque-reset" type="button">Reset</button></div>
-      <div id="alquerque-board" class="alquerque-board" aria-label="Alquerque board"></div>
+      <div id="alquerque-board" class="alquerque-board" data-atlas-zoom-board aria-label="Alquerque board"></div>
       <p class="alquerque-legend">● Black · ○ White · select a piece, then a marked destination</p>
       <p class="alquerque-note">Secure historical core: 5×5 line board, twelve men per side, adjacent movement along drawn lines, capture by hopping an opponent, and victory by taking all opposing men.</p>
     </section>
@@ -40,5 +41,6 @@
   <script src="atlas-game-shell.js?v=1"></script>
   <script src="alquerque.js"></script>
   <script src="alquerque-play.js"></script>
+  <script src="board-viewport.js?v=1"></script>
 </body>
 </html>
