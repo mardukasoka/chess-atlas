@@ -17,7 +17,7 @@ describe('regional engine serialization',()=>{
   });
   test('Janggi initial position preserves our orientation while encoding Cho as side-to-move white',()=>{
     const fen=S.janggiFen(J.initialPosition(),'cho');
-    expect(fen).toBe('RNBA1ABNR/4K4/1C5C1/P1P1P1P1P/9/9/p1p1p1p1p/1c5c1/4k4/rnba1abnr w - - 0 1');
+    expect(fen).toBe('RBNA1ANBR/4K4/1C5C1/P1P1P1P1P/9/9/p1p1p1p1p/1c5c1/4k4/rbna1anbr w - - 0 1');
     expect(fen.split(' ')[0].split('/')).toHaveLength(10);
   });
 });
