@@ -15,9 +15,9 @@ describe('regional engine serialization',()=>{
     expect(S.shogiSfen(s,7)).toContain('+P8');
     expect(S.shogiSfen(s,7)).toMatch(/ w 2Pb 7$/);
   });
-  test('Janggi initial position serializes 9x10 board and palace-centre generals',()=>{
+  test('Janggi initial position preserves our orientation while encoding Cho as side-to-move white',()=>{
     const fen=S.janggiFen(J.initialPosition(),'cho');
-    expect(fen.split(' ')[0]).toBe('rnba1abnr/4k4/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/4K4/RNBA1ABNR');
+    expect(fen).toBe('RNBA1ABNR/4K4/1C5C1/P1P1P1P1P/9/9/p1p1p1p1p/1c5c1/4k4/rnba1abnr w - - 0 1');
     expect(fen.split(' ')[0].split('/')).toHaveLength(10);
   });
 });
