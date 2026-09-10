@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hnefatafl — Chess Atlas</title>
   <link rel="stylesheet" href="historical-play.css?v=1">
+  <link rel="stylesheet" href="board-viewport.css?v=1">
   <style>
     .tafl-shell{max-width:760px;margin:0 auto}.tafl-board{display:grid;grid-template-columns:repeat(11,1fr);width:min(94vw,660px);aspect-ratio:1;margin:1rem auto;border:1px solid currentColor}.tafl-cell{position:relative;border:1px solid color-mix(in srgb,currentColor 22%,transparent);background:transparent;min-width:0;aspect-ratio:1;font:inherit;font-size:clamp(.8rem,4.4vw,1.75rem);padding:0}.tafl-cell.restricted{background:color-mix(in srgb,currentColor 10%,transparent)}.tafl-cell.selected{outline:3px solid currentColor;outline-offset:-3px}.tafl-cell[data-legal="true"]::after{content:"";position:absolute;width:22%;aspect-ratio:1;border-radius:50%;background:currentColor;opacity:.35;left:39%;top:39%}.tafl-actions{display:flex;justify-content:center;gap:.5rem}.tafl-legend{text-align:center;opacity:.75}.brief{line-height:1.45}.brief strong{display:block;margin-top:.55rem}
   </style>
@@ -13,9 +14,9 @@
   <main class="history-shell tafl-shell">
     <header class="history-header"><div><p class="eyebrow">Chess Atlas · tafl family</p><h1>Hnefatafl</h1><p class="subtitle">Fetlar 2007 playable reconstruction of the medieval Norse tafl tradition.</p></div><a class="back-link" href="historical-play.html">← Historical games</a></header>
     <section class="status-card" aria-live="polite"><strong id="tafl-status">Loading…</strong><span id="tafl-detail"></span></section>
-    <section class="game-card"><div class="tafl-actions"><button id="tafl-reset" type="button">Reset</button></div><div id="tafl-board" class="tafl-board" aria-label="11 by 11 Hnefatafl board"></div><p class="tafl-legend">♚ king · ○ defenders · ● attackers · select a piece, then a marked destination</p></section>
+    <section class="game-card"><div class="tafl-actions"><button id="tafl-reset" type="button">Reset</button></div><div id="tafl-board" class="tafl-board" data-atlas-zoom-board aria-label="11 by 11 Hnefatafl board"></div><p class="tafl-legend">♚ king · ○ defenders · ● attackers · select a piece, then a marked destination</p></section>
     <section class="note-card brief"><strong>How to play</strong><span>Attackers move first. All pieces slide any distance orthogonally without jumping. Capture an ordinary piece by sandwiching it; restricted squares can complete a capture. Defenders win by moving the king to a corner. Attackers win by surrounding and capturing the king, or by completely encircling the defending force.</span><strong>Story</strong><span>Hnefatafl belongs to the asymmetric tafl games played across the Viking and medieval Norse world. No complete medieval rules text survives, so this board uses the Fetlar Hnefatafl Panel's 2007 reconstruction rather than presenting modern details as certain Viking rules.</span></section>
   </main>
-  <script src="atlas-time-state.js?v=1"></script><script src="atlas-game-shell.js?v=1"></script><script src="hnefatafl.js?v=1"></script><script src="hnefatafl-play.js?v=1"></script>
+  <script src="atlas-time-state.js?v=1"></script><script src="atlas-game-shell.js?v=1"></script><script src="hnefatafl.js?v=1"></script><script src="hnefatafl-play.js?v=1"></script><script src="board-viewport.js?v=1"></script>
 </body>
 </html>
