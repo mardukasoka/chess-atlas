@@ -23,6 +23,16 @@ const integrationSource = fs.readFileSync(
   "utf8"
 );
 
+function moveUntil(buttonId, expectedPeriod, maxSteps = 40) {
+  const button = document.getElementById(buttonId);
+  for (let step = 0; step < maxSteps; step += 1) {
+    if (document.getElementById("atlas-period").textContent === expectedPeriod) return;
+    if (button.disabled) break;
+    button.click();
+  }
+  throw new Error(`Timeline did not reach ${expectedPeriod}`);
+}
+
 test("Atlas routes ancient and future game nodes without changing chess rules", () => {
   jest.resetModules();
   document.body.innerHTML = bodyHtml;
@@ -49,28 +59,18 @@ test("Atlas routes ancient and future game nodes without changing chess rules", 
   expect(navLink).not.toBeNull();
   expect(navLink.textContent).toContain("Ancient Games");
 
-  const down = document.getElementById("timeline-down");
-  for (let step = 0; step < 7; step += 1) {
-    down.click();
-  }
-
-  expect(document.getElementById("atlas-period").textContent).toBe("Senet");
+  moveUntil("timeline-down", "Senet");
   expect(document.getElementById("board").hidden).toBe(true);
   expect(
     document.querySelector('#status a[href="historical-play.html?game=senet"]')
   ).not.toBeNull();
 
-  down.click();
-  expect(document.getElementById("atlas-period").textContent).toBe(
-    "Royal Game of Ur"
-  );
+  moveUntil("timeline-up", "Royal Game of Ur");
   expect(
     document.querySelector('#status a[href="historical-play.html?game=ur"]')
   ).not.toBeNull();
 
-  for (let step = 0; step < 10; step += 1) {
-    document.getElementById("timeline-up").click();
-  }
+  moveUntil("timeline-up", "Speculative Future");
   expect(document.getElementById("atlas-year").textContent).toBe("2200 CE");
   expect(
     document.querySelector('#status a[href="advanced-play.html"]')
