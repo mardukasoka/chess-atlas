@@ -22,8 +22,6 @@
       if(!Array.isArray(row)||row.length!==9)throw new TypeError('Janggi board must be 9 files');
       return compressRow(row.map(p=>{
         if(!p)return null;const ch=JANGGI_CHAR[p.type];if(!ch)throw new Error(`Unknown Janggi piece type: ${p.type}`);
-        // Cho moves first and is encoded as the engine's white side regardless
-        // of screen orientation; our UI currently renders Cho above Han.
         return p.side==='cho'?ch.toUpperCase():ch;
       }));
     }).join('/');
@@ -31,12 +29,23 @@
   }
 
   function shogiPiece(piece){if(!piece)return null;const promoted=piece[0]==='+';const base=promoted?piece.slice(1):piece;return promoted?`+${base}`:base;}
-  function shogiHands(hands){const order=['R','B','G','S','N','L','P'];let out='';for(const side of ['black','white'])for(const t of order){const n=hands?.[side]?.[t]||0;if(!n)continue;const ch=side==='black'?t:t.toLowerCase();out+=(n>1?String(n):'')+ch;}return out||'-';}
-  function shogiSfen(state,moveNumber=1){
+  const SHOGI_HAND_ORDER=['R','B','G','S','N','L','P'];
+  function shogiHands(hands){let out='';for(const side of ['black','white'])for(const t of SHOGI_HAND_ORDER){const n=hands?.[side]?.[t]||0;if(!n)continue;const ch=side==='black'?t:t.toLowerCase();out+=(n>1?String(n):'')+ch;}return out||'-';}
+  function shogiPocket(hands){let out='';for(const side of ['black','white'])for(const t of SHOGI_HAND_ORDER){const n=hands?.[side]?.[t]||0;if(!n)continue;const ch=side==='black'?t:t.toLowerCase();out+=ch.repeat(n);}return out||'-';}
+  function shogiPlacement(state){
     const board=state?.board;if(!Array.isArray(board)||board.length!==9)throw new TypeError('Shogi board must be 9 ranks');
-    const placement=board.map(row=>{if(!Array.isArray(row)||row.length!==9)throw new TypeError('Shogi board must be 9 files');return compressRow(row.map(shogiPiece));}).join('/');
+    return board.map(row=>{if(!Array.isArray(row)||row.length!==9)throw new TypeError('Shogi board must be 9 files');return compressRow(row.map(shogiPiece));}).join('/');
+  }
+  function shogiSfen(state,moveNumber=1){
+    const placement=shogiPlacement(state);
     return `${placement} ${state.turn==='white'?'w':'b'} ${shogiHands(state.hands)} ${Math.max(1,Number(moveNumber)||1)}`;
   }
+  function shogiFen(state,moveNumber=1){
+    const placement=shogiPlacement(state),pocket=shogiPocket(state.hands);
+    // Atlas 'black' is sente and moves first; Fairy-Stockfish generalized FEN
+    // represents that same uppercase side as engine white.
+    return `${placement}[${pocket}] ${state.turn==='black'?'w':'b'} - - 0 ${Math.max(1,Number(moveNumber)||1)}`;
+  }
 
-  return Object.freeze({compressRow,xiangqiFen,janggiFen,shogiHands,shogiSfen});
+  return Object.freeze({compressRow,xiangqiFen,janggiFen,shogiHands,shogiPocket,shogiSfen,shogiFen});
 });
