@@ -1,7 +1,7 @@
 "use strict";
 (function(root,factory){const api=factory();if(typeof module==="object"&&module.exports)module.exports=api;if(root)root.XiangqiRules=api;})(typeof globalThis!=="undefined"?globalThis:this,function(){
   const START=[
-    ['車','馬','象','士','將','士','象','馬','車'],[null,null,null,null,null,null,null,null,null],[null,'砲',null,null,null,null,null,null,'砲',null],['卒',null,'卒',null,'卒',null,'卒',null,'卒'],[null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],['兵',null,'兵',null,'兵',null,'兵',null,'兵'],[null,'炮',null,null,null,null,null,'炮',null],[null,null,null,null,null,null,null,null,null],['俥','傌','相','仕','帥','仕','相','傌','俥']
+    ['車','馬','象','士','將','士','象','馬','車'],[null,null,null,null,null,null,null,null,null],[null,'砲',null,null,null,null,null,'砲',null],['卒',null,'卒',null,'卒',null,'卒',null,'卒'],[null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null],['兵',null,'兵',null,'兵',null,'兵',null,'兵'],[null,'炮',null,null,null,null,null,'炮',null],[null,null,null,null,null,null,null,null,null],['俥','傌','相','仕','帥','仕','相','傌','俥']
   ];
   const TYPE=new Map([
     ['車','r'],['俥','r'],['馬','h'],['傌','h'],['象','e'],['相','e'],['士','a'],['仕','a'],['將','k'],['帥','k'],['砲','c'],['炮','c'],['卒','p'],['兵','p']
