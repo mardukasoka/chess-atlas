@@ -9,6 +9,7 @@ const CausalSamples = require("./history-causality-sample.js");
 const Propagation = require("./history-causal-propagation.js");
 const Divergence = require("./history-divergence.js");
 const ContinuumCase = require("./history-continuum-case.js");
+const ContestGameplay = require("./history-contest-gameplay.js");
 const Neolithic = require("./history-baseline-neolithic.js");
 const Bronze = require("./history-baseline-bronze.js");
 const Iron = require("./history-baseline-iron.js");
@@ -238,6 +239,31 @@ const continuumLimits = ContinuumCase.limits();
 if (continuumLimits.canonicalMutationAllowed || continuumLimits.automaticCorrectionAllowed || continuumLimits.automaticContestResolutionAllowed || continuumLimits.branchHistoryPreserved !== true) {
   fail("Continuum case limits must prohibit automatic enforcement and preserve branch history");
 } else pass("Continuum case enforcement boundary");
+
+const contest = ContestGameplay.createContest(contestedCase);
+if (!contest.ok || contest.status !== "active" || contest.branchAccepted !== false || contest.writesCanonicalHistory !== false || contest.requiresFinalReview !== true) {
+  fail("CONTEST gameplay open-state contract");
+} else {
+  const objectiveDomains = new Set(contest.objectives.map(item => item.domain));
+  const missing = ContestGameplay.OBJECTIVE_DOMAINS.filter(domain => !objectiveDomains.has(domain));
+  if (missing.length) fail(`CONTEST gameplay missing objective domains: ${missing.join(",")}`);
+  else pass("CONTEST gameplay creates all historical constraint objectives");
+}
+
+let resolvedContest = contest;
+for (const item of contest.objectives) {
+  const update = ContestGameplay.recordProgress(resolvedContest, item.id, item.threshold, "self-check completes objective");
+  if (!update.ok) { fail(`CONTEST objective progress failed for ${item.id}`); break; }
+  resolvedContest = update;
+}
+if (!resolvedContest.ok || resolvedContest.status !== "won-pending-review" || resolvedContest.branchAccepted !== false || resolvedContest.requiresFinalReview !== true) {
+  fail("completing CONTEST objectives must win gameplay without automatically accepting branch");
+} else pass("CONTEST victory remains pending final branch review");
+
+const contestLimits = ContestGameplay.limits();
+if (contestLimits.automaticVictoryAllowed || contestLimits.automaticBranchAcceptance || contestLimits.canonicalMutationAllowed || contestLimits.successRequiresAllObjectives !== true || contestLimits.finalReviewRequired !== true) {
+  fail("CONTEST gameplay limits must prohibit automatic branch acceptance and canonical mutation");
+} else pass("CONTEST gameplay enforcement boundary");
 
 const excluded = ExistingCultures.EXCLUDED_NON_CULTURE_OVERLAYS.map(item => item.id);
 if (!excluded.includes("culture-catalhoyuk")) fail("Çatalhöyük settlement overlay must remain excluded from culture-distribution migration");
