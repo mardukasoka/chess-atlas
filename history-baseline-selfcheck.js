@@ -10,18 +10,20 @@ const Iron = require("./history-baseline-iron.js");
 const Classical = require("./history-baseline-classical.js");
 const ClassicalContinuity = require("./history-baseline-classical-continuity.js");
 const ClassicalRelations = require("./history-continuity-classical.js");
+const LateAntiquity = require("./history-baseline-late-antiquity.js");
+const LateAntiquityContinuity = require("./history-baseline-late-antiquity-continuity.js");
+const LateAntiquityRelations = require("./history-continuity-late-antiquity.js");
 const NeolithicSpatial = require("./history-spatial-neolithic.js");
 const BronzeSpatial = require("./history-spatial-bronze.js");
 const IronSpatial = require("./history-spatial-iron.js");
 const ClassicalSpatial = require("./history-spatial-classical.js");
 const ClassicalContinuitySpatial = require("./history-spatial-classical-continuity.js");
+const LateAntiquitySpatial = require("./history-spatial-late-antiquity.js");
+const LateAntiquityContinuitySpatial = require("./history-spatial-late-antiquity-continuity.js");
 const ExistingCultures = require("./history-spatial-existing-cultures.js");
 
 let failures = 0;
-function fail(message) {
-  failures += 1;
-  console.error(`FAIL: ${message}`);
-}
+function fail(message) { failures += 1; console.error(`FAIL: ${message}`); }
 function pass(message) { console.log(`PASS: ${message}`); }
 
 function checkBaselineBatch(name, batch) {
@@ -52,11 +54,8 @@ function checkSpatialCompleteness(name, baselineBatch, spatialBatch) {
     kind: spatialBySubject.get(record.id)?.subjectKind || (record.type === "culture" ? "culture" : "polity")
   }));
   const report = SpatialCoverage.spatialCoverageReport(subjects, spatialBatch.records);
-  if (!report.complete) {
-    fail(`${name} spatial completeness: missing=${JSON.stringify(report.missing)} invalid=${JSON.stringify(report.invalidPolygons)}`);
-  } else {
-    pass(`${name} spatial completeness (${report.represented}/${report.totalSubjects} represented)`);
-  }
+  if (!report.complete) fail(`${name} spatial completeness: missing=${JSON.stringify(report.missing)} invalid=${JSON.stringify(report.invalidPolygons)}`);
+  else pass(`${name} spatial completeness (${report.represented}/${report.totalSubjects} represented)`);
 }
 
 function checkContinuity(name, relations, knownSubjectIds) {
@@ -67,7 +66,6 @@ function checkContinuity(name, relations, knownSubjectIds) {
   }
   if (validationErrors.length) validationErrors.forEach(error => fail(`${name} continuity ${error}`));
   else pass(`${name} continuity relations (${relations.length})`);
-
   const dangling = Continuity.danglingRelations(relations, knownSubjectIds);
   if (dangling.length) fail(`${name} dangling continuity subjects: ${JSON.stringify(dangling)}`);
   else pass(`${name} continuity subject references`);
@@ -78,12 +76,16 @@ checkBaselineBatch("Bronze", Bronze);
 checkBaselineBatch("Iron/Axial", Iron);
 checkBaselineBatch("Hellenistic/Roman/Han", Classical);
 checkBaselineBatch("B4 continuity phases", ClassicalContinuity);
+checkBaselineBatch("Late Antiquity/early medieval", LateAntiquity);
+checkBaselineBatch("B5 continuity phases", LateAntiquityContinuity);
 
 checkSpatialRecords("Neolithic", NeolithicSpatial);
 checkSpatialRecords("Bronze", BronzeSpatial);
 checkSpatialRecords("Iron/Axial", IronSpatial);
 checkSpatialRecords("Hellenistic/Roman/Han", ClassicalSpatial);
 checkSpatialRecords("B4 continuity phases", ClassicalContinuitySpatial);
+checkSpatialRecords("Late Antiquity/early medieval", LateAntiquitySpatial);
+checkSpatialRecords("B5 continuity phases", LateAntiquityContinuitySpatial);
 checkSpatialRecords("legacy culture migration", ExistingCultures);
 
 checkSpatialCompleteness("Neolithic", Neolithic, NeolithicSpatial);
@@ -91,13 +93,18 @@ checkSpatialCompleteness("Bronze", Bronze, BronzeSpatial);
 checkSpatialCompleteness("Iron/Axial", Iron, IronSpatial);
 checkSpatialCompleteness("Hellenistic/Roman/Han", Classical, ClassicalSpatial);
 checkSpatialCompleteness("B4 continuity phases", ClassicalContinuity, ClassicalContinuitySpatial);
+checkSpatialCompleteness("Late Antiquity/early medieval", LateAntiquity, LateAntiquitySpatial);
+checkSpatialCompleteness("B5 continuity phases", LateAntiquityContinuity, LateAntiquityContinuitySpatial);
 
 const knownSubjectIds = new Set([
   ...Iron.records,
   ...Classical.records,
-  ...ClassicalContinuity.records
+  ...ClassicalContinuity.records,
+  ...LateAntiquity.records,
+  ...LateAntiquityContinuity.records
 ].map(record => record.id));
 checkContinuity("B4", ClassicalRelations.relations, knownSubjectIds);
+checkContinuity("B5", LateAntiquityRelations.relations, knownSubjectIds);
 
 const excluded = ExistingCultures.EXCLUDED_NON_CULTURE_OVERLAYS.map(item => item.id);
 if (!excluded.includes("culture-catalhoyuk")) fail("Çatalhöyük settlement overlay must remain excluded from culture-distribution migration");
