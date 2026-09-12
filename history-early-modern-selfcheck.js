@@ -9,6 +9,7 @@ const Continuity=require("./history-continuity.js");
 const Coverage=require("./history-baseline-coverage.js");
 const B6=require("./history-baseline-medieval.js");
 const B7=require("./history-baseline-early-modern.js");
+const B7Knowledge=require("./history-baseline-early-modern-knowledge.js");
 const B7Spatial=require("./history-spatial-early-modern.js");
 const B7Continuity=require("./history-continuity-early-modern.js");
 
@@ -17,12 +18,17 @@ function fail(message){failures+=1;console.error(`FAIL: ${message}`);}
 function pass(message){console.log(`PASS: ${message}`);}
 
 const baselineErrors=[];
-for(const record of B7.records){
+for(const record of [...B7.records,...B7Knowledge.records]){
   const result=Baseline.validateBaselineRecord(record);
   if(!result.ok) baselineErrors.push(`${record.id}: ${result.errors.join(" | ")}`);
 }
 if(baselineErrors.length) baselineErrors.forEach(error=>fail(`B7 baseline ${error}`));
-else pass(`B7 early-modern baseline records (${B7.records.length})`);
+else pass(`B7 early-modern baseline + knowledge records (${B7.records.length+B7Knowledge.records.length})`);
+
+if(!B7Knowledge.get("event-copernican-revolution-1543")) fail("B7 must include the 1543 Copernican Revolution publication anchor");
+else pass("B7 includes Copernican Revolution anchor");
+if(!B7Knowledge.get("event-enlightenment-b7")) fail("B7 must include a broad Enlightenment knowledge-system anchor");
+else pass("B7 includes Enlightenment anchor");
 
 const spatialErrors=[];
 for(const record of B7Spatial.records){
@@ -39,7 +45,7 @@ const spatialReport=SpatialCoverage.spatialCoverageReport(subjects,B7Spatial.rec
 if(!spatialReport.complete) fail(`B7 spatial completeness: missing=${JSON.stringify(spatialReport.missing)} invalid=${JSON.stringify(spatialReport.invalidPolygons)}`);
 else pass(`B7 spatial completeness (${spatialReport.represented}/${spatialReport.totalSubjects} represented)`);
 
-const regionSet=new Set(B7.records.flatMap(record=>record.coverageRegions||[]));
+const regionSet=new Set([...B7.records,...B7Knowledge.records].flatMap(record=>record.coverageRegions||[]));
 const missingRegions=Coverage.WORLD_REGIONS.map(region=>region.id).filter(id=>!regionSet.has(id));
 if(missingRegions.length) fail(`B7 global coverage missing regions: ${missingRegions.join(",")}`);
 else pass("B7 first-pass spine covers all standard world regions");
@@ -52,7 +58,7 @@ for(const relation of B7Continuity.relations){
 if(relationErrors.length) relationErrors.forEach(error=>fail(`B7 continuity ${error}`));
 else pass(`B7 continuity relations (${B7Continuity.relations.length})`);
 
-const knownIds=new Set([...B6.records,...B7.records].map(record=>record.id));
+const knownIds=new Set([...B6.records,...B7.records,...B7Knowledge.records].map(record=>record.id));
 const dangling=Continuity.danglingRelations(B7Continuity.relations,knownIds);
 if(dangling.length) fail(`B7 dangling continuity subjects: ${JSON.stringify(dangling)}`);
 else pass("B7 continuity subject references");
