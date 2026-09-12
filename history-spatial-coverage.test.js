@@ -8,6 +8,7 @@ function polygon(subjectId, subjectKind) {
     id: `polygon-${subjectId}`,
     subjectId,
     subjectKind,
+    geometryType: "Polygon",
     geometryMeaning: subjectKind === "culture" ? "reconstructed-distribution" : "core-area",
     coordinateSpace: "wgs84-lonlat",
     epistemicClass: "scholarly-reconstruction",
