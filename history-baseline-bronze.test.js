@@ -27,7 +27,6 @@ describe("Atlas Early States / Bronze Age baseline spine", () => {
 
   test("baseline spine preserves different forms of social organization", () => {
     const types = new Set(Bronze.records.map(record => record.type));
-    expect(types).toEqual(expect.objectContaining ? types : types);
     expect(types.has("polity")).toBe(true);
     expect(types.has("place")).toBe(true);
     expect(types.has("culture")).toBe(true);
