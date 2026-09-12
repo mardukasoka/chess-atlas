@@ -31,16 +31,19 @@ const relations = Object.freeze([
     from: Object.freeze(["culture-mycenaean-greece"]),
     to: Object.freeze(["culture-mycenaean-greece"]),
     epistemicClass: "disputed",
-    confidence: 0.7,
+    confidence: 0.72,
     temporalOrder: "uncertain",
-    rationale: "The end of Late Bronze Age palace systems is treated as a multicausal scholarly problem rather than assigned a single canonical cause.",
+    rationale: "The end of Late Bronze Age palace systems is treated as a contested multicausal problem rather than assigned one canonical cause. Recent synthesis and network research both reject a simplistic single-factor explanation.",
     alternatives: Object.freeze([
       "warfare/invasion and political conflict",
       "internal political-economic instability",
       "climate/environmental stress",
       "trade-network disruption and cascading system failure"
     ]),
-    sources: Object.freeze([{ label: "Atlas Bronze Age collapse research queue", url: "https://github.com/mardukasoka/chess-atlas" }])
+    sources: Object.freeze([
+      { label: "Middleton — Getting closer to the Late Bronze Age collapse (Antiquity, 2024)", url: "https://www.cambridge.org/core/journals/antiquity/article/getting-closer-to-the-late-bronze-age-collapse-in-the-aegean-and-eastern-mediterranean-c-1200-bc/482564326A668899FF183DD949FC520F" },
+      { label: "Are civilizations destined to collapse? Lessons from the Mediterranean Bronze Age (Global Environmental Change, 2024)", url: "https://www.sciencedirect.com/science/article/pii/S0959378023001589" }
+    ])
   })
 ]);
 
