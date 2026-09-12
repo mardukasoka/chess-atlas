@@ -92,11 +92,12 @@ The first complete baseline should prioritize continuity over maximal detail. Fo
 
 These must be completed first because later simulation and timeline policing depend on them.
 
-1. **Deep prehistory / Neolithic, c. 12,000–3500 BCE**
+1. **Deep prehistory / Neolithic, c. 15,000–3500 BCE**
    - sites and settlement networks
    - agriculture/domestication transitions
    - migration and exchange networks
    - no invented political boundaries where evidence does not support them
+   - start deliberately includes late-Pleistocene American evidence such as Monte Verde rather than cutting the baseline at an arbitrary 12,000 BCE threshold
 
 2. **Early states and Bronze Age, c. 3500–1200 BCE**
    - Mesopotamia, Egypt, Anatolia, Levant, Aegean, Indus, early China
