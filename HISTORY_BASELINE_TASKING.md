@@ -16,6 +16,8 @@ No cause/effect simulation, timeline policing, or player divergence enforcement 
 6. **Canonical records require provenance.** Every assertion needs source metadata and confidence rationale.
 7. **Simulation cannot mutate canonical history.** Alternate history forks from a baseline node.
 8. **Boundary confidence will later control divergence tolerance.** Gameplay tolerance is derived downstream, not embedded as historical fact.
+9. **Spatial representation is part of completion.** Every in-scope empire, state/polity, documented culture, language group, and ethnicity must have a sourced time-indexed polygon/MultiPolygon or an explicit spatially-unresolved record.
+10. **Culture, language, and ethnicity are not sovereignty.** Their geometry represents attested/reconstructed distributions or uncertainty envelopes, never administrative borders unless the subject is independently a polity.
 
 ## Workstream A — Baseline substrate
 
@@ -29,24 +31,34 @@ Deliverables:
 - [x] machine-readable era/region gap report
 - [x] inventory and source/import policy
 - [x] initial globally balanced prehistory/Neolithic anchor batch
+- [x] historical polygon/MultiPolygon schema with coordinate-space declaration
+- [x] spatial completeness auditor
+- [x] zero-dependency history baseline self-check
 - [ ] continuity-link schema (predecessor/successor/transform/split/merge)
 - [ ] claim-conflict schema for disputed dates/boundaries
-- [ ] historical boundary metadata extension
+- [ ] phase-specific historical boundary metadata extension
 - [ ] combined query facade for all baseline batches
+- [ ] independently researched language-group spatial layer
+- [ ] independently researched ethnicity spatial layer
 
 ## Workstream B — Chronological completion batches
 
-Each batch has two passes:
+Each batch has four required passes:
 
 **Pass 1 — spine:** globally important polities/sites/events/routes/technologies and sourced boundary anchors.
 
-**Pass 2 — continuity:** verify transitions into the next batch and fill unexplained births, disappearances, splits, mergers and territorial shifts.
+**Pass 2 — spatial:** representative polygons/MultiPolygons for every in-scope polity/culture plus explicit unresolved records where evidence cannot support geometry.
+
+**Pass 3 — continuity:** verify transitions into the next batch and fill unexplained births, disappearances, splits, mergers and territorial shifts.
+
+**Pass 4 — densification:** add phase-specific boundaries, language/ethnicity distributions, secondary polities, conflicts, routes and regional evidence without inventing precision.
 
 ### B1 — Deep prehistory / Neolithic (15,000–3500 BCE)
 
-Status: **started**
+Status: **global spine + first spatial pass verified**
 
 - [x] first anchor in every world coverage region
+- [x] polygon representatives for existing culture records
 - [ ] calibrated chronology review for approximate BP/"years ago" records
 - [ ] migration/population-history anchors
 - [ ] domestication/agriculture comparison across independent centres
@@ -56,9 +68,9 @@ Status: **started**
 
 ### B2 — Early states / Bronze Age (3500–1200 BCE)
 
-Status: queued
+Status: **global spine + first spatial pass verified**
 
-Required spine:
+Required densification:
 
 - Mesopotamian city-state and imperial transitions
 - Egypt Early Dynastic → Old/Middle/New Kingdom transitions
@@ -76,15 +88,28 @@ Required spine:
 
 ### B3 — Iron Age / Axial world (1200–323 BCE)
 
-Status: queued
+Status: **global spine + first spatial pass verified**
 
-Assyrian/Babylonian/Achaemenid succession; Phoenician/Mediterranean networks; Greek poleis; Macedon; Zhou/Warring States; South Asian formations; African states; American regional developments; steppe systems.
+First-pass anchors include Achaemenid Persia, Classical Athens, Napatan Kush, Scythian steppe horizons, Magadha, Eastern Zhou, Dong Son, Adena, Preclassic Maya, Chavín, and western-Pacific interaction. Densification remains required for Assyrian/Babylonian succession, Phoenician/Mediterranean networks, Greek poleis, Macedon, Warring States, South Asian formations, African states, American developments and steppe systems.
 
 ### B4 — Hellenistic / Roman / Han world (323 BCE–300 CE)
 
-Status: queued
+Status: **started — global spine + first spatial pass committed; execution verification pending**
 
-Alexander and successors; Rome’s documented territorial expansion; Qin/Han; Maurya/post-Maurya; Kushan; Parthia/Sasanian transition; Silk Road and Indian Ocean connections; African and American contemporaries.
+First-pass anchors now include Roman imperial rule, Parthia, Meroitic Kush, Kushan, Maurya, Han, Sa Huynh, Hopewell, Maya Late Preclassic/Early Classic transition, early Moche and eastern-Pacific Polynesian settlement expansion.
+
+Required continuity/densification:
+
+- Alexander and successor kingdoms; Seleucid/Ptolemaic/Antigonid phase boundaries
+- Rome’s dated territorial expansion and provincial change rather than one timeless maximum polygon
+- Qin → Western Han → Wang Mang → Eastern Han continuity
+- Maurya → post-Maurya regional states
+- Kushan chronology and phase-specific extent
+- Parthia → Sasanian transition
+- Silk Road and Indian Ocean connection records
+- Meroitic Kush phase changes and Roman-Egypt frontier interactions
+- American city-state/regional-culture transitions
+- Pacific settlement and exchange represented as island/network evidence, not ocean-spanning territory
 
 ### B5 — Late Antiquity / early medieval (300–800 CE)
 
@@ -139,6 +164,9 @@ Checks:
 - predecessor/successor continuity
 - source conflicts and unsupported precision
 - map resolution and boundary uncertainty
+- spatial subject completeness
+- culture/language/ethnicity geometry semantics
+- dateline and multipart-geometry correctness
 
 Output is a finding/proposal, never an automatic canonical rewrite.
 
@@ -200,6 +228,8 @@ Do not declare baseline complete until:
 - every era has meaningful coverage in all 11 world regions or an explicit evidence gap;
 - major polity/event chains have continuity links;
 - major boundaries have source/confidence metadata;
+- every empire/state/polity, documented culture, language group and ethnicity is spatially represented or explicitly unresolved;
+- culture/language/ethnicity distributions are not encoded as sovereign borders;
 - every canonical record passes the validator;
 - approximate chronology is not silently represented as exact;
 - imported simulator material is independently sourced before promotion;
