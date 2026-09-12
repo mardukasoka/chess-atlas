@@ -4,6 +4,8 @@ const Baseline = require("./history-baseline.js");
 const Spatial = require("./history-spatial.js");
 const SpatialCoverage = require("./history-spatial-coverage.js");
 const Continuity = require("./history-continuity.js");
+const Causality = require("./history-causality.js");
+const CausalSamples = require("./history-causality-sample.js");
 const Neolithic = require("./history-baseline-neolithic.js");
 const Bronze = require("./history-baseline-bronze.js");
 const Iron = require("./history-baseline-iron.js");
@@ -74,6 +76,19 @@ function checkContinuity(name, relations, knownSubjectIds) {
   else pass(`${name} continuity subject references`);
 }
 
+function checkCausality(name, relations, knownSubjectIds) {
+  const validationErrors = [];
+  for (const relation of relations) {
+    const result = Causality.validateCausalRelation(relation);
+    if (!result.ok) validationErrors.push(`${relation.id}: ${result.errors.join(" | ")}`);
+  }
+  if (validationErrors.length) validationErrors.forEach(error => fail(`${name} causality ${error}`));
+  else pass(`${name} causal relations (${relations.length})`);
+  const dangling = Causality.danglingRelations(relations, knownSubjectIds);
+  if (dangling.length) fail(`${name} dangling causal subjects: ${JSON.stringify(dangling)}`);
+  else pass(`${name} causal subject references`);
+}
+
 checkBaselineBatch("Neolithic", Neolithic);
 checkBaselineBatch("Bronze", Bronze);
 checkBaselineBatch("Iron/Axial", Iron);
@@ -103,6 +118,7 @@ checkSpatialCompleteness("B5 continuity phases", LateAntiquityContinuity, LateAn
 checkSpatialCompleteness("Medieval connected world", Medieval, MedievalSpatial);
 
 const knownSubjectIds = new Set([
+  ...Bronze.records,
   ...Iron.records,
   ...Classical.records,
   ...ClassicalContinuity.records,
@@ -113,6 +129,11 @@ const knownSubjectIds = new Set([
 checkContinuity("B4", ClassicalRelations.relations, knownSubjectIds);
 checkContinuity("B5", LateAntiquityRelations.relations, knownSubjectIds);
 checkContinuity("B6", MedievalRelations.relations, knownSubjectIds);
+checkCausality("v0.1", CausalSamples.relations, knownSubjectIds);
+
+const causalLimits = Causality.limits();
+if (causalLimits.simulationAllowed || causalLimits.canonicalMutationAllowed || causalLimits.automaticCorrectionAllowed) fail("causality boundary must remain read-only with respect to canonical history");
+else pass("causality/canonical-history separation");
 
 const excluded = ExistingCultures.EXCLUDED_NON_CULTURE_OVERLAYS.map(item => item.id);
 if (!excluded.includes("culture-catalhoyuk")) fail("Çatalhöyük settlement overlay must remain excluded from culture-distribution migration");
