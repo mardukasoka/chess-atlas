@@ -23,7 +23,7 @@
       id:"event-copernican-revolution-1543",
       type:"event",
       name:"Copernican Revolution — publication of De revolutionibus",
-      time:Object.freeze({year:1543,precision:"exact"}),
+      time:Object.freeze({year:1543,precision:"year"}),
       epistemicClass:"documented",
       status:"reviewed",
       confidence:0.99,
