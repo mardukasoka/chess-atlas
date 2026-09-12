@@ -6,6 +6,7 @@ const SpatialCoverage = require("./history-spatial-coverage.js");
 const Continuity = require("./history-continuity.js");
 const Causality = require("./history-causality.js");
 const CausalSamples = require("./history-causality-sample.js");
+const Propagation = require("./history-causal-propagation.js");
 const Neolithic = require("./history-baseline-neolithic.js");
 const Bronze = require("./history-baseline-bronze.js");
 const Iron = require("./history-baseline-iron.js");
@@ -134,6 +135,49 @@ checkCausality("v0.1", CausalSamples.relations, knownSubjectIds);
 const causalLimits = Causality.limits();
 if (causalLimits.simulationAllowed || causalLimits.canonicalMutationAllowed || causalLimits.automaticCorrectionAllowed) fail("causality boundary must remain read-only with respect to canonical history");
 else pass("causality/canonical-history separation");
+
+const propagationLimits = Propagation.limits();
+if (!propagationLimits.proposalOnly || propagationLimits.canonicalMutationAllowed || propagationLimits.automaticBranchAcceptance || propagationLimits.automaticTimelineCorrection) {
+  fail("causal propagation must remain proposal-only and non-mutating");
+} else pass("causal propagation proposal-only boundary");
+
+const samplePropagation = Propagation.propagate({
+  branchId: "sample-roman-divergence",
+  actorId: "polity-roman-empire-principate",
+  year: 117,
+  action: {
+    type: "annex",
+    targetId: "hypothetical-undocumented-town",
+    distanceFromCoreKm: 900,
+    documentedConflict: false,
+    hostileNeighborCount: 3,
+    tradeDependency: 0.7,
+    localPopulation: 25000,
+    highIntensityConflict: true
+  }
+}, {
+  logisticsEvidenceIds: ["cause-silk-road-kushan-exchange"],
+  diplomacyEvidenceIds: [],
+  manpowerEvidenceIds: [],
+  tradeEvidenceIds: ["cause-silk-road-kushan-exchange"],
+  economyEvidenceIds: [],
+  institutionEvidenceIds: [],
+  demographyEvidenceIds: [],
+  divergenceEvidenceIds: []
+});
+if (!samplePropagation.ok || samplePropagation.mode !== "proposal-only" || samplePropagation.writesCanonicalHistory !== false || samplePropagation.requiresReview !== true) {
+  fail("sample causal propagation output contract");
+} else {
+  const domains = new Set(samplePropagation.effects.map(effect => effect.domain));
+  const requiredDomains = ["logistics","diplomacy","manpower","trade","economy","institutions","demography"];
+  const missingDomains = requiredDomains.filter(domain => !domains.has(domain));
+  if (missingDomains.length) fail(`sample causal propagation missing domains: ${missingDomains.join(",")}`);
+  else pass("sample causal propagation covers all consequence domains");
+  if (samplePropagation.effects.some(effect => effect.canonicalMutation !== false)) fail("sample causal propagation attempted canonical mutation");
+  else pass("sample causal effects are non-mutating");
+  if (!samplePropagation.effects.some(effect => effect.kind === "historical-divergence-signal")) fail("undocumented conquest must emit historical divergence signal");
+  else pass("undocumented conquest divergence signal");
+}
 
 const excluded = ExistingCultures.EXCLUDED_NON_CULTURE_OVERLAYS.map(item => item.id);
 if (!excluded.includes("culture-catalhoyuk")) fail("Çatalhöyük settlement overlay must remain excluded from culture-distribution migration");
