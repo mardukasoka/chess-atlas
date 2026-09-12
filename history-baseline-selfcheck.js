@@ -1,0 +1,89 @@
+"use strict";
+
+const Baseline = require("./history-baseline.js");
+const Spatial = require("./history-spatial.js");
+const SpatialCoverage = require("./history-spatial-coverage.js");
+const Neolithic = require("./history-baseline-neolithic.js");
+const Bronze = require("./history-baseline-bronze.js");
+const Iron = require("./history-baseline-iron.js");
+const NeolithicSpatial = require("./history-spatial-neolithic.js");
+const BronzeSpatial = require("./history-spatial-bronze.js");
+const IronSpatial = require("./history-spatial-iron.js");
+const ExistingCultures = require("./history-spatial-existing-cultures.js");
+
+let failures = 0;
+function fail(message) {
+  failures += 1;
+  console.error(`FAIL: ${message}`);
+}
+function pass(message) { console.log(`PASS: ${message}`); }
+
+function checkBaselineBatch(name, batch) {
+  const errors = [];
+  for (const record of batch.records) {
+    const result = Baseline.validateBaselineRecord(record);
+    if (!result.ok) errors.push(`${record.id}: ${result.errors.join(" | ")}`);
+  }
+  if (errors.length) errors.forEach(error => fail(`${name} baseline ${error}`));
+  else pass(`${name} baseline records (${batch.records.length})`);
+}
+
+function checkSpatialRecords(name, spatialBatch) {
+  const errors = [];
+  for (const record of spatialBatch.records) {
+    const result = Spatial.validatePolygonRecord(record);
+    if (!result.ok) errors.push(`${record.id}: ${result.errors.join(" | ")}`);
+  }
+  if (errors.length) errors.forEach(error => fail(`${name} spatial ${error}`));
+  else pass(`${name} spatial records (${spatialBatch.records.length})`);
+}
+
+function checkSpatialCompleteness(name, baselineBatch, spatialBatch) {
+  const required = baselineBatch.records.filter(record => record.type === "culture" || record.type === "polity");
+  const spatialBySubject = new Map(spatialBatch.records.map(record => [record.subjectId, record]));
+  const subjects = required.map(record => ({
+    id: record.id,
+    kind: spatialBySubject.get(record.id)?.subjectKind || (record.type === "culture" ? "culture" : "polity")
+  }));
+  const report = SpatialCoverage.spatialCoverageReport(subjects, spatialBatch.records);
+  if (!report.complete) {
+    fail(`${name} spatial completeness: missing=${JSON.stringify(report.missing)} invalid=${JSON.stringify(report.invalidPolygons)}`);
+  } else {
+    pass(`${name} spatial completeness (${report.represented}/${report.totalSubjects} represented)`);
+  }
+}
+
+checkBaselineBatch("Neolithic", Neolithic);
+checkBaselineBatch("Bronze", Bronze);
+checkBaselineBatch("Iron/Axial", Iron);
+
+checkSpatialRecords("Neolithic", NeolithicSpatial);
+checkSpatialRecords("Bronze", BronzeSpatial);
+checkSpatialRecords("Iron/Axial", IronSpatial);
+checkSpatialRecords("legacy culture migration", ExistingCultures);
+
+checkSpatialCompleteness("Neolithic", Neolithic, NeolithicSpatial);
+checkSpatialCompleteness("Bronze", Bronze, BronzeSpatial);
+checkSpatialCompleteness("Iron/Axial", Iron, IronSpatial);
+
+const excluded = ExistingCultures.EXCLUDED_NON_CULTURE_OVERLAYS.map(item => item.id);
+if (!excluded.includes("culture-catalhoyuk")) fail("Çatalhöyük settlement overlay must remain excluded from culture-distribution migration");
+else pass("settlement/culture semantic separation");
+
+const lapita = BronzeSpatial.get("culture-lapita");
+if (!lapita || lapita.geometryType !== "MultiPolygon") fail("Lapita must remain multipart");
+else {
+  const badDatelineRing = lapita.geometry.some(ring => {
+    const longitudes = ring.map(point => point[0]);
+    return Math.max(...longitudes) - Math.min(...longitudes) > 30;
+  });
+  if (badDatelineRing) fail("Lapita contains a dateline-spanning ring");
+  else pass("Lapita dateline split");
+}
+
+if (failures) {
+  console.error(`\nHistory baseline self-check failed: ${failures} issue(s).`);
+  process.exitCode = 1;
+} else {
+  console.log("\nHistory baseline self-check passed.");
+}
