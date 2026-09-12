@@ -34,7 +34,7 @@ Deliverables:
 - [x] historical polygon/MultiPolygon schema with coordinate-space declaration
 - [x] spatial completeness auditor
 - [x] zero-dependency history baseline self-check
-- [ ] continuity-link schema (predecessor/successor/transform/split/merge)
+- [x] continuity-link schema (predecessor/successor/transform/split/merge)
 - [ ] claim-conflict schema for disputed dates/boundaries
 - [ ] phase-specific historical boundary metadata extension
 - [ ] combined query facade for all baseline batches
@@ -94,18 +94,16 @@ First-pass anchors include Achaemenid Persia, Classical Athens, Napatan Kush, Sc
 
 ### B4 — Hellenistic / Roman / Han world (323 BCE–300 CE)
 
-Status: **started — global spine + first spatial pass committed; execution verification pending**
+Status: **global spine + first spatial + continuity passes verified**
 
-First-pass anchors now include Roman imperial rule, Parthia, Meroitic Kush, Kushan, Maurya, Han, Sa Huynh, Hopewell, Maya Late Preclassic/Early Classic transition, early Moche and eastern-Pacific Polynesian settlement expansion.
+First-pass anchors include Roman imperial rule, Parthia, Meroitic Kush, Kushan, Maurya, Han, Sa Huynh, Hopewell, Maya Late Preclassic/Early Classic transition, early Moche and eastern-Pacific Polynesian settlement expansion. Continuity now includes successor kingdoms, Qin/Han phase changes and Parthia→Sasanian transition.
 
-Required continuity/densification:
+Required densification:
 
-- Alexander and successor kingdoms; Seleucid/Ptolemaic/Antigonid phase boundaries
+- Antigonid and additional successor-state phase boundaries
 - Rome’s dated territorial expansion and provincial change rather than one timeless maximum polygon
-- Qin → Western Han → Wang Mang → Eastern Han continuity
 - Maurya → post-Maurya regional states
 - Kushan chronology and phase-specific extent
-- Parthia → Sasanian transition
 - Silk Road and Indian Ocean connection records
 - Meroitic Kush phase changes and Roman-Egypt frontier interactions
 - American city-state/regional-culture transitions
@@ -113,15 +111,40 @@ Required continuity/densification:
 
 ### B5 — Late Antiquity / early medieval (300–800 CE)
 
-Status: queued
+Status: **global spine + first spatial + continuity passes verified**
 
-Roman transformations; Byzantium; Sasanian Persia; migration-period polities; Gupta/post-Gupta; Chinese dynastic transitions; early Islamic expansion; African, American, SE Asian and Pacific systems.
+Verified anchors include Byzantium, Sasanian Persia, Aksum, First Turkic Khaganate, Gupta, Sui/Tang, Funan/Chenla, Late Eastern Woodland, Classic Maya, Wari/Tiwanaku, western Polynesian development, and Rashidun→Umayyad→Abbasid transitions.
+
+Required densification:
+
+- migration-period European polities and successor states
+- post-Gupta South Asian regional systems
+- Chinese dynastic fragmentation between major reunifications
+- Byzantine/Sasanian frontier phases
+- Indian Ocean and Red Sea commercial networks
+- East African coastal systems
+- regional language and identity evidence where supportable
 
 ### B6 — Medieval connected world (800–1500 CE)
 
-Status: queued
+Status: **global spine + first spatial + continuity passes committed; execution verification pending**
 
-Europe/Byzantium; Islamic world; African states and trade; steppe/Mongol systems; Tang/Song/Yuan/Ming; South/Southeast Asia; pre-Columbian Americas; Pacific societies.
+First-pass anchors include medieval Byzantium, Holy Roman Empire, Abbasids, Great Zimbabwe, Mali, Mongol imperial/successor systems, Timurids, Chola, Song→Yuan→early Ming, Angkor, Mississippian cultures, Mayapan/K'iche' systems, Chimú→Inca transition and eastern-Polynesian migration/interaction.
+
+Required densification:
+
+- Abbasid fragmentation into regional dynasties and caliphates
+- Seljuk, Ayyubid, Mamluk and Ottoman emergence
+- West African Ghana→Mali→Songhai transitions
+- Great Zimbabwe→Khami/Mutapa regional transitions
+- Mongol successor khanates represented separately
+- Song/Jin/Yuan/Ming phase-specific boundaries
+- Delhi Sultanate and regional South Asian polities
+- Srivijaya/Angkor/Bagan/Majapahit/Ayutthaya/Lan Xang relationships
+- Mississippian, Puebloan, Hohokam, Thule and language-group evidence
+- Mayapan, K'iche', Mexica and other Mesoamerican state systems
+- Chimú and Inca represented as distinct dated phases
+- Polynesian settlement at archipelago scale
 
 ### B7 — Early modern world (1500–1800 CE)
 
@@ -172,7 +195,7 @@ Output is a finding/proposal, never an automatic canonical rewrite.
 
 ## Workstream D — Cause/effect layer
 
-**Blocked until:** baseline has a coherent global spine through at least B6 and consistency validation is operational.
+**Threshold reached once B6 execution verification is clean.** Formal implementation may begin in parallel with continued history densification, but it must remain downstream of the evidence-backed baseline and consistency checks.
 
 Typed relations must distinguish:
 
