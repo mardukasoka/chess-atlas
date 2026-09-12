@@ -8,6 +8,7 @@ const Causality = require("./history-causality.js");
 const CausalSamples = require("./history-causality-sample.js");
 const Propagation = require("./history-causal-propagation.js");
 const Divergence = require("./history-divergence.js");
+const ContinuumCase = require("./history-continuum-case.js");
 const Neolithic = require("./history-baseline-neolithic.js");
 const Bronze = require("./history-baseline-bronze.js");
 const Iron = require("./history-baseline-iron.js");
@@ -206,6 +207,37 @@ const divergenceLimits = Divergence.limits();
 if (divergenceLimits.canonicalMutationAllowed || divergenceLimits.automaticCorrectionAllowed || divergenceLimits.continuumCaseIsProposal !== true) {
   fail("divergence detector must not mutate or automatically correct history");
 } else pass("divergence detector is non-mutating and review-only");
+
+const sampleCase = ContinuumCase.createCase({
+  caseId:"continuum-sample-roman-117",
+  branchId:"sample-roman-divergence",
+  subjectId:"polity-roman-empire-principate",
+  year:117,
+  divergence:farRome,
+  propagation:samplePropagation
+});
+if (!sampleCase.ok || sampleCase.status !== "open" || sampleCase.writesCanonicalHistory !== false || sampleCase.automaticEnforcement !== false || sampleCase.requiresPlayerChoice !== true) {
+  fail("Continuum case open-state contract");
+} else pass("Continuum case packages divergence and causal consequences");
+
+const correctedCase = ContinuumCase.choose(sampleCase, "CORRECT", "Return branch proposal toward evidence-backed historical state.");
+if (!correctedCase.ok || correctedCase.status !== "correction-proposed" || correctedCase.correctionApplied !== false || correctedCase.writesCanonicalHistory !== false || correctedCase.requiresReview !== true) {
+  fail("CORRECT must remain a reviewable proposal without applying a canonical rewrite");
+} else pass("Continuum CORRECT remains proposal-only");
+
+const contestedCase = ContinuumCase.choose(sampleCase, "CONTEST", "Player elects to defend the alternate branch through gameplay.");
+if (!contestedCase.ok || contestedCase.status !== "contested" || contestedCase.branchAccepted !== false || contestedCase.writesCanonicalHistory !== false || contestedCase.requiresReview !== true) {
+  fail("CONTEST must preserve branch for review/gameplay without automatic acceptance");
+} else pass("Continuum CONTEST preserves alternate branch without auto-acceptance");
+
+if (correctedCase.history.length !== 2 || contestedCase.history.length !== 2 || sampleCase.history.length !== 1) {
+  fail("Continuum case history must be immutable and append-only by returned case state");
+} else pass("Continuum case preserves branch decision history");
+
+const continuumLimits = ContinuumCase.limits();
+if (continuumLimits.canonicalMutationAllowed || continuumLimits.automaticCorrectionAllowed || continuumLimits.automaticContestResolutionAllowed || continuumLimits.branchHistoryPreserved !== true) {
+  fail("Continuum case limits must prohibit automatic enforcement and preserve branch history");
+} else pass("Continuum case enforcement boundary");
 
 const excluded = ExistingCultures.EXCLUDED_NON_CULTURE_OVERLAYS.map(item => item.id);
 if (!excluded.includes("culture-catalhoyuk")) fail("Çatalhöyük settlement overlay must remain excluded from culture-distribution migration");
