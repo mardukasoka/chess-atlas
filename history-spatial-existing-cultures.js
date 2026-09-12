@@ -25,6 +25,7 @@ const records = Object.freeze(global.AtlasCultureData.cultures
     subjectId: culture.id,
     subjectKind: "culture",
     name: culture.name,
+    geometryType: "Polygon",
     geometryMeaning: "reconstructed-distribution",
     coordinateSpace: "atlas-equirectangular-2048x1024",
     epistemicClass: "archaeological-reconstruction",
