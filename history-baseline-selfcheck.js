@@ -7,6 +7,7 @@ const Continuity = require("./history-continuity.js");
 const Causality = require("./history-causality.js");
 const CausalSamples = require("./history-causality-sample.js");
 const Propagation = require("./history-causal-propagation.js");
+const Divergence = require("./history-divergence.js");
 const Neolithic = require("./history-baseline-neolithic.js");
 const Bronze = require("./history-baseline-bronze.js");
 const Iron = require("./history-baseline-iron.js");
@@ -178,6 +179,33 @@ if (!samplePropagation.ok || samplePropagation.mode !== "proposal-only" || sampl
   if (!samplePropagation.effects.some(effect => effect.kind === "historical-divergence-signal")) fail("undocumented conquest must emit historical divergence signal");
   else pass("undocumented conquest divergence signal");
 }
+
+const classicalSpatialRecords = [...ClassicalSpatial.records, ...ClassicalContinuitySpatial.records];
+const insideRome = Divergence.evaluateDivergence({
+  subjectId:"polity-roman-empire-principate",
+  year:117,
+  proposedPoints:[[12.5,41.9]],
+  spatialRecords:classicalSpatialRecords
+});
+if (!insideRome.ok || insideRome.outcome !== "within-tolerance" || insideRome.writesCanonicalHistory !== false) {
+  fail("inside historical extent must remain within tolerance");
+} else pass("divergence detector allows within-tolerance play");
+
+const farRome = Divergence.evaluateDivergence({
+  subjectId:"polity-roman-empire-principate",
+  year:117,
+  proposedPoints:[[75,35]],
+  spatialRecords:classicalSpatialRecords,
+  overrideToleranceKm:50
+});
+if (!farRome.ok || farRome.outcome !== "continuum-case-required" || farRome.requiresReview !== true) {
+  fail("materially distant territorial proposal must require Continuum review");
+} else pass("divergence detector opens Continuum case outside tolerance");
+
+const divergenceLimits = Divergence.limits();
+if (divergenceLimits.canonicalMutationAllowed || divergenceLimits.automaticCorrectionAllowed || divergenceLimits.continuumCaseIsProposal !== true) {
+  fail("divergence detector must not mutate or automatically correct history");
+} else pass("divergence detector is non-mutating and review-only");
 
 const excluded = ExistingCultures.EXCLUDED_NON_CULTURE_OVERLAYS.map(item => item.id);
 if (!excluded.includes("culture-catalhoyuk")) fail("Çatalhöyük settlement overlay must remain excluded from culture-distribution migration");
