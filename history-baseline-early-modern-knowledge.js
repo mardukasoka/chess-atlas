@@ -1,8 +1,24 @@
 "use strict";
 
-/* Knowledge-system anchors for B7 Early Modern history (1500–1800 CE). */
+/* Knowledge/world-system anchors for B7 Early Modern history (1500–1800 CE). */
 (function (root) {
   const records = Object.freeze([
+    Object.freeze({
+      id:"event-age-of-exploration-b7",
+      type:"event",
+      name:"Age of Exploration / sustained European transoceanic expansion",
+      time:Object.freeze({startYear:1488,endYear:1700,precision:"range"}),
+      epistemicClass:"documented",
+      status:"reviewed",
+      confidence:0.98,
+      confidenceRationale:"The Age of Exploration is a broad process rather than a single event. The Met places the great period of European exploration from the latter half of the fifteenth through the sixteenth century, with major navigation/cartography advances and sustained oceanic routes. The Atlas extends the anchor into the seventeenth century to cover continued Pacific charting and the consolidation of global maritime trade networks. This record does not imply that inhabited lands were literally 'discovered'; it tracks European maritime expansion, sustained contact, conquest/colonization, and global route integration.",
+      coverageRegions:Object.freeze(["europe","middle-east-north-africa","sub-saharan-africa","south-asia","east-asia","southeast-asia","north-america","central-america-caribbean","south-america","oceania-pacific"]),
+      sources:Object.freeze([
+        {label:"Metropolitan Museum — Europe and the Age of Exploration",type:"academic-secondary",reference:"Age of Exploration from later 15th through 16th century; navigation, cartography, anatomy and optics advances",url:"https://www.metmuseum.org/ja/essays/europe-and-the-age-of-exploration"},
+        {label:"Library of Congress — 1492: An Ongoing Voyage",type:"institutional-dataset",reference:"Sustained contact, exploration, conquest and acculturation in the Americas after 1492",url:"https://www.loc.gov/exhibits/1492/"},
+        {label:"Metropolitan Museum — European Exploration of the Pacific, 1600–1800",type:"academic-secondary",reference:"Seventeenth- and eighteenth-century continuation of European Pacific exploration and charting",url:"https://www.metmuseum.org/it/essays/european-exploration-of-the-pacific-1600-1800"}
+      ])
+    }),
     Object.freeze({
       id:"event-copernican-revolution-1543",
       type:"event",
