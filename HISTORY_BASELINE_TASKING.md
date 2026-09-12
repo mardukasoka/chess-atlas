@@ -127,7 +127,7 @@ Required densification:
 
 ### B6 — Medieval connected world (800–1500 CE)
 
-Status: **global spine + first spatial + continuity passes committed; execution verification pending**
+Status: **global spine + first spatial + continuity passes verified**
 
 First-pass anchors include medieval Byzantium, Holy Roman Empire, Abbasids, Great Zimbabwe, Mali, Mongol imperial/successor systems, Timurids, Chola, Song→Yuan→early Ming, Angkor, Mississippian cultures, Mayapan/K'iche' systems, Chimú→Inca transition and eastern-Polynesian migration/interaction.
 
@@ -195,9 +195,11 @@ Output is a finding/proposal, never an automatic canonical rewrite.
 
 ## Workstream D — Cause/effect layer
 
-**Threshold reached once B6 execution verification is clean.** Formal implementation may begin in parallel with continued history densification, but it must remain downstream of the evidence-backed baseline and consistency checks.
+Status: **started — typed schema + first evidence-backed relations committed; execution verification pending**
 
-Typed relations must distinguish:
+The B6 threshold is reached. Formal implementation now proceeds in parallel with continued history densification, but remains downstream of the evidence-backed baseline and consistency checks.
+
+Typed relations distinguish:
 
 - direct cause
 - contributing condition
@@ -207,6 +209,15 @@ Typed relations must distinguish:
 - consequence
 - correlation
 - disputed interpretation
+
+Current safeguards:
+
+- causal claims require provenance and confidence;
+- direct causal types require an explicit mechanism;
+- correlation may not silently assert a mechanism;
+- disputed interpretations must preserve multiple alternatives;
+- causality records cannot simulate, rewrite, or automatically correct canonical history;
+- dangling subject references fail the baseline self-check.
 
 The Human History Simulator may supply architecture and candidate mechanisms only after baseline separation is maintained.
 
