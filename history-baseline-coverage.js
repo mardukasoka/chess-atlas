@@ -20,7 +20,7 @@
   ]);
 
   const ERAS = Object.freeze([
-    Object.freeze({ id: "deep-prehistory-neolithic", startYear: -12000, endYear: -3501 }),
+    Object.freeze({ id: "deep-prehistory-neolithic", startYear: -15000, endYear: -3501 }),
     Object.freeze({ id: "early-states-bronze-age", startYear: -3500, endYear: -1201 }),
     Object.freeze({ id: "iron-age-axial", startYear: -1200, endYear: -324 }),
     Object.freeze({ id: "hellenistic-roman-han", startYear: -323, endYear: 299 }),
