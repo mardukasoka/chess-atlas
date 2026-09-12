@@ -125,10 +125,11 @@ const records = Object.freeze([
       Object.freeze([[145,-2],[154,-2],[155,-7],[147,-8]]),
       Object.freeze([[154,-5],[164,-5],[164,-12],[156,-12]]),
       Object.freeze([[164,-12],[171,-12],[171,-21],[165,-21]]),
-      Object.freeze([[176,-15],[-176,-15],[-176,-22],[176,-22]])
+      Object.freeze([[176,-15],[179.8,-15],[179.8,-22],[176,-22]]),
+      Object.freeze([[-179.8,-15],[-171,-15],[-171,-22],[-179.8,-22]])
     ]),
     confidence: "low",
-    reconstructionMethod: "Separate schematic archipelago envelopes following the ANU synthesis of Lapita spread across Melanesia into western Polynesia; multipart geometry intentionally avoids filling intervening ocean as continuous occupation.",
+    reconstructionMethod: "Separate schematic archipelago envelopes following the ANU synthesis of Lapita spread across Melanesia into western Polynesia; the dateline is split into separate rings so intervening ocean is never rendered as continuous occupation.",
     spatialCaveat: "Archaeological distribution envelopes across island groups; not political, ethnic, or linguistic borders.",
     sources: sourceFor("culture-lapita")
   })
