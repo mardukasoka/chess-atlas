@@ -6,9 +6,11 @@ const SpatialCoverage = require("./history-spatial-coverage.js");
 const Neolithic = require("./history-baseline-neolithic.js");
 const Bronze = require("./history-baseline-bronze.js");
 const Iron = require("./history-baseline-iron.js");
+const Classical = require("./history-baseline-classical.js");
 const NeolithicSpatial = require("./history-spatial-neolithic.js");
 const BronzeSpatial = require("./history-spatial-bronze.js");
 const IronSpatial = require("./history-spatial-iron.js");
+const ClassicalSpatial = require("./history-spatial-classical.js");
 const ExistingCultures = require("./history-spatial-existing-cultures.js");
 
 let failures = 0;
@@ -56,15 +58,18 @@ function checkSpatialCompleteness(name, baselineBatch, spatialBatch) {
 checkBaselineBatch("Neolithic", Neolithic);
 checkBaselineBatch("Bronze", Bronze);
 checkBaselineBatch("Iron/Axial", Iron);
+checkBaselineBatch("Hellenistic/Roman/Han", Classical);
 
 checkSpatialRecords("Neolithic", NeolithicSpatial);
 checkSpatialRecords("Bronze", BronzeSpatial);
 checkSpatialRecords("Iron/Axial", IronSpatial);
+checkSpatialRecords("Hellenistic/Roman/Han", ClassicalSpatial);
 checkSpatialRecords("legacy culture migration", ExistingCultures);
 
 checkSpatialCompleteness("Neolithic", Neolithic, NeolithicSpatial);
 checkSpatialCompleteness("Bronze", Bronze, BronzeSpatial);
 checkSpatialCompleteness("Iron/Axial", Iron, IronSpatial);
+checkSpatialCompleteness("Hellenistic/Roman/Han", Classical, ClassicalSpatial);
 
 const excluded = ExistingCultures.EXCLUDED_NON_CULTURE_OVERLAYS.map(item => item.id);
 if (!excluded.includes("culture-catalhoyuk")) fail("Çatalhöyük settlement overlay must remain excluded from culture-distribution migration");
