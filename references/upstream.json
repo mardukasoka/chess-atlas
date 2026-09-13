@@ -79,6 +79,22 @@
       "modified": false
     },
     {
+      "id": "globi",
+      "name": "Globi",
+      "repository": "https://github.com/mardukasoka/globi",
+      "role": "Lazy-loaded global presentation renderer for Atlas geography and evidence overlays; the flat canvas remains the authoritative playable surface.",
+      "atlas_domains": [
+        "earth-systems",
+        "geospatial-visualisation",
+        "interface"
+      ],
+      "integration": "dependency-adapter",
+      "adapter_path": "globi-renderer-adapter.js",
+      "upstream_commit": "d993c172bc10ecfc533d2e3c33538e226198822f",
+      "license": "MIT",
+      "modified": false
+    },
+    {
       "id": "worlddynamics",
       "name": "WorldDynamics.jl",
       "repository": "https://github.com/worlddynamics/WorldDynamics.jl",

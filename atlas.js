@@ -122,7 +122,10 @@ let currentNodeIndex = ATLAS_WORLD.nodes.findIndex(
 
 let currentMode = "chess";
 let atlasMap = null;
+let atlasGlobe = null;
 let atlasMapError = null;
+let atlasGlobeError = null;
+let currentWorldRenderer = "flat";
 let manualGameExploration = false;
 let applyingTimelineGame = false;
 
@@ -345,6 +348,8 @@ function renderMode() {
 
   const worldPanel =
     document.getElementById("world-panel");
+  const flatViewport = document.getElementById("world-map");
+  const globeViewport = document.getElementById("world-globe");
   const variantControl =
     document.querySelector(".variant-control");
   const stateControls =
@@ -375,6 +380,20 @@ function renderMode() {
   chessControls.hidden = true;
   stateControls.hidden = true;
   worldPanel.hidden = false;
+  flatViewport.hidden = currentWorldRenderer !== "flat";
+  if (currentWorldRenderer === "globe") {
+    atlasGlobe?.activate().catch(error => {
+      atlasGlobeError = error;
+      currentWorldRenderer = "flat";
+      updateWorldRendererControls();
+      flatViewport.hidden = false;
+      globeViewport.hidden = true;
+      mapSummary.textContent =
+        "The presentation globe could not load. The playable flat map remains available.";
+    });
+  } else {
+    atlasGlobe?.deactivate();
+  }
 
   const available =
     node.games.includes(currentMode);
@@ -407,6 +426,24 @@ function renderMode() {
   }
 }
 
+function updateWorldRendererControls() {
+  document.querySelectorAll("[data-world-renderer]").forEach(button => {
+    const selected = button.dataset.worldRenderer === currentWorldRenderer;
+    button.classList.toggle("active", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
+}
+
+function setWorldRenderer(renderer) {
+  if (renderer !== "flat" && renderer !== "globe") return;
+  if (renderer === "globe" && atlasGlobeError) {
+    atlasGlobeError = null;
+  }
+  currentWorldRenderer = renderer;
+  updateWorldRendererControls();
+  renderMode();
+}
+
 function initialiseAtlas() {
   ensureCampaignPanel();
 
@@ -417,14 +454,33 @@ function initialiseAtlas() {
       atlasMap = new AtlasMapRenderer({
         viewport: mapViewport,
         geography,
-        summary: mapSummary
+        summary: mapSummary,
+        onFeatureSelected: feature => window.dispatchEvent(
+          new CustomEvent("atlas-feature-selected", { detail: feature })
+        )
+      });
+      atlasGlobe = new AtlasGlobiAdapter.AtlasGlobiRenderer({
+        viewport: document.getElementById("world-globe"),
+        geography,
+        summary: mapSummary,
+        onFeatureSelected: feature => window.dispatchEvent(
+          new CustomEvent("atlas-feature-selected", { detail: feature })
+        )
       });
       document
         .getElementById("reset-world")
-        .addEventListener("click", () => atlasMap.resetWorld());
+        .addEventListener("click", () =>
+          currentWorldRenderer === "globe"
+            ? atlasGlobe.resetWorld()
+            : atlasMap.resetWorld()
+        );
       document
         .getElementById("focus-selection")
-        .addEventListener("click", () => atlasMap.focusSelection());
+        .addEventListener("click", () =>
+          currentWorldRenderer === "globe"
+            ? atlasGlobe.focusSelection()
+            : atlasMap.focusSelection()
+        );
       renderMode();
     })
     .catch(error => {
@@ -452,6 +508,12 @@ function initialiseAtlas() {
       setMode(button.dataset.mode);
     });
   });
+
+  document.querySelectorAll("[data-world-renderer]").forEach(button => {
+    button.addEventListener("click", () => setWorldRenderer(button.dataset.worldRenderer));
+  });
+
+  updateWorldRendererControls();
 
   document
     .getElementById("game-variant")

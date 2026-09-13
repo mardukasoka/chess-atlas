@@ -229,6 +229,20 @@ main {
   gap: 6px;
 }
 
+.world-renderer-toggle {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid #435363;
+  border-radius: 10px;
+  background: #151c24;
+}
+
+.world-renderer-toggle button.active {
+  background: #ffd96b;
+  color: #15181d;
+}
+
 .world-map-actions button {
   padding: 8px 10px;
   font-size: 0.78rem;
@@ -250,6 +264,21 @@ main {
   background: #0e2638;
   touch-action: none;
   user-select: none;
+}
+
+.world-map[hidden] {
+  display: none;
+}
+
+.world-globe {
+  background: #03070c;
+}
+
+.world-globe globi-viewer {
+  display: block;
+  width: 100%;
+  height: min(58vh, 480px);
+  min-height: inherit;
 }
 
 .world-map canvas {
@@ -587,8 +616,17 @@ button {
   }
 
   .world-map-actions {
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 5px;
+  }
+
+  .world-renderer-toggle {
+    grid-column: 1 / -1;
+  }
+
+  .world-renderer-toggle button {
+    flex: 1;
   }
 
   .world-map-actions button {
