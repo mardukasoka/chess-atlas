@@ -42,6 +42,7 @@
   renderTimeline = function () {
     baseRenderTimeline();
     syncCultureLayer();
+    syncPresentGodsEye();
   };
 
   const baseRenderMode = renderMode;

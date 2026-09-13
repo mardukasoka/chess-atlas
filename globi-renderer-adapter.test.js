@@ -51,6 +51,38 @@ describe("Globi presentation adapter", () => {
     expect(scene.planet.textureUri).toBe(Adapter.EARTH_TEXTURE_URL);
   });
 
+  test("adds present observations with click-only labels and layer filters", () => {
+    const scene = Adapter.createScene({
+      coordinateSpace,
+      physicalFeatures: [],
+      navigationRegions: [],
+      culturalFeatures: [],
+      liveSnapshot: {
+        fetchedAt: 1,
+        features: [{
+          id: "quake-1",
+          layerId: "earthquakes",
+          label: "Test earthquake",
+          description: "Magnitude 5",
+          lat: 10,
+          lon: 20,
+          timestamp: 1,
+          color: "#ffcf5a"
+        }],
+        sources: []
+      }
+    });
+
+    expect(scene.markers[0]).toEqual(expect.objectContaining({
+      category: "live-earthquakes",
+      calloutMode: "click"
+    }));
+    expect(scene.filters[0].options).toEqual(expect.arrayContaining([
+      expect.objectContaining({ value: "earthquakes" }),
+      expect.objectContaining({ value: "fires" })
+    ]));
+  });
+
   test("renders and resets through the Globi component public API", () => {
     const summary = { textContent: "" };
     const renderer = new Adapter.AtlasGlobiRenderer({

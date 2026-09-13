@@ -126,6 +126,7 @@ let atlasGlobe = null;
 let atlasMapError = null;
 let atlasGlobeError = null;
 let currentWorldRenderer = "flat";
+let godsEyeRequest = 0;
 let manualGameExploration = false;
 let applyingTimelineGame = false;
 
@@ -442,6 +443,30 @@ function setWorldRenderer(renderer) {
   currentWorldRenderer = renderer;
   updateWorldRendererControls();
   renderMode();
+  if (renderer === "globe") syncPresentGodsEye();
+}
+
+function syncPresentGodsEye() {
+  if (!atlasGlobe) return;
+  const request = ++godsEyeRequest;
+  if (getCurrentNode().id !== "present") {
+    atlasGlobe.setLiveSnapshot(null);
+    return;
+  }
+  document.getElementById("world-map-summary").textContent =
+    "Loading present-day God’s-Eye observations…";
+  AtlasGodsEyeLive.loadPresent()
+    .then(snapshot => {
+      if (request === godsEyeRequest && getCurrentNode().id === "present") {
+        atlasGlobe.setLiveSnapshot(snapshot);
+      }
+    })
+    .catch(error => {
+      if (request === godsEyeRequest) {
+        document.getElementById("world-map-summary").textContent =
+          `Present-day observations are temporarily unavailable: ${error.message}`;
+      }
+    });
 }
 
 function initialiseAtlas() {
@@ -467,6 +492,7 @@ function initialiseAtlas() {
           new CustomEvent("atlas-feature-selected", { detail: feature })
         )
       });
+      if (getCurrentNode().id === "present") syncPresentGodsEye();
       document
         .getElementById("zoom-world-out")
         .addEventListener("click", () => {

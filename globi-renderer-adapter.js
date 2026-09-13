@@ -75,12 +75,34 @@
       alt: 0.012,
       visualType: "dot",
       color: "#9ed7ff",
+      category: "historical-evidence",
+      calloutMode: "click",
       sourceId: `source-${feature.id}`
     };
   }
 
-  function createScene({ coordinateSpace, physicalFeatures, navigationRegions, culturalFeatures }) {
+  function liveMarker(feature) {
+    return {
+      id: `live-${feature.layerId}-${feature.id}`,
+      name: { en: feature.label },
+      description: { en: feature.description },
+      lat: feature.lat,
+      lon: feature.lon,
+      alt: Math.max(0.006, (feature.altitudeM || 0) / 637100000),
+      visualType: "dot",
+      markerScale: feature.layerId === "earthquakes" ? 0.018 : 0.015,
+      color: feature.color,
+      category: `live-${feature.layerId}`,
+      calloutMode: "click",
+      pulse: true,
+      timestamp: new Date(feature.timestamp).toISOString(),
+      sourceId: feature.layerId === "earthquakes" ? "usgs-earthquakes" : "nasa-eonet-fires"
+    };
+  }
+
+  function createScene({ coordinateSpace, physicalFeatures, navigationRegions, culturalFeatures, liveSnapshot }) {
     const cultures = Array.isArray(culturalFeatures) ? culturalFeatures : [];
+    const liveFeatures = Array.isArray(liveSnapshot?.features) ? liveSnapshot.features : [];
     return {
       version: 1,
       locale: "en",
@@ -103,7 +125,10 @@
         showCompass: true,
         showScale: true
       },
-      markers: cultures.map(feature => cultureMarker(feature, coordinateSpace)),
+      markers: [
+        ...cultures.map(feature => cultureMarker(feature, coordinateSpace)),
+        ...liveFeatures.map(liveMarker)
+      ],
       paths: [],
       arcs: [],
       regions: [
@@ -116,7 +141,14 @@
         ...cultures.map(feature => featureRegion(feature, coordinateSpace, true))
       ],
       animations: [],
-      filters: [],
+      filters: liveFeatures.length ? [{
+        id: "gods-eye-layer",
+        label: "God’s-Eye layer",
+        options: [
+          { value: "earthquakes", label: "Earthquakes", categories: ["live-earthquakes"] },
+          { value: "fires", label: "Wildfires", categories: ["live-fires"] }
+        ]
+      }] : [],
       dataSources: [
         {
           id: "atlas-geography",
@@ -133,7 +165,8 @@
           url: feature.sources?.[0]?.url || "culture.html",
           license: "See linked source",
           description: feature.mapMeaning || "Archaeological evidence envelope."
-        }))
+        })),
+        ...(liveSnapshot?.sources || [])
       ]
     };
   }
@@ -156,6 +189,7 @@
       this.summary = summary;
       this.onFeatureSelected = onFeatureSelected;
       this.culturalFeatures = [];
+      this.liveSnapshot = null;
       this.viewer = null;
       this.active = false;
       this.zoomLevel = 1;
@@ -196,15 +230,23 @@
       if (this.viewer) this.render();
     }
 
+    setLiveSnapshot(snapshot) {
+      this.liveSnapshot = snapshot || null;
+      if (this.viewer) this.render();
+    }
+
     render() {
       if (!this.viewer) return;
       this.viewer.setScene(createScene({
         coordinateSpace: this.geography.coordinateSpace,
         physicalFeatures: this.geography.physicalFeatures,
         navigationRegions: this.geography.navigationRegions,
-        culturalFeatures: this.culturalFeatures
+        culturalFeatures: this.culturalFeatures,
+        liveSnapshot: this.liveSnapshot
       }));
-      this.summary.textContent = this.culturalFeatures.length
+      this.summary.textContent = this.liveSnapshot
+        ? `${this.liveSnapshot.features.length} present-day observations · updated ${new Date(this.liveSnapshot.fetchedAt).toLocaleTimeString()}.`
+        : this.culturalFeatures.length
         ? "Globe presentation. Select an evidence marker to open its God’s-Eye record."
         : "Globe presentation. No cultural evidence layer is active at this date.";
     }
