@@ -45,6 +45,12 @@ test("Atlas routes ancient and future game nodes without changing chess rules", 
   expect(document.getElementById("atlas-period").hidden).toBe(true);
   expect(document.getElementById("atlas-description").hidden).toBe(true);
 
+  const godsEye = document.querySelector('[data-mode="gods-eye"]');
+  godsEye.click();
+  expect(document.getElementById("world-panel").hidden).toBe(false);
+  expect(document.querySelector('[data-world-renderer="globe"]').classList.contains("active")).toBe(true);
+  document.querySelector('[data-mode="chess"]').click();
+
   const navLink = document.querySelector(
     '.atlas-modes a[href="historical-play.html"]'
   );

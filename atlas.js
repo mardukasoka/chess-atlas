@@ -292,6 +292,11 @@ function resolveHistorically() {
 function setMode(mode) {
   currentMode = mode;
 
+  if (mode === "gods-eye") {
+    currentWorldRenderer = "globe";
+    updateWorldRendererControls();
+  }
+
   document.querySelectorAll(".atlas-mode[data-mode]").forEach(button => {
     button.classList.toggle(
       "active",
@@ -301,6 +306,7 @@ function setMode(mode) {
 
   renderCampaign();
   renderMode();
+  if (mode === "gods-eye") syncPresentGodsEye();
 }
 
 function moveTimeline(direction) {
@@ -397,11 +403,12 @@ function renderMode() {
   }
 
   const available =
-    node.games.includes(currentMode);
+    currentMode === "gods-eye" || node.games.includes(currentMode);
 
   const labels = {
     diplomacy: "Diplomacy",
-    civilisation: "Civilisation"
+    civilisation: "Civilisation",
+    "gods-eye": "God’s Eye"
   };
 
   document.getElementById("world-mode-title").textContent =
