@@ -41,6 +41,10 @@ test("Atlas routes ancient and future game nodes without changing chess rules", 
   new Function(`${atlasSource}\n${integrationSource}`)();
   document.dispatchEvent(new Event("DOMContentLoaded"));
 
+  expect(document.getElementById("atlas-year").hidden).toBe(false);
+  expect(document.getElementById("atlas-period").hidden).toBe(true);
+  expect(document.getElementById("atlas-description").hidden).toBe(true);
+
   const navLink = document.querySelector(
     '.atlas-modes a[href="historical-play.html"]'
   );

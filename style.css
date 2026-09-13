@@ -30,7 +30,7 @@ main {
 
 .timeline-card {
   width: 100%;
-  min-height: 150px;
+  min-height: 104px;
   display: grid;
   grid-template-columns: 52px 1fr 52px;
   align-items: center;
@@ -53,7 +53,7 @@ main {
 
 .timeline-spine {
   position: relative;
-  min-height: 118px;
+  min-height: 72px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,19 +92,9 @@ main {
   font-size: 1.1rem;
 }
 
-#atlas-period {
-  margin-top: 2px;
-  padding: 2px 8px;
-  background: #20242b;
-  font-weight: 600;
-}
-
+#atlas-period,
 #atlas-description {
-  max-width: 320px;
-  margin-top: 5px;
-  padding: 3px 7px;
-  background: #20242b;
-  opacity: 0.72;
+  display: none;
 }
 
 /* VIEW SWITCHER */
@@ -500,13 +490,13 @@ button {
   }
 
   .timeline-card {
-    min-height: 124px;
+    min-height: 96px;
     margin: 6px auto 8px;
     padding: 8px;
   }
 
   .timeline-spine {
-    min-height: 94px;
+    min-height: 66px;
   }
 
   .atlas-modes {
@@ -665,11 +655,11 @@ button {
   }
 
   .timeline-card {
-    min-height: 116px;
+    min-height: 92px;
   }
 
   .timeline-spine {
-    min-height: 86px;
+    min-height: 62px;
   }
 
   .campaign-panel {
