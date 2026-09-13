@@ -468,6 +468,32 @@ function initialiseAtlas() {
         )
       });
       document
+        .getElementById("zoom-world-out")
+        .addEventListener("click", () => {
+          if (currentWorldRenderer === "globe") atlasGlobe.zoomBy(-0.35);
+          else {
+            atlasMap.camera.zoomAt(
+              atlasMap.camera.viewport.width / 2,
+              atlasMap.camera.viewport.height / 2,
+              0.75
+            );
+            atlasMap.invalidate();
+          }
+        });
+      document
+        .getElementById("zoom-world-in")
+        .addEventListener("click", () => {
+          if (currentWorldRenderer === "globe") atlasGlobe.zoomBy(0.35);
+          else {
+            atlasMap.camera.zoomAt(
+              atlasMap.camera.viewport.width / 2,
+              atlasMap.camera.viewport.height / 2,
+              1.35
+            );
+            atlasMap.invalidate();
+          }
+        });
+      document
         .getElementById("reset-world")
         .addEventListener("click", () =>
           currentWorldRenderer === "globe"

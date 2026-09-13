@@ -4,6 +4,8 @@
 (function (root) {
   const GLOBI_MODULE_URL =
     "https://unpkg.com/globi-viewer@1.0.0/dist/globi.min.js";
+  const EARTH_TEXTURE_URL =
+    "https://cdn.jsdelivr.net/npm/three@0.183.2/examples/textures/planets/earth_atmos_2048.jpg";
 
   let componentPromise = null;
 
@@ -46,6 +48,21 @@
     };
   }
 
+  function physicalRegion(feature, coordinateSpace) {
+    const ring = closeRing(
+      feature.geometry.map(point => toLonLat(point, coordinateSpace))
+    );
+    return {
+      id: feature.id,
+      name: { en: feature.name },
+      geojson: { type: "Polygon", coordinates: [ring] },
+      capColor: "rgba(125, 155, 115, 0.88)",
+      sideColor: "#5f7658",
+      altitude: 0.001,
+      sourceId: "atlas-geography"
+    };
+  }
+
   function cultureMarker(feature, coordinateSpace) {
     const points = feature.geometry.map(point => toLonLat(point, coordinateSpace));
     const [lon, lat] = centreOf(points);
@@ -62,14 +79,20 @@
     };
   }
 
-  function createScene({ coordinateSpace, navigationRegions, culturalFeatures }) {
+  function createScene({ coordinateSpace, physicalFeatures, navigationRegions, culturalFeatures }) {
     const cultures = Array.isArray(culturalFeatures) ? culturalFeatures : [];
     return {
       version: 1,
       locale: "en",
       projection: "globe",
       theme: "photo",
-      planet: { id: "earth", lightingMode: "fixed", showBorders: true },
+      planet: {
+        id: "earth",
+        textureUri: EARTH_TEXTURE_URL,
+        lightingMode: "fixed",
+        showBorders: true
+      },
+      camera: { lat: 20, lon: 15, zoom: 1 },
       viewerUi: {
         controlStyle: "icon",
         showBodySelector: false,
@@ -84,6 +107,9 @@
       paths: [],
       arcs: [],
       regions: [
+        ...(physicalFeatures || []).map(feature =>
+          physicalRegion(feature, coordinateSpace)
+        ),
         ...(navigationRegions || []).map(feature =>
           featureRegion(feature, coordinateSpace, false)
         ),
@@ -132,6 +158,7 @@
       this.culturalFeatures = [];
       this.viewer = null;
       this.active = false;
+      this.zoomLevel = 1;
     }
 
     async activate() {
@@ -173,6 +200,7 @@
       if (!this.viewer) return;
       this.viewer.setScene(createScene({
         coordinateSpace: this.geography.coordinateSpace,
+        physicalFeatures: this.geography.physicalFeatures,
         navigationRegions: this.geography.navigationRegions,
         culturalFeatures: this.culturalFeatures
       }));
@@ -182,7 +210,13 @@
     }
 
     resetWorld() {
+      this.zoomLevel = 1;
       this.viewer?.flyTo({ lat: 0, lon: 0 }, { zoom: 1 });
+    }
+
+    zoomBy(delta) {
+      this.zoomLevel = Math.max(0.3, Math.min(4, this.zoomLevel + delta));
+      this.viewer?.globi?.zoom(this.zoomLevel);
     }
 
     focusSelection() {
@@ -193,6 +227,7 @@
 
   root.AtlasGlobiAdapter = Object.freeze({
     GLOBI_MODULE_URL,
+    EARTH_TEXTURE_URL,
     toLonLat,
     createScene,
     AtlasGlobiRenderer

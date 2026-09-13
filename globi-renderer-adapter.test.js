@@ -35,7 +35,7 @@ describe("Globi presentation adapter", () => {
     expect(scene.markers[0].id).toBe("marker-culture-test");
   });
 
-  test("does not turn physical land polygons into duplicate globe geometry", () => {
+  test("renders physical land as a readable fallback when textures fail", () => {
     const scene = Adapter.createScene({
       coordinateSpace,
       navigationRegions: [],
@@ -43,7 +43,12 @@ describe("Globi presentation adapter", () => {
       physicalFeatures: [{ id: "land", geometry: [[0, 0], [1, 0], [1, 1]] }]
     });
 
-    expect(scene.regions).toEqual([]);
+    expect(scene.regions).toHaveLength(1);
+    expect(scene.regions[0]).toEqual(expect.objectContaining({
+      id: "land",
+      sourceId: "atlas-geography"
+    }));
+    expect(scene.planet.textureUri).toBe(Adapter.EARTH_TEXTURE_URL);
   });
 
   test("renders and resets through the Globi component public API", () => {
@@ -58,10 +63,12 @@ describe("Globi presentation adapter", () => {
     });
     renderer.viewer = {
       setScene: jest.fn(),
-      flyTo: jest.fn()
+      flyTo: jest.fn(),
+      globi: { zoom: jest.fn() }
     };
 
     renderer.render();
+    renderer.zoomBy(0.35);
     renderer.resetWorld();
 
     expect(renderer.viewer.setScene).toHaveBeenCalledWith(
@@ -71,5 +78,6 @@ describe("Globi presentation adapter", () => {
       { lat: 0, lon: 0 },
       { zoom: 1 }
     );
+    expect(renderer.viewer.globi.zoom).toHaveBeenCalledWith(1.35);
   });
 });

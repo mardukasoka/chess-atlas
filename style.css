@@ -279,6 +279,7 @@ main {
   width: 100%;
   height: min(58vh, 480px);
   min-height: inherit;
+  touch-action: none;
 }
 
 .world-map canvas {
