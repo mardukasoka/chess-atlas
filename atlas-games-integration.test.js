@@ -57,6 +57,12 @@ test("Atlas routes ancient and future game nodes without changing chess rules", 
   expect(navLink).not.toBeNull();
   expect(navLink.textContent).toContain("Ancient Games");
 
+  const hypernuclidesLink = document.querySelector(
+    '.atlas-modes a[href="experiments/nuclides/?layer=hyper"]'
+  );
+  expect(hypernuclidesLink).not.toBeNull();
+  expect(hypernuclidesLink.textContent).toContain("Hypernuclides");
+
   const down = document.getElementById("timeline-down");
   for (let step = 0; step < 7; step += 1) {
     down.click();

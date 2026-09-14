@@ -19,6 +19,13 @@ body {
 
 main { padding: 14px; }
 
+.return-link {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: #b8c3ff;
+  text-decoration: none;
+}
+
 h1 {
   margin: 0 0 4px;
   font-size: 1.5rem;
@@ -162,6 +169,8 @@ a { color: #9eb0ff; }
 
 <body>
 <main>
+
+<a class="return-link" href="../../index.html">← Return to Chess Atlas</a>
 
 <h1>Nuclide Atlas</h1>
 <div class="subtitle">
@@ -581,8 +590,23 @@ const buttons = document.querySelectorAll("[data-s]");
 const pairCards = document.getElementById("pairCards");
 const exoticCards = document.getElementById("exoticCards");
 
-let currentS = 0;
+const requestedLayer = new URLSearchParams(window.location.search).get("layer");
+let currentS = requestedLayer === "hyper"
+  ? 1
+  : requestedLayer === "antihyper"
+    ? -1
+    : 0;
 let selected = null;
+
+buttons.forEach(button => {
+  button.classList.toggle("active", Number(button.dataset.s) === currentS);
+});
+
+if (currentS === 1) {
+  layerTitle.textContent = "S = +1 — Lambda hypernuclei";
+} else if (currentS === -1) {
+  layerTitle.textContent = "S = −1 — anti-Lambda hypernuclei";
+}
 
 const minN = -3;
 const maxN = 10;
