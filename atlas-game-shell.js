@@ -7,6 +7,12 @@
     catalogue.defer = true;
     document.head.appendChild(catalogue);
   }
+  if (!document.querySelector('script[src^="agent-status.js"]')) {
+    const agentStatus = document.createElement("script");
+    agentStatus.src = "agent-status.js?v=1";
+    agentStatus.defer = true;
+    document.head.appendChild(agentStatus);
+  }
   const TimeState = window.ChessAtlasTimeState;
   if (!TimeState) return;
   const state = TimeState.read(window.location.search);
