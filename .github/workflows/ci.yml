@@ -67,7 +67,7 @@ jobs:
                 clean_asset="${asset%%\?*}"
                 clean_asset="${clean_asset%%#*}"
 
-                if [ ! -f "$clean_asset" ]; then
+                if [ ! -f "$clean_asset" ] && [ ! -f "${clean_asset%/}/index.html" ]; then
 
                   echo "::error file=index.html::Missing local asset: $clean_asset"
 
