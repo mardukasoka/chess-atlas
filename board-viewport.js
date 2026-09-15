@@ -19,13 +19,18 @@
     wrapper.parentNode.insertBefore(controls,wrapper.nextSibling);
     target.classList.add("atlas-zoom-target");
 
+    const storageKey=`chess-atlas-board-view:${location.pathname}:${target.id||"board"}`;
     let state={scale:1,x:0,y:0};
+    try{
+      const stored=JSON.parse(sessionStorage.getItem(storageKey));
+      if(stored&&Number.isFinite(stored.scale)&&Number.isFinite(stored.x)&&Number.isFinite(stored.y))state={scale:clamp(stored.scale,1,3),x:stored.x,y:stored.y};
+    }catch(_error){}
     const pointers=new Map();
     let gesture=null;
     const readout=controls.querySelector(".atlas-board-zoom-readout");
     function bounds(){const rect=wrapper.getBoundingClientRect();return{w:rect.width,h:rect.height}}
     function clampPan(){const {w,h}=bounds();const maxX=Math.max(0,(w*state.scale-w)/2),maxY=Math.max(0,(h*state.scale-h)/2);state.x=clamp(state.x,-maxX,maxX);state.y=clamp(state.y,-maxY,maxY)}
-    function render(){clampPan();stage.style.transform=`translate(${state.x}px,${state.y}px) scale(${state.scale})`;readout.textContent=`${Math.round(state.scale*100)}%`}
+    function render(){clampPan();stage.style.transform=`translate(${state.x}px,${state.y}px) scale(${state.scale})`;readout.textContent=`${Math.round(state.scale*100)}%`;sessionStorage.setItem(storageKey,JSON.stringify(state))}
     function setScale(next){const previous=state.scale;state.scale=clamp(next,1,3);if(state.scale===1){state.x=0;state.y=0}else if(previous>0){const ratio=state.scale/previous;state.x*=ratio;state.y*=ratio}render()}
     function reset(){state={scale:1,x:0,y:0};render()}
     controls.addEventListener("click",event=>{const action=event.target.closest("button")?.dataset.zoom;if(action==="in")setScale(state.scale+0.25);if(action==="out")setScale(state.scale-0.25);if(action==="reset")reset()});

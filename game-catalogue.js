@@ -2,20 +2,28 @@
 
 /* Shared, lightweight navigation for every playable Chess Atlas board. */
 (() => {
+  if (window.ChessAtlasGameCatalogueLoaded) return;
+  window.ChessAtlasGameCatalogueLoaded = true;
   const games = Object.freeze([
     { era: "c. 3000 BCE", name: "Senet", href: "historical-play.html?game=senet", match: ["historical-play.html", "senet"] },
     { era: "c. 2600 BCE", name: "Royal Game of Ur", href: "historical-play.html?game=ur", match: ["historical-play.html", "ur"] },
     { era: "Roman era", name: "Ludus Latrunculorum", href: "latrunculi-play.html" },
     { era: "historic", name: "Nine Men’s Morris", href: "historical-play.html?game=morris", match: ["historical-play.html", "morris"] },
+    { era: "ancient China", name: "Go / Weiqi / Baduk", href: "go-play.html" },
     { era: "c. 600 CE", name: "Chaturanga", href: "index.html?game=chaturanga", match: ["index.html", "chaturanga"] },
     { era: "c. 800 CE", name: "Hnefatafl", href: "hnefatafl-play.html" },
     { era: "c. 800 CE", name: "Shatranj", href: "index.html?game=shatranj", match: ["index.html", "shatranj"] },
+    { era: "medieval China", name: "Xiangqi", href: "xiangqi-play.html" },
+    { era: "11th c. CE", name: "Shogi", href: "shogi-play.html" },
+    { era: "Goryeo period", name: "Janggi", href: "janggi-play.html" },
     { era: "1283 CE", name: "Alquerque de Doze", href: "alquerque-play.html" },
     { era: "1283 CE", name: "Acedrex", href: "index.html?game=acedrex", match: ["index.html", "acedrex"] },
     { era: "historic", name: "Pachisi", href: "pachisi-play.html" },
     { era: "historic", name: "Chaupar / Chausar", href: "chaupar-play.html" },
+    { era: "historic Thailand", name: "Makruk", href: "index.html?game=makruk", match: ["index.html", "makruk"] },
     { era: "c. 1500 CE", name: "Modern Chess", href: "index.html?game=modern", match: ["index.html", "modern"] },
     { era: "pre-contact Hawaiʻi", name: "Kōnane", href: "historical-play.html?game=konane", match: ["historical-play.html", "konane"] },
+    { era: "17th c. CE", name: "Backgammon", href: "backgammon-play.html" },
     { era: "1732 CE", name: "Tablut", href: "tablut-play.html" },
     { era: "future", name: "Infinite / 4D Chess", href: "advanced-play.html" }
   ]);
@@ -60,8 +68,10 @@
     const current = selectedHref();
     if (current) select.value = current;
     select.addEventListener("change", () => {
-      localStorage.setItem("chess-atlas-last-game-route", select.value);
-      location.href = select.value;
+      const state = window.ChessAtlasTimeState?.read(location.search) || {};
+      const route = window.ChessAtlasTimeState?.addToRoute(select.value, state) || select.value;
+      localStorage.setItem("chess-atlas-last-game-route", route);
+      location.href = route;
     });
     applyRequestedMainGame();
   }

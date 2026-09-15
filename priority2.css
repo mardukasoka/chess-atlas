@@ -1,0 +1,50 @@
+.world-renderer-toggle {
+  display: flex;
+  grid-column: 1 / -1;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid #435363;
+  border-radius: 10px;
+  background: #151c24;
+}
+
+.world-renderer-toggle button {
+  flex: 1;
+  min-height: 40px;
+}
+
+.world-renderer-toggle button.active {
+  background: #ffd96b;
+  color: #15181d;
+}
+
+.world-map[hidden] {
+  display: none;
+}
+
+.world-globe {
+  background: radial-gradient(circle at 50% 42%, #142436 0, #05090f 68%);
+}
+
+.world-globe globi-viewer {
+  display: block;
+  width: 100%;
+  height: min(58vh, 480px);
+  min-height: inherit;
+}
+
+@media (max-width: 520px) {
+  .world-panel-heading {
+    grid-template-columns: 1fr;
+  }
+
+  .world-map-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .world-map {
+    min-height: min(62vh, 430px);
+  }
+}

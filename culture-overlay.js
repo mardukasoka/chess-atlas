@@ -67,6 +67,7 @@
 
   function syncCultureLayer() {
     if (atlasMap) atlasMap.setCulturalFeatures(activeCultures());
+    if (atlasGlobe) atlasGlobe.setCulturalFeatures(activeCultures());
   }
 
   function restoreMapWhenReady(state, attempts = 0) {
@@ -91,24 +92,24 @@
   };
 
   document.addEventListener("DOMContentLoaded", () => {
-    const map = document.getElementById("world-map");
-    if (!map) return;
-
-    map.addEventListener("click", () => {
-      requestAnimationFrame(() => {
-        if (!atlasMap || !atlasMap.selectedId) return;
-        const culture = AtlasCultureData.get(atlasMap.selectedId);
-        if (!culture) return;
-        const node = getCurrentNode();
-        const returnState = AtlasReturnState.encode({
-          atlas: node.id,
-          mode: currentMode,
-          camera: atlasMap.camera,
-          selectedId: atlasMap.selectedId
-        });
-        location.href = `culture.html?id=${encodeURIComponent(culture.slug)}&return=${encodeURIComponent(returnState)}`;
+    window.addEventListener("atlas-feature-selected", event => {
+      const culture = AtlasCultureData.get(event.detail?.id);
+      if (!culture) return;
+      const node = getCurrentNode();
+      const returnState = AtlasReturnState.encode({
+        atlas: node.id,
+        mode: currentMode,
+        camera: atlasMap?.camera,
+        selectedId: culture.id
       });
+      location.href = `culture.html?id=${encodeURIComponent(culture.slug)}&return=${encodeURIComponent(returnState)}`;
     });
+
+    const map = document.getElementById("world-map");
+    map?.addEventListener("click", () => requestAnimationFrame(() => {
+      if (!atlasMap?.selectedId) return;
+      window.dispatchEvent(new CustomEvent("atlas-feature-selected", { detail: { id: atlasMap.selectedId } }));
+    }));
 
     const requested = AtlasReturnState.decode(location.hash);
     if (requested) {
