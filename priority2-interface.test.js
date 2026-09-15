@@ -8,6 +8,7 @@ describe("Priority 2 interface continuity", () => {
     expect(html).toContain('id="world-map" class="world-map" role="application" aria-label="Interactive Atlas flat map" hidden');
     expect(html).toContain("globi-renderer-adapter.js");
     expect(atlas).toContain('currentWorldRenderer=localStorage.getItem(WORLD_RENDERER_KEY)==="flat"?"flat":"globe"');
+    expect(atlas).toContain('currentMode="civilisation"');
   });
 
   test("the shared navigator covers the completed regional boards", () => {
@@ -16,6 +17,7 @@ describe("Priority 2 interface continuity", () => {
       expect(catalogue).toContain(route);
     }
     expect(catalogue).toContain("ChessAtlasTimeState?.addToRoute");
+    expect(catalogue).toContain("Playable · local agent");
   });
 
   test("board viewport state survives page-level mobile navigation", () => {
