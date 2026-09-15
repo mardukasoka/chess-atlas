@@ -1,0 +1,115 @@
+"use strict";
+
+require("./globi-renderer-adapter.js");
+
+const Adapter = globalThis.AtlasGlobiAdapter;
+
+describe("Globi presentation adapter", () => {
+  const coordinateSpace = { width: 2048, height: 1024 };
+
+  test("converts the Atlas equirectangular corners and centre", () => {
+    expect(Adapter.toLonLat([0, 0], coordinateSpace)).toEqual([-180, 90]);
+    expect(Adapter.toLonLat([1024, 512], coordinateSpace)).toEqual([0, 0]);
+    expect(Adapter.toLonLat([2048, 1024], coordinateSpace)).toEqual([180, -90]);
+  });
+
+  test("converts cultural evidence into closed GeoJSON regions", () => {
+    const scene = Adapter.createScene({
+      coordinateSpace,
+      navigationRegions: [],
+      culturalFeatures: [{
+        id: "culture-test",
+        slug: "test",
+        name: "Test culture",
+        mapMeaning: "Evidence envelope; not territory.",
+        geometry: [[1024, 512], [1100, 512], [1100, 600]],
+        sources: [{ label: "Test source", url: "https://example.com" }]
+      }]
+    });
+
+    expect(scene.projection).toBe("globe");
+    expect(scene.regions).toHaveLength(1);
+    expect(scene.regions[0].geojson.type).toBe("Polygon");
+    const ring = scene.regions[0].geojson.coordinates[0];
+    expect(ring[0]).toEqual(ring[ring.length - 1]);
+    expect(scene.markers[0].id).toBe("marker-culture-test");
+  });
+
+  test("renders physical land as a readable fallback when textures fail", () => {
+    const scene = Adapter.createScene({
+      coordinateSpace,
+      navigationRegions: [],
+      culturalFeatures: [],
+      physicalFeatures: [{ id: "land", geometry: [[0, 0], [1, 0], [1, 1]] }]
+    });
+
+    expect(scene.regions).toHaveLength(1);
+    expect(scene.regions[0]).toEqual(expect.objectContaining({
+      id: "land",
+      sourceId: "atlas-geography"
+    }));
+    expect(scene.planet.textureUri).toBe(Adapter.EARTH_TEXTURE_URL);
+  });
+
+  test("adds present observations with click-only labels and layer filters", () => {
+    const scene = Adapter.createScene({
+      coordinateSpace,
+      physicalFeatures: [],
+      navigationRegions: [],
+      culturalFeatures: [],
+      liveSnapshot: {
+        fetchedAt: 1,
+        features: [{
+          id: "quake-1",
+          layerId: "earthquakes",
+          label: "Test earthquake",
+          description: "Magnitude 5",
+          lat: 10,
+          lon: 20,
+          timestamp: 1,
+          color: "#ffcf5a"
+        }],
+        sources: []
+      }
+    });
+
+    expect(scene.markers[0]).toEqual(expect.objectContaining({
+      category: "live-earthquakes",
+      calloutMode: "click"
+    }));
+    expect(scene.filters[0].options).toEqual(expect.arrayContaining([
+      expect.objectContaining({ value: "earthquakes" }),
+      expect.objectContaining({ value: "fires" })
+    ]));
+  });
+
+  test("renders and resets through the Globi component public API", () => {
+    const summary = { textContent: "" };
+    const renderer = new Adapter.AtlasGlobiRenderer({
+      viewport: { hidden: true },
+      geography: {
+        coordinateSpace,
+        navigationRegions: []
+      },
+      summary
+    });
+    renderer.viewer = {
+      setScene: jest.fn(),
+      flyTo: jest.fn(),
+      globi: { zoom: jest.fn() }
+    };
+
+    renderer.render();
+    renderer.zoomBy(0.35);
+    renderer.resetWorld();
+
+    expect(renderer.viewer.setScene).toHaveBeenCalledWith(
+      expect.objectContaining({ projection: "globe" })
+    );
+    expect(renderer.viewer.flyTo).toHaveBeenCalledWith(
+      { lat: 0, lon: 0 },
+      { zoom: 1 }
+    );
+    expect(renderer.viewer.globi.zoom).toHaveBeenCalledWith(1.35);
+  });
+});
