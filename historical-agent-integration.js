@@ -4,7 +4,7 @@
 (()=>{
   const opponent=document.getElementById("history-opponent");
   if(!opponent||!window.ChessAtlasGameAgent)return;
-  const supported=new Set(["ur","senet"]);
+  const supported=new Set(["ur","senet","konane"]);
   let timer=null;
 
   function agentActive(){return opponent.value==="agent"&&supported.has(mode)&&game&&!game.winner&&game.turn==="b"}
@@ -17,7 +17,7 @@
       apply:m=>{game.move(m.pieceIndex);recordState("agent move")},
       pass:()=>{game.passIfNoMove();recordState("agent pass");return"pass"}
     };
-    if(mode==="senet")return{
+    if(mode==="konane")return{\n      isTerminal:()=>Boolean(game.winner),\n      prepareTurn:()=>null,\n      legalActions:()=>game.phase==="play"?game.legalMoves():[],\n      choose:actions=>window.ChessAtlasKonaneAgent?window.ChessAtlasKonaneAgent.create({depth:2}).chooseAction({game,legalActions:actions}):actions[0],\n      apply:m=>game.move(m.from,m.to),\n      pass:()=>null\n    };\n    if(mode==="senet")return{
       isTerminal:()=>Boolean(game.winner),
       prepareTurn:()=>{if(game.lastThrow===null){game.cast();recordState("agent cast");return"cast"}return null},
       legalActions:()=>game.legalMoves(),
