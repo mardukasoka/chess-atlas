@@ -7,7 +7,7 @@
   const key=([r,c])=>`${r},${c}`;
   const opponentMode=()=>document.getElementById('xiangqi-opponent').value;
   const isAgentTurn=()=>game.turn==='black'&&opponentMode()!=='human';
-  function currentAgent(){const mode=opponentMode();if(mode==='heuristic')return H?.createAgent(Agents,'xiangqi',{id:'xiangqi-heuristic',name:'Atlas Heuristic'});if(mode==='random')return Agents?.randomAgent({id:'xiangqi-random',name:'Random Legal'});return null;}
+  function currentAgent(){const mode=opponentMode();if(mode==='fairy-stockfish')return window.ChessAtlasRegionalFairyStockfish?.createAgent('xiangqi');if(mode==='heuristic')return H?.createAgent(Agents,'xiangqi',{id:'xiangqi-heuristic',name:'Atlas Heuristic'});if(mode==='random')return Agents?.randomAgent({id:'xiangqi-random',name:'Random Legal'});return null;}
   function setStatus(message){status.textContent=message;}
   function render(){
     grid.textContent='';const legalKeys=new Set(legal.map(key));
@@ -27,5 +27,5 @@
     selected=null;legal=[];setStatus(`${game.turn==='red'?'Red':'Black'} to move · select one of your pieces`);render();
   }
   function reset(){game=Module.create();selected=null;legal=[];busy=false;setStatus('Red to move');render();}
-  document.getElementById('reset').onclick=reset;document.getElementById('clear').onclick=()=>{selected=null;legal=[];setStatus(`${game.turn==='red'?'Red':'Black'} to move`);render();};document.getElementById('xiangqi-opponent').onchange=()=>{selected=null;legal=[];render();void maybeAgent();};reset();
+  document.getElementById('reset').onclick=reset;document.getElementById('clear').onclick=()=>{selected=null;legal=[];setStatus(`${game.turn==='red'?'Red':'Black'} to move`);render();};document.getElementById('xiangqi-opponent').onchange=()=>{selected=null;legal=[];render();void maybeAgent();};window.ChessAtlasRegionalFairyStockfish?.configureSelect(document.getElementById('xiangqi-opponent'));reset();
 })();
