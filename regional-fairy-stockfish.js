@@ -11,7 +11,7 @@
   function available(){return !!factory()&&!!root.ChessAtlasFairyStockfishTransport&&!!root.ChessAtlasFairyStockfishAgent}
   function ensureTransport(){if(!available())throw new Error("Fairy-Stockfish WASM factory is not installed");if(!transport)transport=root.ChessAtlasFairyStockfishTransport.create({factory:factory()});return transport}
   function createAgent(gameId,options={}){return root.ChessAtlasFairyStockfishAgent.create({gameId,transport:ensureTransport(),search:options.search||"go depth 8"})}
-  function configureSelect(select){if(!select)return false;let option=select.querySelector('option[value="fairy-stockfish"]');if(!option){option=document.createElement("option");option.value="fairy-stockfish";select.appendChild(option)}const ok=available();option.disabled=!ok;option.textContent=ok?"Fairy-Stockfish · WASM":"Fairy-Stockfish · WASM not installed";return ok}
+  async function enable(select){const loader=root.ChessAtlasFairyStockfishLoader;if(!loader)throw new Error("Fairy-Stockfish loader is unavailable");await loader.install();configureSelect(select);return available()}\n  function configureSelect(select){if(!select)return false;let option=select.querySelector('option[value="fairy-stockfish"]');if(!option){option=document.createElement("option");option.value="fairy-stockfish";select.appendChild(option)}const ok=available();option.disabled=!ok;option.textContent=ok?"Fairy-Stockfish · WASM":"Fairy-Stockfish · WASM not installed";return ok}
   function dispose(){if(transport)transport.dispose();transport=null}
-  return Object.freeze({available,createAgent,configureSelect,dispose});
+  return Object.freeze({available,enable,createAgent,configureSelect,dispose});
 });
