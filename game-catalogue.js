@@ -25,6 +25,7 @@
     { era: "pre-contact Hawaiʻi", name: "Kōnane", href: "historical-play.html?game=konane", match: ["historical-play.html", "konane"] },
     { era: "17th c. CE", name: "Backgammon", href: "backgammon-play.html" },
     { era: "1732 CE", name: "Tablut", href: "tablut-play.html" },
+    { era: "19th c. CE", name: "Mahjong", href: "mahjong-play.html" },
     { era: "future", name: "Infinite / 4D Chess", href: "advanced-play.html" }
   ]);
 
@@ -57,7 +58,7 @@
   function capability(route) {
     const page = route.split("?")[0];
     if (page === "advanced-play.html") return "Experimental board";
-    if (["go-play.html", "backgammon-play.html", "xiangqi-play.html", "shogi-play.html", "janggi-play.html", "historical-play.html"].includes(page)) return "Playable · local agent";
+    if (["go-play.html", "backgammon-play.html", "xiangqi-play.html", "shogi-play.html", "janggi-play.html", "historical-play.html", "mahjong-play.html"].includes(page)) return "Playable · local agent";
     return "Playable";
   }
 
