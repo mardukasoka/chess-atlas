@@ -1,0 +1,11 @@
+"use strict";
+/* Lightweight Kōnane alpha-beta specialist; Atlas-native legality is authoritative. */
+(function(root,factory){const api=factory(typeof require==="function"?require("./konane.js"):root.ChessAtlasKonane);if(typeof module!=="undefined"&&module.exports)module.exports=api;root.ChessAtlasKonaneAgent=api;})(typeof globalThis!=="undefined"?globalThis:this,function(engine){
+  if(!engine)throw new Error("Kōnane engine not loaded");
+  function clone(game){const copy=new engine.KonaneGame({rows:game.rows,cols:game.cols});copy.board=game.board.map(r=>r.slice());copy.phase=game.phase;copy.turn=game.turn;copy.firstHole=game.firstHole?[...game.firstHole]:null;copy.winner=game.winner;return copy}
+  function count(game,side){let n=0;for(const row of game.board)for(const p of row)if(p===side)n++;return n}
+  function evaluate(game,side){const enemy=side==="b"?"w":"b";if(game.winner===side)return 100000;if(game.winner===enemy)return -100000;return (game.legalMoves(side).length-game.legalMoves(enemy).length)*12+(count(game,side)-count(game,enemy))*3}
+  function search(game,side,depth,alpha,beta){if(depth<=0||game.winner)return evaluate(game,side);const moves=game.legalMoves();if(!moves.length)return evaluate(game,side);const max=game.turn===side;let value=max?-Infinity:Infinity;for(const m of moves){const next=clone(game);next.move(m.from,m.to);const s=search(next,side,depth-1,alpha,beta);if(max){value=Math.max(value,s);alpha=Math.max(alpha,value)}else{value=Math.min(value,s);beta=Math.min(beta,value)}if(beta<=alpha)break}return value}
+  function create(options={}){const depth=Math.max(1,Math.min(4,Number(options.depth)||2));return Object.freeze({id:options.id||"konane-alpha-beta",name:options.name||"Kōnane Alpha-Beta",chooseAction(context){const game=context.game,actions=context.legalActions||[];if(!actions.length)return null;const side=game.turn;let best=-Infinity,choice=actions[0];for(const action of actions){const next=clone(game);next.move(action.from,action.to);const s=search(next,side,depth-1,-Infinity,Infinity);if(s>best){best=s;choice=action}}return choice}})}
+  return Object.freeze({create,evaluate});
+});
