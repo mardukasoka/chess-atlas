@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Mahjong · Chess Atlas</title><link rel="stylesheet" href="mahjong-play.css?v=1"></head>
+<body><main class="mahjong-shell"><header><p class="eyebrow">Chess Atlas · Games</p><h1>Mahjong</h1><p>Lightweight canonical tile surface for Chinese Mahjong families. Rules, agents and artwork remain replaceable adapters.</p></header>
+<section class="variant-card"><label for="mahjong-profile">Rules reference</label><select id="mahjong-profile"><option value="classical">Chinese Classical · browser reference</option><option value="cantonese">Cantonese · browser reference</option><option value="hong-kong">Hong Kong · Rust/TypeScript reference</option><option value="riichi">Riichi · separate Japanese branch</option></select><p id="profile-note"></p></section>
+<section><h2>Canonical lightweight tiles</h2><div id="mahjong-tiles" class="tiles" aria-label="Mahjong tile set"></div></section>
+<section class="integration"><h2>Atlas integration</h2><p><strong>Presentation:</strong> one reusable tile layer. <strong>Rules:</strong> adapters from the forked implementations. <strong>AI:</strong> interchangeable legal/heuristic/learned agents. No Java runtime is required.</p><p class="status">Stage: source-backed integration surface. Full four-player turn engine is not yet claimed as Atlas-native.</p></section>
+<p><a href="index.html?atlasMode=games">← Atlas</a></p></main>
+<script src="atlas-time-state.js?v=1"></script><script src="mahjong-play.js?v=1"></script><script src="game-catalogue.js?v=3"></script></body></html>
