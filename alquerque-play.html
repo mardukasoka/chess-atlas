@@ -30,7 +30,7 @@
 
     <section class="historical-card">
       <p id="alquerque-status" aria-live="polite"></p>
-      <div class="alquerque-actions"><button id="alquerque-reset" type="button">Reset</button></div>
+      <div class="alquerque-actions"><button id="alquerque-reset" type="button">Reset</button><button id="alquerque-agent-move" type="button">Agent move</button></div>
       <div id="alquerque-board" class="alquerque-board" data-atlas-zoom-board aria-label="Alquerque board"></div>
       <p class="alquerque-legend">● Black · ○ White · select a piece, then a marked destination</p>
       <p class="alquerque-note">Secure historical core: 5×5 line board, twelve men per side, adjacent movement along drawn lines, capture by hopping an opponent, and victory by taking all opposing men.</p>
@@ -40,6 +40,7 @@
   <script src="atlas-time-state.js?v=1"></script>
   <script src="atlas-game-shell.js?v=1"></script>
   <script src="alquerque.js"></script>
+  <script src="alquerque-agent.js"></script>
   <script src="alquerque-play.js"></script>
   <script src="board-viewport.js?v=1"></script>
   <script src="game-catalogue.js?v=1"></script>
