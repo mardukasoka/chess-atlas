@@ -7,6 +7,7 @@
   const boardEl = document.getElementById("alquerque-board");
   const statusEl = document.getElementById("alquerque-status");
   const resetEl = document.getElementById("alquerque-reset");
+  const agentEl = document.getElementById("alquerque-agent-move");
   const MARKER = { white: "○", black: "●" };
   let game;
   let selected = null;
@@ -93,5 +94,17 @@
   }
 
   resetEl.addEventListener("click", reset);
+  if (agentEl && globalThis.ChessAtlasAlquerqueAgent) agentEl.addEventListener("click", async () => {
+    if (game.winner) return;
+    agentEl.disabled = true;
+    try {
+      const agent = globalThis.ChessAtlasAlquerqueAgent.create({ depth: 2 });
+      const legalActions = game.legalActions();
+      const action = await agent.chooseAction({ gameId: "alquerque-alfonso-1283", game, legalActions });
+      if (action && legalActions.includes(action)) game.apply(action);
+      selected = null;
+      render();
+    } finally { agentEl.disabled = false; }
+  });
   reset();
 })();
