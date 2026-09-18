@@ -9,7 +9,7 @@
     if(prep)return {status:"prepared",action:prep};
     const actions=adapter.legalActions();
     if(!actions.length){const passed=adapter.pass?adapter.pass():null;return {status:"pass",action:passed}}
-    const action=choose(actions,rng);adapter.apply(action);return {status:"move",action};
+    const selected=adapter.choose?adapter.choose(actions):choose(actions,rng);\n    const action=actions.includes(selected)?selected:null;\n    if(!action)throw new Error("Agent selected an action outside legal actions");\n    adapter.apply(action);return {status:"move",action};
   }
   window.ChessAtlasGameAgent=Object.freeze({choose,step});
 })();

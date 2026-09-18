@@ -13,6 +13,7 @@
       isTerminal:()=>Boolean(game.winner),
       prepareTurn:()=>{if(game.lastRoll===null){game.cast();recordState("agent cast");return"cast"}return null},
       legalActions:()=>game.legalMoves(),
+      choose:actions=>window.ChessAtlasUrAgent?window.ChessAtlasUrAgent.create().chooseAction({game,legalActions:actions}):actions[0],
       apply:m=>{game.move(m.pieceIndex);recordState("agent move")},
       pass:()=>{game.passIfNoMove();recordState("agent pass");return"pass"}
     };

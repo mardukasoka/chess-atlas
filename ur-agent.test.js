@@ -1,0 +1,3 @@
+"use strict";
+const Hist=require("./historical-games.js");const Specialist=require("./ur-agent.js");
+describe("Royal Game of Ur specialist",()=>{test("chooses from legal Finkel-profile moves",()=>{const game=new Hist.RoyalGameOfUr({seed:1});game.lastRoll=1;const legal=game.legalMoves();const action=Specialist.create().chooseAction({game,legalActions:legal});expect(legal).toContain(action)});test("prefers bearing off when available",()=>{const game=new Hist.RoyalGameOfUr({seed:1});game.pieces.set("w",[13,14,14,14,14,14,14]);game.lastRoll=1;const legal=game.legalMoves();expect(Specialist.create().chooseAction({game,legalActions:legal}).to).toBe(14)});});
