@@ -86,28 +86,62 @@
     return action;
   }
 
-  async function takeTurn(options) {
+  function createController(options) {
     const opts = options || {};
     const modules = opts.modules;
     if (!modules || typeof modules.legalActions !== "function" || typeof modules.applyAction !== "function") {
-      throw new TypeError("takeTurn requires a game-module registry");
+      throw new TypeError("createController requires a game-module registry");
     }
-    if (!opts.gameId) throw new TypeError("takeTurn requires gameId");
-    const actions = modules.legalActions(opts.gameId, opts.game);
+    if (!opts.gameId) throw new TypeError("createController requires gameId");
+
+    return Object.freeze({
+      gameId: opts.gameId,
+      getState(game) {
+        return typeof modules.snapshot === "function" ? modules.snapshot(opts.gameId, game) : game;
+      },
+      legalMoves(game) {
+        return modules.legalActions(opts.gameId, game);
+      },
+      async chooseMove(agent, game) {
+        const legalActions = modules.legalActions(opts.gameId, game);
+        if (chanceActions(legalActions).length) return null;
+        return choose(agent, {
+          gameId: opts.gameId,
+          game,
+          snapshot: typeof modules.snapshot === "function" ? modules.snapshot(opts.gameId, game) : null,
+          legalActions
+        });
+      },
+      makeMove(game, action) {
+        const legalActions = modules.legalActions(opts.gameId, game);
+        if (!legalActions.includes(action)) throw new Error("Cannot apply an action outside legalActions");
+        return modules.applyAction(opts.gameId, game, action);
+      },
+      result(game) {
+        const state = typeof modules.snapshot === "function" ? modules.snapshot(opts.gameId, game) : game;
+        if (state && state.result != null) return state.result;
+        if (state && state.winner != null) return { winner: state.winner };
+        return null;
+      }
+    });
+  }
+
+  async function takeTurn(options) {
+    const opts = options || {};
+    const controller = createController(opts);
+    const actions = controller.legalMoves(opts.game);
     const pendingChance = chanceActions(actions);
     if (pendingChance.length) {
       return Object.freeze({ status: "chance", actions: pendingChance.slice(), action: null, result: null });
     }
-    const action = await choose(opts.agent, {
-      gameId: opts.gameId,
-      game: opts.game,
-      snapshot: typeof modules.snapshot === "function" ? modules.snapshot(opts.gameId, opts.game) : null,
-      legalActions: actions
-    });
-    if (action == null) return Object.freeze({ status: "no-action", actions: [], action: null, result: null });
-    const result = modules.applyAction(opts.gameId, opts.game, action);
+    const action = await controller.chooseMove(opts.agent, opts.game);
+    if (action == null) return Object.freeze({ status: "no-action", actions: [], action: null, result: controller.result(opts.game) });
+    const result = controller.makeMove(opts.game, action);
     return Object.freeze({ status: "applied", actions: [], action, result });
   }
 
-  return Object.freeze({ validateAgent, randomAgent, heuristicAgent, choose, takeTurn, playerActions, chanceActions });
+  return Object.freeze({
+    validateAgent, randomAgent, heuristicAgent, choose, createController, takeTurn,
+    playerActions, chanceActions
+  });
 });
