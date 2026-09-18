@@ -1,0 +1,3 @@
+"use strict";const K=require("./konane.js");const A=require("./konane-agent.js");
+function opened(){const g=new K.KonaneGame({size:8});const b=g.blackOpeningChoices()[0];g.removeOpening(b);g.removeOpening(g.whiteOpeningChoices()[0]);return g}
+describe("Kōnane specialist",()=>{test("selects only a legal Atlas move",()=>{const g=opened(),legal=g.legalMoves();expect(legal).toContain(A.create({depth:2}).chooseAction({game:g,legalActions:legal}))});test("does not mutate game while searching",()=>{const g=opened(),before=JSON.stringify(g.snapshot()),legal=g.legalMoves();A.create({depth:2}).chooseAction({game:g,legalActions:legal});expect(JSON.stringify(g.snapshot())).toBe(before)});});
