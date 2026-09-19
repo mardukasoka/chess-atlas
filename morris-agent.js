@@ -1,0 +1,5 @@
+"use strict";
+(function(root,factory){const api=factory();if(typeof module!=="undefined"&&module.exports)module.exports=api;if(root)root.ChessAtlasMorrisAgent=api;})(typeof globalThis!=="undefined"?globalThis:this,function(){
+  function create(){return Object.freeze({id:"morris-heuristic",chooseAction(ctx){const a=ctx.legalActions||[];if(!a.length)return null;const capture=a.find(x=>x.type==="capture");if(capture)return capture;const g=ctx.game;if(g){for(const x of a){if(x.type==="place"){const lines=g.board.graph.winningLines.filter(line=>line.includes(x.node));if(lines.some(line=>line.filter(n=>n!==x.node).every(n=>g.board.get(n)?.side===g.turn)))return x;}if(x.type==="move"){const lines=g.board.graph.winningLines.filter(line=>line.includes(x.to));if(lines.some(line=>line.filter(n=>n!==x.to).every(n=>g.board.get(n)?.side===g.turn)))return x;}}}return a[0];}})}
+  return Object.freeze({create});
+});
