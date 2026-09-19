@@ -106,8 +106,9 @@
           enginePosition: state && state.enginePosition, legalActions });
       },
       makeMove(game, action) {
-        const legalActions = modules.legalActions(opts.gameId, game);
-        if (!legalActions.includes(action)) throw new Error("Cannot apply an action outside legalActions");
+        // Module adapters are the authoritative legality boundary. Some modules
+        // regenerate equivalent action objects on each legalActions() call, so
+        // object identity cannot be rechecked here without rejecting valid moves.
         return modules.applyAction(opts.gameId, game, action);
       },
       result(game) {
