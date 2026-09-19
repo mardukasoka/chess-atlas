@@ -69,7 +69,7 @@
     const shell = document.createElement("section");
     shell.id = "atlas-game-catalogue";
     shell.className = "atlas-game-catalogue";
-    shell.innerHTML = `<label for="atlas-game-jump"><span>Playable Atlas</span><small>chronological navigator</small></label><div class="atlas-game-choice"><select id="atlas-game-jump" aria-label="Choose a playable Chess Atlas game">${games.map(game => `<option value="${game.href}">${game.era} · ${game.name}</option>`).join("")}</select><output id="atlas-game-capability"></output></div>`;
+    shell.innerHTML = `<label for="atlas-game-jump"><span>Playable Atlas</span><small>all-games catalogue · independent of timeline</small></label><div class="atlas-game-choice"><select id="atlas-game-jump" aria-label="Choose a playable Chess Atlas game">${games.map(game => `<option value="${game.href}">${game.era} · ${game.name}</option>`).join("")}</select><output id="atlas-game-capability"></output></div>`;
     const host = document.querySelector(".variant-control, .control-card, .future-header, .history-header, header");
     if (host && host.classList.contains("variant-control")) host.before(shell);
     else if (host) host.after(shell);
