@@ -22,6 +22,7 @@
     { era: "historic", name: "Chaupar / Chausar", href: "chaupar-play.html" },
     { era: "historic Thailand", name: "Makruk", href: "index.html?game=makruk", match: ["index.html", "makruk"] },
     { era: "documented 1795", name: "Sittuyin", href: "sittuyin-play.html" },
+    { era: "traditional Mongolia", name: "Shatar", href: "shatar-play.html" },
     { era: "c. 1500 CE", name: "Modern Chess", href: "index.html?game=modern", match: ["index.html", "modern"] },
     { era: "pre-contact Hawaiʻi", name: "Kōnane", href: "historical-play.html?game=konane", match: ["historical-play.html", "konane"] },
     { era: "17th c. CE", name: "Backgammon", href: "backgammon-play.html" },
@@ -59,7 +60,7 @@
   function capability(route) {
     const page = route.split("?")[0];
     if (page === "advanced-play.html") return "Experimental board";
-    if (["go-play.html", "backgammon-play.html", "xiangqi-play.html", "shogi-play.html", "janggi-play.html", "sittuyin-play.html", "historical-play.html", "mahjong-play.html"].includes(page)) return "Playable · local agent";
+    if (["go-play.html", "backgammon-play.html", "xiangqi-play.html", "shogi-play.html", "janggi-play.html", "sittuyin-play.html", "shatar-play.html", "historical-play.html", "mahjong-play.html"].includes(page)) return "Playable · local agent";
     return "Playable";
   }
 
