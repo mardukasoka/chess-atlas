@@ -21,6 +21,17 @@
     { era: "historic", name: "Pachisi", href: "pachisi-play.html" },
     { era: "historic", name: "Chaupar / Chausar", href: "chaupar-play.html" },
     { era: "historic Thailand", name: "Makruk", href: "index.html?game=makruk", match: ["index.html", "makruk"] },
+    { era: "c. 1202 CE evidence · 1616 rules", name: "Courier Chess", href: "courier-play.html" },
+    { era: "documentary anchor · origin uncertain", name: "Ouk Chatrang", href: "ouk-chatrang-play.html" },
+    { era: "Madagascar · traditional", name: "Fanorona", href: "catalogue-foundations.html?game=fanorona" },
+    { era: "Indonesia · traditional", name: "Surakarta", href: "catalogue-foundations.html?game=surakarta" },
+    { era: "Türkiye · traditional", name: "Turkish Draughts", href: "catalogue-foundations.html?game=turkish-draughts" },
+    { era: "modern international", name: "International Draughts", href: "catalogue-foundations.html?game=international-draughts" },
+    { era: "East Asia · traditional", name: "Gomoku", href: "catalogue-foundations.html?game=gomoku" },
+    { era: "Japan · standardized modern", name: "Renju", href: "catalogue-foundations.html?game=renju" },
+    { era: "China · traditional", name: "Banqi", href: "catalogue-foundations.html?game=banqi" },
+    { era: "China · traditional", name: "Dou Shou Qi", href: "catalogue-foundations.html?game=dou-shou-qi" },
+    { era: "China · traditional", name: "Luzhanqi", href: "catalogue-foundations.html?game=luzhanqi" },
     { era: "documented 1795", name: "Sittuyin", href: "sittuyin-play.html" },
     { era: "traditional Mongolia", name: "Shatar", href: "shatar-play.html" },
     { era: "c. 1500 CE", name: "Modern Chess", href: "index.html?game=modern", match: ["index.html", "modern"] },
@@ -60,6 +71,7 @@
   function capability(route) {
     const page = route.split("?")[0];
     if (page === "advanced-play.html") return "Experimental board";
+    if (page === "catalogue-foundations.html") return "Rules foundation · completion pending";
     if (["go-play.html", "backgammon-play.html", "xiangqi-play.html", "shogi-play.html", "janggi-play.html", "sittuyin-play.html", "shatar-play.html", "courier-play.html", "ouk-chatrang-play.html", "historical-play.html", "mahjong-play.html"].includes(page)) return "Playable · local agent";
     return "Playable";
   }
