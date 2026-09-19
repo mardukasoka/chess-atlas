@@ -1,0 +1,2 @@
+"use strict";
+describe("Fairy-Stockfish WASM loader",()=>{test("keeps canonical vendor paths explicit",()=>{const L=require("./fairy-stockfish-loader.js");expect(L.DEFAULT_SCRIPT).toBe("vendor/fairy-stockfish/stockfish.js");expect(L.DEFAULT_WASM).toBe("vendor/fairy-stockfish/stockfish.wasm")});test("does not claim browser support in Node",()=>{const L=require("./fairy-stockfish-loader.js");expect(L.supported({WebAssembly:{}})).toBe(false)});});
