@@ -15,5 +15,7 @@
   function pawnMoves(board,row,col,side){const d=side==="w"?-1:1,out=[];if(inside(row+d,col)&&!board[row+d][col])out.push({row:row+d,col});for(const dc of[-1,1])if(inside(row+d,col+dc)&&board[row+d][col+dc]&&colour(board[row+d][col+dc])!==side)out.push({row:row+d,col:col+dc});return out}
   function moves(board,row,col){const p=board?.[row]?.[col];if(!p)return[];const side=colour(p);switch(type(p)){case"K":return stepMoves(board,row,col,STEPS.K);case"F":return stepMoves(board,row,col,STEPS.F);case"E":return elephantMoves(board,row,col,side);case"N":return stepMoves(board,row,col,STEPS.N);case"R":return rookMoves(board,row,col);case"P":return pawnMoves(board,row,col,side);default:return[]}}
   function promotionSquares(side){const out=[];for(let r=0;r<8;r++)for(let c=0;c<8;c++)if((r===c||r+c===7)&&(side==="w"?r<4:r>=4))out.push([r,c]);return out}
-  return Object.freeze({moves,promotionSquares});
+  function initialPawns(){const b=Array.from({length:8},()=>Array(8).fill(""));for(let c=0;c<4;c++)b[5][c]="wP";for(let c=4;c<8;c++)b[4][c]="wP";for(let c=0;c<4;c++)b[2][c]="bP";for(let c=4;c<8;c++)b[3][c]="bP";return b}
+  function deploymentRegion(side){const pawnBoard=initialPawns(),out=[];for(let r=0;r<8;r++)for(let c=0;c<8;c++){const ownHalf=side==="w"?r>=4:r<4;if(ownHalf&&!pawnBoard[r][c])out.push([r,c])}return out}
+  return Object.freeze({moves,promotionSquares,initialPawns,deploymentRegion});
 });
