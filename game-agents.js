@@ -86,28 +86,53 @@
     return action;
   }
 
-  async function takeTurn(options) {
+  function createController(options) {
     const opts = options || {};
     const modules = opts.modules;
     if (!modules || typeof modules.legalActions !== "function" || typeof modules.applyAction !== "function") {
-      throw new TypeError("takeTurn requires a game-module registry");
+      throw new TypeError("createController requires a game-module registry");
     }
-    if (!opts.gameId) throw new TypeError("takeTurn requires gameId");
-    const actions = modules.legalActions(opts.gameId, opts.game);
+    if (!opts.gameId) throw new TypeError("createController requires gameId");
+    const snapshot = game => typeof modules.snapshot === "function" ? modules.snapshot(opts.gameId, game) : game;
+    return Object.freeze({
+      gameId: opts.gameId,
+      getState: snapshot,
+      legalMoves(game) { return modules.legalActions(opts.gameId, game); },
+      async chooseMove(agent, game) {
+        const legalActions = modules.legalActions(opts.gameId, game);
+        if (chanceActions(legalActions).length) return null;
+        const state = snapshot(game);
+        return choose(agent, { gameId: opts.gameId, game, snapshot: state,
+          enginePosition: state && state.enginePosition, legalActions });
+      },
+      makeMove(game, action) {
+        // Module adapters are the authoritative legality boundary. Some modules
+        // regenerate equivalent action objects on each legalActions() call, so
+        // object identity cannot be rechecked here without rejecting valid moves.
+        return modules.applyAction(opts.gameId, game, action);
+      },
+      result(game) {
+        const state = snapshot(game);
+        if (state && state.result != null) return state.result;
+        if (state && state.winner != null) return { winner: state.winner };
+        return null;
+      }
+    });
+  }
+
+  async function takeTurn(options) {
+    const opts = options || {};
+    const controller = createController(opts);
+    const actions = controller.legalMoves(opts.game);
     const pendingChance = chanceActions(actions);
     if (pendingChance.length) {
       return Object.freeze({ status: "chance", actions: pendingChance.slice(), action: null, result: null });
     }
-    const action = await choose(opts.agent, {
-      gameId: opts.gameId,
-      game: opts.game,
-      snapshot: typeof modules.snapshot === "function" ? modules.snapshot(opts.gameId, opts.game) : null,
-      legalActions: actions
-    });
+    const action = await controller.chooseMove(opts.agent, opts.game);
     if (action == null) return Object.freeze({ status: "no-action", actions: [], action: null, result: null });
-    const result = modules.applyAction(opts.gameId, opts.game, action);
+    const result = controller.makeMove(opts.game, action);
     return Object.freeze({ status: "applied", actions: [], action, result });
   }
 
-  return Object.freeze({ validateAgent, randomAgent, heuristicAgent, choose, takeTurn, playerActions, chanceActions });
+  return Object.freeze({ validateAgent, randomAgent, heuristicAgent, choose, createController, takeTurn, playerActions, chanceActions });
 });
