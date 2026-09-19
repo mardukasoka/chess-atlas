@@ -60,7 +60,7 @@
   function capability(route) {
     const page = route.split("?")[0];
     if (page === "advanced-play.html") return "Experimental board";
-    if (["go-play.html", "backgammon-play.html", "xiangqi-play.html", "shogi-play.html", "janggi-play.html", "sittuyin-play.html", "shatar-play.html", "historical-play.html", "mahjong-play.html"].includes(page)) return "Playable · local agent";
+    if (["go-play.html", "backgammon-play.html", "xiangqi-play.html", "shogi-play.html", "janggi-play.html", "sittuyin-play.html", "shatar-play.html", "courier-play.html", "historical-play.html", "mahjong-play.html"].includes(page)) return "Playable · local agent";
     return "Playable";
   }
 
