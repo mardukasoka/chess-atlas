@@ -6,7 +6,4 @@ test("timeline menus use the current game's origin node rather than cumulative h
   expect(source).toContain("const id=node.boardGameId");
   expect(source).not.toContain("g.sortEra<=year&&g.timelineEligible!==false");
 });
-test("timeline menu copy describes introduction rather than persistent availability",()=>{
-  expect(source).toContain("No new playable non-chess game is introduced at this timeline node.");
-  expect(source).toContain("No new playable chess-family game is introduced at this timeline node.");
-});
+test("empty origin-node menus collapse rather than describe persistent availability",()=>{\n  expect(source).toContain("menu.hidden=!games.length");\n  expect(source).toContain("setModeAvailability");\n  expect(source).not.toContain("No new playable chess-family game is introduced at this timeline node.");\n});
