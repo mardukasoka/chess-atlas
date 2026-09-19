@@ -4,11 +4,19 @@
 (()=>{
   const opponent=document.getElementById("history-opponent");
   if(!opponent||!window.ChessAtlasGameAgent)return;
-  const supported=new Set(["ur","senet","konane"]);
+  const supported=new Set(["ur","senet","konane","morris"]);
   let timer=null;
 
   function agentActive(){return opponent.value==="agent"&&supported.has(mode)&&game&&!game.winner&&game.turn==="b"}
   function adapter(){
+    if(mode==="morris")return{
+      isTerminal:()=>false,
+      prepareTurn:()=>null,
+      legalActions:()=>window.ChessAtlasMorrisModule.legalActions(game),
+      choose:legalActions=>window.ChessAtlasMorrisAgent.create().chooseAction({game,legalActions}),
+      apply:action=>window.ChessAtlasMorrisModule.applyAction(game,action),
+      pass:()=>null
+    };
     if(mode==="ur")return{
       isTerminal:()=>Boolean(game.winner),
       prepareTurn:()=>{if(game.lastRoll===null){game.cast();recordState("agent cast");return"cast"}return null},
