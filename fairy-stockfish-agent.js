@@ -7,7 +7,7 @@
  * authoritative. UI activation must remain gated by adapter validation.
  */
 (function(root,factory){const api=factory();if(typeof module!=="undefined"&&module.exports)module.exports=api;if(root)root.ChessAtlasFairyStockfishAgent=api;})(typeof globalThis!=="undefined"?globalThis:this,function(){
-  const VARIANTS=Object.freeze({modern:"chess",shatranj:"shatranj",makruk:"makruk",xiangqi:"xiangqi",shogi:"shogi",janggi:"janggi",sittuyin:"sittuyin",shatar:"shatar",courier:"courier"});
+  const VARIANTS=Object.freeze({modern:"chess",shatranj:"shatranj",makruk:"makruk",xiangqi:"xiangqi",shogi:"shogi",janggi:"janggi",sittuyin:"sittuyin",shatar:"shatar","ouk-chatrang":"cambodian",courier:"courier"});
   const normalize=value=>typeof value==="string"?value.trim().toLowerCase():"";
   const actionMove=action=>normalize(action?.uci||action?.engineMove||action?.move);
   function variantFor(gameId){return VARIANTS[gameId]||null;}
