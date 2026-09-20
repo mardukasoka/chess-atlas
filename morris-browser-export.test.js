@@ -1,0 +1,1 @@
+"use strict";test("Morris module exports browser global for historical-play integration",()=>{const fs=require("fs"),s=fs.readFileSync("morris-module.js","utf8");expect(s).toContain("root.ChessAtlasMorrisModule=def")});
