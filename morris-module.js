@@ -4,6 +4,7 @@
   const registry=typeof require!=="undefined"?require("./game-modules.js"):root.ChessAtlasGameModules;
   const def=factory(GraphGames);
   if(typeof module!=="undefined"&&module.exports)module.exports=def;
+  if(root)root.ChessAtlasMorrisModule=def;
   if(registry&&!registry.get(def.id))registry.register(def);
 })(typeof globalThis!=="undefined"?globalThis:this,function(GraphGames){
   function legalActions(game){
