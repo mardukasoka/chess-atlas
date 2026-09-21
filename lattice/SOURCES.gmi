@@ -1,0 +1,15 @@
+# Sources and provenance
+
+This page is deliberately outside the story.
+
+The Archaic Web combines original fiction with links to historical, scientific, technological and cultural resources. A linked resource does not inherit the epistemic status of the page that links to it.
+
+## Internal source material
+
+The first six reconstructed-memory pages are based on the ANI / Axel / Curtain / Green Ascent / Lattice / Signal story developed for Chess Atlas and its Future Infinite Board.
+
+Development records may later be exposed as preserved archive material. Their original dates and provenance should be retained.
+
+## External references
+
+External historical, scientific and fictional influences must be cited here before public release. Copyrighted fictional universes are references and cultural precedents, not incorporated canon.

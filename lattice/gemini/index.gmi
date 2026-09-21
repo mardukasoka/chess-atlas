@@ -1,0 +1,14 @@
+# Archive
+
+Some records are intact. Their order is not.
+
+=> memory/01-before-the-curtain.gmi Reconstructed Fragment 01 — Before the Curtain
+=> memory/02-the-curtain.gmi Reconstructed Fragment 02 — The Curtain
+=> memory/03-ani.gmi Reconstructed Fragment 03 — ANI
+=> memory/04-the-green-ascent.gmi Reconstructed Fragment 04 — The Green Ascent
+=> memory/05-the-lattice.gmi Reconstructed Fragment 05 — The Lattice
+=> memory/06-the-signal.gmi Reconstructed Fragment 06 — The Signal
+=> ../SOURCES.gmi Sources
+=> ../OPEN_SOURCE.gmi Open source components
+
+> Preservation record: incomplete.

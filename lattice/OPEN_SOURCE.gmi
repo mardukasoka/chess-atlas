@@ -1,0 +1,15 @@
+# Open source components
+
+This register records software actually incorporated or adapted by the Archaic Web.
+
+No external Gopher, Gemini or IRC repository is incorporated in v0.1. The first version consists only of repository-local Gemtext, Gopher text/menu files, and an ordinary-browser mirror.
+
+Reference-only projects must not be listed as incorporated dependencies. When a component is adopted, record:
+
+* project and upstream repository
+* authors or maintainers where appropriate
+* license
+* version or commit
+* files or functionality used
+* modifications made
+* location in this project

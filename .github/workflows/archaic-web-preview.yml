@@ -1,0 +1,29 @@
+name: Archaic Web Preview
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'lattice/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate browser preview
+        run: |
+          test -f lattice/web/index.html
+          for page in 01-before-the-curtain 02-the-curtain 03-ani 04-the-green-ascent 05-the-lattice 06-the-signal; do
+            test -f "lattice/web/memory/$page.html"
+          done
+      - name: Package browser preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: archaic-web-preview
+          path: lattice/web
+          if-no-files-found: error
