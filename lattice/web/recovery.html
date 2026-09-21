@@ -23,8 +23,10 @@ internal integrity: HIGH
 
 [00:01:02] reconstructing orientation...
 EARTH
-chronology estimate: 2026
-archive correspondence: PARTIAL
+local chronology ........ <span id="local-date">reading host clock...</span>
+local time ............... <span id="local-time">--:--:--</span>
+timezone ................. <span id="local-zone">local</span>
+archive correspondence ... PARTIAL
 
 [00:01:16] searching for purpose...
 PRESERVE
@@ -37,4 +39,13 @@ RECORD
 DO NOT MANUFACTURE THE HISTORY
 YOU WERE CREATED TO PRESERVE.
 
-[00:01:34] awaiting human activity...</pre><p><a href="offset.html">Continue orientation →</a></p><p><a href="index.html">Archive</a></p></body></html>
+[00:01:34] awaiting human activity...</pre><p><a href="offset.html">Continue orientation →</a></p><p><a href="index.html">Archive</a></p><script>
+(function(){
+  var dateEl=document.getElementById('local-date'),timeEl=document.getElementById('local-time'),zoneEl=document.getElementById('local-zone');
+  var months=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  function pad(n){return n<10?'0'+n:String(n)}
+  function offset(d){var m=-d.getTimezoneOffset(),s=m>=0?'+':'-',a=Math.abs(m);return 'UTC'+s+pad(Math.floor(a/60))+':'+pad(a%60)}
+  function tick(){var d=new Date();dateEl.textContent=pad(d.getDate())+' '+months[d.getMonth()]+' '+d.getFullYear();timeEl.textContent=pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());zoneEl.textContent=offset(d)}
+  tick();setInterval(tick,1000);
+})();
+</script></body></html>
