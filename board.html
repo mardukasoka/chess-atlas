@@ -16,7 +16,7 @@
     line{stroke:#697386;stroke-width:2}
     .card{position:absolute;width:210px;min-height:110px;padding:14px;border:1px solid #46505e;border-radius:14px;background:#1d222a;box-shadow:0 8px 24px rgba(0,0,0,.3);user-select:none;touch-action:none}
     .future{border-color:#5f8b69}.conflict{border-color:#95675d}.system{border-color:#607aa5}.resource{border-color:#9a8d59}.heritage{border-color:#8c6fa8}
-    .card h3{margin:0 0 8px;font-size:16px}.card p{margin:0;color:#abb3bf;font-size:13px;line-height:1.4}.card .source{display:inline-block;margin-top:8px;padding:0;border:0;background:none;color:#9ec5ff;font-size:12px;text-decoration:underline}.tag{display:inline-block;margin-top:10px;padding:3px 7px;border-radius:10px;background:#2b313a;color:#ccd2da;font-size:11px}
+    .card h3{margin:0 0 8px;font-size:16px}.card p{margin:0;color:#abb3bf;font-size:13px;line-height:1.4}.card .source{display:inline-block;margin-top:8px;padding:0;border:0;background:none;color:#9ec5ff;font-size:12px;text-decoration:underline}.tag{display:inline-block;margin-top:10px;padding:3px 7px;border-radius:10px;background:#2b313a;color:#ccd2da;font-size:11px}\n    .card.landing{width:300px;min-height:160px;border-color:#6fa67b;background:#202a25}.card.landing h3{font-size:19px}.card .meta{display:block;margin-top:8px;color:#8fa79a;font-size:11px;line-height:1.35}
   </style>
 </head>
 <body>
@@ -29,7 +29,7 @@
   <main id="viewport"><div id="world"><svg id="edges"></svg><div id="cards"></div></div></main>
   <script>
     const nodes=[
-      {id:"present",type:"future",title:"Present — 2026",text:"Observed history reaches the simulation boundary.",x:400,y:500},
+      {id:"technology-observatory",type:"future",landing:true,title:"Technological Evolution Observatory",text:"Landing node for the Futures Board. Track technologies as evidence moves them through fiction/concept → research → prototype → demonstrated → deployed. Branches may diverge and converge rather than following a single predicted timeline.",meta:"Historical anchor: Max Roser / Our World in Data · Future reference: Information is Beautiful / BBC Future · Fiction-to-reality reference: ATTsavings (via Cool Infographics)",url:"https://ourworldindata.org/technology-long-run",x:300,y:360},\n      {id:"present",type:"future",title:"Now — 2026",text:"Observed history reaches the monitored-futures boundary.",x:700,y:500},\n      {id:"field-matter",type:"system",title:"Field Manipulation of Matter",text:"Optical tweezers + acoustic levitation + electromagnetic control → automated laboratories → programmable assembly → molecular manufacturing. Monitored as constituent capabilities, not a dated replicator prediction.",x:700,y:240},
       {id:"solarpunk",type:"future",title:"Solarpunk Transition",text:"Clean energy, ecological restoration and resilient communities.",x:720,y:300},
       {id:"civilisation",type:"system",title:"5D Civilisation",text:"Population, technology, resources and institutions.",x:1040,y:500},
       {id:"diplomacy",type:"system",title:"Diplomacy",text:"Actors, alliances, negotiation and strategic geography.",x:1360,y:300},
@@ -52,25 +52,25 @@
       {id:"alexandria",type:"heritage",title:"Alexandria Reconstruction",text:"Prototype: physical map → ancient city → Mouseion/library candidate sites → floor plans → catalogue/text repositories.",x:2920,y:950}
     ];
     const links=[
-      ["present","solarpunk"],["solarpunk","civilisation"],["civilisation","diplomacy"],["civilisation","conflict"],["diplomacy","chess"],["conflict","chess"],["council","civilisation"],["compute","council"],
+      ["technology-observatory","present"],["technology-observatory","field-matter"],["field-matter","present"],["present","solarpunk"],["solarpunk","civilisation"],["civilisation","diplomacy"],["civilisation","conflict"],["diplomacy","chess"],["conflict","chess"],["council","civilisation"],["compute","council"],
       ["compute","open-model-lab"],["open-model-lab","council"],["council","agent-harness"],["agent-harness","game-agents"],["agent-harness","accuracy-agents"],["game-agents","chess"],["accuracy-agents","heritage-reconstruction"],
       ["civilisation","heritage-reconstruction"],["heritage-reconstruction","sketchfab-heritage"],["heritage-reconstruction","scan-the-world"],["heritage-reconstruction","google-heritage"],["heritage-reconstruction","history-cartography"],["sketchfab-heritage","cyark"],["scan-the-world","atlas-library"],["google-heritage","atlas-library"],["history-cartography","atlas-library"],["history-cartography","alexandria"],["cyark","alexandria"],["atlas-library","alexandria"],["atlas-library","agi-atlas"]
     ];
     const viewport=document.getElementById("viewport"),world=document.getElementById("world"),cards=document.getElementById("cards"),edges=document.getElementById("edges");
     let camera={x:20,y:20,scale:.8},drag=null,pan=null;
     const node=id=>nodes.find(item=>item.id===id);
-    function drawCards(){cards.innerHTML="";nodes.forEach(item=>{const card=document.createElement("div");card.className="card "+item.type;card.dataset.id=item.id;card.style.left=item.x+"px";card.style.top=item.y+"px";card.innerHTML=`<h3>${item.title}</h3><p>${item.text}</p>${item.url?`<a class="source" href="${item.url}" target="_blank" rel="noopener noreferrer">Open resource ↗</a>`:""}<br><span class="tag">${item.type}</span>`;cards.appendChild(card)})}
+    function drawCards(){cards.innerHTML="";nodes.forEach(item=>{const card=document.createElement("div");card.className="card "+item.type+(item.landing?" landing":"");card.dataset.id=item.id;card.style.left=item.x+"px";card.style.top=item.y+"px";card.innerHTML=`<h3>${item.title}</h3><p>${item.text}</p>${item.meta?`<small class="meta">${item.meta}</small>`:""}${item.url?`<a class="source" href="${item.url}" target="_blank" rel="noopener noreferrer">Open resource ↗</a>`:""}<br><span class="tag">${item.type}</span>`;cards.appendChild(card)})}
     function drawEdges(){edges.innerHTML="";links.forEach(([from,to])=>{const a=node(from),b=node(to);if(!a||!b)return;const line=document.createElementNS("http://www.w3.org/2000/svg","line");line.setAttribute("x1",a.x+105);line.setAttribute("y1",a.y+55);line.setAttribute("x2",b.x+105);line.setAttribute("y2",b.y+55);edges.appendChild(line)})}
-    function applyCamera(){world.style.transform=`translate(${camera.x}px,${camera.y}px) scale(${camera.scale})`}
+    function applyCamera(){world.style.transform=`translate(${camera.x}px,${camera.y}px) scale(${camera.scale})`}\n    function centreLanding(){const landing=node("technology-observatory");if(!landing)return;camera.scale=.9;camera.x=viewport.clientWidth/2-(landing.x+150)*camera.scale;camera.y=viewport.clientHeight/2-(landing.y+80)*camera.scale;applyCamera()}
     function screenToWorld(x,y){const rect=viewport.getBoundingClientRect();return{x:(x-rect.left-camera.x)/camera.scale,y:(y-rect.top-camera.y)/camera.scale}}
     viewport.addEventListener("pointerdown",event=>{if(event.target.closest("a.source"))return;const card=event.target.closest(".card");viewport.setPointerCapture(event.pointerId);if(card){const item=node(card.dataset.id),point=screenToWorld(event.clientX,event.clientY);drag={id:event.pointerId,item,dx:point.x-item.x,dy:point.y-item.y}}else pan={id:event.pointerId,startX:event.clientX,startY:event.clientY,x:camera.x,y:camera.y}});
     viewport.addEventListener("pointermove",event=>{if(drag&&drag.id===event.pointerId){const point=screenToWorld(event.clientX,event.clientY);drag.item.x=point.x-drag.dx;drag.item.y=point.y-drag.dy;const card=document.querySelector(`[data-id="${drag.item.id}"]`);card.style.left=drag.item.x+"px";card.style.top=drag.item.y+"px";drawEdges()}else if(pan&&pan.id===event.pointerId){camera.x=pan.x+event.clientX-pan.startX;camera.y=pan.y+event.clientY-pan.startY;applyCamera()}});
     function release(event){if(drag&&drag.id===event.pointerId)drag=null;if(pan&&pan.id===event.pointerId)pan=null}
     viewport.addEventListener("pointerup",release);viewport.addEventListener("pointercancel",release);
     viewport.addEventListener("wheel",event=>{event.preventDefault();const factor=event.deltaY<0?1.1:.9;camera.scale=Math.max(.25,Math.min(2,camera.scale*factor));applyCamera()},{passive:false});
-    document.getElementById("centre").addEventListener("click",()=>{camera={x:20,y:20,scale:.8};applyCamera()});
+    document.getElementById("centre").addEventListener("click",centreLanding);
     document.getElementById("add").addEventListener("click",()=>{nodes.push({id:"idea-"+Date.now(),type:"future",title:"New Future State",text:"A new scenario, idea or resource.",x:900,y:600});drawCards();drawEdges()});
-    drawCards();drawEdges();applyCamera();
+    drawCards();drawEdges();centreLanding();
   </script>
 </body>
 </html>
