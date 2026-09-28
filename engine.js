@@ -1586,41 +1586,80 @@ if (
       colourOf(piece);
 
 
-    return this
-      .pseudoMoves(
+    const candidates =
+      this.pseudoMoves(
         row,
         col
-      )
-      .filter(
-        move => {
+      );
 
-          const nextBoard =
-            cloneBoard(
-              this.board
-            );
+    // Modern-chess safety net: the initial two-square pawn move is
+    // fundamental to the present-day ruleset. Keep this validation at
+    // the engine boundary so a browser-side rule-adapter mismatch cannot
+    // incorrectly reject e2-e4 / d2-d4 (or the black equivalents).
+    if (
+      this.profileId === "modern" &&
+      typeOf(piece) === "P"
+    ) {
+      const direction =
+        colour === "w" ? -1 : 1;
+      const startingRow =
+        colour === "w"
+          ? this.boardShape.dimensions[0] - 2
+          : 1;
+      const oneStep =
+        row + direction;
+      const twoStep =
+        row + direction * 2;
 
+      if (
+        row === startingRow &&
+        inside(oneStep, col, this.boardShape) &&
+        inside(twoStep, col, this.boardShape) &&
+        !this.board[oneStep][col] &&
+        !this.board[twoStep][col] &&
+        !candidates.some(
+          move =>
+            move.row === twoStep &&
+            move.col === col
+        )
+      ) {
+        candidates.push({
+          row: twoStep,
+          col
+        });
+      }
+    }
 
-          nextBoard[
-            move.row
-          ][
-            move.col
-          ] = piece;
+    return candidates.filter(
+      move => {
 
-
-          nextBoard[
-            row
-          ][
-            col
-          ] = "";
-
-
-          return !this.inCheck(
-            colour,
-            nextBoard
+        const nextBoard =
+          cloneBoard(
+            this.board
           );
 
-        }
-      );
+
+        nextBoard[
+          move.row
+        ][
+          move.col
+        ] = piece;
+
+
+        nextBoard[
+          row
+        ][
+          col
+        ] = "";
+
+
+        return !this.inCheck(
+          colour,
+          nextBoard
+        );
+
+      }
+    );
 
   }
 
