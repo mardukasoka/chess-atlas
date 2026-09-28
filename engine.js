@@ -1814,9 +1814,15 @@ if (
     this.turn =
       next;
 
+    const checked =
+      this.inCheck(
+        next
+      );
 
     this.status =
-      `${this.profile.name}: ${colourName(next)} to move`;
+      checked
+        ? `${this.profile.name}: ${colourName(next)} to move — CHECK`
+        : `${this.profile.name}: ${colourName(next)} to move`;
 
   }
 
