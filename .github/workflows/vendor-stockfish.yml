@@ -1,0 +1,47 @@
+name: Vendor Stockfish Lite
+
+on:
+  push:
+    paths:
+      - ".github/workflows/vendor-stockfish.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  vendor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Fetch Stockfish lite single-threaded
+        run: |
+          rm -rf .stockfish-package vendor/stockfish
+          mkdir -p .stockfish-package vendor/stockfish
+          cd .stockfish-package
+          npm pack stockfish@19.0.0
+          tar -xzf stockfish-19.0.0.tgz
+          cp package/bin/stockfish-19-lite-single.js ../vendor/stockfish/
+          cp package/bin/stockfish-19-lite-single.wasm ../vendor/stockfish/
+          cd ..
+          rm -rf .stockfish-package
+      - name: Record GPL source and licence
+        run: |
+          cat > vendor/stockfish/README.md <<'EOF'
+          # Stockfish browser engine
+          Vendored from the npm package `stockfish@19.0.0` (Stockfish.js / Stockfish), GPL-3.0.
+          Upstream source: https://github.com/nmrugg/stockfish.js
+          Engine project: https://stockfishchess.org/
+          This is the lite single-threaded browser build, chosen for static GitHub Pages/mobile compatibility.
+          EOF
+      - name: Commit engine assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add vendor/stockfish
+          git diff --cached --quiet && exit 0
+          git commit -m "Vendor Stockfish 19 lite browser engine"
+          git push
