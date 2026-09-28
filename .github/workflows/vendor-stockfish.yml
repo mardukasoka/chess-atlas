@@ -1,4 +1,5 @@
 name: Vendor Stockfish Lite
+# Reproducible engine vendoring; rerun by editing this workflow or workflow_dispatch.
 
 on:
   push:
