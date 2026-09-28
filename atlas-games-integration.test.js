@@ -53,11 +53,12 @@ test("Atlas routes ancient and future game nodes without changing chess rules", 
   new Function(`${atlasSource}\n${integrationSource}`)();
   document.dispatchEvent(new Event("DOMContentLoaded"));
 
-  const navLink = document.querySelector(
-    '.atlas-modes a[href="historical-play.html"]'
-  );
-  expect(navLink).not.toBeNull();
-  expect(navLink.textContent).toContain("Ancient Games");
+  // Historical games are now reached through their timeline nodes rather than
+  // a persistent Ancient Games navigation button. Keep this test focused on
+  // those routes so it protects gameplay without reintroducing UI clutter.
+  expect(
+    document.querySelector('.atlas-modes a[href="historical-play.html"]')
+  ).toBeNull();
 
   moveUntil("timeline-down", "Senet");
   expect(document.getElementById("board").hidden).toBe(true);
