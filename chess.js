@@ -82,13 +82,13 @@ function updateOpponentControl() {
   const label = opponentSelect.options[opponentSelect.selectedIndex]?.textContent || "Human";
   opponentStatus.textContent =
     opponentSelect.value === "human"
-      ? "Two-player board · White to move"
-      : `You play White · ${label} plays Black`;
+      ? "Human controls the next side to move"
+      : `${label} controls the next AI turn · switch opponent at any time`;
 }
 
 async function maybeTakeOpponentTurn() {
   const agent = currentOpponentAgent();
-  if (!agent || opponentBusy || engine.profileId !== "modern" || engine.turn !== "b" || engine.gameOver) return;
+  if (!agent || opponentBusy || engine.profileId !== "modern" || engine.gameOver) return;
   const Modules = window.ChessAtlasGameModules;
   const Agents = window.ChessAtlasGameAgents;
   if (!Modules || !Agents || !Modules.get("modern-chess")) return;
@@ -627,7 +627,7 @@ boardElement.addEventListener(
       );
 
 
-    if (opponentBusy || (currentOpponentAgent() && engine.turn === "b")) {
+    if (opponentBusy) {
       return;
     }
 
