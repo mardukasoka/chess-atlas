@@ -50,6 +50,8 @@ const opponentControl =
   );
 
 let opponentBusy = false;
+let stockfishLoader = null;
+let stockfishAgent = null;
 
 function currentOpponentAgent() {
   if (!opponentSelect || opponentSelect.value === "human") return null;
@@ -57,6 +59,9 @@ function currentOpponentAgent() {
   if (!Agents) return null;
   if (opponentSelect.value === "random") {
     return Agents.randomAgent({ id: "random-opponent", name: "Random AI" });
+  }
+  if (opponentSelect.value === "stockfish") {
+    return stockfishAgent;
   }
   if (opponentSelect.value === "heuristic") {
     const values = { P: 1, N: 3, B: 3, R: 5, Q: 9, K: 100 };
@@ -667,8 +672,34 @@ variantSelect.addEventListener(
 if (opponentSelect) {
   opponentSelect.addEventListener(
     "change",
-    () => {
+    async () => {
       updateOpponentControl();
+
+      if (
+        opponentSelect.value === "stockfish" &&
+        !stockfishAgent
+      ) {
+        try {
+          opponentStatus.textContent = "Loading Stockfish 19 locally…";
+          if (!window.ChessAtlasStockfishLoader) {
+            throw new Error("Stockfish loader is unavailable");
+          }
+          stockfishLoader =
+            stockfishLoader ||
+            window.ChessAtlasStockfishLoader.create({
+              timeoutMs: 20000
+            });
+          stockfishAgent = stockfishLoader.load();
+          opponentStatus.textContent = "Stockfish 19 ready · runs locally in your browser";
+        } catch (error) {
+          console.error("Stockfish load failed", error);
+          opponentSelect.value = "human";
+          opponentStatus.textContent =
+            "Stockfish engine asset is not available yet · Human selected";
+          return;
+        }
+      }
+
       maybeTakeOpponentTurn();
     }
   );
