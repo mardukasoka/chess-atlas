@@ -1592,14 +1592,28 @@ if (
         col
       );
 
-    // Modern 2-D queen parity guard. The shared N-D kernel remains the
-    // primary generator, but ordinary chess must never lose a clear
-    // orthogonal/diagonal queen ray. Union the legacy 2-D slider and let
-    // the normal king-safety filter below remain authoritative.
+    // Modern 2-D sliding-piece parity guard. The shared N-D kernel remains
+    // the primary generator, but ordinary chess must never lose a clear
+    // rook, bishop or queen ray. Union the proven 2-D sliders and let the
+    // normal king-safety filter below remain authoritative.
     if (
       this.profileId === "modern" &&
-      typeOf(piece) === "Q"
+      ["R", "B", "Q"].includes(typeOf(piece))
     ) {
+      const directions =
+        typeOf(piece) === "R"
+          ? ORTHOGONAL
+          : typeOf(piece) === "B"
+            ? DIAGONAL
+            : KING_MOVES;
+
+      const queenRays =
+        this.slidingMoves(
+          row,
+          col,
+          directions,
+          this.board
+        );
       const queenRays =
         this.slidingMoves(
           row,
