@@ -10,11 +10,19 @@ const actions = document.getElementById("history-actions");
 const board = document.getElementById("history-board");
 const noteTitle = document.getElementById("history-note-title");
 const note = document.getElementById("history-note");
+const historyTitle = document.getElementById("history-title");
+const historyEra = document.getElementById("history-era");
 
 const STORAGE_KEY = "chess-atlas-5d-state-v0.2";
 const stateGraph = new window.StateGraph();
 const TRACKED = new Set(["ur", "senet"]);
 const ORIGIN_TIME = Object.freeze({ senet: -3000, ur: -2600 });
+const PRESENTATION = Object.freeze({
+  ur: ["Royal Game of Ur", "Mesopotamia · c. 2600 BCE"],
+  senet: ["Senet", "Egypt · attested from c. 3000 BCE"],
+  morris: ["Nine Men\u2019s Morris", "Historical merels tradition · chronology debated"],
+  konane: ["K\u014dnane", "Hawai\u02bbi · pre-contact tradition"]
+});
 
 let mode = "ur";
 let game = null;
@@ -117,6 +125,9 @@ function resetGame({ record = true } = {}) {
 
 function render() {
   board.replaceChildren();
+  const [presentationTitle, presentationEra] = PRESENTATION[mode] || ["Historical Game", ""];
+  historyTitle.textContent = presentationTitle;
+  historyEra.textContent = presentationEra;
   actions.replaceChildren();
   const [title, text] = NOTES[mode];
   noteTitle.textContent = title;
