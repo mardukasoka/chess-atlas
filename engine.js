@@ -1592,6 +1592,35 @@ if (
         col
       );
 
+    // Modern 2-D queen parity guard. The shared N-D kernel remains the
+    // primary generator, but ordinary chess must never lose a clear
+    // orthogonal/diagonal queen ray. Union the legacy 2-D slider and let
+    // the normal king-safety filter below remain authoritative.
+    if (
+      this.profileId === "modern" &&
+      typeOf(piece) === "Q"
+    ) {
+      const queenRays =
+        this.slidingMoves(
+          row,
+          col,
+          KING_MOVES,
+          this.board
+        );
+
+      for (const move of queenRays) {
+        if (
+          !candidates.some(
+            candidate =>
+              candidate.row === move.row &&
+              candidate.col === move.col
+          )
+        ) {
+          candidates.push(move);
+        }
+      }
+    }
+
     // Modern-chess safety net: the initial two-square pawn move is
     // fundamental to the present-day ruleset. Keep this validation at
     // the engine boundary so a browser-side rule-adapter mismatch cannot
