@@ -1,6 +1,6 @@
 "use strict";
 
-/* Lazy browser hookup for Stockfish 18 lite single-threaded.
+/* Lazy browser hookup for Stockfish 19 lite single-threaded.
  * The GPL engine assets stay separate from the Chess Atlas core and are
  * fetched only when a player explicitly enables Stockfish.
  */
@@ -12,7 +12,7 @@
   if(typeof module!=="undefined"&&module.exports)module.exports=api;
   root.ChessAtlasStockfishLoader=api;
 })(typeof globalThis!=="undefined"?globalThis:this,function(WorkerTransport,Stockfish){
-  const DEFAULT_ASSET="vendor/stockfish/stockfish-18-lite-single.js";
+  const DEFAULT_ASSET="vendor/stockfish/stockfish-19-lite-single.js";
 
   function create(options){
     const opts=options||{};
