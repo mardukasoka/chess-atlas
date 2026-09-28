@@ -78,10 +78,10 @@
 
   function mount() {
     if (document.getElementById("atlas-game-catalogue")) return;
-    const shell = document.createElement("section");
+    const shell = document.createElement("details");
     shell.id = "atlas-game-catalogue";
     shell.className = "atlas-game-catalogue";
-    shell.innerHTML = `<label for="atlas-game-jump"><span>Playable Atlas</span><small>all-games catalogue · independent of timeline</small></label><div class="atlas-game-choice"><select id="atlas-game-jump" aria-label="Choose a playable Chess Atlas game">${games.map(game => `<option value="${game.href}">${game.era} · ${game.name}</option>`).join("")}</select><output id="atlas-game-capability"></output></div>`;
+    shell.innerHTML = `<summary>Browse games</summary><div class="atlas-game-catalogue-body"><label for="atlas-game-jump"><span>Playable Atlas</span><small>all-games catalogue · independent of timeline</small></label><div class="atlas-game-choice"><select id="atlas-game-jump" aria-label="Choose a playable Chess Atlas game">${games.map(game => `<option value="${game.href}">${game.era} · ${game.name}</option>`).join("")}</select><output id="atlas-game-capability"></output></div></div>`;
     const host = document.querySelector(".variant-control, .control-card, .future-header, .history-header, header");
     if (host && host.classList.contains("variant-control")) host.before(shell);
     else if (host) host.after(shell);
@@ -103,7 +103,7 @@
   }
 
   const style = document.createElement("style");
-  style.textContent = ".atlas-game-catalogue{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0;padding:8px 10px;border:1px solid #343a46;border-radius:12px;background:#171a20;color:#f3f3f4}.atlas-game-catalogue label{display:grid;gap:1px;font-weight:700;text-align:left}.atlas-game-catalogue small{font-weight:400;color:#aeb5c0}.atlas-game-choice{display:grid;gap:3px;min-width:0;width:min(62%,350px)}.atlas-game-catalogue select{min-width:0;width:100%;padding:9px;border:1px solid #465064;border-radius:9px;background:#242a34;color:#fff;font:inherit}.atlas-game-catalogue output{color:#9fd5ad;font-size:.72rem;text-align:right}@media(max-width:520px){.atlas-game-catalogue{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;margin:6px 0;padding:7px 8px}.atlas-game-catalogue label span{font-size:.88rem}.atlas-game-catalogue label small{display:none}.atlas-game-choice{width:100%}.atlas-game-catalogue select{padding:8px;font-size:.86rem}}";
+  style.textContent = ".atlas-game-catalogue{margin:8px 0;border:1px solid #343a46;border-radius:12px;background:#171a20;color:#f3f3f4;overflow:hidden}.atlas-game-catalogue summary{cursor:pointer;padding:8px 10px;font-weight:700;text-align:left}.atlas-game-catalogue-body{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 10px 10px}.atlas-game-catalogue label{display:grid;gap:1px;font-weight:700;text-align:left}.atlas-game-catalogue small{font-weight:400;color:#aeb5c0}.atlas-game-choice{display:grid;gap:3px;min-width:0;width:min(62%,350px)}.atlas-game-catalogue select{min-width:0;width:100%;padding:9px;border:1px solid #465064;border-radius:9px;background:#242a34;color:#fff;font:inherit}.atlas-game-catalogue output{color:#9fd5ad;font-size:.72rem;text-align:right}@media(max-width:520px){.atlas-game-catalogue{margin:6px 0}.atlas-game-catalogue-body{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;padding:0 8px 8px}.atlas-game-catalogue label span{font-size:.88rem}.atlas-game-catalogue label small{display:none}.atlas-game-choice{width:100%}.atlas-game-catalogue select{padding:8px;font-size:.86rem}}";
   document.head.appendChild(style);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
   else mount();
