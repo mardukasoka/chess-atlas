@@ -15,7 +15,7 @@ test("Stockfish stays unloaded until explicitly requested",()=>{
   const agent=loader.load();
   expect(agent.id).toBe("stockfish");
   expect(loader.loaded).toBe(true);
-  expect(calls).toEqual(["vendor/stockfish/stockfish-18-lite-single.js"]);
+  expect(calls).toEqual(["vendor/stockfish/stockfish-19-lite-single.js"]);
 });
 
 test("Stockfish loader is idempotent and disposable",()=>{
