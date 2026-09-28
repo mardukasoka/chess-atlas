@@ -34,6 +34,95 @@ const variantSelect =
     "game-variant"
   );
 
+const opponentSelect =
+  document.getElementById(
+    "opponent-select"
+  );
+
+const opponentStatus =
+  document.getElementById(
+    "opponent-status"
+  );
+
+const opponentControl =
+  document.getElementById(
+    "opponent-control"
+  );
+
+let opponentBusy = false;
+
+function currentOpponentAgent() {
+  if (!opponentSelect || opponentSelect.value === "human") return null;
+  const Agents = window.ChessAtlasGameAgents;
+  if (!Agents) return null;
+  if (opponentSelect.value === "random") {
+    return Agents.randomAgent({ id: "random-opponent", name: "Random AI" });
+  }
+  if (opponentSelect.value === "heuristic") {
+    const values = { P: 1, N: 3, B: 3, R: 5, Q: 9, K: 100 };
+    return Agents.heuristicAgent({
+      id: "heuristic-opponent",
+      name: "Heuristic AI",
+      scoreAction(action) {
+        const target = action && action.to
+          ? engine.board[action.to[0]][action.to[1]]
+          : "";
+        return target ? (values[target[1]] || 0) : 0;
+      }
+    });
+  }
+  return null;
+}
+
+function updateOpponentControl() {
+  if (!opponentControl) return;
+  const modern = engine.profileId === "modern";
+  opponentControl.hidden = !modern;
+  if (!modern) return;
+  const label = opponentSelect.options[opponentSelect.selectedIndex]?.textContent || "Human";
+  opponentStatus.textContent =
+    opponentSelect.value === "human"
+      ? "Two-player board · White to move"
+      : `You play White · ${label} plays Black`;
+}
+
+async function maybeTakeOpponentTurn() {
+  const agent = currentOpponentAgent();
+  if (!agent || opponentBusy || engine.profileId !== "modern" || engine.turn !== "b" || engine.gameOver) return;
+  const Modules = window.ChessAtlasGameModules;
+  const Agents = window.ChessAtlasGameAgents;
+  if (!Modules || !Agents || !Modules.get("modern-chess")) return;
+  opponentBusy = true;
+  boardElement.setAttribute("aria-busy", "true");
+  opponentStatus.textContent = `${agent.name} is choosing…`;
+  try {
+    const controller = Agents.createController({ modules: Modules, gameId: "modern-chess" });
+    const action = await controller.chooseMove(agent, engine);
+    if (action) {
+      const state = controller.makeMove(engine, action);
+      graphTime += 1;
+      stateGraph.addState({
+        game: "chess",
+        timeline: "history",
+        time: graphTime,
+        action: `${agent.name}: ${action.uci || "move"}`,
+        state
+      });
+      saveGraph();
+      updateForwardOptions();
+updateOpponentControl();
+      drawState(state);
+    }
+  } catch (error) {
+    console.error("Opponent move failed", error);
+    statusElement.textContent = `Opponent error: ${error.message}`;
+  } finally {
+    opponentBusy = false;
+    boardElement.removeAttribute("aria-busy");
+    updateOpponentControl();
+  }
+}
+
 
 const engine =
   new window.ChessEngine(
@@ -490,6 +579,16 @@ updateForwardOptions();
     state
   );
 
+  if (
+    state.turn !== before.turn &&
+    state.turnCode === "b"
+  ) {
+    window.setTimeout(
+      maybeTakeOpponentTurn,
+      180
+    );
+  }
+
 }
 
 
@@ -528,6 +627,10 @@ boardElement.addEventListener(
       );
 
 
+    if (opponentBusy || (currentOpponentAgent() && engine.turn === "b")) {
+      return;
+    }
+
     handleSquare(
       row,
       col
@@ -555,8 +658,21 @@ stateForwardSelect.addEventListener(
 
 variantSelect.addEventListener(
   "change",
-  changeVariant
+  () => {
+    changeVariant();
+    updateOpponentControl();
+  }
 );
+
+if (opponentSelect) {
+  opponentSelect.addEventListener(
+    "change",
+    () => {
+      updateOpponentControl();
+      maybeTakeOpponentTurn();
+    }
+  );
+}
 
 
 createBoard();
@@ -655,3 +771,4 @@ if (
 }
 
 updateForwardOptions();
+updateOpponentControl();
