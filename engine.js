@@ -1607,22 +1607,15 @@ if (
             ? DIAGONAL
             : KING_MOVES;
 
-      const queenRays =
+      const slidingRays =
         this.slidingMoves(
           row,
           col,
           directions,
           this.board
         );
-      const queenRays =
-        this.slidingMoves(
-          row,
-          col,
-          KING_MOVES,
-          this.board
-        );
 
-      for (const move of queenRays) {
+      for (const move of slidingRays) {
         if (
           !candidates.some(
             candidate =>
