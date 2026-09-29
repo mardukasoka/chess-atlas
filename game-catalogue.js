@@ -77,6 +77,19 @@
   }
 
   function mount() {
+    const titleHost = document.getElementById("atlas-title-menu");
+    if (titleHost) {
+      if (titleHost.querySelector(".atlas-all-games-choice")) return;
+      const wrap = document.createElement("div");
+      wrap.className = "atlas-all-games-choice";
+      wrap.innerHTML = `<select aria-label="Choose a playable Chess Atlas game"><option value="">Browse all games…</option>${games.map(game => `<option value="${game.href}">${game.era} · ${game.name}</option>`).join("")}</select><output></output>`;
+      const select = wrap.querySelector("select");
+      const output = wrap.querySelector("output");
+      select.addEventListener("change", () => { if (!select.value) return; output.textContent = capability(select.value); const state = window.ChessAtlasTimeState?.read(location.search) || {}; const route = window.ChessAtlasTimeState?.addToRoute(select.value, state) || select.value; localStorage.setItem("chess-atlas-last-game-route", route); location.href = route; });
+      titleHost.prepend(wrap);
+      applyRequestedMainGame();
+      return;
+    }
     if (document.getElementById("atlas-game-catalogue")) return;
     const shell = document.createElement("details");
     shell.id = "atlas-game-catalogue";
@@ -103,7 +116,7 @@
   }
 
   const style = document.createElement("style");
-  style.textContent = ".atlas-game-catalogue{margin:8px 0;border:1px solid #343a46;border-radius:12px;background:#171a20;color:#f3f3f4;overflow:hidden}.atlas-game-catalogue summary{cursor:pointer;padding:8px 10px;font-weight:700;text-align:left}.atlas-game-catalogue-body{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 10px 10px}.atlas-game-catalogue label{display:grid;gap:1px;font-weight:700;text-align:left}.atlas-game-catalogue small{font-weight:400;color:#aeb5c0}.atlas-game-choice{display:grid;gap:3px;min-width:0;width:min(62%,350px)}.atlas-game-catalogue select{min-width:0;width:100%;padding:9px;border:1px solid #465064;border-radius:9px;background:#242a34;color:#fff;font:inherit}.atlas-game-catalogue output{color:#9fd5ad;font-size:.72rem;text-align:right}@media(max-width:520px){.atlas-game-catalogue{margin:6px 0}.atlas-game-catalogue-body{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;padding:0 8px 8px}.atlas-game-catalogue label span{font-size:.88rem}.atlas-game-catalogue label small{display:none}.atlas-game-choice{width:100%}.atlas-game-catalogue select{padding:8px;font-size:.86rem}}";
+  style.textContent = ".atlas-all-games-choice{grid-column:1/-1;display:grid;gap:3px}.atlas-all-games-choice select{width:100%;min-height:42px;padding:8px;border:1px solid #465064;border-radius:9px;background:#242a34;color:#fff;font:inherit}.atlas-all-games-choice output{color:#9fd5ad;font-size:.72rem;text-align:right}.atlas-game-catalogue{margin:8px 0;border:1px solid #343a46;border-radius:12px;background:#171a20;color:#f3f3f4;overflow:hidden}.atlas-game-catalogue summary{cursor:pointer;padding:8px 10px;font-weight:700;text-align:left}.atlas-game-catalogue-body{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 10px 10px}.atlas-game-catalogue label{display:grid;gap:1px;font-weight:700;text-align:left}.atlas-game-catalogue small{font-weight:400;color:#aeb5c0}.atlas-game-choice{display:grid;gap:3px;min-width:0;width:min(62%,350px)}.atlas-game-catalogue select{min-width:0;width:100%;padding:9px;border:1px solid #465064;border-radius:9px;background:#242a34;color:#fff;font:inherit}.atlas-game-catalogue output{color:#9fd5ad;font-size:.72rem;text-align:right}@media(max-width:520px){.atlas-game-catalogue{margin:6px 0}.atlas-game-catalogue-body{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;padding:0 8px 8px}.atlas-game-catalogue label span{font-size:.88rem}.atlas-game-catalogue label small{display:none}.atlas-game-choice{width:100%}.atlas-game-catalogue select{padding:8px;font-size:.86rem}}";
   document.head.appendChild(style);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
   else mount();
