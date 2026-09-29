@@ -5,7 +5,7 @@ const atlasEmbed = new URLSearchParams(window.location.search).get("embed") === 
 (() => {
   if (!atlasEmbed && !document.querySelector('script[src^="game-catalogue.js"]')) {
     const catalogue = document.createElement("script");
-    catalogue.src = "game-catalogue.js?v=2";
+    catalogue.src = "game-catalogue.js?v=3";
     catalogue.defer = true;
     document.head.appendChild(catalogue);
   }
@@ -16,23 +16,20 @@ const atlasEmbed = new URLSearchParams(window.location.search).get("embed") === 
     document.head.appendChild(agentStatus);
   }
   const TimeState = window.ChessAtlasTimeState;
-  if (!TimeState) return;
-  const state = TimeState.read(window.location.search);
-  if (!state.nodeId && !state.mode) return;
-
+  const state = TimeState ? TimeState.read(window.location.search) : {};
   document.querySelectorAll('a[href]').forEach(link => {
     const href = link.getAttribute('href');
     if (!href || /^(?:https?:|mailto:|#)/i.test(href)) return;
     if (!/\.html(?:[?#]|$)/i.test(href)) return;
-    const routed = TimeState.addToRoute(href, state);
-    const url = new URL(routed, window.location.href);
-    url.searchParams.delete("embed");
-    link.setAttribute('href', url.pathname.split("/").pop() + url.search + url.hash);
-    if (atlasEmbed && /(?:^|\/)index\.html(?:[?#]|$)/i.test(href)) link.setAttribute("target", "_top");
+    if (atlasEmbed) {
+      link.setAttribute("target", "_top");
+      if (TimeState) link.setAttribute("href", TimeState.addToRoute(href, state));
+      return;
+    }
+    if (TimeState && (state.nodeId || state.mode)) link.setAttribute("href", TimeState.addToRoute(href, state));
   });
 })();
 
-/* Compact presentation when a game is hosted by the Atlas timeline. */
 if (atlasEmbed) {
   document.documentElement.classList.add("atlas-embedded");
   const style = document.createElement("style");
