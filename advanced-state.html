@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chess Atlas — Timeline & Quantum Chess</title>
   <link rel="stylesheet" href="advanced-state.css?v=1">
-</head>
+<style>.future-switcher{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}.future-switcher a{color:inherit;text-decoration:none;border:1px solid #3b434d;border-radius:9px;padding:7px 9px;font-size:.82rem}</style></head>
 <body>
   <main class="state-shell">
     <header class="state-header">
@@ -16,6 +16,8 @@
       </div>
       <a class="back-link" href="advanced-play.html">← Future Chess</a>
     </header>
+
+<nav class="future-switcher" aria-label="Future games"><a href="advanced-play.html?mode=infinite">Infinite</a><a href="advanced-play.html?mode=4d">4D / Tesseract</a><a href="advanced-state.html?mode=5d">5D</a><a href="advanced-state.html?mode=quantum">Quantum</a></nav>
 
     <section class="mode-card" aria-label="Advanced state mode">
       <button type="button" data-mode="timeline" class="active">5D timeline</button>
