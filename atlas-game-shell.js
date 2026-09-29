@@ -1,7 +1,8 @@
 "use strict";
 
+const atlasEmbed = new URLSearchParams(window.location.search).get("embed") === "1";
+
 (() => {
-  const atlasEmbed = new URLSearchParams(window.location.search).get("embed") === "1";
   if (!atlasEmbed && !document.querySelector('script[src^="game-catalogue.js"]')) {
     const catalogue = document.createElement("script");
     catalogue.src = "game-catalogue.js?v=2";
@@ -27,6 +28,7 @@
     const url = new URL(routed, window.location.href);
     url.searchParams.delete("embed");
     link.setAttribute('href', url.pathname.split("/").pop() + url.search + url.hash);
+    if (atlasEmbed && /(?:^|\/)index\.html(?:[?#]|$)/i.test(href)) link.setAttribute("target", "_top");
   });
 })();
 
