@@ -70,7 +70,10 @@ function pawnDestination(piece, from, to, options = {}, attacksOnly = false) {
     ((piece.side === "w" || piece.side === "white") ? 1 : -1);
   const delta = SpatialGeometry.difference(to, from);
 
-  if (delta[forwardAxis] !== direction) return { legal: false, capture: false };
+  const forwardDelta = delta[forwardAxis];
+  const startRank = options.startRank?.[piece.side] ?? options.startRank?.[(piece.side === "w" ? "white" : "black")];
+  const doubleStep = !attacksOnly && startRank !== undefined && from[forwardAxis] === startRank && forwardDelta === 2 * direction;
+  if (forwardDelta !== direction && !doubleStep) return { legal: false, capture: false };
 
   const changedCaptureAxes = captureAxes.filter(axis => delta[axis] !== 0);
   const invalidOtherAxis = delta.some((value, axis) =>
@@ -87,9 +90,10 @@ function pawnDestination(piece, from, to, options = {}, attacksOnly = false) {
 
   const forwardPattern = changedCaptureAxes.length === 0 &&
     delta.every((value, axis) => axis === forwardAxis || value === 0);
+  const legalForward = forwardPattern && (forwardDelta === direction || doubleStep);
 
   return {
-    legal: forwardPattern || capturePattern,
+    legal: legalForward || capturePattern,
     capture: capturePattern
   };
 }
@@ -122,7 +126,14 @@ function isPseudoLegalDestination(board, from, to, options = {}) {
   if (type === "P") {
     const pattern = pawnDestination(normalized, from, to, options.pawn);
     if (!pattern.legal) return false;
-    return pattern.capture ? Boolean(target) : !target;
+    if (pattern.capture) return Boolean(target);
+    const direction = options.pawn?.forwardDirection ?? (normalized.side === "w" || normalized.side === "white" ? 1 : -1);
+    if (Math.abs(to[options.pawn?.forwardAxis ?? 1] - from[options.pawn?.forwardAxis ?? 1]) === 2) {
+      const middle = [...from];
+      middle[options.pawn?.forwardAxis ?? 1] += direction;
+      if (board.occupancy.get(middle)) return false;
+    }
+    return !target;
   }
 
   return false;
