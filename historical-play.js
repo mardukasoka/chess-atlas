@@ -234,7 +234,13 @@ function morrisNodeAt(row, col) {
   return `${file}${rank}`;
 }
 
+function humanBoardInputAllowed() {
+  const opponent = document.getElementById("history-opponent");
+  return !(opponent && opponent.value === "agent" && game && game.turn === "b");
+}
+
 function handleMorris(node) {
+  if (!humanBoardInputAllowed()) return;
   if (game.pendingCapture) {
     try { game.capture(node); selected = null; } catch (_) { return; }
     render(); return;
@@ -282,7 +288,7 @@ function key2(coordinate) { return coordinate.join(","); }
 function konaneLegalTargets() { return !selected || game.phase !== "play" ? [] : game.jumpsFrom(selected).map(move => move.to); }
 
 function handleKonane(coordinate) {
-  if (game.winner) return;
+  if (game.winner || !humanBoardInputAllowed()) return;
   if (game.phase === "black-removal" || game.phase === "white-removal") {
     try { game.removeOpening(coordinate); } catch (_) { return; }
     render(); return;
