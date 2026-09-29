@@ -39,7 +39,8 @@
     { era: "17th c. CE", name: "Backgammon", href: "backgammon-play.html" },
     { era: "1732 CE", name: "Tablut", href: "tablut-play.html" },
     { era: "19th c. CE", name: "Mahjong", href: "mahjong-play.html" },
-    { era: "future", name: "Infinite / 4D Chess", href: "advanced-play.html" }
+    { era: "future", name: "Infinite / 4D Chess", href: "advanced-play.html" },
+    { era: "future lab", name: "Infinite Whiteboard", href: "board.html" }
   ]);
 
   function currentPath() {
@@ -71,6 +72,7 @@
   function capability(route) {
     const page = route.split("?")[0];
     if (page === "advanced-play.html") return "Experimental board";
+    if (page === "board.html") return "Infinite futures whiteboard";
     if (page === "catalogue-foundations.html") return "Rules foundation · completion pending";
     if (["go-play.html", "backgammon-play.html", "xiangqi-play.html", "shogi-play.html", "janggi-play.html", "sittuyin-play.html", "shatar-play.html", "courier-play.html", "ouk-chatrang-play.html", "historical-play.html", "mahjong-play.html"].includes(page)) return "Playable · local agent";
     return "Playable";
