@@ -65,12 +65,12 @@ function resetGame() {
   if (mode === "4d") {
     game = new FutureLegality.AdvancedChessGame({
       board: create4DStart(),
-      pawn: { forwardAxis: 1, captureAxes: [0, 2, 3] }
+      pawn: { forwardAxis: 1, captureAxes: [0, 2, 3], startRank: { w: 1, b: 2 } }
     });
   } else {
     game = new FutureLegality.AdvancedChessGame({
       board: createInfiniteStart(),
-      pawn: { forwardAxis: 1, captureAxes: [0] }
+      pawn: { forwardAxis: 1, captureAxes: [0], startRank: { w: 1, b: 6 } }
     });
   }
   render();
@@ -250,7 +250,12 @@ function render() {
 
 modeSelect.addEventListener("change", () => {
   mode = modeSelect.value;
-  resetGame();
+  const requestedMode = new URLSearchParams(window.location.search).get("mode");
+if (requestedMode === "4d" || requestedMode === "infinite") {
+  mode = requestedMode;
+  modeSelect.value = requestedMode;
+}
+resetGame();
 });
 
 viewSelect.addEventListener("change", () => {
