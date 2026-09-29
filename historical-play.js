@@ -336,6 +336,17 @@ stateForwardSelect.addEventListener("change", () => {
   if (!restoreNode(node)) updateGraphControls();
 });
 
-const loaded = loadGraph();
-const current = loaded ? stateGraph.getCurrent() : null;
-if (!restoreNode(current)) resetGame({ record: true });
+// An explicit ?game= route from the Atlas is authoritative. Do not let a
+// previously saved Ur/Senet state replace the game selected by the timeline.
+const requestedMode = new URLSearchParams(window.location.search).get("game");
+const supportedModes = new Set(["ur", "senet", "morris", "konane"]);
+
+if (requestedMode && supportedModes.has(requestedMode)) {
+  mode = requestedMode;
+  modeSelect.value = requestedMode;
+  resetGame({ record: true });
+} else {
+  const loaded = loadGraph();
+  const current = loaded ? stateGraph.getCurrent() : null;
+  if (!restoreNode(current)) resetGame({ record: true });
+}
