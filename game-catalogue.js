@@ -2,6 +2,7 @@
 
 /* Shared, lightweight navigation for every playable Chess Atlas board. */
 (() => {
+  if (new URLSearchParams(window.location.search).get("embed") === "1") return;
   if (window.ChessAtlasGameCatalogueLoaded) return;
   window.ChessAtlasGameCatalogueLoaded = true;
   const games = Object.freeze([
