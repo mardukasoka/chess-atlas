@@ -71,6 +71,6 @@
     schedule();
   }
   opponent.addEventListener("change",()=>{render();syncOpponent()});
-  modeSelect.addEventListener("change",()=>setTimeout(syncOpponent,0));
+  if(modeSelect)modeSelect.addEventListener("change",()=>setTimeout(syncOpponent,0));
   syncOpponent();
 })();
