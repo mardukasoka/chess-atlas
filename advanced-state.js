@@ -64,7 +64,7 @@ function restoreSnapshot(snapshot) {
   game = new StateLegality.AdvancedChessGame({
     board,
     turn: snapshot.turn,
-    pawn: { forwardAxis: 1, captureAxes: [0] }
+    pawn: { forwardAxis: 1, captureAxes: [0], startRank: { w: 1, b: 6 } }
   });
 }
 
@@ -185,7 +185,7 @@ function renderTimeline() {
 function resetTimeline() {
   game = new StateLegality.AdvancedChessGame({
     board: createClassicStart(),
-    pawn: { forwardAxis: 1, captureAxes: [0] }
+    pawn: { forwardAxis: 1, captureAxes: [0], startRank: { w: 1, b: 6 } }
   });
   graph = new Timeline.TimelineGraph(boardSnapshot(game.board, game.turn));
   activeNodeId = graph.rootId;
@@ -276,3 +276,11 @@ resetButton.addEventListener("click", () => {
 
 resetTimeline();
 resetQuantum();
+
+const requestedMode = new URLSearchParams(window.location.search).get("mode");
+if (requestedMode === "5d" || requestedMode === "timeline" || requestedMode === "quantum") {
+  selectedMode = requestedMode === "quantum" ? "quantum" : "timeline";
+  document.querySelectorAll("[data-mode]").forEach(item => item.classList.toggle("active", item.dataset.mode === selectedMode));
+  timelineMode.hidden = selectedMode !== "timeline";
+  quantumMode.hidden = selectedMode !== "quantum";
+}
