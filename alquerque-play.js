@@ -8,7 +8,7 @@
   const statusEl = document.getElementById("alquerque-status");
   const resetEl = document.getElementById("alquerque-reset");
   const agentEl = document.getElementById("alquerque-agent-move");
-  const MARKER = { white: "○", black: "●" };
+  const MARKER = { white: "◉", black: "●" };
   let game;
   let selected = null;
 
