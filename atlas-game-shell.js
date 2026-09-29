@@ -1,7 +1,8 @@
 "use strict";
 
 (() => {
-  if (!document.querySelector('script[src^="game-catalogue.js"]')) {
+  const atlasEmbed = new URLSearchParams(window.location.search).get("embed") === "1";
+  if (!atlasEmbed && !document.querySelector('script[src^="game-catalogue.js"]')) {
     const catalogue = document.createElement("script");
     catalogue.src = "game-catalogue.js?v=2";
     catalogue.defer = true;
@@ -22,18 +23,21 @@
     const href = link.getAttribute('href');
     if (!href || /^(?:https?:|mailto:|#)/i.test(href)) return;
     if (!/\.html(?:[?#]|$)/i.test(href)) return;
-    link.setAttribute('href', TimeState.addToRoute(href, state));
+    const routed = TimeState.addToRoute(href, state);
+    const url = new URL(routed, window.location.href);
+    url.searchParams.delete("embed");
+    link.setAttribute('href', url.pathname.split("/").pop() + url.search + url.hash);
   });
 })();
 
 /* Compact presentation when a game is hosted by the Atlas timeline. */
-const atlasEmbed = new URLSearchParams(window.location.search).get("embed") === "1";
 if (atlasEmbed) {
   document.documentElement.classList.add("atlas-embedded");
   const style = document.createElement("style");
   style.textContent = `
     html.atlas-embedded,html.atlas-embedded body{min-height:100%;overflow-y:auto!important;overscroll-behavior:auto!important}
     html.atlas-embedded body{padding:0!important}
+    html.atlas-embedded #atlas-game-catalogue,html.atlas-embedded .atlas-game-catalogue,html.atlas-embedded .atlas-all-games-choice,
     html.atlas-embedded header,html.atlas-embedded .top,html.atlas-embedded .history-header,
     html.atlas-embedded .eyebrow,html.atlas-embedded .subtitle,html.atlas-embedded .back-link,
     html.atlas-embedded .note,html.atlas-embedded .note-card,
