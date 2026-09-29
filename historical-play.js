@@ -1,6 +1,7 @@
 "use strict";
 
 const modeSelect = document.getElementById("history-mode");
+const requestedMode = new URLSearchParams(window.location.search).get("game");
 const resetButton = document.getElementById("history-reset");
 const stateBackButton = document.getElementById("history-state-back");
 const stateForwardSelect = document.getElementById("history-state-forward");
@@ -67,7 +68,7 @@ function recordState(action) {
 function restoreNode(node) {
   if (!node || !TRACKED.has(node.game) || !node.state) return false;
   mode = node.game;
-  modeSelect.value = mode;
+  if (modeSelect) modeSelect.value = mode;
   selected = null;
   game = mode === "ur"
     ? new window.ChessAtlasHistoricalGames.RoyalGameOfUr({ snapshot: node.state })
@@ -81,6 +82,7 @@ function restoreNode(node) {
 function updateGraphControls() {
   const tracked = TRACKED.has(mode);
   const current = stateGraph.getCurrent();
+  if (!stateBackButton || !stateForwardSelect) return;
   stateBackButton.disabled = !tracked || !current || current.parentId === null;
   stateForwardSelect.disabled = !tracked;
   stateForwardSelect.innerHTML = '<option value="">Future states</option>';
@@ -113,7 +115,7 @@ function sideName(side) {
 
 function resetGame({ record = true } = {}) {
   selected = null;
-  mode = modeSelect.value;
+  mode = modeSelect ? modeSelect.value : (requestedMode || mode);
   if (mode === "ur") game = new window.ChessAtlasHistoricalGames.RoyalGameOfUr({ seed: 1 });
   if (mode === "senet") game = new window.ChessAtlasSenet.SenetKendallGame({ seed: 1 });
   if (mode === "morris") game = new window.ChessAtlasGraphGames.MorrisGame();
@@ -329,13 +331,13 @@ function renderKonane() {
   board.appendChild(grid);
 }
 
-modeSelect.addEventListener("change", () => resetGame({ record: true }));
+if (modeSelect) modeSelect.addEventListener("change", () => resetGame({ record: true }));
 resetButton.addEventListener("click", () => resetGame({ record: true }));
-stateBackButton.addEventListener("click", () => {
+if (stateBackButton) stateBackButton.addEventListener("click", () => {
   const node = stateGraph.goBack();
   if (!restoreNode(node)) updateGraphControls();
 });
-stateForwardSelect.addEventListener("change", () => {
+if (stateForwardSelect) stateForwardSelect.addEventListener("change", () => {
   const id = stateForwardSelect.value;
   if (!id) return;
   const node = stateGraph.goForward(id);
@@ -344,12 +346,11 @@ stateForwardSelect.addEventListener("change", () => {
 
 // An explicit ?game= route from the Atlas is authoritative. Do not let a
 // previously saved Ur/Senet state replace the game selected by the timeline.
-const requestedMode = new URLSearchParams(window.location.search).get("game");
 const supportedModes = new Set(["ur", "senet", "morris", "konane"]);
 
 if (requestedMode && supportedModes.has(requestedMode)) {
   mode = requestedMode;
-  modeSelect.value = requestedMode;
+  if (modeSelect) modeSelect.value = requestedMode;
   resetGame({ record: true });
 } else {
   const loaded = loadGraph();
