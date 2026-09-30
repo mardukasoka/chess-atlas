@@ -6,6 +6,8 @@
   const statusEl = document.getElementById("tablut-status");
   const detailEl = document.getElementById("tablut-detail");
   const resetEl = document.getElementById("tablut-reset");
+  const opponentEl = document.getElementById("tablut-opponent");
+  let agentBusy = false;
   let game = new TablutGame();
   let selected = null;
 
@@ -35,6 +37,31 @@
     detailEl.textContent = `Captured: ${game.captured.attackers} attackers · ${game.captured.defenders} defenders`;
   }
 
+  function scoreAction(action) {
+    const [r,c] = action.to;
+    const piece = game.at(...action.from);
+    let score = Math.random() * 0.01;
+    if (piece === "king") score += Math.min(r, 8-r, c, 8-c) * -8;
+    if (piece === "defender") score += 2 - (Math.abs(r-4)+Math.abs(c-4)) * 0.08;
+    return score;
+  }
+
+  function maybeAgent() {
+    if (!opponentEl || opponentEl.value !== "agent" || game.winner || game.turn !== "defenders" || agentBusy) return;
+    agentBusy = true;
+    selected = null;
+    render();
+    setTimeout(() => {
+      const legal = game.legalActions();
+      if (legal.length) {
+        const action = legal.slice().sort((a,b) => scoreAction(b)-scoreAction(a))[0];
+        game.apply(action);
+      }
+      agentBusy = false;
+      render();
+    }, 220);
+  }
+
   function render() {
     renderStatus();
     const legal = legalFromSelected();
@@ -60,7 +87,7 @@
   }
 
   function onCellClick(event) {
-    if (game.winner) return;
+    if (game.winner || agentBusy || (opponentEl && opponentEl.value === "agent" && game.turn === "defenders")) return;
     const row = Number(event.currentTarget.dataset.row);
     const col = Number(event.currentTarget.dataset.col);
     const destination = legalFromSelected().find(move => same(move.to, [row, col]));
@@ -68,6 +95,7 @@
       game.apply(destination);
       selected = null;
       render();
+      maybeAgent();
       return;
     }
     const piece = game.at(row, col);
@@ -75,6 +103,8 @@
     else selected = null;
     render();
   }
+
+  if (opponentEl) opponentEl.addEventListener("change", () => { render(); maybeAgent(); });
 
   resetEl.addEventListener("click", () => {
     game = new TablutGame();
