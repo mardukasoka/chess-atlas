@@ -17,7 +17,7 @@ function elementMap(rows){
 }
 function atomLink(item){
   if(item.Z<=0) return "";
-  return `<br><br><a href="./atomic-cloud.html?isotope=${encodeURIComponent(item.name)}&Z=${item.Z}">View neutral atom →</a>`;
+  return `<br><br><a href="./atomic-cloud.html?isotope=${encodeURIComponent(item.name)}&Z=${item.Z}">View atomic orbital model →</a><br><small>Hydrogenic one-particle visualization; not a full neutral ${item.Z}-electron calculation.</small>`;
 }
 function hyperLink(item){
   if(item.Z<=0||item.type!=="hyper") return "";
