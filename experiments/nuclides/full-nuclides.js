@@ -1,6 +1,7 @@
 (() => {
 "use strict";
 const board=document.getElementById("atlasBoard");
+const scroll=board?.closest(".scroll");
 const details=document.getElementById("atlasDetails");
 if(!board||!details||typeof hypernuclides==="undefined") return;
 
@@ -74,6 +75,8 @@ async function upgrade(){
     origin.style.position="absolute"; origin.style.width="46px"; origin.style.left=`${pad+(0-minN)*step}px`; origin.style.top=`${pad+(maxZ-0)*step}px`;
     origin.addEventListener("click",()=>openOrigin()); board.appendChild(origin);
     details.innerHTML=`Full educational chart loaded: ${ordinary.length.toLocaleString()} nuclides. Tap a nuclide to inspect it.`;
+    // Start near the light/stable region instead of the far edge of the full 9k × 6k chart.
+    if(scroll){ const targetN=2,targetZ=2; scroll.scrollLeft=Math.max(0,pad+(targetN-minN)*step-scroll.clientWidth/2); scroll.scrollTop=Math.max(0,pad+(maxZ-targetZ)*step-scroll.clientHeight/2); }
     const active=document.querySelector("[data-filter].active")?.dataset.filter||"all"; setFilter(active);
   }catch(err){
     console.warn("Full nuclide upgrade unavailable; keeping verified fallback.",err);
