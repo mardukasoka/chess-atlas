@@ -101,8 +101,9 @@
     const backBtn = document.getElementById("backBtn");
     const params = new URLSearchParams(location.search);
     const isotope = params.get("isotope") || "Hydrogen-1";
-    const atomicNumber = Number(params.get("Z") || 1);
-    const nucleusKind = params.get("nucleus") || "ordinary";
+    const rawZ = Number(params.get("Z"));
+    const atomicNumber = Number.isFinite(rawZ) && rawZ > 0 ? Math.min(118, Math.trunc(rawZ)) : 1;
+    const nucleusKind = params.get("nucleus") === "hyper" ? "hyper" : "ordinary";
     backBtn.onclick = () => history.length > 1 ? history.back() : location.assign("./");
 
     const ELECTRON_SCALE = 1.0;
@@ -340,7 +341,7 @@
       status.innerHTML =
         `${nucleusKind === "hyper" ? "Hypernucleus" : "Nuclide"}: ${isotope} · Z=${atomicNumber}<br>` +
         `${nucleusKind === "hyper" ? "Electron cloud only; hypernuclear internal structure is not represented.<br>" : ""}` +
-        `Hydrogenic orbital model<br>` +
+        `Hydrogenic orbital model (one-particle approximation; not a ${atomicNumber}-electron calculation)<br>` +
         `Mode: ${boundParticle}<br>` +
         `n=${n}, l=${l}, m=${m}<br>` +
         `orbital scale=${a0.toFixed(6)}<br>` +
