@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,viewport-fit=cover"
+  >
+  <title>Nuclide Atlas · Atomic Cloud</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #fff;
+      font-family: system-ui, sans-serif;
+      overflow: hidden;
+    }
+
+    #ui {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 10;
+      background: rgba(0,0,0,0.55);
+      padding: 10px;
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+      max-width: 240px;
+    }
+
+    #ui button,
+    #ui select {
+      margin: 3px 2px;
+      padding: 7px 9px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background: #111;
+      color: #fff;
+    }
+
+    #ui button.active {
+      background: #fff;
+      color: #000;
+    }
+
+    #status {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.35;
+      opacity: 0.9;
+    }
+
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      touch-action: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="ui">
+    <div>
+      <button id="electronBtn" class="active">Electron</button>
+      <button id="muonBtn">Muon</button>
+      <button id="backBtn">← Nuclides</button>
+    </div>
+
+    <div>
+      n
+      <select id="nSelect"></select>
+
+      l
+      <select id="lSelect"></select>
+
+      m
+      <select id="mSelect"></select>
+    </div>
+
+    <div id="status"></div>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const electronBtn = document.getElementById("electronBtn");
+    const muonBtn = document.getElementById("muonBtn");
+
+    const nSelect = document.getElementById("nSelect");
+    const lSelect = document.getElementById("lSelect");
+    const mSelect = document.getElementById("mSelect");
+
+    const status = document.getElementById("status");
+    const backBtn = document.getElementById("backBtn");
+    const params = new URLSearchParams(location.search);
+    const isotope = params.get("isotope") || "Hydrogen-1";
+    const atomicNumber = Number(params.get("Z") || 1);
+    backBtn.onclick = () => history.length > 1 ? history.back() : location.assign("./");
+
+    const ELECTRON_SCALE = 1.0;
+    const MUON_SCALE = 0.005378;
+
+    let boundParticle = "electron";
+    let a0 = ELECTRON_SCALE;
+
+    let n = 2;
+    let l = 1;
+    let m = 0;
+
+    let points = [];
+
+    let rotX = 0.4;
+    let rotY = 0.6;
+
+    let dragging = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    const POINT_COUNT = 12000;
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width = innerWidth * dpr;
+      canvas.height = innerHeight * dpr;
+
+      canvas.style.width = innerWidth + "px";
+      canvas.style.height = innerHeight + "px";
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+
+    function populateN() {
+      nSelect.innerHTML = "";
+
+      for (let i = 1; i <= 6; i++) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = i;
+
+        if (i === n) opt.selected = true;
+
+        nSelect.appendChild(opt);
+      }
+
+      populateL();
+    }
+
+    function populateL() {
+      lSelect.innerHTML = "";
+
+      for (let i = 0; i < n; i++) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = i;
+
+        if (i === l) opt.selected = true;
+
+        lSelect.appendChild(opt);
+      }
+
+      if (l > n - 1) l = n - 1;
+
+      populateM();
+    }
+
+    function populateM() {
+      mSelect.innerHTML = "";
+
+      for (let i = -l; i <= l; i++) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = i;
+
+        if (i === m) opt.selected = true;
+
+        mSelect.appendChild(opt);
+      }
+
+      if (m > l) m = l;
+      if (m < -l) m = -l;
+    }
+
+    nSelect.addEventListener("change", () => {
+      n = Number(nSelect.value);
+
+      if (l > n - 1) l = n - 1;
+
+      populateL();
+      generate();
+    });
+
+    lSelect.addEventListener("change", () => {
+      l = Number(lSelect.value);
+
+      if (m > l) m = l;
+      if (m < -l) m = -l;
+
+      populateM();
+      generate();
+    });
+
+    mSelect.addEventListener("change", () => {
+      m = Number(mSelect.value);
+      generate();
+    });
+
+    electronBtn.onclick = () => {
+      boundParticle = "electron";
+      a0 = ELECTRON_SCALE;
+
+      electronBtn.classList.add("active");
+      muonBtn.classList.remove("active");
+
+      generate();
+    };
+
+    muonBtn.onclick = () => {
+      boundParticle = "muon";
+      a0 = MUON_SCALE;
+
+      muonBtn.classList.add("active");
+      electronBtn.classList.remove("active");
+
+      generate();
+    };
+
+    function randNormal() {
+      let u = 0;
+      let v = 0;
+
+      while (u === 0) u = Math.random();
+      while (v === 0) v = Math.random();
+
+      return Math.sqrt(-2 * Math.log(u))
+        * Math.cos(2 * Math.PI * v);
+    }
+
+    function sampleRadius() {
+      /*
+        Lightweight hydrogen-like approximation.
+
+        Characteristic orbital size scales as:
+
+        r ~ n² a0
+
+        This preserves the key physical size relation between
+        electronic and muonic hydrogen.
+      */
+
+      const scale = n * n * a0;
+
+      const u = Math.max(Math.random(), 1e-9);
+
+      return -Math.log(u) * scale;
+    }
+
+    function angularWeight(theta, phi) {
+      /*
+        Lightweight shape approximations for first few orbital families.
+        We are keeping this deliberately compact for mobile.
+
+        l = 0 : s
+        l = 1 : p
+        l = 2 : d-like
+      */
+
+      if (l === 0) {
+        return 1;
+      }
+
+      if (l === 1) {
+        if (m === 0) {
+          return Math.cos(theta) ** 2;
+        }
+
+        return Math.sin(theta) ** 2;
+      }
+
+      if (l === 2) {
+        if (m === 0) {
+          const c = Math.cos(theta);
+          return (3 * c * c - 1) ** 2;
+        }
+
+        return Math.sin(theta) ** 2
+          * Math.cos(theta) ** 2;
+      }
+
+      return 1;
+    }
+
+    function generate() {
+      points = [];
+
+      while (points.length < POINT_COUNT) {
+        const r = sampleRadius();
+
+        const theta = Math.acos(
+          1 - 2 * Math.random()
+        );
+
+        const phi = 2 * Math.PI * Math.random();
+
+        const weight = angularWeight(theta, phi);
+
+        if (Math.random() > Math.min(weight, 1)) {
+          continue;
+        }
+
+        const sinTheta = Math.sin(theta);
+
+        const x = r * sinTheta * Math.cos(phi);
+        const y = r * Math.cos(theta);
+        const z = r * sinTheta * Math.sin(phi);
+
+        points.push({
+          x,
+          y,
+          z,
+          intensity: Math.exp(
+            -r / Math.max(n * n * a0, 1e-9)
+          )
+        });
+      }
+
+      const contraction = 1 / MUON_SCALE;
+
+      status.innerHTML =
+        `Nuclide: ${isotope} · Z=${atomicNumber}<br>` +
+        `Hydrogenic orbital model<br>` +
+        `Mode: ${boundParticle}<br>` +
+        `n=${n}, l=${l}, m=${m}<br>` +
+        `orbital scale=${a0.toFixed(6)}<br>` +
+        (
+          boundParticle === "muon"
+            ? `contraction ≈ ${contraction.toFixed(1)}×`
+            : `reference electronic scale`
+        );
+    }
+
+    function rotatePoint(p) {
+      let x = p.x;
+      let y = p.y;
+      let z = p.z;
+
+      const cy = Math.cos(rotY);
+      const sy = Math.sin(rotY);
+
+      let x1 = x * cy - z * sy;
+      let z1 = x * sy + z * cy;
+
+      const cx = Math.cos(rotX);
+      const sx = Math.sin(rotX);
+
+      let y2 = y * cx - z1 * sx;
+      let z2 = y * sx + z1 * cx;
+
+      return {
+        x: x1,
+        y: y2,
+        z: z2,
+        intensity: p.intensity
+      };
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+      const cx = innerWidth / 2;
+      const cy = innerHeight / 2;
+
+      /*
+        Common physical scale.
+
+        Electronic hydrogen fills the viewport.
+        Muonic hydrogen remains ~186× smaller,
+        rather than being auto-expanded.
+      */
+
+      const scale = Math.min(
+        innerWidth,
+        innerHeight
+      ) * 0.055;
+
+      const rotated = points
+        .map(rotatePoint)
+        .sort((a, b) => a.z - b.z);
+
+      for (const p of rotated) {
+        const x = cx + p.x * scale;
+        const y = cy + p.y * scale;
+
+        const brightness =
+          80 + Math.floor(
+            175 * p.intensity
+          );
+
+        const radius =
+          boundParticle === "muon"
+            ? 1.2
+            : 1.0;
+
+        ctx.beginPath();
+
+        ctx.arc(
+          x,
+          y,
+          radius,
+          0,
+          Math.PI * 2
+        );
+
+        ctx.fillStyle =
+          `rgba(${brightness},` +
+          `${Math.floor(brightness * 0.65)},` +
+          `255,0.8)`;
+
+        ctx.fill();
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    canvas.addEventListener("pointerdown", e => {
+      dragging = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+
+      canvas.setPointerCapture(e.pointerId);
+    });
+
+    canvas.addEventListener("pointermove", e => {
+      if (!dragging) return;
+
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+
+      rotY += dx * 0.01;
+      rotX += dy * 0.01;
+
+      lastX = e.clientX;
+      lastY = e.clientY;
+    });
+
+    canvas.addEventListener("pointerup", () => {
+      dragging = false;
+    });
+
+    populateN();
+    generate();
+    draw();
+  </script>
+
+</body>
+</html>
