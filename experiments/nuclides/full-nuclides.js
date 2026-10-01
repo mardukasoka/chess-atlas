@@ -32,6 +32,7 @@ function makeNode(item,category){
   const node=document.createElement("button");
   node.className=`nuclide ${item.type}`;
   node.dataset.category=category;
+  node.style.width="100%"; node.style.minHeight="46px";
   node.setAttribute("aria-label",`${item.name}, N ${item.N}, Z ${item.Z}`);
   node.innerHTML=`<span class="status-dot ${item.status==="radioactive"?"radioactive":""}"></span><span class="symbol">${item.symbol}</span><span class="mass">A=${item.A}${item.S!==undefined?` · S=${item.S}`:""}</span>`;
   node.addEventListener("click",()=>selectNode(node,item));
@@ -66,6 +67,7 @@ async function upgrade(){
       const cell=document.createElement("div");
       cell.className="cell cluster";
       cell.style.position="absolute"; cell.style.width="46px"; cell.style.minHeight="46px";
+      cell.style.height="auto"; cell.style.aspectRatio="auto";
       cell.style.left=`${pad+(N-minN)*step}px`; cell.style.top=`${pad+(maxZ-Z)*step}px`;
       for(const item of cellItems) cell.appendChild(makeNode(item,item.type==="matter"||item.type==="antimatter"?"ordinary":"hyper"));
       board.appendChild(cell);
