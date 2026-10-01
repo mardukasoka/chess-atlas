@@ -102,6 +102,7 @@
     const params = new URLSearchParams(location.search);
     const isotope = params.get("isotope") || "Hydrogen-1";
     const atomicNumber = Number(params.get("Z") || 1);
+    const nucleusKind = params.get("nucleus") || "ordinary";
     backBtn.onclick = () => history.length > 1 ? history.back() : location.assign("./");
 
     const ELECTRON_SCALE = 1.0;
@@ -337,7 +338,8 @@
       const contraction = 1 / MUON_SCALE;
 
       status.innerHTML =
-        `Nuclide: ${isotope} · Z=${atomicNumber}<br>` +
+        `${nucleusKind === "hyper" ? "Hypernucleus" : "Nuclide"}: ${isotope} · Z=${atomicNumber}<br>` +
+        `${nucleusKind === "hyper" ? "Electron cloud only; hypernuclear internal structure is not represented.<br>" : ""}` +
         `Hydrogenic orbital model<br>` +
         `Mode: ${boundParticle}<br>` +
         `n=${n}, l=${l}, m=${m}<br>` +
