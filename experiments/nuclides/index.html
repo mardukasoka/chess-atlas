@@ -30,7 +30,7 @@
   </div>
 </section>
 <div id="atlasDetails" class="details" aria-live="polite">Tap any nucleus or hypernucleus to inspect it.</div>
-<p class="note">Chart status: bounded light-nuclide demonstrator, not a complete evaluated nuclear database. Stable and radioactive labels describe ground-state nuclides. Negative antinucleon coordinates are an Atlas reflection convention, not standard nuclear-chart notation.</p>
+<p class="note">Chart status: Galaxy of Nuclides educational dataset is loaded progressively when available; the original light-nuclide demonstrator remains the safe fallback. This is not a complete evaluated nuclear database. Stable and radioactive labels describe ground-state nuclides. Negative antinucleon coordinates are an Atlas reflection convention, not standard nuclear-chart notation.</p>
 </main>
 <script>
 const ordinaryNuclides=[
@@ -55,4 +55,6 @@ document.getElementById("zoomBack").addEventListener("click",closeOrigin);docume
 function setFilter(filter){document.querySelectorAll("[data-filter]").forEach(button=>button.classList.toggle("active",button.dataset.filter===filter));if(filter==="pairs"||filter==="exotics"){openOrigin(filter==="pairs"?0:6,filter);return}closeOrigin();document.querySelectorAll("[data-category]").forEach(item=>item.classList.toggle("hidden-by-filter",filter!=="all"&&item.dataset.category!==filter&&item.dataset.category!=="origin"));}
 document.querySelectorAll("[data-filter]").forEach(button=>button.addEventListener("click",()=>setFilter(button.dataset.filter)));
 renderAtlas();setFilter(requested==="hyper"||requested==="antihyper"?"hyper":"all");
-</script></body></html>
+</script>
+<script src="./full-nuclides.js"></script>
+</body></html>
