@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "title": "QCD → Nuclide bridge",
+    "schema": "atlas-matter-v0.1",
+    "purpose": "Cross-scale relations; canonical properties remain on their owning pages."
+  },
+  "nodes": [
+    {
+      "id": "proton",
+      "label": "proton",
+      "kind": "baryon",
+      "valence": "uud",
+      "strangeness": 0,
+      "qcd": "../qcd-matter/#proton",
+      "nuclear": "../nuclides/"
+    },
+    {
+      "id": "neutron",
+      "label": "neutron",
+      "kind": "baryon",
+      "valence": "udd",
+      "strangeness": 0,
+      "qcd": "../qcd-matter/#neutron",
+      "nuclear": "../nuclides/"
+    },
+    {
+      "id": "lambda",
+      "label": "Λ hyperon",
+      "kind": "hyperon",
+      "valence": "uds",
+      "strangeness": -1,
+      "qcd": "../qcd-matter/#lambda",
+      "nuclear": "../nuclides/?layer=hyper"
+    },
+    {
+      "id": "hypertriton",
+      "label": "hypertriton",
+      "kind": "hypernucleus",
+      "composition": [
+        "proton",
+        "neutron",
+        "lambda"
+      ],
+      "strangeness": -1,
+      "nuclear": "../nuclides/?layer=hyper",
+      "status": "observed"
+    },
+    {
+      "id": "antihypertriton",
+      "label": "antihypertriton",
+      "kind": "antihypernucleus",
+      "composition": [
+        "antiproton",
+        "antineutron",
+        "antilambda"
+      ],
+      "strangeness": 1,
+      "nuclear": "../nuclides/?layer=hyper",
+      "status": "observed"
+    }
+  ],
+  "edges": [
+    {
+      "from": "u,d quarks",
+      "to": "proton",
+      "relation": "QCD confinement / baryon structure"
+    },
+    {
+      "from": "u,d quarks",
+      "to": "neutron",
+      "relation": "QCD confinement / baryon structure"
+    },
+    {
+      "from": "u,d,s quarks",
+      "to": "lambda",
+      "relation": "QCD confinement / strange baryon structure"
+    },
+    {
+      "from": "proton + neutron",
+      "to": "ordinary nuclei",
+      "relation": "nuclear binding"
+    },
+    {
+      "from": "proton + neutron + lambda",
+      "to": "hypertriton",
+      "relation": "hypernuclear binding"
+    }
+  ],
+  "provenance": [
+    {
+      "source": "Particle Data Group 2025",
+      "url": "https://pdg.lbl.gov/2025/"
+    },
+    {
+      "source": "CERN — LHCb observes hypertriton production",
+      "url": "https://home.cern/news/news/physics/lhcb-observes-hypertriton-production-proton-proton-collisions-lhc"
+    }
+  ]
+}
