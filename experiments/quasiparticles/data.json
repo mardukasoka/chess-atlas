@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "title": "Quasiparticles & Collective Excitations",
+    "schema": "atlas-matter-v0.2",
+    "rule": "Every emergent excitation names a host system; no entry is a Standard Model particle.",
+    "sources": [
+      "Nature Physics quantum-materials review",
+      "DOE superconductivity overview"
+    ]
+  },
+  "entries": [
+    {
+      "id": "phonon",
+      "name": "Phonon",
+      "host": "crystal lattice",
+      "kind": "collective lattice vibration",
+      "statistics": "bosonic",
+      "links": [
+        "conventional superconductivity",
+        "polarons",
+        "magnon-polaron"
+      ],
+      "status": "established"
+    },
+    {
+      "id": "magnon",
+      "name": "Magnon",
+      "host": "magnetically ordered material",
+      "kind": "spin-wave excitation",
+      "statistics": "bosonic",
+      "links": [
+        "magnetism",
+        "magnon-polaron"
+      ],
+      "status": "established"
+    },
+    {
+      "id": "exciton",
+      "name": "Exciton",
+      "host": "semiconductor/insulator",
+      "kind": "bound electron-hole excitation",
+      "links": [
+        "exciton condensate",
+        "polaritons"
+      ],
+      "status": "established"
+    },
+    {
+      "id": "trion",
+      "name": "Trion",
+      "host": "semiconductor/2D material",
+      "kind": "charged excitonic complex",
+      "status": "established"
+    },
+    {
+      "id": "polaron",
+      "name": "Polaron",
+      "host": "polarizable lattice",
+      "kind": "carrier dressed by lattice response",
+      "links": [
+        "electron-phonon coupling"
+      ],
+      "status": "established"
+    },
+    {
+      "id": "plasmon",
+      "name": "Plasmon",
+      "host": "electron gas/conductor",
+      "kind": "collective charge-density oscillation",
+      "status": "established"
+    },
+    {
+      "id": "polariton",
+      "name": "Polariton",
+      "host": "strongly coupled light-matter system",
+      "kind": "hybrid photon-matter excitation",
+      "status": "established"
+    },
+    {
+      "id": "spinon",
+      "name": "Spinon",
+      "host": "fractionalized quantum magnet",
+      "kind": "fractionalized spin excitation",
+      "status": "system-dependent experimental evidence"
+    },
+    {
+      "id": "holon",
+      "name": "Holon",
+      "host": "fractionalized correlated electron system",
+      "kind": "fractionalized charge excitation",
+      "status": "system-dependent experimental evidence"
+    },
+    {
+      "id": "anyon",
+      "name": "Anyon",
+      "host": "two-dimensional topological system",
+      "kind": "fractional/statistical quasiparticle",
+      "status": "established in specific platforms; non-Abelian sector platform-dependent"
+    },
+    {
+      "id": "bogoliubov",
+      "name": "Bogoliubov quasiparticle",
+      "host": "paired fermionic condensate/superconductor",
+      "kind": "electron-hole superposition excitation",
+      "links": [
+        "superconductivity"
+      ],
+      "status": "established"
+    },
+    {
+      "id": "majorana-zero-mode",
+      "name": "Majorana zero mode",
+      "host": "engineered/topological superconducting platform",
+      "kind": "emergent zero-energy mode",
+      "status": "candidate/platform-dependent; distinguish from fundamental Majorana fermion"
+    },
+    {
+      "id": "weyl",
+      "name": "Weyl quasiparticle",
+      "host": "Weyl semimetal",
+      "kind": "band quasiparticle near Weyl node",
+      "status": "established in materials"
+    },
+    {
+      "id": "dirac",
+      "name": "Dirac quasiparticle",
+      "host": "Dirac material/semimetal",
+      "kind": "band quasiparticle near Dirac node",
+      "status": "established in materials"
+    },
+    {
+      "id": "roton",
+      "name": "Roton",
+      "host": "superfluid",
+      "kind": "collective excitation near dispersion minimum",
+      "status": "established"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "title": "Quantum Phases & Transitions",
+    "schema": "atlas-matter-v0.2",
+    "sources": [
+      "DOE superconductivity overview",
+      "Nature Reviews Physics strong correlations"
+    ]
+  },
+  "phases": [
+    {
+      "id": "sc",
+      "name": "Superconducting",
+      "class": "ordered quantum phase",
+      "signatures": [
+        "zero DC resistance",
+        "Meissner response"
+      ],
+      "excitations": [
+        "bogoliubov",
+        "collective modes"
+      ],
+      "tuning": [
+        "temperature",
+        "magnetic field",
+        "pressure",
+        "density/doping",
+        "disorder"
+      ],
+      "status": "established"
+    },
+    {
+      "id": "sf",
+      "name": "Superfluid",
+      "class": "quantum fluid",
+      "excitations": [
+        "phonon",
+        "roton"
+      ],
+      "status": "established"
+    },
+    {
+      "id": "bec",
+      "name": "Bose-Einstein condensate",
+      "class": "condensed quantum phase",
+      "status": "established"
+    },
+    {
+      "id": "qh",
+      "name": "Quantum Hall",
+      "class": "topological phase",
+      "excitations": [
+        "edge modes",
+        "anyons in fractional regimes"
+      ],
+      "status": "established"
+    },
+    {
+      "id": "qsl",
+      "name": "Quantum spin liquid",
+      "class": "correlated/topological quantum phase",
+      "excitations": [
+        "spinons (model/material dependent)"
+      ],
+      "status": "candidate/established evidence depends on material"
+    },
+    {
+      "id": "strange-metal",
+      "name": "Strange metal",
+      "class": "correlated metallic regime",
+      "note": "May involve loss or breakdown of conventional quasiparticle description near quantum criticality.",
+      "status": "observed phenomenology; microscopic interpretation system-dependent"
+    },
+    {
+      "id": "cdw",
+      "name": "Charge-density wave",
+      "class": "symmetry-broken electronic phase",
+      "status": "established"
+    },
+    {
+      "id": "sdw",
+      "name": "Spin-density wave",
+      "class": "symmetry-broken magnetic/electronic phase",
+      "status": "established"
+    },
+    {
+      "id": "time-crystal",
+      "name": "Discrete time crystal",
+      "class": "nonequilibrium dynamical phase",
+      "status": "experimentally realized in driven platforms"
+    },
+    {
+      "id": "supersolid",
+      "name": "Supersolid",
+      "class": "coexisting crystalline and superfluid order",
+      "status": "experimentally realized in selected platforms"
+    }
+  ],
+  "transitions": {
+    "coordinates": [
+      "temperature",
+      "pressure",
+      "magnetic field",
+      "electric field",
+      "density/doping",
+      "disorder",
+      "interaction strength",
+      "dimensionality"
+    ],
+    "types": [
+      "first-order",
+      "continuous",
+      "quantum phase transition",
+      "BKT/topological transition",
+      "crossover (not a true phase transition)"
+    ]
+  },
+  "superconductivity": {
+    "conventional": {
+      "mechanism": "phonon-mediated effective attraction in BCS/Eliashberg framework",
+      "status": "established"
+    },
+    "unconventional": {
+      "mechanism": "pairing not adequately described as ordinary phonon-mediated BCS; mechanism/material dependent",
+      "status": "active research"
+    },
+    "families": [
+      "elemental/conventional",
+      "A15 and related intermetallics",
+      "cuprates",
+      "iron-based",
+      "heavy-fermion",
+      "nickelates",
+      "hydrides/high-pressure",
+      "2D/moire",
+      "topological-superconductivity candidates"
+    ]
+  }
+}
