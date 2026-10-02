@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "title": "Atomic to emergent-matter bridge",
+    "schema": "atlas-matter-v0.2"
+  },
+  "edges": [
+    {
+      "from": "atoms",
+      "to": "crystal/molecular lattice",
+      "relation": "bonding + structure"
+    },
+    {
+      "from": "electron",
+      "to": "electronic band states",
+      "relation": "periodic/interacting many-body environment"
+    },
+    {
+      "from": "lattice vibration",
+      "to": "phonon",
+      "relation": "quantization of collective mode"
+    },
+    {
+      "from": "electron + lattice polarization",
+      "to": "polaron",
+      "relation": "dressed carrier"
+    },
+    {
+      "from": "electron-hole excitation",
+      "to": "exciton",
+      "relation": "effective bound excitation"
+    },
+    {
+      "from": "electron correlations",
+      "to": "collective/fractional excitations",
+      "relation": "many-body emergence"
+    },
+    {
+      "from": "paired electronic state",
+      "to": "Bogoliubov quasiparticle",
+      "relation": "superconducting effective excitation"
+    },
+    {
+      "from": "phonon-mediated electron pairing",
+      "to": "conventional superconductivity",
+      "relation": "BCS/Eliashberg pathway"
+    },
+    {
+      "from": "strong correlations",
+      "to": "unconventional phases",
+      "relation": "system-dependent; not a single universal mechanism"
+    }
+  ]
+}
