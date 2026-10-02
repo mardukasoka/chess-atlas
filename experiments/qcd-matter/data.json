@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "title": "QCD, Hadrons & QCD Matter",
+    "schema": "atlas-matter-v0.1",
+    "sources": [
+      "Particle Data Group 2025",
+      "CERN"
+    ]
+  },
+  "classes": [
+    {
+      "id": "baryons",
+      "name": "Baryons",
+      "composition": "qqq (ordinary valence picture)",
+      "status": "established",
+      "examples": [
+        "proton",
+        "neutron",
+        "Lambda"
+      ]
+    },
+    {
+      "id": "mesons",
+      "name": "Mesons",
+      "composition": "q qbar (ordinary valence picture)",
+      "status": "established",
+      "examples": [
+        "pion",
+        "kaon"
+      ]
+    },
+    {
+      "id": "charmonium",
+      "name": "Charmonium",
+      "composition": "c cbar",
+      "status": "established",
+      "examples": [
+        "J/psi",
+        "eta_c"
+      ]
+    },
+    {
+      "id": "bottomonium",
+      "name": "Bottomonium",
+      "composition": "b bbar",
+      "status": "established",
+      "examples": [
+        "Upsilon",
+        "eta_b"
+      ]
+    },
+    {
+      "id": "top-threshold",
+      "name": "Top-antitop threshold",
+      "composition": "t tbar near threshold",
+      "status": "special regime",
+      "note": "Top quarks decay too rapidly for conventional long-lived quarkonium spectroscopy; threshold QCD remains meaningful."
+    },
+    {
+      "id": "tetraquark",
+      "name": "Tetraquark candidates/states",
+      "composition": "qq qbar qbar",
+      "status": "observed exotic-hadron sector",
+      "note": "Internal binding interpretation can be state-dependent."
+    },
+    {
+      "id": "pentaquark",
+      "name": "Pentaquark candidates/states",
+      "composition": "qqqq qbar",
+      "status": "observed exotic-hadron sector",
+      "note": "Internal binding interpretation can be state-dependent."
+    },
+    {
+      "id": "hybrid",
+      "name": "Hybrid hadrons",
+      "composition": "quarks plus excited gluonic degrees of freedom",
+      "status": "candidate/observed-spectrum interpretation"
+    },
+    {
+      "id": "glueball",
+      "name": "Glueballs",
+      "composition": "predominantly gluonic bound states",
+      "status": "predicted; experimental identification unresolved"
+    },
+    {
+      "id": "qgp",
+      "name": "Quark-gluon plasma",
+      "kind": "hot QCD matter",
+      "status": "experimentally produced",
+      "links": [
+        "heavy-ion collisions"
+      ]
+    },
+    {
+      "id": "dense-quark",
+      "name": "Dense quark matter",
+      "kind": "cold/dense QCD",
+      "status": "theoretical/astrophysical candidate"
+    },
+    {
+      "id": "strange-matter",
+      "name": "Strange quark matter",
+      "kind": "dense QCD hypothesis",
+      "status": "hypothetical"
+    },
+    {
+      "id": "color-sc",
+      "name": "Color superconductivity",
+      "kind": "paired quark phase at high density",
+      "status": "theoretical",
+      "links": [
+        "quantum phases",
+        "compact stars"
+      ]
+    }
+  ],
+  "bridges": [
+    {
+      "from": "proton/neutron",
+      "to": "Nuclide Atlas"
+    },
+    {
+      "from": "Lambda hyperon",
+      "to": "Hypernuclei"
+    },
+    {
+      "from": "color superconductivity",
+      "to": "Quantum Phases"
+    }
+  ]
+}
