@@ -1,0 +1,264 @@
+{
+  "meta": {
+    "title": "Standard Model",
+    "schema": "atlas-matter-v0.1",
+    "status": "established framework",
+    "sources": [
+      "Particle Data Group 2025",
+      "CERN Standard Model"
+    ]
+  },
+  "particles": [
+    {
+      "id": "u",
+      "name": "up quark",
+      "family": "quark",
+      "generation": 1,
+      "charge_e": 0.6666666666666666,
+      "spin": 0.5,
+      "color": true,
+      "interactions": [
+        "strong",
+        "weak",
+        "electromagnetic"
+      ],
+      "status": "established",
+      "next": [
+        "proton",
+        "neutron",
+        "mesons"
+      ]
+    },
+    {
+      "id": "d",
+      "name": "down quark",
+      "family": "quark",
+      "generation": 1,
+      "charge_e": -0.3333333333333333,
+      "spin": 0.5,
+      "color": true,
+      "interactions": [
+        "strong",
+        "weak",
+        "electromagnetic"
+      ],
+      "status": "established",
+      "next": [
+        "proton",
+        "neutron",
+        "mesons"
+      ]
+    },
+    {
+      "id": "c",
+      "name": "charm quark",
+      "family": "quark",
+      "generation": 2,
+      "charge_e": 0.6666666666666666,
+      "spin": 0.5,
+      "color": true,
+      "interactions": [
+        "strong",
+        "weak",
+        "electromagnetic"
+      ],
+      "status": "established",
+      "next": [
+        "charmonium",
+        "charmed hadrons"
+      ]
+    },
+    {
+      "id": "s",
+      "name": "strange quark",
+      "family": "quark",
+      "generation": 2,
+      "charge_e": -0.3333333333333333,
+      "spin": 0.5,
+      "color": true,
+      "interactions": [
+        "strong",
+        "weak",
+        "electromagnetic"
+      ],
+      "status": "established",
+      "next": [
+        "strange hadrons",
+        "hypernuclei"
+      ]
+    },
+    {
+      "id": "t",
+      "name": "top quark",
+      "family": "quark",
+      "generation": 3,
+      "charge_e": 0.6666666666666666,
+      "spin": 0.5,
+      "color": true,
+      "interactions": [
+        "strong",
+        "weak",
+        "electromagnetic"
+      ],
+      "status": "established",
+      "next": [
+        "top-antitop threshold"
+      ]
+    },
+    {
+      "id": "b",
+      "name": "bottom quark",
+      "family": "quark",
+      "generation": 3,
+      "charge_e": -0.3333333333333333,
+      "spin": 0.5,
+      "color": true,
+      "interactions": [
+        "strong",
+        "weak",
+        "electromagnetic"
+      ],
+      "status": "established",
+      "next": [
+        "bottomonium",
+        "bottom hadrons"
+      ]
+    },
+    {
+      "id": "e",
+      "name": "electron",
+      "family": "charged lepton",
+      "generation": 1,
+      "charge_e": -1,
+      "spin": 0.5,
+      "color": false,
+      "interactions": [
+        "weak",
+        "electromagnetic"
+      ],
+      "status": "established"
+    },
+    {
+      "id": "mu",
+      "name": "muon",
+      "family": "charged lepton",
+      "generation": 2,
+      "charge_e": -1,
+      "spin": 0.5,
+      "color": false,
+      "interactions": [
+        "weak",
+        "electromagnetic"
+      ],
+      "status": "established"
+    },
+    {
+      "id": "tau",
+      "name": "tau",
+      "family": "charged lepton",
+      "generation": 3,
+      "charge_e": -1,
+      "spin": 0.5,
+      "color": false,
+      "interactions": [
+        "weak",
+        "electromagnetic"
+      ],
+      "status": "established"
+    },
+    {
+      "id": "nue",
+      "name": "electron neutrino",
+      "family": "neutrino",
+      "generation": 1,
+      "charge_e": 0,
+      "spin": 0.5,
+      "color": false,
+      "interactions": [
+        "weak"
+      ],
+      "status": "established",
+      "note": "Neutrino oscillations require nonzero neutrino masses; the minimal original SM needs extension to accommodate them."
+    },
+    {
+      "id": "numu",
+      "name": "muon neutrino",
+      "family": "neutrino",
+      "generation": 2,
+      "charge_e": 0,
+      "spin": 0.5,
+      "color": false,
+      "interactions": [
+        "weak"
+      ],
+      "status": "established",
+      "note": "Neutrino oscillations require nonzero neutrino masses; the minimal original SM needs extension to accommodate them."
+    },
+    {
+      "id": "nutau",
+      "name": "tau neutrino",
+      "family": "neutrino",
+      "generation": 3,
+      "charge_e": 0,
+      "spin": 0.5,
+      "color": false,
+      "interactions": [
+        "weak"
+      ],
+      "status": "established",
+      "note": "Neutrino oscillations require nonzero neutrino masses; the minimal original SM needs extension to accommodate them."
+    },
+    {
+      "id": "photon",
+      "name": "photon",
+      "family": "gauge boson",
+      "charge_e": 0,
+      "spin": 1,
+      "interaction": "electromagnetic",
+      "status": "established"
+    },
+    {
+      "id": "gluon",
+      "name": "gluon",
+      "family": "gauge boson",
+      "charge_e": 0,
+      "spin": 1,
+      "interaction": "strong",
+      "multiplicity": 8,
+      "status": "established"
+    },
+    {
+      "id": "W",
+      "name": "W boson",
+      "family": "gauge boson",
+      "charge_e": "±1",
+      "spin": 1,
+      "interaction": "weak",
+      "status": "established"
+    },
+    {
+      "id": "Z",
+      "name": "Z boson",
+      "family": "gauge boson",
+      "charge_e": 0,
+      "spin": 1,
+      "interaction": "weak",
+      "status": "established"
+    },
+    {
+      "id": "H",
+      "name": "Higgs boson",
+      "family": "scalar boson",
+      "charge_e": 0,
+      "spin": 0,
+      "status": "established",
+      "discovered": 2012
+    }
+  ],
+  "boundary": [
+    "gravity",
+    "dark matter",
+    "matter-antimatter asymmetry",
+    "origin of neutrino masses"
+  ]
+}
