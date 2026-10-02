@@ -1,0 +1,258 @@
+{
+  "meta": {
+    "title": "Superconductivity Atlas",
+    "schema": "atlas-matter-v0.3",
+    "scope": "Representative family-level catalogue. Values are representative literature landmarks, not a substitute for per-sample phase diagrams.",
+    "status_fields": [
+      "established",
+      "active research",
+      "candidate/contested"
+    ]
+  },
+  "families": [
+    {
+      "id": "conventional",
+      "name": "Conventional / phonon-mediated",
+      "examples": [
+        "Hg",
+        "Pb",
+        "Nb",
+        "Nb3Sn",
+        "MgB2"
+      ],
+      "mechanism": "electron-phonon pairing; BCS/Eliashberg framework",
+      "pressure": "ambient and material-dependent",
+      "pairing": "primarily spin-singlet; gap structure material-dependent",
+      "status": "established"
+    },
+    {
+      "id": "cuprates",
+      "name": "Cuprates",
+      "examples": [
+        "YBa2Cu3O7-x",
+        "Bi2Sr2CaCu2O8+x"
+      ],
+      "tc_landmark_K": "~90–135 at ambient pressure depending family",
+      "controls": [
+        "hole/electron doping",
+        "pressure",
+        "field"
+      ],
+      "pairing": "predominantly d-wave",
+      "mechanism": "unconventional; strong correlations central",
+      "status": "established superconductivity; microscopic pairing mechanism active research"
+    },
+    {
+      "id": "iron",
+      "name": "Iron-based",
+      "examples": [
+        "LaFeAsO1-xFx",
+        "Ba1-xKxFe2As2",
+        "FeSe"
+      ],
+      "tc_landmark_K": "up to ~55 bulk family scale; strongly system-dependent",
+      "controls": [
+        "doping",
+        "pressure",
+        "strain"
+      ],
+      "pairing": "multiband; sign-changing states prominent",
+      "mechanism": "unconventional; magnetic/orbital fluctuations actively studied",
+      "status": "established superconductivity"
+    },
+    {
+      "id": "heavy",
+      "name": "Heavy fermion",
+      "examples": [
+        "CeCu2Si2",
+        "UPt3",
+        "CeCoIn5",
+        "UTe2"
+      ],
+      "tc_landmark_K": "typically sub-K to few-K",
+      "controls": [
+        "pressure",
+        "field",
+        "composition"
+      ],
+      "pairing": "often unconventional; material-specific",
+      "mechanism": "strong correlations / magnetic fluctuations implicated",
+      "status": "established superconductivity; order parameter material-dependent"
+    },
+    {
+      "id": "nickelate-il",
+      "name": "Infinite-layer nickelates",
+      "examples": [
+        "Nd1-xSrxNiO2"
+      ],
+      "tc_landmark_K": "tens of kelvin scale",
+      "controls": [
+        "doping",
+        "strain",
+        "film synthesis"
+      ],
+      "pairing": "under investigation",
+      "mechanism": "unconventional correlated-electron candidate",
+      "status": "established superconductivity in thin-film systems; mechanism active research"
+    },
+    {
+      "id": "nickelate-rp",
+      "name": "Ruddlesden–Popper nickelates",
+      "examples": [
+        "La3Ni2O7"
+      ],
+      "tc_landmark_K": "bulk superconductivity reported up to 96 K",
+      "pressure_GPa": "high pressure; phase-diagram dependent",
+      "controls": [
+        "pressure",
+        "structure"
+      ],
+      "pairing": "under investigation",
+      "mechanism": "active research",
+      "status": "established high-pressure superconductivity with rapidly developing phase diagram"
+    },
+    {
+      "id": "hydrides",
+      "name": "Hydrides / superhydrides",
+      "examples": [
+        "H3S",
+        "LaH10"
+      ],
+      "tc_landmark_K": ">200 K in landmark high-pressure systems",
+      "pressure_GPa": "megabar-scale for landmark systems",
+      "controls": [
+        "pressure",
+        "stoichiometry",
+        "structure"
+      ],
+      "pairing": "largely phonon-mediated framework for key systems",
+      "mechanism": "strong electron-phonon coupling",
+      "status": "established high-pressure superconductivity; magnetic/diamagnetic validation methodology remains an active experimental issue"
+    },
+    {
+      "id": "moire",
+      "name": "2D / moiré",
+      "examples": [
+        "magic-angle graphene systems",
+        "moiré WSe2"
+      ],
+      "tc_landmark_K": "low-K scale, platform-dependent",
+      "controls": [
+        "twist angle",
+        "carrier density",
+        "displacement field",
+        "bandwidth"
+      ],
+      "pairing": "platform-dependent",
+      "mechanism": "strongly tunable correlated superconductivity",
+      "status": "established in selected platforms; mechanism active research"
+    },
+    {
+      "id": "topological",
+      "name": "Topological-superconductivity candidates",
+      "examples": [
+        "K2Cr3As3",
+        "engineered superconductor-semiconductor platforms",
+        "selected uranium/heavy-fermion systems"
+      ],
+      "controls": [
+        "field",
+        "orientation",
+        "pressure",
+        "interfaces"
+      ],
+      "pairing": "candidate odd-parity/triplet or engineered topological regimes depending platform",
+      "mechanism": "platform-dependent",
+      "status": "candidate/platform-dependent; Majorana claims require explicit evidence grading"
+    }
+  ],
+  "dimensions": [
+    "Tc",
+    "pressure",
+    "magnetic field",
+    "carrier density/doping",
+    "strain",
+    "disorder",
+    "dimensionality",
+    "gap symmetry",
+    "pairing evidence",
+    "Meissner/diamagnetic evidence",
+    "zero resistance",
+    "specific heat",
+    "isotope effect",
+    "spectroscopy",
+    "replication status"
+  ],
+  "timeline": [
+    {
+      "year": 1911,
+      "event": "Superconductivity discovered in mercury"
+    },
+    {
+      "year": 1957,
+      "event": "BCS microscopic theory"
+    },
+    {
+      "year": 1986,
+      "event": "Cuprate high-Tc superconductivity discovered"
+    },
+    {
+      "year": 2001,
+      "event": "MgB2 superconductivity reported"
+    },
+    {
+      "year": 2008,
+      "event": "Iron-based high-Tc family emerges"
+    },
+    {
+      "year": 2015,
+      "event": "High-Tc superconductivity reported in sulfur hydride under pressure"
+    },
+    {
+      "year": 2018,
+      "event": "Correlated insulating states and superconductivity in magic-angle twisted bilayer graphene"
+    },
+    {
+      "year": 2019,
+      "event": "Superconductivity reported in infinite-layer nickelate thin films"
+    },
+    {
+      "year": 2023,
+      "event": "High-pressure superconductivity reported in bilayer Ruddlesden–Popper nickelates"
+    },
+    {
+      "year": 2026,
+      "event": "Bulk superconductivity up to 96 K reported in pressurized nickelate single crystals"
+    },
+    {
+      "year": 2026,
+      "event": "Bandwidth-tuned Mott transition and superconductivity demonstrated in moiré WSe2"
+    }
+  ],
+  "provenance": [
+    {
+      "label": "Nickelate review",
+      "doi": "10.1038/s42254-025-00898-2"
+    },
+    {
+      "label": "Pressurized nickelate bulk superconductivity",
+      "doi": "10.1038/s41586-025-09954-4"
+    },
+    {
+      "label": "Moiré WSe2",
+      "doi": "10.1038/s41586-025-10049-3"
+    },
+    {
+      "label": "Unconventional pairing review",
+      "doi": "10.1103/RevModPhys.84.1383"
+    },
+    {
+      "label": "Iron superconductivity review",
+      "doi": "10.1103/RevModPhys.83.1589"
+    },
+    {
+      "label": "Hydride validation perspective",
+      "doi": "10.1038/s41567-025-02969-8"
+    }
+  ]
+}
