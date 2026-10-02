@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "title": "Matter Atlas phase-transition schema",
+    "version": "0.1",
+    "purpose": "Common transition/provenance fields for quantum phases now and future nuclide/QCD overlays."
+  },
+  "transition_fields": {
+    "identity": [
+      "id",
+      "name",
+      "domain",
+      "system_or_material"
+    ],
+    "state_change": [
+      "phase_from",
+      "phase_to",
+      "transition_type",
+      "order",
+      "symmetry_change",
+      "topology_change"
+    ],
+    "controls": [
+      "temperature_K",
+      "pressure_Pa",
+      "baryon_density",
+      "chemical_potential",
+      "magnetic_field_T",
+      "electric_field",
+      "carrier_density_or_doping",
+      "strain",
+      "disorder",
+      "composition"
+    ],
+    "observables": [
+      "zero_resistance",
+      "diamagnetism_or_Meissner",
+      "heat_capacity",
+      "spectroscopy",
+      "transport",
+      "scattering",
+      "order_parameter",
+      "other"
+    ],
+    "epistemic": [
+      "status",
+      "replication_status",
+      "confidence",
+      "disputed_reason"
+    ],
+    "provenance": [
+      "discovery_year",
+      "measurement_date",
+      "technique",
+      "doi",
+      "source_url",
+      "source_type"
+    ],
+    "atlas_links": [
+      "nuclides",
+      "atoms",
+      "materials",
+      "quasiparticles",
+      "qcd_states",
+      "phase_diagram"
+    ]
+  },
+  "transition_types": [
+    {
+      "id": "first-order",
+      "note": "discontinuous first derivative of free energy; latent heat/coexistence may occur"
+    },
+    {
+      "id": "continuous",
+      "note": "continuous transition with critical behavior; classification may depend on universality class"
+    },
+    {
+      "id": "quantum",
+      "note": "zero-temperature transition driven by a non-thermal control parameter"
+    },
+    {
+      "id": "bkt",
+      "note": "topological BKT transition in appropriate low-dimensional systems"
+    },
+    {
+      "id": "topological",
+      "note": "change characterized by topology rather than ordinary local symmetry breaking"
+    },
+    {
+      "id": "crossover",
+      "note": "smooth change, explicitly not a thermodynamic phase transition"
+    }
+  ],
+  "domains": [
+    {
+      "id": "atomic-material",
+      "examples": [
+        "solid/liquid/gas",
+        "magnetic order",
+        "electronic order"
+      ]
+    },
+    {
+      "id": "quantum-matter",
+      "examples": [
+        "superconductivity",
+        "superfluidity",
+        "quantum Hall",
+        "spin liquids"
+      ]
+    },
+    {
+      "id": "nuclear",
+      "examples": [
+        "nuclear shape transitions",
+        "pairing transitions",
+        "liquid-gas nuclear matter"
+      ]
+    },
+    {
+      "id": "qcd",
+      "examples": [
+        "hadron gas/QGP crossover",
+        "candidate critical behavior",
+        "dense QCD phases"
+      ]
+    }
+  ],
+  "overlay_future": {
+    "target": "Nuclide Atlas",
+    "mode": "optional overlay; never changes canonical N-Z-S coordinates",
+    "projection": [
+      "per-nuclide nuclear structure/shape transitions",
+      "pairing/shell phenomena",
+      "decay/stability boundaries",
+      "environment-dependent atomic/material phases via linked element"
+    ],
+    "guardrail": "Do not place bulk-material phase transitions directly on a nuclide unless the relation is explicitly through an element/material instance."
+  },
+  "provenance_policy": {
+    "preferred": [
+      "primary peer-reviewed paper",
+      "evaluated database/review",
+      "major laboratory collaboration"
+    ],
+    "statuses": [
+      "observed",
+      "replicated",
+      "candidate",
+      "disputed",
+      "theoretical"
+    ],
+    "rule": "Claims about existence and claims about mechanism are graded independently."
+  }
+}
