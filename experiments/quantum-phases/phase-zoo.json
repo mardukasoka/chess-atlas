@@ -1,0 +1,351 @@
+{
+  "meta": {
+    "title": "Quantum & Emergent Phase Zoo",
+    "schema": "atlas-matter-v0.4",
+    "classification": "Phases may carry multiple order tags; categories are not mutually exclusive."
+  },
+  "categories": [
+    {
+      "id": "magnetic",
+      "name": "Magnetic order",
+      "states": [
+        {
+          "name": "Ferromagnet",
+          "order": [
+            "broken spin-rotation/time-reversal"
+          ],
+          "excitations": [
+            "magnons"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Antiferromagnet",
+          "order": [
+            "staggered magnetic order"
+          ],
+          "excitations": [
+            "magnons"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Ferrimagnet",
+          "order": [
+            "opposed unequal sublattices"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Spin glass",
+          "order": [
+            "frozen disordered moments"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Spin-density wave",
+          "order": [
+            "spatially modulated spin density"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Quantum spin liquid",
+          "order": [
+            "long-range entanglement",
+            "no conventional magnetic LRO"
+          ],
+          "excitations": [
+            "spinons/other fractionalized modes model-dependent"
+          ],
+          "status": "material-dependent evidence"
+        }
+      ]
+    },
+    {
+      "id": "electronic",
+      "name": "Electronic / correlated order",
+      "states": [
+        {
+          "name": "Mott insulator",
+          "order": [
+            "interaction-driven localization"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Charge-density wave",
+          "order": [
+            "modulated charge density"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Wigner crystal",
+          "order": [
+            "electron crystallization"
+          ],
+          "status": "established in suitable low-density/field regimes"
+        },
+        {
+          "name": "Nematic electronic phase",
+          "order": [
+            "rotational symmetry breaking"
+          ],
+          "status": "established in selected materials"
+        },
+        {
+          "name": "Strange metal",
+          "order": [
+            "non-Fermi-liquid phenomenology"
+          ],
+          "status": "observed regime; microscopic interpretation system-dependent"
+        },
+        {
+          "name": "Excitonic insulator/condensate",
+          "order": [
+            "electron-hole pairing"
+          ],
+          "status": "platform/material dependent"
+        }
+      ]
+    },
+    {
+      "id": "topological",
+      "name": "Topological order & band topology",
+      "states": [
+        {
+          "name": "Integer quantum Hall",
+          "order": [
+            "Chern topology"
+          ],
+          "excitations": [
+            "chiral edge modes"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Fractional quantum Hall",
+          "order": [
+            "topological order",
+            "long-range entanglement"
+          ],
+          "excitations": [
+            "fractionally charged anyons"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Topological insulator",
+          "order": [
+            "symmetry-protected band topology"
+          ],
+          "excitations": [
+            "boundary states"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Topological crystalline insulator",
+          "order": [
+            "crystalline-symmetry-protected topology"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Chern insulator / quantum anomalous Hall",
+          "order": [
+            "Chern topology",
+            "broken time reversal"
+          ],
+          "status": "established in selected systems"
+        },
+        {
+          "name": "Weyl semimetal",
+          "order": [
+            "gapless band topology"
+          ],
+          "excitations": [
+            "Weyl quasiparticles",
+            "surface Fermi arcs"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Dirac semimetal",
+          "order": [
+            "symmetry-protected band crossings"
+          ],
+          "excitations": [
+            "Dirac quasiparticles"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Topological superconductor",
+          "order": [
+            "superconductivity",
+            "non-trivial topology"
+          ],
+          "excitations": [
+            "candidate Majorana boundary/defect modes"
+          ],
+          "status": "candidate/platform-dependent"
+        }
+      ]
+    },
+    {
+      "id": "quantum-fluid",
+      "name": "Quantum fluids & condensates",
+      "states": [
+        {
+          "name": "Superconductor",
+          "order": [
+            "charged condensate",
+            "gauge-symmetry description"
+          ],
+          "excitations": [
+            "Bogoliubov quasiparticles",
+            "collective modes"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Superfluid",
+          "order": [
+            "phase-coherent quantum fluid"
+          ],
+          "excitations": [
+            "phonons",
+            "rotons in helium"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Bose-Einstein condensate",
+          "order": [
+            "macroscopic mode occupation/coherence"
+          ],
+          "status": "established"
+        },
+        {
+          "name": "Supersolid",
+          "order": [
+            "density order",
+            "superfluid coherence"
+          ],
+          "status": "realized in selected ultracold/dipolar platforms"
+        }
+      ]
+    },
+    {
+      "id": "driven",
+      "name": "Driven & nonequilibrium",
+      "states": [
+        {
+          "name": "Discrete time crystal",
+          "order": [
+            "subharmonic temporal order"
+          ],
+          "status": "experimentally realized in driven platforms"
+        },
+        {
+          "name": "Floquet topological phase",
+          "order": [
+            "periodically driven effective topology"
+          ],
+          "status": "experimentally realized in selected platforms"
+        },
+        {
+          "name": "Prethermal phase",
+          "order": [
+            "long-lived nonequilibrium regime"
+          ],
+          "status": "established concept; realization platform-dependent"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "from": "Mott insulator",
+      "to": "Superconductor",
+      "controls": [
+        "doping",
+        "pressure",
+        "bandwidth"
+      ],
+      "note": "material dependent"
+    },
+    {
+      "from": "Antiferromagnet",
+      "to": "Paramagnet",
+      "controls": [
+        "temperature",
+        "pressure",
+        "field",
+        "composition"
+      ],
+      "transition": [
+        "thermal",
+        "quantum"
+      ]
+    },
+    {
+      "from": "Fractional quantum Hall liquid",
+      "to": "Wigner crystal",
+      "controls": [
+        "filling",
+        "interactions",
+        "electric field/orbital structure"
+      ],
+      "note": "2026 bilayer graphene experiment provides a direct transition example"
+    },
+    {
+      "from": "Charge-density wave",
+      "to": "Superconductor",
+      "controls": [
+        "pressure",
+        "doping",
+        "field"
+      ],
+      "note": "competition/coexistence depends on material"
+    },
+    {
+      "from": "Topological insulator",
+      "to": "magnetic topological phase",
+      "controls": [
+        "magnetic order",
+        "exchange coupling"
+      ],
+      "note": "topology and symmetry breaking can coexist"
+    }
+  ],
+  "provenance": [
+    {
+      "label": "Quantum materials overview",
+      "doi": "10.1038/nphys4302"
+    },
+    {
+      "label": "Topological classification",
+      "doi": "10.1103/RevModPhys.88.035005"
+    },
+    {
+      "label": "Topological phase zoo",
+      "doi": "10.1103/RevModPhys.89.041004"
+    },
+    {
+      "label": "Magnetic topological materials",
+      "doi": "10.1038/s41586-021-04105-x"
+    },
+    {
+      "label": "Kagome intertwined phases",
+      "doi": "10.1038/s42254-023-00635-7"
+    },
+    {
+      "label": "2026 topological ↔ crystalline electron transition",
+      "doi": "10.1103/sh8l-v7yf"
+    }
+  ]
+}
