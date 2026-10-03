@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "description": "Fork/upstream relationships used by the Atlas References repository watch. Upstream identities are verified from GitHub fork metadata.",
+  "repositories": [
+    {
+      "reference": "atlas-of-space",
+      "repo": "mardukasoka/atlasof.space",
+      "upstream": "gordonhart/atlasof.space"
+    },
+    {
+      "reference": "galaxy-manifold",
+      "repo": "mardukasoka/galaxy-manifold.github.io",
+      "upstream": "galaxy-manifold/galaxy-manifold.github.io"
+    },
+    {
+      "reference": "laniakea",
+      "repo": "mardukasoka/laniakea",
+      "upstream": "manlius/laniakea"
+    },
+    {
+      "reference": "gods-eye",
+      "repo": "mardukasoka/gods-eye-view",
+      "upstream": "bilawalsidhu/gods-eye-view"
+    },
+    {
+      "reference": "galaxy-of-nuclides",
+      "repo": "mardukasoka/galaxy_of_nuclides",
+      "upstream": "Frencil/galaxy_of_nuclides"
+    },
+    {
+      "reference": "globi",
+      "repo": "mardukasoka/globi",
+      "upstream": "salam/globi"
+    },
+    {
+      "reference": "orbits",
+      "repo": "mardukasoka/orbits",
+      "upstream": "nasapsg/orbits"
+    },
+    {
+      "reference": "jsorrery",
+      "repo": "mardukasoka/jsorrery",
+      "upstream": "mgvez/jsorrery"
+    },
+    {
+      "reference": "keeptrack-space",
+      "repo": "mardukasoka/keeptrack.space",
+      "upstream": "thkruz/keeptrack.space"
+    },
+    {
+      "reference": "stellarium-web-engine",
+      "repo": "mardukasoka/stellarium-web-engine",
+      "upstream": "Stellarium/stellarium-web-engine"
+    },
+    {
+      "reference": "asterank",
+      "repo": "mardukasoka/asterank",
+      "upstream": "typpo/asterank"
+    },
+    {
+      "reference": "western-meteor",
+      "repo": "mardukasoka/WesternMeteorPyLib",
+      "upstream": "wmpg/WesternMeteorPyLib"
+    },
+    {
+      "reference": "opencontracts",
+      "repo": "mardukasoka/OpenContracts",
+      "upstream": "Open-Source-Legal/OpenContracts"
+    },
+    {
+      "reference": "glaw",
+      "repo": "mardukasoka/glaw",
+      "upstream": "rikitrader/glaw"
+    },
+    {
+      "reference": "lavern",
+      "repo": "mardukasoka/lavern",
+      "upstream": "AnttiHero/lavern"
+    },
+    {
+      "reference": "rrsi",
+      "repo": "mardukasoka/rrsi",
+      "upstream": "google-research/rrsi"
+    },
+    {
+      "reference": "rrsi",
+      "repo": "mardukasoka/Choir",
+      "upstream": "Weber-GeoML/Choir"
+    }
+  ]
+}
