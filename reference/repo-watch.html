@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Atlas Repository Watch</title><style>body{max-width:760px;margin:0 auto;padding:24px 18px;font:16px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;background:#faf8f1;color:#171717}a{color:#174f86}header{border-bottom:1px solid #bbb;padding-bottom:12px}h1{font-size:1.55rem}.repo{border-top:1px solid #ccc;padding:13px 0}.name{font-weight:700}.meta{font-size:.82rem;color:#555;overflow-wrap:anywhere}.state{font-weight:700}.behind{color:#8a3b12}.current{color:#27633b}.unknown{color:#666}button{font:inherit;padding:8px 12px}#summary{margin:18px 0}</style></head><body><header><a href="./">← References</a> · <a href="../">↑ Chess Atlas</a></header><main><h1>Repository Watch</h1><p>Maintenance checklist for Atlas forks. Status is checked live against GitHub when this page opens; no repository is updated automatically.</p><p><button id="refresh">Refresh checks</button></p><div id="summary">Loading repository manifest…</div><div id="repos"></div></main><script>
+const summary=document.getElementById('summary'),box=document.getElementById('repos');
+async function load(){
+ summary.textContent='Checking forks…';box.innerHTML='';
+ try{
+  const manifest=await fetch('./repo-watch.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('manifest '+r.status);return r.json()});
+  let behind=0,current=0,unknown=0;
+  for(const item of manifest.repositories){
+   const el=document.createElement('div');el.className='repo';
+   el.innerHTML='<div class="name"></div><div class="meta"></div><div class="state unknown">CHECKING</div>';
+   el.querySelector('.name').textContent=item.repo;
+   el.querySelector('.meta').textContent='upstream: '+item.upstream;
+   box.appendChild(el);
+   const state=el.querySelector('.state');
+   try{
+    const fork=await fetch('https://api.github.com/repos/'+item.repo).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+    const up=await fetch('https://api.github.com/repos/'+item.upstream).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+    const cmp=await fetch('https://api.github.com/repos/'+item.repo+'/compare/'+encodeURIComponent(up.default_branch)+'...'+encodeURIComponent(item.upstream+':'+up.default_branch)).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+    const n=cmp.ahead_by||0;
+    if(n>0){behind++;state.className='state behind';state.textContent='UPDATE AVAILABLE · '+n+' upstream commit'+(n===1?'':'s');}
+    else{current++;state.className='state current';state.textContent='CURRENT';}
+   }catch(e){unknown++;state.className='state unknown';state.textContent='CHECK MANUALLY';}
+  }
+  summary.textContent='Update available: '+behind+' · Current: '+current+' · Manual check: '+unknown;
+ }catch(e){summary.textContent='Repository watch unavailable; use the manifest for manual checks.'}
+}
+document.getElementById('refresh').addEventListener('click',load);load();
+</script></body></html>
