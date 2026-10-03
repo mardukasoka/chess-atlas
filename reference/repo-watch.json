@@ -86,6 +86,26 @@
       "reference": "rrsi",
       "repo": "mardukasoka/Choir",
       "upstream": "Weber-GeoML/Choir"
+    },
+    {
+      "reference": "history-globe",
+      "repo": "mardukasoka/human-history-simulator",
+      "upstream": "lowesyang/human-history-simulator"
+    },
+    {
+      "reference": "history-globe",
+      "repo": "mardukasoka/human-history-map",
+      "upstream": "amyleesterling/human-history-map"
+    },
+    {
+      "reference": "history-globe",
+      "repo": "mardukasoka/seh",
+      "upstream": "ofrohn/seh"
+    },
+    {
+      "reference": "history-globe",
+      "repo": "mardukasoka/ChronoZoom",
+      "upstream": "alterm4nn/ChronoZoom"
     }
   ]
 }
