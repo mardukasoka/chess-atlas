@@ -13,3 +13,6 @@
 @media(max-width:420px){.atlas-game-browser{margin-bottom:6px}.atlas-game-browser>summary{font-size:1.75rem}.atlas-title-menu{grid-template-columns:1fr}}
 
 .future-chess-host{width:100%;height:calc(100dvh - 145px);min-height:430px;margin:0;overflow:hidden;border:1px solid #383e48;border-radius:12px;background:#16181d}.future-chess-host[hidden]{display:none!important}.future-chess-host iframe{width:100%;height:100%;border:0;background:#16181d}@media(max-width:420px){.future-chess-host{height:calc(100dvh - 132px);min-height:390px}}
+
+/* Lightweight provenance navigation. */
+.atlas-header{position:relative}.atlas-references-link{position:absolute;right:0;top:.35rem;font-size:.76rem;font-weight:600;color:#aeb7c2;text-decoration:none;z-index:2}.atlas-references-link:hover,.atlas-references-link:focus{color:#fff;text-decoration:underline}@media(max-width:420px){.atlas-references-link{top:.25rem;font-size:.7rem}}
