@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atlas AI Capability Stack</title>
+<style>
+:root{color-scheme:light}*{box-sizing:border-box}body{max-width:820px;margin:0 auto;padding:22px 16px 48px;font:15px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;background:#faf8f1;color:#171717}a{color:#174f86}header,footer{border-color:#bbb;border-style:solid;border-width:0 0 1px;padding-bottom:12px}footer{border-width:1px 0 0;margin-top:30px;padding-top:12px}h1{font-size:1.55rem;margin-bottom:6px}h2{font-size:1rem;margin-top:28px;text-transform:uppercase;letter-spacing:.08em}h3{font-size:.95rem;margin:18px 0 4px}.muted{color:#666}.box{border:1px solid #bbb;padding:12px;margin:12px 0;background:#fffdf7}.stage{display:grid;grid-template-columns:5.5em 1fr;gap:8px;border-top:1px dotted #bbb;padding:8px 0}.stage:first-child{border-top:0}.tag{font-weight:bold}.warn{border-left:4px solid #777;padding-left:10px}code{font-family:inherit;background:#eee9dd;padding:1px 3px}pre{white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid #bbb;background:#fffdf7;padding:12px;font:13px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;vertical-align:top;border-bottom:1px solid #ccc;padding:7px 5px}th{font-weight:bold}@media(max-width:560px){body{padding:16px 12px 36px}.stage{grid-template-columns:1fr}table{display:block;overflow-x:auto;white-space:nowrap}}
+</style>
+</head>
+<body>
+<header><a href="./reference/">Atlas References</a> · <a href="./">Chess Atlas</a></header>
+<main>
+<h1>Atlas AI Capability Stack</h1>
+<p class="muted">AI stages, jagged capability frontier, scientific repositories and the proposed Atlas MCP capability topology. Separate from the project References directory.</p>
+
+<h2>AI stages</h2>
+<div class="box">
+<div class="stage"><span class="tag">Stage 4</span><span><b>Reasoning AI</b> (2024–25) — tool-using and multi-step reasoning systems with uneven domain competence.</span></div>
+<div class="stage"><span class="tag">Stage 5</span><span><b>AGI</b> (2026–27) — proposed transition to broadly general competence across cognitive domains.</span></div>
+<div class="stage"><span class="tag">Stage 6</span><span><b>ASI / Material Transcendence</b> — prospective systems whose capability extends substantially into scientific and material intervention.</span></div>
+<div class="stage"><span class="tag">Stage 7</span><span><b>Universal Emulator</b> — conceptual capacity to construct and reason across increasingly comprehensive executable world models.</span></div>
+<div class="stage"><span class="tag">Stage 8</span><span><b>Transcendental AI</b> — prospective capability beyond ordinary human-accessible cognitive and representational regimes.</span></div>
+<div class="stage"><span class="tag">Stage 9</span><span><b>Cosmic AI</b> — conceptual intelligence operating across astronomical scales and infrastructure.</span></div>
+<div class="stage"><span class="tag">Stage 10</span><span><b>Godlike AI</b> — limiting conceptual category, not an empirical claim about present systems.</span></div>
+</div>
+<p class="warn"><b>Epistemic status:</b> Stages 6–10 are prospective/conceptual. The timeline labels are Atlas working categories, not claims that these transitions are established forecasts.</p>
+
+<h2>Jagged frontier</h2>
+<p>Capability should be tracked dimension-by-dimension rather than collapsed into one intelligence score:</p>
+<p><code>cognition</code> · <code>comprehension</code> · <code>world modelling</code> · <code>simulation</code> · <code>scientific verification</code> · <code>physical sensing</code> · <code>embodiment</code> · <code>agency</code> · <code>coordination</code> · <code>self-improvement</code> · <code>recursive substrate construction</code> · <code>external zone of effect</code></p>
+
+<h2>Scientific capability repositories</h2>
+<table>
+<thead><tr><th>Repository</th><th>Role</th><th>MCP treatment</th></tr></thead>
+<tbody>
+<tr><td><a href="https://github.com/mardukasoka/scienceclaw">ScienceClaw</a></td><td>Scientific skills, tool registry, artifact lineage</td><td>Adapter provider; README documents MCP but implementation is unverified in current main</td></tr>
+<tr><td><a href="https://github.com/mardukasoka/GraphReasoning">GraphReasoning</a></td><td>Scientific knowledge graphs and graph reasoning</td><td>Selected read/query adapter</td></tr>
+<tr><td><a href="https://github.com/mardukasoka/SciAgentsDiscovery">SciAgentsDiscovery</a></td><td>Hypothesis generation and multi-agent scientific reasoning</td><td>Governed workflow adapter</td></tr>
+<tr><td><a href="https://github.com/mardukasoka/SwarmWorld">SwarmWorld</a></td><td>Deterministic executable worlds, replay and counterfactual experiments</td><td>Controlled SIMULATE adapter</td></tr>
+<tr><td><a href="https://github.com/mardukasoka/PRefLexOR">PRefLexOR</a></td><td>Recursive/reflexive reasoning and training research</td><td>Experimental TRAIN/MUTATE only</td></tr>
+<tr><td><a href="https://github.com/mardukasoka/fractal">Fractal</a></td><td>Recursive orchestration</td><td>Internal only; not a general MCP tool</td></tr>
+<tr><td><a href="./reference/sagent/">Sagent</a></td><td>Canonical bounded execution runtime</td><td>Execution boundary</td></tr>
+<tr><td><a href="./reference/trackinizer/">Trackinizer</a></td><td>Canonical evidence/provenance ledger</td><td>Internal evidence service</td></tr>
+<tr><td><a href="./reference/rrsi/">RRSI</a></td><td>Regularized recursive self-improvement research</td><td>Experimental only</td></tr>
+<tr><td><a href="https://github.com/mardukasoka/atlas-lite-council">Atlas Lite Council</a></td><td>Evaluation, disagreement preservation and governance</td><td>Governance boundary</td></tr>
+</tbody>
+</table>
+
+<h2>Atlas Scientific MCP</h2>
+<pre>AI / Council
+     |
+     v
+ATLAS SCIENTIFIC MCP
+  capabilities.search
+  capabilities.describe
+  capabilities.invoke
+  artifacts.get
+  evidence.get
+     |
+     v
+Policy / permission gate
+     |
+     v
+Sagent execution boundary
+     |
+     +--> ScienceClaw
+     +--> GraphReasoning
+     +--> SciAgentsDiscovery
+     +--> SwarmWorld
+     +--> experimental providers [isolated]
+     |
+     v
+Trackinizer evidence
+     |
+     v
+Council evaluation
+     |
+     v
+Atlas accepted / mapped knowledge</pre>
+
+<h2>Permission classes</h2>
+<p><b>READ</b> — literature, catalogue and knowledge-graph retrieval.<br>
+<b>COMPUTE</b> — bounded deterministic analysis.<br>
+<b>SIMULATE</b> — explicit model/world execution.<br>
+<b>WRITE / ACT</b> — repository or external-system mutation; governed.<br>
+<b>TRAIN / MUTATE</b> — model/harness improvement research; isolated, benchmarked and explicitly authorized.</p>
+
+<h2>Capability lifecycle</h2>
+<pre>DISCOVERED -> CANDIDATE -> AUDITED -> CONTAINED_TEST
+ -> BENCHMARKED -> COUNCIL_REVIEWED -> APPROVED
+ -> REGISTERED -> AVAILABLE
+
+holding/terminal:
+QUARANTINED | REJECTED | DEPRECATED | UNAVAILABLE</pre>
+<p>An AI may identify a capability gap and propose a candidate. Discovery never grants execution authority or production admission.</p>
+
+<h2>Invocation evidence</h2>
+<pre>CAPABILITY_REQUESTED
+ -> CAPABILITY_SELECTED
+ -> POLICY_CHECK
+ -> TOOL_EXECUTED
+ -> ARTIFACT_CAPTURED
+ -> EVIDENCE_RECORDED
+ -> COMPLETED / FAILED
+
+policy failure:
+POLICY_CHECK -> RUN_REFUSED -> EVIDENCE_RECORDED</pre>
+<p>Successful execution is not equivalent to scientific truth. Results retain an epistemic class such as retrieved observation, computation, simulation, hypothesis or experimental-model output.</p>
+
+<h2>Atlas invariant</h2>
+<div class="box">Facts are not simulations.<br>Simulations are not judgments.<br>Judgments are not laws.<br>Laws are not interfaces.</div>
+
+<h2>Status</h2>
+<p><b>Architecture:</b> Pass 2 specified. <b>Implementation:</b> not yet claimed. First proof target remains one read-only ScienceClaw capability through the bounded execution/evidence path.</p>
+</main>
+<footer>Atlas AI Capability Stack · lightweight reference surface</footer>
+</body></html>
