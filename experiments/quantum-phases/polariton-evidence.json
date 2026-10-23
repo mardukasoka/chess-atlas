@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1",
+  "canonical_context": "Nuclides & Exotic Atoms → Quasiparticles → Quantum Phases",
+  "records": [
+    {
+      "id": "QM-POLARITON-2017-001",
+      "title": "Room-temperature superfluidity in a polariton condensate",
+      "year": 2017,
+      "entity": "exciton-polariton",
+      "entity_class": "hybrid light–matter quasiparticle",
+      "material_system": "organic molecular film in optical microcavity",
+      "observation": "Suppressed scattering of propagating polariton fluid around an obstacle under ambient conditions",
+      "status": "experimental",
+      "primary_source": {
+        "doi": "10.1038/nphys4147",
+        "url": "https://doi.org/10.1038/nphys4147"
+      },
+      "secondary_source": "https://www.sciencedaily.com/releases/2017/06/170605121359.htm",
+      "crosslinks": [
+        "../nuclides/",
+        "../quasiparticles/",
+        "../quantum-phases/"
+      ],
+      "limitations": [
+        "Not a hypernuclide or exotic atom",
+        "Does not establish superfluidity of free photons",
+        "Does not require three-photon entanglement"
+      ]
+    }
+  ]
+}
