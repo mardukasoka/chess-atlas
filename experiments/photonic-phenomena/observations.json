@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1",
+  "records": [
+    {
+      "id": "QO-002",
+      "name": "Anomalous group velocity of light",
+      "year": 2000,
+      "doi": "10.1038/35018520",
+      "category": "dispersion",
+      "status": "published",
+      "caveat": "No faster-than-light information transfer"
+    },
+    {
+      "id": "QO-001",
+      "name": "Three-photon bound states",
+      "year": 2018,
+      "doi": "10.1038/nature25776",
+      "category": "few-body photonic interactions",
+      "status": "published",
+      "caveat": "Not proof of photon superfluidity"
+    },
+    {
+      "id": "QM-POLARITON-2017-001",
+      "name": "Room-temperature polariton superfluidity",
+      "year": 2017,
+      "doi": "10.1038/nphys4147",
+      "category": "collective light-matter phase",
+      "status": "published",
+      "caveat": "Polaritons are quasiparticles, not exotic atoms"
+    }
+  ]
+}
