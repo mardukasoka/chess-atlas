@@ -2,12 +2,33 @@ name: Atlas return-state regression
 on:
   pull_request:
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   regression:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node tests/atlas-return-state-regression.test.cjs
+      - name: Red-before — regression must fail on parent of original fix
+        shell: bash
+        run: |
+          set -euo pipefail
+          git show 287de5894d54826caebbd5d90c48ffdaab0670fd^:atlas-return-state.js > atlas-return-state.js
+          set +e
+          node tests/atlas-return-state-regression.test.cjs > /tmp/atlas-red.log 2>&1
+          red_exit=$?
+          set -e
+          cat /tmp/atlas-red.log
+          echo "Historical regression exit code: $red_exit (expected nonzero)"
+          git checkout -- atlas-return-state.js
+          if [ "$red_exit" -eq 0 ]; then
+            echo "::error::Regression unexpectedly passes against original broken decoder"
+            exit 1
+          fi
+      - name: Green-after — regression passes on current PR head
+        run: node tests/atlas-return-state-regression.test.cjs
