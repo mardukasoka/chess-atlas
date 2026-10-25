@@ -6,6 +6,7 @@
   if (root) root.AtlasReturnState = api;
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   function finite(value) {
+    if (value == null || value === '') return null;
     const number = Number(value);
     return Number.isFinite(number) ? number : null;
   }
