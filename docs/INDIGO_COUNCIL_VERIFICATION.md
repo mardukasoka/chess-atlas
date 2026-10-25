@@ -9,7 +9,7 @@
 - Regression run: https://github.com/mardukasoka/chess-atlas/actions/runs/40207783359 — **success**
 - General validator: https://github.com/mardukasoka/chess-atlas/actions/runs/40207783336 — **success**
 
-The regression workflow replaces the current decoder with the historical version, runs the expanded tests and requires a nonzero exit code, restores the current decoder, and then requires zero exit code. GitHub Actions success establishes that this sequence completed. Inspect job logs to record the exact historical exit code and assertion; the successful workflow alone does not expose those values here.
+The regression workflow replaces the current decoder with the historical version, runs the expanded tests and requires a nonzero exit code, restores the current decoder, and then requires zero exit code. GitHub Actions success establishes that this sequence completed. Direct inspection of GitHub Actions job logs confirmed: historical decoder **exit code 1**, `AssertionError [ERR_ASSERTION]: absent x must stay null`; restored corrected decoder printed `Atlas return-state regression checks passed` and the workflow concluded success. The historical test is an *expected failure* inside an overall successful verification job. The validator run https://github.com/mardukasoka/chess-atlas/actions/runs/40208606394 separately reported 84 suites and 424 tests passed.
 
 ## Test coverage
 - Missing `x`, `y`, `zoom` remain `null`.
