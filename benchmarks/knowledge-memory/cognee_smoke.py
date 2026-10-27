@@ -8,17 +8,10 @@ os.environ.pop("LLM_API_KEY", None)
 os.environ.pop("OPENAI_API_KEY", None)
 os.environ.pop("EMBEDDING_API_KEY", None)
 
-FACTS = [
-    "Hydrogen-1 has one proton and zero neutrons.",
-    "Deuterium is hydrogen-2 and has one proton and one neutron.",
-    "Tritium is hydrogen-3 and has one proton and two neutrons.",
-    "Helium-4 has two protons and two neutrons.",
-]
-QUERIES = [
-    {"question": "Which hydrogen isotope has two neutrons?", "expected": "Tritium"},
-    {"question": "How many neutrons does deuterium have?", "expected": "one"},
-    {"question": "How many protons does helium-4 have?", "expected": "two"},
-]
+FIXTURE_PATH = Path(__file__).parent / "fixtures" / "isotopes-v1.json"
+FIXTURE = json.loads(FIXTURE_PATH.read_text())
+FACTS = [d["text"] for d in FIXTURE["documents"]]
+QUERIES = [q for q in FIXTURE["questions"] if q["expected"] is not None]
 
 async def main():
     import cognee
@@ -30,7 +23,9 @@ async def main():
         found = await cognee.recall(q["question"], datasets=["indigo_nuclides_smoke"])
         text = str(found)
         results.append({
+            "question_id": q["id"],
             "question": q["question"],
+            "expected_source_id": q["source_id"],
             "expected": q["expected"],
             "retrieved_nonempty": bool(found),
             "expected_in_retrieval": q["expected"].lower() in text.lower(),
