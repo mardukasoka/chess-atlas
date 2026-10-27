@@ -1,0 +1,21 @@
+name: Indigo benchmark scorer checks
+on:
+  push:
+    branches: [indigo/knowledge-memory-benchmark]
+    paths:
+      - 'benchmarks/knowledge-memory/test_evaluation.py'
+      - '.github/workflows/indigo-benchmark-scorer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scorer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate evaluation rules
+        run: python -m unittest discover -s benchmarks/knowledge-memory -p 'test_evaluation.py' -v
