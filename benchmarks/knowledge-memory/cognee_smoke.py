@@ -36,12 +36,18 @@ async def main():
             "expected_in_retrieval": q["expected"].lower() in text.lower(),
             "retrieval_excerpt": text[:500],
         })
-    out = {"engine": "cognee", "test_type": "local_model_smoke",
-           "queries": results, "count": len(results)}
+    out = {"engine": "cognee", "test_type": "local_model_retrieval_probe",
+           "queries": results, "count": len(results),
+           "nonempty_count": sum(r["retrieved_nonempty"] for r in results),
+           "expected_present_count": sum(r["expected_in_retrieval"] for r in results),
+           "note": "Expected-string presence in retrieved passages is a diagnostic, not answer accuracy."}
     Path("reports").mkdir(exist_ok=True)
     Path("reports/cognee-smoke.json").write_text(json.dumps(out, indent=2))
     print(json.dumps({"engine": out["engine"], "count": out["count"],
-                      "nonempty": sum(r["retrieved_nonempty"] for r in results)}))
+                      "nonempty": out["nonempty_count"],
+                      "expected_present": out["expected_present_count"]}))
+    if out["nonempty_count"] == 0:
+        raise AssertionError("Cognee returned no passages for any fixture question")
 
 if __name__ == "__main__":
     asyncio.run(main())
