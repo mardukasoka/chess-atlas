@@ -1,0 +1,38 @@
+name: Indigo Cognee knowledge smoke
+on:
+  push:
+    branches: [indigo/knowledge-memory-benchmark]
+    paths:
+      - 'benchmarks/knowledge-memory/**'
+      - '.github/workflows/indigo-cognee-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: indigo-cognee-smoke
+  cancel-in-progress: true
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      DO_NOT_TRACK: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install Cognee local model support
+        run: python -m pip install 'cognee[gliner]==1.6.5'
+      - name: Run CPU-only smoke test
+        run: python benchmarks/knowledge-memory/cognee_smoke.py
+      - name: Upload sanitized result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: indigo-cognee-smoke
+          path: reports/cognee-smoke.json
+          if-no-files-found: ignore
+          retention-days: 3
