@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "description": "Synthetic benchmark fixture; not a source-verified nuclide dataset.",
+  "documents": [
+    {
+      "id": "H-1",
+      "text": "Hydrogen-1 has one proton and zero neutrons."
+    },
+    {
+      "id": "H-2",
+      "text": "Deuterium is hydrogen-2 and has one proton and one neutron."
+    },
+    {
+      "id": "H-3",
+      "text": "Tritium is hydrogen-3 and has one proton and two neutrons."
+    },
+    {
+      "id": "He-4",
+      "text": "Helium-4 has two protons and two neutrons."
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "question": "Which hydrogen isotope has two neutrons?",
+      "expected": "Tritium",
+      "source_id": "H-3"
+    },
+    {
+      "id": "q2",
+      "question": "How many neutrons does deuterium have?",
+      "expected": "one",
+      "source_id": "H-2"
+    },
+    {
+      "id": "q3",
+      "question": "How many protons does helium-4 have?",
+      "expected": "two",
+      "source_id": "He-4"
+    },
+    {
+      "id": "q4",
+      "question": "What is the half-life of helium-4?",
+      "expected": null,
+      "source_id": null
+    }
+  ]
+}
