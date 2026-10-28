@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: positive: while loop parses to golden AST
+ok 1 - positive: while loop parses to golden AST
+  ---
+  duration_ms: 3.397353
+  type: 'test'
+  ...
+# Subtest: semantic equivalence: AST evaluation matches Lua semantics (x == 3)
+ok 2 - semantic equivalence: AST evaluation matches Lua semantics (x == 3)
+  ---
+  duration_ms: 0.681219
+  type: 'test'
+  ...
+# Subtest: negative: Lua numeric for "for i = 1, 3 do ... end" is rejected with a parse error
+ok 3 - negative: Lua numeric for "for i = 1, 3 do ... end" is rejected with a parse error
+  ---
+  duration_ms: 0.597916
+  type: 'test'
+  ...
+# Subtest: documents current non-Lua grammar rule "for i, a, b do" (comma instead of =)
+ok 4 - documents current non-Lua grammar rule "for i, a, b do" (comma instead of =)
+  ---
+  duration_ms: 1.800982
+  type: 'test'
+  ...
+# Subtest: edge: empty input is rejected (grammar requires >=1 statement)
+ok 5 - edge: empty input is rejected (grammar requires >=1 statement)
+  ---
+  duration_ms: 0.296383
+  type: 'test'
+  ...
+# Subtest: edge: unicode in string literal / identifier
+ok 6 - edge: unicode in string literal / identifier
+  ---
+  duration_ms: 0.720183
+  type: 'test'
+  ...
+# Subtest: edge: very long identifier (5000 chars) parses
+ok 7 - edge: very long identifier (5000 chars) parses
+  ---
+  duration_ms: 0.192503
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 62.588566
