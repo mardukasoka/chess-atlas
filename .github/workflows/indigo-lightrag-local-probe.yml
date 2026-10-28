@@ -1,5 +1,10 @@
 name: Indigo LightRAG local ingestion probe
 on:
+  push:
+    branches: [indigo/knowledge-memory-benchmark]
+    paths:
+      - 'benchmarks/knowledge-memory/lightrag_local_probe.py'
+      - '.github/workflows/indigo-lightrag-local-probe.yml'
   workflow_dispatch:
 permissions:
   contents: read
