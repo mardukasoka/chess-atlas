@@ -1,0 +1,29 @@
+name: Indigo LightRAG local ingestion probe
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: indigo-lightrag-local-probe
+  cancel-in-progress: true
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install LightRAG
+        run: python -m pip install 'lightrag-hku'
+      - name: Run local ingestion and chunk retrieval probe
+        run: python benchmarks/knowledge-memory/lightrag_local_probe.py
+      - name: Upload diagnostic report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: indigo-lightrag-local-probe
+          path: reports/lightrag-local-probe.json
+          if-no-files-found: ignore
+          retention-days: 3
