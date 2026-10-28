@@ -1,0 +1,7 @@
+PASS valid/hypothesis_phase.json: valid
+PASS valid/observation_m31.json: valid
+PASS valid/verified_outcome_transpiler.json: valid
+PASS invalid/invalid_enum_record_type.json: invalid -> 'rumour' is not one of ['observation', 'hypothesis', 'simulation', 'verified_outcome']
+PASS invalid/missing_source_id.json: invalid -> 'source_id' is a required property
+PASS invalid/wrong_type_confidence.json: invalid -> 'high' is not of type 'number'
+RESULT: ALL PASS
