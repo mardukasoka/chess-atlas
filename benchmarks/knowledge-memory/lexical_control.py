@@ -17,7 +17,7 @@ def retrieve(question):
         ((len(q & tokens(d["text"])), d["id"], d["text"]) for d in fixture["documents"]),
         key=lambda x: (-x[0], x[1])
     )
-    return ranked[0]
+    # Zero overlap is not evidence: return an explicit no-match instead.\n    return ranked[0] if ranked and ranked[0][0] > 0 else (0, None, None)
 started = time.monotonic()
 results = []
 for item in fixture["questions"]:
@@ -30,7 +30,7 @@ for item in fixture["questions"]:
         "retrieved_text": passage,
         "lexical_overlap": overlap,
         "expected_source_matched": correct_source,
-        "answer_correctness": "not_tested",
+        "answer_correctness": "not_tested",\n        "source_attribution_verified": False,
         "abstention": "not_tested"
     })
 report = {
