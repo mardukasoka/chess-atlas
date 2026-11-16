@@ -60,6 +60,21 @@
             "spinons/other fractionalized modes model-dependent"
           ],
           "status": "material-dependent evidence"
+        },
+        {
+          "name": "Altermagnet",
+          "order": [
+            "compensated collinear magnetic order",
+            "momentum-dependent even-parity spin splitting",
+            "d-, g- or i-wave symmetry classes"
+          ],
+          "net_magnetization": "zero in ideal compensated state",
+          "excitations": [
+            "magnons",
+            "spin-polarized electronic states"
+          ],
+          "status": "distinct magnetic phase/class with experimental realizations",
+          "distinction": "Unlike a conventional Néel antiferromagnet, spin-up and spin-down sublattices are related by crystal rotation rather than a simple translation/inversion symmetry."
         }
       ]
     },
@@ -320,6 +335,25 @@
         "exchange coupling"
       ],
       "note": "topology and symmetry breaking can coexist"
+    },
+    {
+      "from": "Altermagnet",
+      "to": "spin-polarized current",
+      "controls": [
+        "crystal symmetry",
+        "magnetic domain",
+        "electrical bias"
+      ],
+      "note": "Mn5Si3 experimentally injects spin current despite vanishing net magnetization (Nature 2026)"
+    },
+    {
+      "from": "Antiferromagnet",
+      "to": "surface altermagnetism",
+      "controls": [
+        "surface termination",
+        "surface symmetry"
+      ],
+      "note": "PRX 2026 predicts more than 150 MAGNDATA antiferromagnets with at least one altermagnetic surface"
     }
   ],
   "provenance": [
@@ -346,6 +380,22 @@
     {
       "label": "2026 topological ↔ crystalline electron transition",
       "doi": "10.1103/sh8l-v7yf"
+    },
+    {
+      "label": "Altermagnetism signatures review",
+      "doi": "10.1038/s41586-025-09883-2"
+    },
+    {
+      "label": "Mn5Si3 compensated-magnet spin injection",
+      "doi": "10.1038/s41586-026-11227-7"
+    },
+    {
+      "label": "Ultrathin BiFeO3 altermagnetic signatures",
+      "doi": "10.1038/s41563-026-02786-1"
+    },
+    {
+      "label": "BiFeO3 magnon transport and altermagnetic signatures",
+      "doi": "10.1103/1wyj-nrgk"
     }
   ]
 }
