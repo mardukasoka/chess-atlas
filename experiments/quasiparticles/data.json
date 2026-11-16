@@ -30,9 +30,16 @@
       "statistics": "bosonic",
       "links": [
         "magnetism",
-        "magnon-polaron"
+        "magnon-polaron",
+        "altermagnetism",
+        "antiferromagnetism",
+        "magnon transport"
       ],
-      "status": "established"
+      "status": "established",
+      "note": "Quantized collective spin-wave excitation. Magnons are emergent quasiparticles/collective excitations, not fundamental particles; their dispersion and transport depend on the host magnetic order.",
+      "atlas_examples": [
+        "BiFeO3/LaFeO3 confined heterostructures: anisotropic magnon transport with altermagnetic signatures (PRL 2026)"
+      ]
     },
     {
       "id": "exciton",
